@@ -6,11 +6,11 @@ h1 {
   /* padding: 20px; */
 }
 input {
-  width: 100%;
+  width: 80%;
 }
 .td-row {
   margin: 10px 5px;
 }
 .td-button {
-  min-width: 80px;
+  min-width: 60px;
 }

@@ -1,0 +1,10 @@
+.kgspan {
+  color: blue;
+}
+.kgitem {
+  border: 1px solid black;
+  /* color: blue; */
+}
+button {
+  float: right;
+}

@@ -1,4 +1,4 @@
-function TodoItem2({ name, date }) {
+function TodoItem({ name, date }) {
   // this.prop = props;
   // const props = props;
   return (
@@ -11,4 +11,4 @@ function TodoItem2({ name, date }) {
     </div>
   );
 }
-export default TodoItem2;
+export default TodoItem;
