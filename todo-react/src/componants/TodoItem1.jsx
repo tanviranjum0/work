@@ -1,3 +1,5 @@
+import { MdAddComment } from "react-icons/md";
+// import { MdDelete } from "react-icons/md";
 function TodoItem1() {
   return (
     <div>
@@ -9,7 +11,9 @@ function TodoItem1() {
           <input type="date" name="" id="" />
         </div>
         <div className="col-2">
-          <button className="btn btn-success td-button m-1">Add</button>
+          <button className="btn btn-success td-button m-1">
+            <MdAddComment />
+          </button>
         </div>
       </div>
     </div>
