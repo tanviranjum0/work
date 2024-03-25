@@ -1,0 +1,26 @@
+.app-container {
+  display: flex;
+}
+.content {
+  width: 100%;
+  /* padding: 15px; */
+}
+.sidebar {
+  min-height: 100vh;
+}
+.create-post {
+  padding: 15px;
+  /* height: 60vh; */
+  width:80%;
+  margin: 40px;
+}
+.post-card{
+  /* padding: 15px; */
+  margin:20px 50px;
+}
+.hashtag{
+  margin:0px 3px;
+}
+.reactions{
+  margin:15px 0 0 0;
+}
