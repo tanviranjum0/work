@@ -1,3 +1,4 @@
+"use client";
 const Notfound = () => {
   return (
     <div className="text-bold h2">

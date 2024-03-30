@@ -1,7 +1,4 @@
 const page = () => {
-  // fetch("@/placeholder.json")
-  //   .then((res) => res.json())
-  //   .then(console.log);
   return (
     <div className="mt-10">
       Hello World

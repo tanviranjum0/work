@@ -1,5 +1,5 @@
-import Button from "../../app/components/Button";
-import tanvir from "../../public/tanvir.jpg";
+import Button from "@/app/components/Button";
+import tanvir from "@/public/sc.png";
 import Image from "next/image";
 const About = () => {
   return (
