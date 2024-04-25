@@ -2,11 +2,11 @@
   "posts": [
     {
       "id": 10,
-      "title": "His mother had always taught him",
-      "body": "His mother had always taught him not to ever think of himself as better than others. He'd tried to live by this motto. He never looked down on those who were less fortunate or who had less money than him. But the stupidity of the group of people he was talking to made him change his mind.",
-      "userId": 9,
-      "tags": ["history", "american", "crime"],
-      "reactions": 2
+      "title": "They rushed out the door.",
+      "body": "They rushed out the door, grabbing anything and everything they could think of they might need. There was no time to double-check to make sure they weren't leaving something important behind. Everything was thrown into the car and they sped off. Thirty minutes later they were safe and that was when it dawned on them that they had forgotten the most important thing of all.",
+      "userId": 1,
+      "tags": ["fiction", "magical", "history"],
+      "reactions": 4
     }
   ],
   "total": 150,

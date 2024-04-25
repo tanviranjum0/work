@@ -1,33 +1,21 @@
-import Person from "./Components/Person";
-import { Component } from "react";
-import "./App.css";
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      persons: [
-        {
-          name: "Tanvir",
-          age: "19",
-        },
-        {
-          name: "Anjum",
-          age: "19",
-        },
-        {
-          name: "Rahim",
-          age: "19",
-        },
-      ],
-    };
-  }
+import { Route, Routes } from "react-router-dom";
+import { Box } from "@mui/material";
+import Home from "./components/Home";
+import ExerciseDetail from "./components/ExerciseDetail";
+import Navbar from "./components/Navbar";
 
-  render() {
-    let persons;
-    persons = this.state.persons.map((p) => {
-      return <Person name={p.name} age={p.age} key={p.name} />;
-    });
-    return <div className="container align-center">{persons}</div>;
-  }
-}
+const App = () => {
+  return (
+    <div>
+      <Box width="400px" />
+      <Navbar></Navbar>
+      <Routes>
+        <Home />
+        <Route path="/" element={<Home />} />
+        <Route path="/exercise/:id" element={<ExerciseDetail />} />
+      </Routes>
+    </div>
+  );
+};
+
 export default App;

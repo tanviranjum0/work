@@ -1,89 +1,116 @@
-import { useRef, useContext } from "react";
-import { PostList } from "../store/PostListStore";
-export default function CreatePost(PostList) {
-  const { addPost } = useContext();
-  const userId = useRef();
-  const postTitle = useRef();
-  const postBody = useRef();
-  const reactions = useRef();
-  const tags = useRef();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-  return (
-    <div>
-      <form className="create-post" onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className=" p-1 htmlForm-label">
-            User Id
-          </label>
-          <input
-            type="email"
-            ref={userId}
-            className="htmlForm-control w-100"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="User id"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className=" p-1 htmlForm-label">
-            Post Title
-          </label>
-          <input
-            ref={postTitle}
-            type="email"
-            className="htmlForm-control w-100"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="How are you feeling today!"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className=" p-1 htmlForm-label">
-            Post Cotent
-          </label>
-          <textarea
-            ref={postBody}
-            type="email"
-            rows="4"
-            className="htmlForm-control w-100"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="Describe"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className=" p-1 htmlForm-label">
-            Reactions
-          </label>
-          <input
-            ref={reactions}
-            type="number"
-            className="htmlForm-control w-100"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="Number of Reactions"
-          />
-        </div>
+import { useContext, useRef } from "react";
+import { PostList } from "../store/post-list-store";
 
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className=" p-1 htmlForm-label">
-            Tags
-          </label>
-          <input
-            ref={tags}
-            type="email"
-            className="htmlForm-control w-100"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="Enter your tags here"
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Post
-        </button>
-      </form>
-    </div>
+const CreatePost = () => {
+  const { addPost } = useContext(PostList);
+
+  const userIdElement = useRef();
+  const postTitleElement = useRef();
+  const postBodyElement = useRef();
+  const reactionsElement = useRef();
+  const tagsElement = useRef();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const userId = userIdElement.current.value;
+    const postTitle = postTitleElement.current.value;
+    const postBody = postBodyElement.current.value;
+    const reactions = reactionsElement.current.value;
+    const tags = tagsElement.current.value.split(" ");
+
+    // userIdElement.current.value = "";
+    // postTitleElement.current.value = "";
+    // postBodyElement.current.value = "";
+    // reactionsElement.current.value = "";
+    // tagsElement.current.value = "";
+    fetch("https://dummyjson.com/posts/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: postTitle,
+        body: postBody,
+        reactions: reactions,
+        userId: userId,
+        tags: tags,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => addPost(res));
+  };
+
+  return (
+    <form className="create-post" onSubmit={handleSubmit}>
+      <div className="mb-3">
+        <label htmlFor="userId" className="form-label">
+          Enter your User Id here
+        </label>
+        <input
+          type="number"
+          ref={userIdElement}
+          className="form-control"
+          id="userId"
+          placeholder="Your User Id"
+        />
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="title" className="form-label">
+          Post Title
+        </label>
+        <input
+          type="text"
+          ref={postTitleElement}
+          className="form-control"
+          id="title"
+          placeholder="How are you feeling today..."
+        />
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="body" className="form-label">
+          Post Content
+        </label>
+        <textarea
+          type="text"
+          ref={postBodyElement}
+          rows="4"
+          className="form-control"
+          id="body"
+          placeholder="Tell us more about it"
+        />
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="reactions" className="form-label">
+          Number of reactions
+        </label>
+        <input
+          type="text"
+          ref={reactionsElement}
+          className="form-control"
+          id="reactions"
+          placeholder="How many people reacted to this post"
+        />
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="tags" className="form-label">
+          Enter your hashtags here
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="tags"
+          ref={tagsElement}
+          placeholder="Please enter tags using space"
+        />
+      </div>
+
+      <button type="submit" className="btn btn-primary">
+        Post
+      </button>
+    </form>
   );
-}
+};
+
+export default CreatePost;

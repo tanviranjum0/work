@@ -12,7 +12,7 @@ const App = () => {
   const dispatch = useDispatch();
   return (
     <div>
-      <div className="h2">This is Redux Course</div>
+      <div className="h2 text-center">This is Redux Course</div>
       <hr />
       <Navbar> </Navbar>
       <div> current value :{count}</div>

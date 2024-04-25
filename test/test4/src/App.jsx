@@ -1,42 +1,30 @@
-import { useSelector, useDispatch } from "react-redux";
-import { increment, decrement, multiply, division } from "./redux/counterSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment } from "./features/counters/counterSlice";
+
 const App = () => {
-  const count = useSelector((state) => state.counter.value);
+  const counter = useSelector((state) => state.counters);
   const dispatch = useDispatch();
+  const handleIncrement = () => {
+    dispatch(increment());
+  };
+  const handleDecrement = () => {
+    dispatch(decrement());
+  };
   return (
-    <div className="text-center container border w-50">
-      <div className="h2">Basic calculator using Redux</div>
-      <input
-        type="text"
-        disabled
-        className="w-75 text-center display"
-        value={count}
-      />
-      <div className="buttons">
-        <div
-          onClick={() => dispatch(increment())}
-          className="btn btn-primary m-2 w-45"
-        >
-          Increment +{" "}
-        </div>
-        <div
-          onClick={() => dispatch(decrement())}
-          className="btn btn-primary m-2 w-45 "
-        >
-          Decrement -{" "}
-        </div>
-        <div
-          onClick={() => dispatch(multiply(5))}
-          className="btn btn-primary m-2 w-45 "
-        >
-          Multiply *{" "}
-        </div>
-        <div
-          onClick={() => dispatch(division(5))}
-          className="btn btn-primary m-2 w-45 "
-        >
-          Division /{" "}
-        </div>
+    <div className="shadow-lg h3 text-center fw-bold mt-5">
+      <div className="h2">{counter}</div>
+      <div onClick={handleIncrement} className="btn btn-warning m-2">
+        Increment
+      </div>
+      <div onClick={handleDecrement} className="btn btn-warning m-2">
+        Decrement
+      </div>
+      <div className="h2">{counter}</div>
+      <div onClick={handleIncrement} className="btn btn-warning m-2">
+        Increment
+      </div>
+      <div onClick={handleDecrement} className="btn btn-warning m-2">
+        Decrement
       </div>
     </div>
   );

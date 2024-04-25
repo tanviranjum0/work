@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* .btn{
+  @apply mx-10 my-10 inline-block ring ring-green-500 bg-green-400 ring-offset-2 rounded-full p-3 hover:bg-red-900 hover:transition-colors
+} */
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -17,17 +20,19 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+ background: #d88ebfe3;
 }
+/* @layer base{
+h1{
+    @apply font-bold
+} 
 
+ } */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+.rounded{
+  border-radius: 20%  !important;
 }

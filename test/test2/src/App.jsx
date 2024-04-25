@@ -1,17 +1,35 @@
-import useCounter from "./useCounter";
-import Counter2 from "./Counter2";
+import { useReducer } from "react";
+
 const App = () => {
-  const [count, increment, decrement] = useCounter();
+  function reducer(state, action) {
+    if (action.type === "inc") {
+      return {
+        // ...state,
+        count: state.count + 1,
+      };
+    } else if (action.type === "dec") {
+      return {
+        // ...state,
+        count: state.count - 1,
+      };
+    }
+  }
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
   return (
     <div className="text-center">
-      <div className="h3">{count} </div>
-      <button onClick={() => increment()} className="btn btn-info">
-        Increment
+      <div className="h2">{state.count}</div>
+      <button
+        onClick={() => dispatch({ type: "inc" })}
+        className="btn btn-primary"
+      >
+        INC
       </button>
-      <button onClick={() => decrement()} className="btn btn-info">
-        Decrement
+      <button
+        onClick={() => dispatch({ type: "dec" })}
+        className="btn btn-primary"
+      >
+        DEC
       </button>
-      <Counter2 />
     </div>
   );
 };
