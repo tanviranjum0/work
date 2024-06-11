@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base{
+
+  h1{
+      @apply font-extrabold
+
+  }
+}
+.button{
+  @apply p-4 m-3 bg-red-300 hover:bg-green-300
+}

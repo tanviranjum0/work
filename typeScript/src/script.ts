@@ -107,6 +107,7 @@
 //   let width = options.width;
 //   let length = options.length;
 // }
+
 // let a = { width: 30, length: 20 };
 // drawRectangle(a);
 // import { Player } from "./interfaces/player.js";
