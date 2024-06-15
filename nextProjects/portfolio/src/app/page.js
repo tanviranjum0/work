@@ -1,34 +1,17 @@
-import NavLink from "./components/NavLink";
-const navLinks = [
-  {
-    title: "Home",
-    path: "#home",
-  },
-  {
-    title: "About",
-    path: "#about",
-  },
-  {
-    title: "Projects",
-    path: "#projects",
-  },
-  {
-    title: "Contact",
-    path: "#contact",
-  },
-];
+import HeroSection from "./components/HeroSection";
+import About from "./components/About";
+import Footer from "./components/Footer";
+// import MenuOverlay from "./components/MenuOverlay";
+import Navbar from "./components/Navbar";
+
 const page = () => {
   return (
-    <div className="grid grid=cols-6 ">
-      <h2 className="font-bold text-4xl p-3 ">Logo</h2>
-      <div className="flex ">
-        {" "}
-        {navLinks.map((link, index) => (
-          <li key={index} style={{ listStyle: "none" }}>
-            <NavLink href={link.path} title={link.title} />
-          </li>
-        ))}
-      </div>
+    <div className="bg-[#d7f7f5] dark:text-white  dark:bg-[#263859]">
+      <Navbar />
+      <HeroSection />
+      <About />
+      <Footer />
+      {/* <MenuOverlay /> */}
     </div>
   );
 };
