@@ -55,7 +55,7 @@ router.get("/:id", async (req, res) => {
       error: "There was a Error",
     });
   }
-  res.send(data);
+  // res.send(data);
 });
 //post todo
 router.post("/", checkLogin, async (req, res) => {

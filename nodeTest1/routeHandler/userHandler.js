@@ -5,7 +5,9 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const userSchema = require("../schemas/userSchema");
 const User = new mongoose.model("User", userSchema);
+
 //Get all the users
+
 router.post("/signup", async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -20,7 +22,9 @@ router.post("/signup", async (req, res) => {
     console.log("Failed");
   }
 });
+
 //login route
+
 router.post("/login", async (req, res) => {
   try {
     const user = await User.find({ username: req.body.username });
