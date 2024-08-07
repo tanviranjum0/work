@@ -21,7 +21,7 @@ const Gestures = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95, rotate: "2.5deg" }}
-          className="example-button"
+          className="px-3 py-2 bg-slate-400"
         >
           Click me!
         </motion.button>
@@ -29,7 +29,7 @@ const Gestures = () => {
           whileHover={{ scale: 1.15 }}
           whileTap={{ scale: 0.85, rotate: "-2.5deg" }}
           style={{ backgroundColor: "red" }}
-          className="example-button"
+          className="px-3 py-2"
         >
           Click me!
         </motion.button>

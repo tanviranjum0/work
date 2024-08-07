@@ -146,7 +146,7 @@ const ScrollAnimations = () => {
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsum.
         </p>
-        <div
+        {/* <div
           style={{
             width: "50px",
             height: "50px",
@@ -162,7 +162,7 @@ const ScrollAnimations = () => {
           }}
         >
           {scaleX.current.toFixed(2) * 100}%
-        </div>
+        </div> */}
         <p>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industrys standard dummy text ever
