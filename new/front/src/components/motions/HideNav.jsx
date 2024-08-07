@@ -1,25 +1,10 @@
-import { useEffect, useState } from "react";
-import Hero from "../compos/Hero";
-import Nav from "../compos/Nav";
+import { useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 
-const HideNav = () => {
-  return (
-    <div>
-      <Navigation />
-      <Hero />
-    </div>
-  );
-};
-
-export default HideNav;
-const Navigation = () => {
+const HideNav = ({ children }) => {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
-  useEffect(() => {
-    const unsub = scrollY.on("change", (latest) => console.log(latest));
-    return () => unsub();
-  }, [scrollY]);
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious();
 
@@ -42,12 +27,13 @@ const Navigation = () => {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{
-        duration: 0.35,
+        duration: 0.25,
         ease: "easeInOut",
       }}
       className="sticky top-0 flex items-center justify-center"
     >
-      <Nav />
+      {children}
     </motion.div>
   );
 };
+export default HideNav;
