@@ -30,7 +30,7 @@ const HideNav = ({ children }) => {
         duration: 0.25,
         ease: "easeInOut",
       }}
-      className="sticky top-0 flex items-center justify-center"
+      className="sticky top-0 flex z-50 items-center justify-center"
     >
       {children}
     </motion.div>

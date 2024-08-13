@@ -1,19 +1,78 @@
-import React from "react";
+// import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import Navbar from "./components/moleculas/Navbar";
+import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
-const App = () => {
-  return (
-    <div>
-      <Home />
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+// const App = () => {
+//   return (
+//     <div>
+//       <Navbar />
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/about" element={<About />} />
+//         <Route path="/contact" element={<Contact />} />
+//       </Routes>
+//     </div>
+//   );
+// };
 
-      {/* <BrowserRouter>
+// export default App;
+
+import { motion, AnimatePresence } from "framer-motion";
+
+import { useLocation } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import NewTicket from "./pages/NewTicket";
+import Ticket from "./pages/Ticket";
+import Tickets from "./pages/Tickets";
+import Login from "./pages/Login";
+function App() {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="popLayout">
+      <motion.div
+        key={location.pathname}
+        initial="initialState"
+        animate="animateState"
+        exit="exitState"
+        transition={{
+          duration: 0.75,
+          type: "tween",
+        }}
+        variants={{
+          initialState: {
+            opacity: 0,
+            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
+          },
+          animateState: {
+            opacity: 1,
+            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
+          },
+
+          exitState: {
+            opacity: 0,
+            clipPath: "polygon(50% 0, 50% 0, 50% 100%, 50% 100%)",
+          },
+        }}
+        className="w-full"
+      >
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/tickets" element={<Tickets />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/new-ticket" element={<NewTicket />} />
+          <Route path="/ticket/:ticketId" element={<Ticket />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
-      </BrowserRouter> */}
-    </div>
+      </motion.div>
+    </AnimatePresence>
   );
-};
+}
 
 export default App;

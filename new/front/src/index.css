@@ -2,12 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-
+.active{
+  border-bottom: 2px solid black;
+}
 .main-bg{
   background: url("./assets/concert.png");
   background-size: cover ;
   background-repeat: no-repeat;
-  min-height: 100vh;
-opacity: .95;
+  opacity: .95;
 }
+
+.about-bg{
+  background: url("./assets/concert2.jpg");
+  background-size: cover ;
+  background-repeat: no-repeat;
+  opacity: .95;
+}
+
+.contact-bg{
+  background: url("./assets/contactbg.png");
+  background-size: cover ;
+  background-repeat: no-repeat;
+  opacity: .95;
+}
+
+.dashboard-bg{
+  background: url("./assets/concert4.png");
+  background-size: cover ;
+  background-repeat: no-repeat;
+  opacity: .95;
+}
+.new-bg{
+  background: url("./assets/new-ticket.png");
+  background-size: cover ;
+  background-repeat: no-repeat;
+  opacity: .95;
+}
+
+
+
 
