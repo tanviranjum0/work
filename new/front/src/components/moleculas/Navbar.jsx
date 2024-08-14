@@ -15,7 +15,7 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import classNames from "classnames";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 let navigation = [
   { name: "Home", href: "/", current: true },
   { name: "About", href: "/about", current: false },
@@ -24,7 +24,7 @@ let navigation = [
 
 const Navbar = () => {
   return (
-    <HideNav>
+    <HideNav key="mainnav">
       <Disclosure as="nav" className="bg-gray-800  w-full">
         <div className="mx-auto w-full px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-center">
@@ -73,9 +73,6 @@ const Navbar = () => {
                           ? " bg-gray-700 text-white opacity-80 rounded-md px-3 py-2 text-sm font-medium"
                           : "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                       }
-
-                      // className="text-gray-300 hover:bg-gray-700 hover:text-white
-                      //   rounded-md px-3 py-2 text-sm font-medium"
                     >
                       {item.name}
                     </NavLink>
@@ -115,17 +112,29 @@ const Navbar = () => {
                     </NavLink>
                   </MenuItem>
                   <MenuItem>
-                    <NavLink
-                      to="/signout"
-                      // className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                      className={({ isActive }) =>
-                        isActive
-                          ? " block px-4 py-2 text-sm text-white data-[focus]:bg-gray-100 bg-slate-500"
-                          : "block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                      }
-                    >
-                      Sign out
-                    </NavLink>
+                    {localStorage.getItem("auth") ? (
+                      <NavLink
+                        to="/signout"
+                        className={({ isActive }) =>
+                          isActive
+                            ? " block px-4 py-2 text-sm text-white data-[focus]:bg-gray-100 bg-slate-500"
+                            : "block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                        }
+                      >
+                        Sign Out
+                      </NavLink>
+                    ) : (
+                      <NavLink
+                        to="/login"
+                        className={({ isActive }) =>
+                          isActive
+                            ? " block px-4 py-2 text-sm text-white data-[focus]:bg-gray-100 bg-slate-500"
+                            : "block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                        }
+                      >
+                        Login
+                      </NavLink>
+                    )}
                   </MenuItem>
                 </MenuItems>
               </Menu>

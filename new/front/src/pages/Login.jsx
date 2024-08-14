@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../components/moleculas/Footer";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();
   const handleSubmit = () => {
@@ -12,13 +12,16 @@ function Login() {
     Mutation.mutate({ email, password });
   };
   const loginHandler = (p) => {
-    const res = fetch("http://localhost:3000/api/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(p),
-    });
+    const res = fetch(
+      "https://ticket-back-production.up.railway.app/api/users/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(p),
+      }
+    );
     return res;
   };
 
@@ -36,6 +39,7 @@ function Login() {
           localStorage.setItem("auth", `Bearer ${e.token}`);
           toast.success("Logging in successfully");
           navigate("/");
+          window.location.reload();
         }
       });
     },
@@ -109,10 +113,7 @@ function Login() {
 
               <Field as="div" className="flex gap-x-4 ">
                 <Label className="text-sm leading-6 text-gray-300">
-                  By continuing this, you agree to our{" "}
-                  <a href="#" className="font-semibold text-indigo-600">
-                    privacy&nbsp;policy
-                  </a>
+                  Don't Have An Account? <Link to="/signup">Sign Up</Link>
                 </Label>
               </Field>
             </div>

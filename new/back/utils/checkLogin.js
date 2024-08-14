@@ -22,10 +22,8 @@ const checkLogin = async (req, res, next) => {
       console.log(error);
       res.status(401).json({ error: "Not authorized2" });
     }
-  }
-
-  if (!token) {
-    res.status(401).json({ error: "Not authorized3" });
+  } else {
+    res.status(402).json({ message: "Authorization Failed" });
   }
 };
 

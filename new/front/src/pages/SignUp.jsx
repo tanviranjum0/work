@@ -16,13 +16,16 @@ export default function SignUp() {
     Mutation.mutate({ email, password, name });
   };
   const signUpHandler = (i) => {
-    const res = fetch("http://localhost:3000/api/users/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(i),
-    });
+    const res = fetch(
+      "https://ticket-back-production.up.railway.app/api/users/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(i),
+      }
+    );
     return res;
   };
   const Mutation = useMutation({

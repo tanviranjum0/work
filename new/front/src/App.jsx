@@ -1,35 +1,18 @@
 // import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/moleculas/Navbar";
 import SignUp from "./pages/SignUp";
+import Signout from "./pages/Signout";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-// const App = () => {
-//   return (
-//     <div>
-//       <Navbar />
-//       <Routes>
-//         <Route path="/" element={<Home />} />
-//         <Route path="/about" element={<About />} />
-//         <Route path="/contact" element={<Contact />} />
-//       </Routes>
-//     </div>
-//   );
-// };
-
-// export default App;
-
 import { motion, AnimatePresence } from "framer-motion";
-
-import { useLocation } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import NewTicket from "./pages/NewTicket";
 import Ticket from "./pages/Ticket";
 import Tickets from "./pages/Tickets";
 import Login from "./pages/Login";
 function App() {
-  const location = useLocation();
   return (
     <AnimatePresence mode="popLayout">
       <motion.div
@@ -65,6 +48,7 @@ function App() {
           <Route path="/tickets" element={<Tickets />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signout" element={<Signout />} />
           <Route path="/new-ticket" element={<NewTicket />} />
           <Route path="/ticket/:ticketId" element={<Ticket />} />
           <Route path="/dashboard" element={<Dashboard />} />

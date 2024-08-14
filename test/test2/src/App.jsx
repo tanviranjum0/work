@@ -1,37 +1,23 @@
-import { useReducer } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import React from "react";
+import Login from "./components/Login";
+import LogOut from "./components/LogOut";
+const Profile = () => {
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
-const App = () => {
-  function reducer(state, action) {
-    if (action.type === "inc") {
-      return {
-        // ...state,
-        count: state.count + 1,
-      };
-    } else if (action.type === "dec") {
-      return {
-        // ...state,
-        count: state.count - 1,
-      };
-    }
+  if (isLoading) {
+    return <div>Loading ...</div>;
   }
-  const [state, dispatch] = useReducer(reducer, { count: 0 });
+
   return (
-    <div className="text-center">
-      <div className="h2">{state.count}</div>
-      <button
-        onClick={() => dispatch({ type: "inc" })}
-        className="btn btn-primary"
-      >
-        INC
-      </button>
-      <button
-        onClick={() => dispatch({ type: "dec" })}
-        className="btn btn-primary"
-      >
-        DEC
-      </button>
+    <div>
+      {/* <img src={user.picture} alt={user.name} />
+      <h2>{user.name}</h2>
+      <p>{user.email}</p> */}
+      <Login />
+      <LogOut />
     </div>
   );
 };
 
-export default App;
+export default Profile;

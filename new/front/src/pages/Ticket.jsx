@@ -25,14 +25,17 @@ function Ticket() {
   };
 
   const newNote = (data) => {
-    const res = fetch(`http://localhost:3000/api/tickets/notes/${ticketId}`, {
-      method: "POST",
-      headers: {
-        authorization: `${localStorage.getItem("auth")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const res = fetch(
+      `https://ticket-back-production.up.railway.app/api/tickets/notes/${ticketId}`,
+      {
+        method: "POST",
+        headers: {
+          authorization: `${localStorage.getItem("auth")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
     return res;
   };
 
@@ -54,26 +57,32 @@ function Ticket() {
     },
   });
   const handleDelete = (id) => {
-    const del = fetch(`http://localhost:3000/api/tickets/notes/${ticketId}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `${localStorage.getItem("auth")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id }),
-    }).then((res) => {
+    const del = fetch(
+      `https://ticket-back-production.up.railway.app/api/tickets/notes/${ticketId}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `${localStorage.getItem("auth")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      }
+    ).then((res) => {
       res.json();
       queryClient.invalidateQueries({ queryKey: ["note"] });
       toast.success("Note deleted successfully");
     });
   };
   const handleClose = () => {
-    fetch(`http://localhost:3000/api/tickets/${ticketId}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `${localStorage.getItem("auth")}`,
-      },
-    }).then((res) => {
+    fetch(
+      `https://ticket-back-production.up.railway.app/api/tickets/${ticketId}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `${localStorage.getItem("auth")}`,
+        },
+      }
+    ).then((res) => {
       queryClient.invalidateQueries({ queryKey: ["note", "ticket"] });
       toast.success("Ticket closed successfully");
       navigate("/tickets");
@@ -82,13 +91,16 @@ function Ticket() {
   const { data: ticketData, isFetching } = useQuery({
     queryKey: ["ticket"],
     queryFn: () => {
-      return fetch(`http://localhost:3000/api/tickets/${ticketId}`, {
-        method: "GET",
-        headers: {
-          authorization: `${localStorage.getItem("auth")}`,
-          "Content-Type": "application/json",
-        },
-      }).then((res) => res.json());
+      return fetch(
+        `https://ticket-back-production.up.railway.app/api/tickets/${ticketId}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: `${localStorage.getItem("auth")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      ).then((res) => res.json());
     },
 
     refetchOnWindowFocus: false,
@@ -96,13 +108,16 @@ function Ticket() {
   const { data: noteData, isPending } = useQuery({
     queryKey: ["note"],
     queryFn: () => {
-      return fetch(`http://localhost:3000/api/tickets/notes/${ticketId}`, {
-        method: "GET",
-        headers: {
-          authorization: `${localStorage.getItem("auth")}`,
-          "Content-Type": "application/json",
-        },
-      }).then((res) => res.json());
+      return fetch(
+        `https://ticket-back-production.up.railway.app/api/tickets/notes/${ticketId}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: `${localStorage.getItem("auth")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      ).then((res) => res.json());
     },
 
     refetchOnWindowFocus: false,

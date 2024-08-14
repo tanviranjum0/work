@@ -18,7 +18,7 @@ const NewTicket = () => {
 
   const newTicket = (data) => {
     return () =>
-      fetch("http://localhost:3000/api/tickets", {
+      fetch("https://ticket-back-production.up.railway.app/api/tickets", {
         method: "POST",
         headers: {
           authorization: `${localStorage.getItem("auth")}`,

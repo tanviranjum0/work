@@ -43,7 +43,14 @@ const login = async (req, res) => {
 };
 
 const logOut = async (req, res) => {
-  res.clearCookie("token").json({ message: "Logged out successfully" });
+  const { password } = req.body;
+  const user = await User.findOne(req.user._id);
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(401).json({ message: "Invalid credentials" });
+  } else {
+    res.json({ message: "Logout Successful" });
+  }
 };
 const getMe = async (req, res) => {
   try {
