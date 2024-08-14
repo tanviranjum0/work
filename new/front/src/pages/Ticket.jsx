@@ -13,7 +13,6 @@ import { motion } from "framer-motion";
 function Ticket() {
   const navigate = useNavigate();
   const [noteOpen, setNoteOpen] = useState(false);
-  const [noteText, setNoteText] = useState("");
 
   const queryClient = useQueryClient();
   const { ticketId } = useParams();

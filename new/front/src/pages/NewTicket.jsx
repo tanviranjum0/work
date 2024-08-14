@@ -17,15 +17,21 @@ const NewTicket = () => {
   };
 
   const newTicket = (data) => {
-    return () =>
-      fetch("https://ticket-back-production.up.railway.app/api/tickets", {
-        method: "POST",
-        headers: {
-          authorization: `${localStorage.getItem("auth")}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+    if (localStorage.getItem("auth")) {
+      return fetch(
+        "https://ticket-back-production.up.railway.app/api/tickets",
+        {
+          method: "POST",
+          headers: {
+            authorization: `${localStorage.getItem("auth")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+    } else {
+      return "Please login first";
+    }
   };
 
   const Mutation = useMutation({
@@ -34,6 +40,9 @@ const NewTicket = () => {
       data.json().then((e) => {
         if (e.message == "Please add a seating and description") {
           toast.error("Please add a seating and description");
+        } else if (e == "Please login first") {
+          toast.error("Please login first");
+          navigate("/signin");
         } else {
           queryClient.invalidateQueries(["ticket"]);
           toast.success("Ticket created successfully");
