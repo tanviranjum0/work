@@ -29,14 +29,13 @@ function SignOut() {
       }
     );
     const data = await res.json();
-
+    // localStorage.removeItem("auth");
     if (data.message == "Invalid credentials") {
       toast.error("Invalid credentials, Please try again");
       navigate("/signout");
     } else if (data.message == "Logout Successful") {
       localStorage.removeItem("auth");
       toast.success("Log Out Successful");
-
       navigate("/");
       window.location.reload();
     } else if (data.message == "Authorization Failed") {

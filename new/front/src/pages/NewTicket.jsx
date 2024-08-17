@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Footer from "../components/moleculas/Footer";
 import { useNavigate } from "react-router-dom";
-import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
+import Loader from "../components/Loader/Loader";
 const NewTicket = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -11,38 +13,54 @@ const NewTicket = () => {
     payment: "",
     description: "",
   });
+  useEffect(() => {
+    if (localStorage.getItem("auth") == null) {
+      toast.error("Please login first");
+      navigate("/login");
+    }
+  }, []);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const newTicket = (data) => {
-    if (localStorage.getItem("auth")) {
+  const { data: userData, isFetching } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => {
       return fetch(
-        "https://ticket-back-production.up.railway.app/api/tickets",
+        "https://ticket-back-production.up.railway.app/api/users/me",
         {
-          method: "POST",
+          method: "GET",
           headers: {
             authorization: `${localStorage.getItem("auth")}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
         }
-      );
-    } else {
-      return "Please login first";
-    }
+      ).then((res) => res.json());
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  if (isFetching) return <Loader />;
+
+  const newTicket = () => {
+    const seating = document.getElementById("seating").value;
+    const payment = document.getElementById("payment").value;
+    const description = document.getElementById("description").value;
+    setFormData({ seating, payment, description });
+    return fetch("https://ticket-back-production.up.railway.app/api/tickets", {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        authorization: `${localStorage.getItem("auth")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
   };
 
   const Mutation = useMutation({
-    mutationFn: newTicket(formData),
+    mutationFn: newTicket(),
     onSuccess: (data) => {
       data.json().then((e) => {
         if (e.message == "Please add a seating and description") {
           toast.error("Please add a seating and description");
-        } else if (e == "Please login first") {
-          toast.error("Please login first");
-          navigate("/signin");
         } else {
           queryClient.invalidateQueries(["ticket"]);
           toast.success("Ticket created successfully");
@@ -70,6 +88,7 @@ const NewTicket = () => {
           </label>
           <input
             type="text"
+            value={userData.name}
             className="w-full px-4 py-2 border rounded-md"
             disabled
           />
@@ -78,6 +97,7 @@ const NewTicket = () => {
           </label>
           <input
             type="text"
+            value={userData.email}
             className="w-full px-4 py-2 border rounded-md"
             disabled
           />
@@ -88,7 +108,6 @@ const NewTicket = () => {
             className="w-full px-4 py-2 mt-1 border rounded-md"
             name="seating"
             id="seating"
-            onChange={handleChange}
           >
             <option value="Platinum">Platinum</option>
             <option value="Gold">Gold</option>
@@ -102,7 +121,6 @@ const NewTicket = () => {
             className="w-full px-4 py-2 mt-1 border rounded-md"
             name="payment"
             id="payment"
-            onChange={handleChange}
           >
             <option value="Visa">Visa</option>
             <option value="Mastercard">Master Card</option>
@@ -115,7 +133,6 @@ const NewTicket = () => {
             id="description"
             name="description"
             rows={4}
-            onChange={handleChange}
             className="mt-3 p-5 w-full block bg-slate-200 h-32 rounded-md"
           ></textarea>
           <button

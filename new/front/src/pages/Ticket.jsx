@@ -12,18 +12,22 @@ import { motion } from "framer-motion";
 
 function Ticket() {
   const navigate = useNavigate();
+  const [load, setLoad] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
 
   const queryClient = useQueryClient();
   const { ticketId } = useParams();
 
   const handleNoteSubmit = () => {
+    setLoad(true);
     const text = document.getElementById("noteText").value;
     Mutation.mutate({ text });
     setNoteOpen(!noteOpen);
+    setLoad(false);
   };
 
   const newNote = (data) => {
+    setLoad(true);
     const res = fetch(
       `https://ticket-back-production.up.railway.app/api/tickets/notes/${ticketId}`,
       {
@@ -35,6 +39,7 @@ function Ticket() {
         body: JSON.stringify(data),
       }
     );
+    setLoad(false);
     return res;
   };
 
@@ -56,6 +61,7 @@ function Ticket() {
     },
   });
   const handleDelete = (id) => {
+    setLoad(true);
     const del = fetch(
       `https://ticket-back-production.up.railway.app/api/tickets/notes/${ticketId}`,
       {
@@ -69,10 +75,12 @@ function Ticket() {
     ).then((res) => {
       res.json();
       queryClient.invalidateQueries({ queryKey: ["note"] });
+      setLoad(false);
       toast.success("Note deleted successfully");
     });
   };
   const handleClose = () => {
+    setLoad(true);
     fetch(
       `https://ticket-back-production.up.railway.app/api/tickets/${ticketId}`,
       {
@@ -85,6 +93,7 @@ function Ticket() {
       queryClient.invalidateQueries({ queryKey: ["note", "ticket"] });
       toast.success("Ticket closed successfully");
       navigate("/tickets");
+      setLoad(false);
     });
   };
   const { data: ticketData, isFetching } = useQuery({
@@ -123,6 +132,7 @@ function Ticket() {
   });
   if (isFetching) return <Loader />;
   if (isPending) return <Loader />;
+  if (load) return <Loader />;
   return (
     <>
       <div className="w-[80%]  mx-auto text-start pt-5 my-20 text-primary">
@@ -216,7 +226,6 @@ function Ticket() {
                   id="noteText"
                   className="w-full h-full p-5 bg-slate-300"
                   placeholder="Note text"
-                  onChange={(e) => setNoteText(e.target.value)}
                 ></textarea>
               </div>
               <button
