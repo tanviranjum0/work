@@ -1,7 +1,7 @@
 import React from "react";
 
 const Foot1 = () => {
-  const handleMouseEnter = async (e) => {
+  const handleMouseEnter = (e) => {
     e.target.setAttribute("stroke", "red");
   };
   const handleMouseLeave = (e) => {
