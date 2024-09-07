@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.main-bg{
+  background-image: url('./images/main-bg.webp');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.banner-bg{
+  background-image: url('../public//banner.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+input[type=radio]:checked + label:before{
+  background-color: rgb(55, 55, 140);
+}
+input[type=radio] + label:before{
+  height:18px;
+  width:18px;
+  border-radius: 100%;
+  padding-right: 5px;
+  border: 2px solid black;
+  margin-right: 2px;
+  content: " ";
+  display:inline-block;
+  vertical-align: baseline;
+}
