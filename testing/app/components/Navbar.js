@@ -2,26 +2,31 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import logo from "../../public/logo2.png";
+import Link from "next/link";
 const Navbar = () => {
   return (
     <div className="flex ">
       <motion.div
+        key={"mainnavbar"}
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{
-          duraion: 1,
-          type: "tween",
+          duraion: 2,
+          ease: "easeInOut",
+          type: "spring",
+          stiffness: 50,
         }}
         className="flex pt-10 select-none"
       >
-        <div className="h-10 ml-10">
+        <Link href={"/"} className="h-10 w-auto ml-10">
           <Image
             src={logo}
             width={100}
             height={100}
+            className="h-auto w-auto"
             alt="Picture of the author"
           />
-        </div>
+        </Link>
         <div className="text-2xl mt-4 italic ml-[-8px]">MoveSeeks</div>
       </motion.div>
       <motion.button

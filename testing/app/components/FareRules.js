@@ -1,6 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
+import { useContext } from "react";
+import { StoreContext } from "../context/StoreContextMain";
+
 const FareRules = ({ details, setDetails }) => {
+  // const { details, setDetails } = useContext(StoreContext);
   return (
     <div className="flex mt-5 flex-col">
       <div className="flex my-3 justify-center items-center cursor-pointer">
@@ -31,6 +35,7 @@ const FareRules = ({ details, setDetails }) => {
         </div>
       </div>
       <motion.div
+        key={"farerulesmain"}
         initial={{
           y: -100,
         }}

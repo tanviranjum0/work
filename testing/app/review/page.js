@@ -301,7 +301,7 @@ const page = () => {
                     </option>
                     <option value="Cook Islands">Cook Islands</option>
                     <option value="Costa Rica">Costa Rica</option>
-                    <option value="Cota D'Ivoire">Cote d'Ivoire</option>
+                    <option value="Cota D'Ivoire">Cote d&apos;Ivoire</option>
                     <option value="Croatia">Croatia (Hrvatska)</option>
                     <option value="Cuba">Cuba</option>
                     <option value="Cyprus">Cyprus</option>
@@ -375,13 +375,13 @@ const page = () => {
                     <option value="Kenya">Kenya</option>
                     <option value="Kiribati">Kiribati</option>
                     <option value="Democratic People's Republic of Korea">
-                      Korea, Democratic People's Republic of
+                      Korea, Democratic People&apos;s Republic of
                     </option>
                     <option value="Korea">Korea, Republic of</option>
                     <option value="Kuwait">Kuwait</option>
                     <option value="Kyrgyzstan">Kyrgyzstan</option>
                     <option value="Lao">
-                      Lao People's Democratic Republic
+                      Lao People&apos;s Democratic Republic
                     </option>
                     <option value="Latvia">Latvia</option>
                     <option value="Lebanon">Lebanon</option>

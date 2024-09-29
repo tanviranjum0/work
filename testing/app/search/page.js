@@ -7,7 +7,6 @@ const page = () => {
   return (
     <div>
       <div className="h-[90vh] main-bg text-sky-800">
-        {" "}
         <Navbar />
         <HomeSearch modify={true} />
       </div>

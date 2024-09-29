@@ -11,6 +11,7 @@ const page = () => {
         }}
       >
         <motion.span
+          key={"mainlader"}
           style={{
             opacity: 2,
             display: "block",

@@ -9,6 +9,7 @@ import { RiTwitterXFill } from "react-icons/ri";
 const Footer = () => {
   return (
     <motion.div
+      key={"mainfooter"}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.75, ease: "easeOut" }}
@@ -18,10 +19,11 @@ const Footer = () => {
         <div className="text-sky-800">
           <div className="flex scale-75 pb-5">
             {" "}
-            <div className="h-10 ">
+            <div className="h-10 w-auto">
               <Image
                 src={logo}
                 width={100}
+                className="h-auto w-auto"
                 height={100}
                 alt="Picture of the author"
               />
