@@ -197,11 +197,42 @@
 // };
 
 // export default page;
-
-import React from "react";
-
-const page = () => {
-  return <div>Hello</div>;
+"use client";
+import { useState } from "react";
+import Datepicker from "react-tailwindcss-datepicker";
+const START_FROM = new Date();
+START_FROM.setMonth(START_FROM.getMonth() + 1);
+const MIN_DATE = new Date();
+MIN_DATE.setDate(MIN_DATE.getDate() - 4);
+const App = () => {
+  const [value, setValue] = useState({
+    startDate: null,
+    endDate: null,
+  });
+  console.log(value.startDate?.toISOString().slice(0, 10));
+  console.log(value);
+  return (
+    <div className="flex justify-center items-center">
+      <input
+        type="date"
+        onChange={(e) => {
+          console.log(e.target.value);
+        }}
+        id="testingDate"
+      />
+      <div className="w-[10%] h-[10vw]">
+        <Datepicker
+          inputClassName="w-full bg-sky-400 h-24"
+          useRange={false}
+          minDate={MIN_DATE}
+          startFrom={START_FROM}
+          value={value}
+          asSingle={true}
+          onChange={(newValue) => setValue(newValue)}
+        />
+      </div>
+    </div>
+  );
 };
 
-export default page;
+export default App;

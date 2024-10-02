@@ -54,7 +54,9 @@ const Flight = ({ flight, searchFormData }) => {
               .toUTCString()
               .slice(0, 17)}
           </div>
-          <div className="text-lg">{searchFormData.fromOrigin.name}</div>
+          <div className="text-sm my-auto">
+            {searchFormData.fromOrigin.name}
+          </div>
         </div>
         <div className="p-2 mt-10 flex items-center justify-center flex-col">
           <div className="text-sm">
@@ -96,12 +98,15 @@ const Flight = ({ flight, searchFormData }) => {
               .toUTCString()
               .slice(0, 17)}
           </div>
-          <div className="text-lg">{searchFormData.toOrigin.name}</div>
+          <div className="text-sm my-auto">{searchFormData.toOrigin.name}</div>
         </div>
         <div className="p-2 mt-10">
           <div className="text-sm ">Price</div>
           <div className="text-xl pt-5">
             {flight.price.currency} {flight.price.total}
+          </div>
+          <div className="text-sm pt-3">
+            {flight.travelerPricings[0].fareDetailsBySegment[0].cabin} CLASS
           </div>
         </div>
         <div className="mt-5">

@@ -4,6 +4,16 @@ import { useRouter } from "next/navigation";
 export const StoreContext = createContext(null);
 const StoreContextMain = ({ children }) => {
   const router = useRouter();
+  const [cabinType, setCabinType] = useState("ECONOMY");
+  const [returnTrue, setReturnTrue] = useState(false);
+  const [flightDepartureDates, setFlightDepartureDates] = useState({
+    startDate: null,
+    endDate: null,
+  });
+  const [flightReturnDates, setflightReturnDates] = useState({
+    startDate: null,
+    endDate: null,
+  });
   const [searchFormData, setSearchFormData] = useState({
     fromOrigin: {
       name: "Search your location...",
@@ -28,6 +38,7 @@ const StoreContextMain = ({ children }) => {
     departureDay: "",
     returnDay: "",
   });
+  // console.log(dates);
 
   const days = [
     "Sunday",
@@ -44,6 +55,9 @@ const StoreContextMain = ({ children }) => {
   const [query, setQuery] = useState({
     fromInput: false,
     toInput: false,
+    departureDateInput: false,
+    returnDateInput: false,
+    travellersCount: false,
   });
 
   const handleDetails = () => {
@@ -55,9 +69,9 @@ const StoreContextMain = ({ children }) => {
     e.preventDefault();
     router.push("/search");
     setAvailableFlights();
-    const departureDate = document.getElementById(
-      "flightsearchdeparturedate"
-    ).value;
+    // const departureDate = document.getElementById(
+    //   "flightsearchdeparturedate"
+    // ).value;
     // const returnDate = document.getElementById("flightsearchreturndate").value;
     const adultnumber = document.getElementById(
       "flightsearchadultnumber"
@@ -65,12 +79,29 @@ const StoreContextMain = ({ children }) => {
 
     let url = new URLSearchParams();
 
+    if (returnTrue) {
+      if (flightReturnDates.startDate != null) {
+        url.set(
+          "returnDate",
+          flightReturnDates.startDate?.toISOString().slice(0, 10)
+        );
+      } else {
+        return alert("Please add a return date");
+      }
+    }
     url.set("originLocationCode", searchFormData.fromOrigin.iataCode);
     url.set("destinationLocationCode", searchFormData.toOrigin.iataCode);
-    url.set("departureDate", departureDate);
+    url.set(
+      "departureDate",
+      flightDepartureDates.startDate?.toISOString().slice(0, 10)
+    );
+    url.set("currencyCode", "USD");
     url.set("adults", adultnumber);
+    url.set("nonStop", true);
+    url.set("travelClass", cabinType);
     url.set("max", 10);
-
+    // console.log(departureDate);
+    // console.log(url.toString());
     const data = await fetch(
       `https://test.api.amadeus.com/v2/shopping/flight-offers?${url}`,
       {
@@ -80,6 +111,7 @@ const StoreContextMain = ({ children }) => {
       }
     );
     const result = await data.json();
+    console.log(result);
     setAvailableFlights(result);
   };
 
@@ -99,7 +131,7 @@ const StoreContextMain = ({ children }) => {
       );
 
       const lulu = await lala.json();
-
+      console.log(lulu);
       if (lulu.data[0] == undefined) {
         setSearchToLoader(false);
         setError("No search results found");
@@ -128,6 +160,7 @@ const StoreContextMain = ({ children }) => {
         }
       );
       const lulu = await lala.json();
+      console.log(lulu);
       if (lulu.data == undefined) {
         setError("No search results found");
         setSearchData([]);
@@ -171,12 +204,20 @@ const StoreContextMain = ({ children }) => {
     handleFlightSearch,
     searchData,
     setSearchData,
+    returnTrue,
+    setReturnTrue,
     searchFormData,
     setSearchFormData,
     handleSearchChangeToOrigin,
+    cabinType,
+    setCabinType,
     fromSearchLoader,
     setFromSearchLoader,
     query,
+    flightDepartureDates,
+    setFlightDepartureDates,
+    flightReturnDates,
+    setflightReturnDates,
     setQuery,
     error,
     days,

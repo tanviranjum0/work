@@ -8,13 +8,7 @@ import { motion } from "framer-motion";
 import { RiTwitterXFill } from "react-icons/ri";
 const Footer = () => {
   return (
-    <motion.div
-      key={"mainfooter"}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.75, ease: "easeOut" }}
-      className="mb-10 opacity-10"
-    >
+    <div className="mb-10 footer-animation">
       <div className="grid mb-10 pl-10 mt-10 w-[90vw] mx-auto gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <div className="text-sky-800">
           <div className="flex scale-75 pb-5">
@@ -167,7 +161,7 @@ const Footer = () => {
       <div className="col-span-12 text-center py-8 text-gray-600">
         Copyright @2024 Roksana. All rights reserved by MoveSeeks
       </div>
-    </motion.div>
+    </div>
   );
 };
 

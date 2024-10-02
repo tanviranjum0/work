@@ -2,6 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes left-nav-anim {
+ from {  transform: translateX(-50px);
+  opacity:0;
+}
+ to {  transform: translateX(0px);
+opacity: 1;
+}
+}
+@keyframes home-search-anim {
+ from {  transform: translateY(100px);
+  opacity:0;
+}
+ to {  transform: translateY(0px);
+opacity: 1;
+}
+}
+
+@keyframes right-nav-anim {
+ from {  transform: translateX(50px);
+  opacity:0;
+}
+ to {  transform: translateX(0px);
+opacity: 1;
+}
+}
+@keyframes footer-anim {
+ from {  
+  opacity:0;
+}
+ to { 
+opacity: 1;
+}
+}
+.navbar-left-animation{
+  animation-name: left-nav-anim;
+  animation-duration: 1s;
+}
+.footer-animation{
+  animation-name: footer-anim;
+  animation-duration: 1s;
+}
+.navbar-right-animation{
+  animation-name: right-nav-anim;
+  animation-duration: 1s;
+}
+.home-search-animation{
+  animation-name: home-search-anim;
+  animation-duration: 1s;
+}
+
 .main-bg{
   background-image: url('./images/main-bg.webp');
   background-position: center;
