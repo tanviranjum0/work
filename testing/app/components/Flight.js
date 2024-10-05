@@ -1,14 +1,15 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdOutlineArrowRightAlt } from "react-icons/md";
 import logo from "../../public/logo2.png";
 import FlightDetails from "./FlightDetails";
 import FareSummary from "./FareSummary";
 import FareRules from "./FareRules";
+import { StoreContext } from "../context/StoreContextMain";
 
 const Flight = ({ flight, searchFormData }) => {
-  // console.log(flight);
+  const { handleBookNowClick } = useContext(StoreContext);
   const [details, setDetails] = useState("");
   const [airlineName, setAirlineName] = useState();
   useEffect(() => {
@@ -25,7 +26,7 @@ const Flight = ({ flight, searchFormData }) => {
       setAirlineName(flightresult.data[0]?.businessName);
     };
     newFunc();
-  }, []);
+  }, [flight.validatingAirlineCodes]);
 
   return (
     <div className="my-5">
@@ -45,9 +46,9 @@ const Flight = ({ flight, searchFormData }) => {
           <div className="text-sm"> Depart</div>
           <div className="pt-2 text-lg">
             {" "}
-            {new Date(
-              flight.itineraries[0].segments[0].departure.at
-            ).toLocaleTimeString()}
+            {new Date(flight.itineraries[0].segments[0].departure.at)
+              .toLocaleTimeString()
+              .replace(":00", "")}
           </div>
           <div className="">
             {new Date(flight.itineraries[0].segments[0].departure.at)
@@ -70,7 +71,7 @@ const Flight = ({ flight, searchFormData }) => {
                 60000 /
                 60
             )}{" "}
-            hours{" "}
+            hour{" "}
             {((new Date(
               flight.itineraries[0].segments[0].arrival.at
             ).getTime() -
@@ -89,9 +90,9 @@ const Flight = ({ flight, searchFormData }) => {
         <div className="p-2 mt-10">
           <div className="text-sm"> Arrive</div>
           <div className="pt-2 text-lg">
-            {new Date(
-              flight.itineraries[0].segments[0].arrival.at
-            ).toLocaleTimeString()}
+            {new Date(flight.itineraries[0].segments[0].arrival.at)
+              .toLocaleTimeString()
+              .replace(":00", "")}
           </div>
           <div className="">
             {new Date(flight.itineraries[0].segments[0].arrival.at)
@@ -110,7 +111,12 @@ const Flight = ({ flight, searchFormData }) => {
           </div>
         </div>
         <div className="mt-5">
-          <button className="mt-5 text-center bg-sky-300 hover:bg-sky-800 hover:text-sky-200 px-5 py-3 rounded-md transition-all duration-200 active:scale-95">
+          <button
+            onClick={() => {
+              return handleBookNowClick(flight, airlineName);
+            }}
+            className="mt-5 text-center bg-sky-300 hover:bg-sky-800 hover:text-sky-200 px-5 py-3 rounded-md transition-all duration-200 active:scale-95"
+          >
             Book Now!
           </button>
         </div>

@@ -5,6 +5,7 @@ export const StoreContext = createContext(null);
 const StoreContextMain = ({ children }) => {
   const router = useRouter();
   const [cabinType, setCabinType] = useState("ECONOMY");
+  const [reviewFlight, setReviewFlight] = useState([]);
   const [returnTrue, setReturnTrue] = useState(false);
   const [flightDepartureDates, setFlightDepartureDates] = useState({
     startDate: null,
@@ -65,14 +66,18 @@ const StoreContextMain = ({ children }) => {
     baggage.classList.toggle("hidden");
   };
 
+  const handleBookNowClick = (flight, airlineName) => {
+    console.log("Flight", flight);
+    flight.airlineName = airlineName;
+    setReviewFlight([flight]);
+    router.push("/review");
+    // console.log("FlightState", reviewFlight);
+  };
+
   const handleFlightSearch = async (e) => {
     e.preventDefault();
     router.push("/search");
     setAvailableFlights();
-    // const departureDate = document.getElementById(
-    //   "flightsearchdeparturedate"
-    // ).value;
-    // const returnDate = document.getElementById("flightsearchreturndate").value;
     const adultnumber = document.getElementById(
       "flightsearchadultnumber"
     ).value;
@@ -100,8 +105,7 @@ const StoreContextMain = ({ children }) => {
     url.set("nonStop", true);
     url.set("travelClass", cabinType);
     url.set("max", 10);
-    // console.log(departureDate);
-    // console.log(url.toString());
+
     const data = await fetch(
       `https://test.api.amadeus.com/v2/shopping/flight-offers?${url}`,
       {
@@ -206,6 +210,8 @@ const StoreContextMain = ({ children }) => {
     setSearchData,
     returnTrue,
     setReturnTrue,
+    reviewFlight,
+    setReviewFlight,
     searchFormData,
     setSearchFormData,
     handleSearchChangeToOrigin,
@@ -222,6 +228,7 @@ const StoreContextMain = ({ children }) => {
     error,
     days,
     availableFlights,
+    handleBookNowClick,
     setAvailableFlights,
     setError,
     handleDetails,

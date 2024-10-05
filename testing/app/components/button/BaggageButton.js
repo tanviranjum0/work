@@ -1,8 +1,10 @@
 "use client";
 import BaggageDetails from "../BaggageDetails";
-import { handleDetails } from "../BaggageDetails";
-
+// import { handleDetails } from "../BaggageDetails";
+import { useContext } from "react";
+import { StoreContext } from "@/app/context/StoreContextMain";
 const BaggageButton = () => {
+  const { handleDetails } = useContext(StoreContext);
   return (
     <div>
       <BaggageDetails />
