@@ -37,10 +37,10 @@ const SwipeCarousel = () => {
           return pv + 1;
         });
       }
-    }, AUTO_DELAY);
+    }, [AUTO_DELAY]);
 
     return () => clearInterval(intervalRef);
-  }, []);
+  }, [dragX]);
 
   const onDragEnd = () => {
     const x = dragX.get();
@@ -53,7 +53,7 @@ const SwipeCarousel = () => {
   };
 
   return (
-    <div className="relative overflow-hidden bg-sky-100 py-8">
+    <div className="relative overflow-hidden bg-neutral-950 py-8">
       <motion.div
         key={"draggingmotion"}
         drag="x"
@@ -65,10 +65,10 @@ const SwipeCarousel = () => {
           x: dragX,
         }}
         animate={{
-          translateX: `-${imgIndex * 100.7}%`,
+          translateX: `-${imgIndex * 101 + 4}%`,
         }}
         transition={SPRING_OPTIONS}
-        onDragEnd={() => onDragEnd()}
+        onDragEnd={onDragEnd}
         className="flex cursor-grab rounded-md items-center active:cursor-grabbing"
       >
         <Images imgIndex={imgIndex} />
@@ -85,7 +85,7 @@ const Images = ({ imgIndex }) => {
     <>
       {imgs.map((imgSrc, idx) => {
         return (
-          <div key={`${idx} new`} className="rounded-xl">
+          <div key={`${idx} new`}>
             <motion.div
               key={(idx, "imagerendering")}
               style={{
@@ -97,14 +97,14 @@ const Images = ({ imgIndex }) => {
                 scale: imgIndex === idx ? 0.95 : 0.85,
               }}
               transition={SPRING_OPTIONS}
-              className="aspect-video w-screen relative shrink-0 rounded-xl bg-sky-50 object-cover"
+              className="aspect-video w-screen relative shrink-0 rounded-xl bg-neutral-800 object-cover"
             >
               <Image
                 src={imgSrc}
                 quality={100}
                 alt={imgSrc}
                 fill={true}
-                className="h-full w-full absolute rounded-xl object-cover"
+                className="h-full w-full absolute object-cover"
               />
             </motion.div>
           </div>
