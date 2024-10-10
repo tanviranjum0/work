@@ -2,11 +2,11 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { FiArrowUpRight } from "react-icons/fi";
-// import { BsFire } from "react-icons/bs";
+import Reveal from "./Reveal";
 
 const TextParallaxContentExample = () => {
   return (
-    <div className="relative left-20 bg-[#111] top-24">
+    <div className="relative w-[calc(100%-5rem)] left-20 bg-[#111] top-24">
       <TextParallaxContent
         imgUrl="https://images.unsplash.com/photo-1467664631004-58beab1ece0d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         subheading="I'm a Full Stack Developer"
@@ -40,9 +40,9 @@ const TextParallaxContentExample = () => {
           rightTwo="I invite you to explore my portfolio and see the diverse range of projects I’ve brought to life. Let's collaborate to turn your ideas into reality! Contact me today to get started."
         />
       </TextParallaxContent>
-      <button className="rounded-2xl flex gap-2 my-10 w-40 relative left-[40%] border-2 border-green-400 bg-green-400 px-6 py-3 font-semibold uppercase text-black transition-all duration-300 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:rounded-md hover:shadow-[4px_4px_0px_black] active:translate-x-[0px] active:translate-y-[0px] active:rounded-2xl active:shadow-none">
+      <button className="rounded-2xl flex gap-2 mb-44 w-40 relative left-[40%] border-2 border-green-400 bg-green-400 px-6 py-3 font-semibold uppercase text-black transition-all duration-300 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:rounded-md hover:shadow-[4px_4px_0px_black] active:translate-x-[0px] active:translate-y-[0px] active:rounded-2xl active:shadow-none">
         Projects
-        <span className="text-xl">
+        <span className="text-xl hover:rotate-45">
           <FiArrowUpRight />
         </span>
       </button>
@@ -84,6 +84,7 @@ const StickyImage = ({ imgUrl }) => {
       style={{
         backgroundImage: `url(${imgUrl})`,
         backgroundSize: "cover",
+        borderRadius: "5px",
         backgroundPosition: "center",
         height: `calc(100vh - ${IMG_PADDING * 2}px)`,
         top: IMG_PADDING,
@@ -131,15 +132,17 @@ const OverlayCopy = ({ subheading, heading }) => {
 
 const ExampleContent = ({ left, rightone, rightTwo }) => (
   <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
-    <h2 className="col-span-1 text-3xl text-[#999] font-bold md:col-span-4">
-      {left}
+    {" "}
+    <h2 className="col-span-1 text-3xl  text-[#999] font-bold md:col-span-4">
+      <Reveal> {left}</Reveal>
     </h2>
     <div className="col-span-1 md:col-span-8">
-      <p className="mb-4 text-xl text-neutral-600 md:text-2xl">{rightone}</p>
-      <p className="mb-8 text-xl text-neutral-600 md:text-2xl">{rightTwo}</p>
-      {/* <button className="w-full rounded bg-neutral-900 px-9 py-4 text-xl text-white transition-colors hover:bg-neutral-700 md:w-fit">
-        Learn more <FiArrowUpRight className="inline" />
-      </button> */}
+      <div className="mb-4 text-xl text-neutral-600 md:text-2xl">
+        <Reveal>{rightone}</Reveal>
+      </div>
+      <div className="mb-8 text-xl text-neutral-600 md:text-2xl">
+        <Reveal>{rightTwo}</Reveal>
+      </div>
     </div>
   </div>
 );

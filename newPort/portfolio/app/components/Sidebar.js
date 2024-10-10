@@ -1,23 +1,36 @@
 import LogoBox from "./LogoBox";
+import Link from "next/link";
 
 const Sidebar = () => {
   return (
-    <div className="fixed w-20 h-screen bg-black z-50 top-0">
+    <div className="fixed w-16 h-screen bg-black z-50 top-0">
       <LogoBox />
       <div className="flex rotate-90 mt-5 ">
         {" "}
-        <div className="px-8 py-7 transition-all duration-300 hover:text-green-400  md:text-xl ">
+        <Link
+          href="/"
+          className="px-5 cursor-pointer  hover:border-t-2 border-green-200 select-none py-4 transition-all duration-300 hover:text-green-400  md:text-xl "
+        >
           Home
-        </div>
-        <div className="px-8 py-7 transition-all duration-300 hover:text-green-400  md:text-xl ">
+        </Link>
+        <Link
+          href="/contact"
+          className="px-5 cursor-pointer hover:border-t-2 border-green-200 select-none py-4 transition-all duration-300 hover:text-green-400  md:text-xl "
+        >
           Contact
-        </div>
-        <div className="px-8 py-7 transition-all duration-300 hover:text-green-400  md:text-xl ">
+        </Link>
+        <Link
+          href="/projects"
+          className="px-5 cursor-pointer hover:border-t-2 border-green-200 select-none py-4 transition-all duration-300 hover:text-green-400  md:text-xl "
+        >
           Projects
-        </div>
-        <div className="px-8 py-7 transition-all duration-300 hover:text-green-400  md:text-xl ">
+        </Link>
+        <Link
+          href="/experience"
+          className="px-5 cursor-pointer hover:border-t-2 border-green-200 select-none py-4 transition-all duration-300 hover:text-green-400  md:text-xl "
+        >
           Exp..
-        </div>
+        </Link>
       </div>
     </div>
   );
