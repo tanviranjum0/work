@@ -59,7 +59,6 @@ const TiltCard = ({ projects }) => {
   return (
     <motion.div
       onClick={() => handleProjectDetailsShow(projects.name)}
-      // onClick={() => window.open(`${projects.link}`)}
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
