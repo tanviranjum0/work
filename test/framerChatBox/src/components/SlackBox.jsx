@@ -17,8 +17,7 @@ const SlackBox = () => {
   const [aiMessages, setAiMessages] = useState([
     {
       name: "Acme Ai",
-      message:
-        "Hi Geeta, welcome to Acme Al. What would you like to search for?",
+      message: "Answer received",
     },
   ]);
   const handleAiBoxOpened = () => {
