@@ -11,18 +11,21 @@ const formSchema = yup.object({
     .min(8, "Password 8 character required")
     .max(26, "Password cannot contain over 26 characters"),
 });
-const validateForm = (req, res) => {
-  const formData = req.body;
+const validateForm = async (req, res, next) => {
+  const formData = await req.body;
   // console.log(req.body);
-  formSchema
+  await formSchema
     .validate(formData)
     .catch((err) => {
-      res.status(422).send(err.errors);
       console.log(err.errors);
+      return res.status(422).send(err.errors);
     })
     .then((valid) => {
       if (valid) {
         console.log("Form is good");
+        next();
+      } else {
+        res.status(400).send();
       }
     });
 };

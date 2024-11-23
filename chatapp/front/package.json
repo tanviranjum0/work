@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/layout": "^2.3.1",
     "@chakra-ui/react": "2.1.2",
     "@chakra-ui/react-types": "^2.0.6",
+    "@chakra-ui/tabs": "^3.0.0",
     "@emotion/react": "^11.13.5",
     "formik": "^2.4.6",
     "motion": "^11.11.17",

@@ -5,7 +5,7 @@ import {
   FormLabel,
   FormErrorMessage,
   Button,
-  Input,
+  Text,
   Heading,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
@@ -13,8 +13,13 @@ import { Formik, Form, useFormik } from "formik";
 import * as yup from "yup";
 import TextField from "./TextField";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import { useContext, useState } from "react";
+import { AccountContext } from "../../AccountContext";
 const Login = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
+
+  const { user, setUser } = useContext(AccountContext);
   // const formik = useFormik({
   //   initialValues: {
   //     username: "",
@@ -53,8 +58,6 @@ const Login = () => {
       })}
       onSubmit={(values, actions) => {
         const vals = { ...values };
-
-        // alert(JSON.stringify(values, null, 2));
         actions.resetForm();
         fetch("http://localhost:4000/auth/login", {
           method: "POST",
@@ -64,22 +67,27 @@ const Login = () => {
           },
           body: JSON.stringify(vals),
         })
-          .catch((err) => {
-            return;
-          })
           .then((res) => {
-            if (!res || !res.ok || res.status >= 400) {
+            if (!res) {
               return;
             } else {
-              res.json();
+              return res.json();
             }
           })
           .then((data) => {
             if (!data) {
               return;
-            } else {
-              console.log(data);
             }
+
+            setUser({ ...data });
+            if (data.status) {
+              setError(data.status);
+            } else if (data.loggedIn) {
+              navigate("/home");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
           });
       }}
     >
@@ -94,6 +102,9 @@ const Login = () => {
           as={Form}
         >
           <Heading>Log In</Heading>
+          <Text as={"p"} color={"red.500"}>
+            {error}
+          </Text>
           <TextField
             name="username"
             placeContent={"Enter Username"}

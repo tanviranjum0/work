@@ -1,12 +1,12 @@
 import ToggleColorMode from "./components/ToggleColorMode";
 import Views from "./components/Views";
-
+import USerContext from "./AccountContext";
 const App = () => {
   return (
-    <div>
+    <USerContext>
       <Views />
       <ToggleColorMode />
-    </div>
+    </USerContext>
   );
 };
 
