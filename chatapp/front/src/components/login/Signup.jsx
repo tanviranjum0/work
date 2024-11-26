@@ -38,7 +38,7 @@ const SignUp = () => {
           },
           body: JSON.stringify(vals),
         })
-          .catch((err) => {
+          .catch(() => {
             return;
           })
           .then((res) => {
@@ -52,7 +52,6 @@ const SignUp = () => {
             if (!data) {
               return;
             }
-
             setUser({ ...data });
             if (data.status) {
               setError(data.status);

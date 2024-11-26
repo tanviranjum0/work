@@ -2,11 +2,15 @@ const express = require("express");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const { sessionMiddleware } = require("./controllers/serverController");
 const helmet = require("helmet");
-const session = require("express-session");
+const { wrap } = require("./controllers/serverController");
 const authRouter = require("./routers/authRoute");
-const RedisStore = require("connect-redis").default;
-const redisClient = require("./redis");
+const {
+  authorizeUser,
+  addFriend,
+  initializeUser,
+} = require("./controllers/socketController");
 const app = express();
 const server = require("http").createServer(app);
 app.use(helmet());
@@ -19,22 +23,7 @@ const io = new Server(server, {
   },
 });
 
-app.use(
-  session({
-    secret: "knwdvlbwlbvlen",
-    credentials: true,
-    name: "sid",
-    store: new RedisStore({ client: redisClient }),
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: process.env.ENVIRONMENT === "production" ? "true" : "auto",
-      httpOnly: true,
-      expires: 1000 * 60 * 60 * 24 * 30, // 1 hour
-      sameSite: process.env.ENVIRONMENT === "production" ? "none" : "lax",
-    },
-  })
-);
+app.use(sessionMiddleware());
 
 app.use(
   cors({
@@ -44,6 +33,12 @@ app.use(
 );
 
 app.use("/auth", authRouter);
-
-io.on("connect", (socket) => {});
+io.use(wrap(sessionMiddleware()));
+io.use(authorizeUser);
+io.on("connect", (socket) => {
+  initializeUser(socket);
+  socket.on("add_friend", (friendName, cb) => {
+    addFriend(socket, friendName, cb);
+  });
+});
 server.listen(4000, () => console.log("listening on port 4000"));

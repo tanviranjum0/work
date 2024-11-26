@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export const AccountContext = createContext();
 const USerContext = ({ children }) => {
-  const [user, setUser] = useState({ loggedIn: null });
+  const [user, setUser] = useState({ loggedIn: false });
   const navigate = useNavigate();
   useEffect(() => {
     fetch("http://localhost:4000/auth/login", {
@@ -14,6 +14,7 @@ const USerContext = ({ children }) => {
       .then((res) => {
         if (!res || !res.ok || res.status > 400) {
           setUser({ loggedIn: false });
+
           return;
         }
         return res.json();
@@ -23,6 +24,7 @@ const USerContext = ({ children }) => {
           setUser({ loggedIn: false });
         }
         navigate("/home");
+
         setUser({ ...data });
       });
   }, []);

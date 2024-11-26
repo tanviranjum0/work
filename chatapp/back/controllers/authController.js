@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
-
 const pool = require("../db");
-
+const { v4: uuid } = require("uuid");
 module.exports.handlelogin = (req, res) => {
   if (req.session.user && req.session.user.username) {
     res.json({ loggedIn: true, username: req.session.username });
@@ -12,7 +11,7 @@ module.exports.handlelogin = (req, res) => {
 
 module.exports.handlepost = async (req, res) => {
   const potentialLogin = await pool.query(
-    "select id, username, passhash from users u where u.username=$1",
+    "select id, username, passhash, userid from users u where u.username=$1",
     [req.body.username]
   );
 
@@ -25,11 +24,13 @@ module.exports.handlepost = async (req, res) => {
       req.session.user = {
         username: req.body.username,
         id: potentialLogin.rows[0].id,
+        userid: potentialLogin.rows[0].userid,
       };
-      console.log({
-        loggedIn: true,
-        username: potentialLogin.rows[0].username,
-      });
+      // console.log({
+      //   loggedIn: true,
+      //   username: potentialLogin.rows[0].username,
+      // });
+      // console.log("Success");
       res.status(200).json({
         loggedIn: true,
         username: potentialLogin.rows[0].username,
@@ -60,12 +61,13 @@ module.exports.registrationAttempt = async (req, res) => {
   if (existUser.rowCount == 0) {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUserQuery = await pool.query(
-      "insert into users (username, passhash) values ($1, $2) returning  id,username",
-      [req.body.username, hashedPassword]
+      "insert into users (username, passhash,userid) values ($1, $2, $3) returning id,username,userid",
+      [req.body.username, hashedPassword, uuid()]
     );
     req.session.user = {
       username: req.body.username,
       id: newUserQuery.rows[0].id,
+      userid: newUserQuery.rows[0].userid,
     };
     res
       .status(200)
