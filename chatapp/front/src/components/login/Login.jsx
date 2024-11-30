@@ -59,7 +59,7 @@ const Login = () => {
       onSubmit={(values, actions) => {
         const vals = { ...values };
         actions.resetForm();
-        fetch("http://localhost:4000/auth/login", {
+        fetch(`${import.meta.env.VITE_SERVER_URL}/auth/login`, {
           method: "POST",
           credentials: "include",
           headers: {

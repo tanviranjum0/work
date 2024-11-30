@@ -27,10 +27,9 @@ const SignUp = () => {
           .required("Password is required"),
       })}
       onSubmit={(values, actions) => {
-        // alert(JSON.stringify(values, null, 2));
         const vals = { ...values };
         actions.resetForm();
-        fetch("http://localhost:4000/auth/register", {
+        fetch(`${import.meta.env.VITE_SERVER_URL}/auth/register`, {
           method: "POST",
           credentials: "include",
           headers: {

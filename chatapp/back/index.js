@@ -10,11 +10,14 @@ const {
   authorizeUser,
   addFriend,
   initializeUser,
+  onDisconnect,
 } = require("./controllers/socketController");
+const dm = require("./controllers/dm");
 const app = express();
 const server = require("http").createServer(app);
 app.use(helmet());
 app.use(express.json());
+app.set("trust proxy", 1);
 dotenv.config();
 const io = new Server(server, {
   cors: {
@@ -40,5 +43,7 @@ io.on("connect", (socket) => {
   socket.on("add_friend", (friendName, cb) => {
     addFriend(socket, friendName, cb);
   });
+  socket.on("disconnecting", () => onDisconnect(socket));
+  socket.on("dm", (message) => dm(socket, message));
 });
 server.listen(4000, () => console.log("listening on port 4000"));

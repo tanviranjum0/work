@@ -13,7 +13,6 @@ const formSchema = yup.object({
 });
 const validateForm = async (req, res, next) => {
   const formData = await req.body;
-  // console.log(req.body);
   await formSchema
     .validate(formData)
     .catch((err) => {

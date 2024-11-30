@@ -26,11 +26,6 @@ module.exports.handlepost = async (req, res) => {
         id: potentialLogin.rows[0].id,
         userid: potentialLogin.rows[0].userid,
       };
-      // console.log({
-      //   loggedIn: true,
-      //   username: potentialLogin.rows[0].username,
-      // });
-      // console.log("Success");
       res.status(200).json({
         loggedIn: true,
         username: potentialLogin.rows[0].username,
@@ -52,7 +47,6 @@ module.exports.handlepost = async (req, res) => {
 };
 
 module.exports.registrationAttempt = async (req, res) => {
-  // await validateForm(req, res);
   const existUser = await pool.query(
     "select username from users where username=$1",
     [req.body.username]
