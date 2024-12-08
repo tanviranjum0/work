@@ -1,5 +1,4 @@
 const redisClient = require("../redis");
-
 module.exports.authorizeUser = (socket, next) => {
   if (!socket.request.session || !socket.request.session.user) {
     console.log("Bad Request");
@@ -31,7 +30,7 @@ module.exports.initializeUser = async (socket) => {
     -1
   );
   const parsedFriendList = await parseFriendList(friendList);
-  const friendRooms = await parsedFriendList.map((friend) => friend.userid);
+  const friendRooms = parsedFriendList.map((friend) => friend.userid);
   if (friendRooms.length > 0)
     await socket.to(friendRooms).emit("connected", true, socket.user.username);
   await socket.emit("friends", parsedFriendList);

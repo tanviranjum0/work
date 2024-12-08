@@ -51,7 +51,6 @@ const AddFriendModal = ({ onClose, isOpen }) => {
                 setError(errorMgs);
               }
             );
-            // onClose();
             actions.resetForm();
           }}
         >
