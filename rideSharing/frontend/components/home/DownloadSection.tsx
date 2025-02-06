@@ -18,7 +18,7 @@ const DownloadSection = () => {
           <div className="text-xl font-semibold mt-4 md:mt-8 py-3">
             Download AutoLane user app
           </div>
-          <Link href={"/app-download"} className="flex gap-2 md:gap-5">
+          <Link href={"/app-download"} className="flex mx-10 gap-2 md:gap-5">
             <Image
               alt="google play store"
               src={google}
@@ -37,12 +37,19 @@ const DownloadSection = () => {
           <div className="text-xl font-semibold mt-4 md:mt-8 py-3">
             Download AutoLane driver app
           </div>
-          <Link href={"/app-download"} className="flex gap-5">
+          <Link href={"/app-download"} className="flex mx-10 gap-2 md:gap-5">
             <Image
               className="cursor-pointer"
               alt="google play store"
               src={google}
               height={100}
+              width={200}
+            />
+            <Image
+              className="cursor-pointer"
+              height={100}
+              alt="app store"
+              src={apple}
               width={200}
             />
           </Link>

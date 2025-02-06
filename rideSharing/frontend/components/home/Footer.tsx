@@ -1,116 +1,370 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import logo from "../../public/logo.jpg";
 import Image from "next/image";
+import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
+
+interface footerLinksType {
+  Platform: Array<{ name: string; href: string }>;
+  Earn: Array<{ name: string; href: string }>;
+  Help: Array<{ name: string; href: string }>;
+  Marchant: Array<{ name: string; href: string }>;
+}
 const Footer = () => {
+  const [openAccordion, setOpenAccordion] = useState<{
+    Platform: boolean;
+    Earn: boolean;
+    Marchant: boolean;
+    Help: boolean;
+  }>({
+    Platform: false,
+    Earn: false,
+    Marchant: false,
+    Help: false,
+  });
+
+  const footerLinks: footerLinksType = {
+    Platform: [
+      { name: "AutoLane Bike", href: "/" },
+      { name: "AutoLane Car", href: "/" },
+      { name: "AutoLane Food", href: "/" },
+      { name: "AutoLane Shop", href: "/" },
+      { name: "AutoLane Parcel", href: "/" },
+      { name: "AutoLane Couriers", href: "/" },
+      { name: "AutoLane Rental", href: "/" },
+      { name: "AutoLane Maps", href: "/" },
+    ],
+    Earn: [
+      { name: "Earn with Bike", href: "/" },
+      { name: "Earn with Car", href: "/" },
+      { name: "Earn with Cycle", href: "/" },
+    ],
+    Marchant: [
+      { name: "Courier Marchant Sign Up", href: "/" },
+      { name: "Courier Marchant Login", href: "/" },
+      { name: "Car Admiral Login", href: "/" },
+      { name: "Resto Marchant Sign Up ", href: "/" },
+      { name: "Resto Marchant Login", href: "/" },
+    ],
+    Help: [
+      { name: "Walk in support center", href: "/" },
+      { name: "User Help Center", href: "/" },
+      { name: "Rider Help Center", href: "/" },
+      { name: "Marchant Help Center", href: "/" },
+      { name: "Live Chat for Driver", href: "/" },
+      { name: "Helpline +1111 111 11", href: "/" },
+      { name: "Emergency helpline +12345", href: "/" },
+    ],
+  };
+
   return (
     <div className="text-white bg-zinc-900">
-      <div className="w-[90vw] border-b-2 mx-auto p-10 grid grid-cols-4 gap-5 ">
-        <div className="p-3">
-          <div className="text-2xl font-semibold py-4">Platform</div>
-          <li className="list-none">
-            <ul className="py-1 hover:underline cursor-pointer">
-              AutoLane Bike
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              AutoLane Car
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              AutoLane Food{" "}
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              AutoLane Shop{" "}
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              AutoLane Parcel
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              AutoLane Courier
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              AutoLane Rentals
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              AutoLane Maps
-            </ul>
-          </li>
+      <div className="w-[90vw] border-b-2 mx-auto p-10 grid justify-center md:grid-cols-2 lg:grid-cols-4 md:gap-5 ">
+        <div className="md:p-3 text-center">
+          <div
+            onClick={() =>
+              setOpenAccordion((prev) => ({
+                Platform: !prev.Platform,
+                Earn: false,
+                Marchant: false,
+                Help: false,
+              }))
+            }
+            className="text-2xl font-semibold md:py-4 py-1 cursor-pointer md:cursor-defalit"
+          >
+            Platform
+          </div>
+          <AnimatePresence>
+            {openAccordion.Platform && (
+              <motion.ul
+                key={"platformSection"}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{
+                  opacity: openAccordion.Platform ? 1 : 0,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.5,
+                  ease: "linear",
+                  type: "tween",
+                }}
+                exit={{
+                  opacity: 0,
+                  y: -20,
+                }}
+                className="list-none"
+              >
+                {footerLinks.Platform.map((item, i) => (
+                  <motion.li
+                    initial={{
+                      opacity: 0,
+                      y: -10,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    transition={{
+                      delay: i * 0.05,
+                      duration: 0.1,
+                      ease: "linear",
+                      type: "tween",
+                    }}
+                    exit={{ opacity: 0, y: -10 }}
+                    key={item.name}
+                    className="py-1 hover:underline cursor-pointer"
+                  >
+                    {item.name}
+                  </motion.li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
+          <ul className="list-none Platform hidden md:block">
+            {footerLinks.Platform.map((item, i) => (
+              <motion.li
+                key={item.name}
+                className="py-1 hover:underline cursor-pointer"
+              >
+                {item.name}
+              </motion.li>
+            ))}
+          </ul>
         </div>
-        <div className="p-3">
-          <div className="text-2xl font-semibold py-4">Earn</div>
-          <li className="list-none">
-            <ul className="py-1 hover:underline cursor-pointer">
-              Earn with Bike
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              Earn with Car
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              Earn with Cycle{" "}
-            </ul>
-          </li>
+        <div className="md:p-3 text-center">
+          <div
+            onClick={() =>
+              setOpenAccordion((prev) => ({
+                Platform: false,
+                Earn: !prev.Earn,
+                Marchant: false,
+                Help: false,
+              }))
+            }
+            className="text-2xl font-semibold md:py-4 py-1 cursor-pointer md:cursor-defalit"
+          >
+            Earn
+          </div>
+          <AnimatePresence key={"animate presence earn"}>
+            {openAccordion.Earn && (
+              <motion.ul
+                key={"earnSection"}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{
+                  opacity: openAccordion.Earn ? 1 : 0,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.5,
+                  ease: "linear",
+                  type: "tween",
+                }}
+                exit={{
+                  opacity: 0,
+                  y: -20,
+                }}
+                className="list-none"
+              >
+                {footerLinks.Earn.map((item: { name: string }, i) => (
+                  <motion.li
+                    initial={{
+                      opacity: 0,
+                      y: -10,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    transition={{
+                      delay: i * 0.05,
+                      duration: 0.1,
+                      ease: "linear",
+                      type: "tween",
+                    }}
+                    key={item.name}
+                    className="py-1 hover:underline cursor-pointer"
+                  >
+                    {item.name}
+                  </motion.li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
+          <ul className="list-none Earn hidden md:block">
+            {footerLinks.Earn.map((item) => (
+              <li
+                key={item.name}
+                className="py-1 hover:underline cursor-pointer"
+              >
+                {item.name}
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="p-3">
-          <div className="text-2xl font-semibold py-4">Marchant</div>
-          <li className="list-none">
-            <ul className="py-1 hover:underline cursor-pointer">
-              Courier Marchant Sign Up
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              Courier Marchant Login
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              Car Admiral Login
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              Resto Marchant Sign Up
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              Resto Marchant Login
-            </ul>
-          </li>
+        <div className="md:p-3 text-center">
+          <div
+            onClick={() =>
+              setOpenAccordion((prev) => ({
+                Platform: false,
+                Earn: false,
+                Marchant: !prev.Marchant,
+                Help: false,
+              }))
+            }
+            className="text-2xl font-semibold md:py-4 py-1 cursor-pointer md:cursor-defalit"
+          >
+            Marchant
+          </div>
+          <AnimatePresence key={"animate presence marchant"}>
+            {openAccordion.Marchant && (
+              <motion.ul
+                key={"marchantSection"}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{
+                  opacity: openAccordion.Marchant ? 1 : 0,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.5,
+                  ease: "linear",
+                  type: "tween",
+                }}
+                exit={{
+                  opacity: 0,
+                  y: -20,
+                }}
+                className="list-none"
+              >
+                {footerLinks.Marchant.map((item, i) => (
+                  <motion.li
+                    initial={{
+                      opacity: 0,
+                      y: -10,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    transition={{
+                      delay: i * 0.05,
+                      duration: 0.1,
+                      ease: "linear",
+                      type: "tween",
+                    }}
+                    exit={{
+                      opacity: 0,
+                      y: -10,
+                    }}
+                    key={item.name}
+                    className="py-1 hover:underline cursor-pointer"
+                  >
+                    {item.name}
+                  </motion.li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
+          <ul className="list-none Marchant hidden md:block">
+            {footerLinks.Marchant.map((item) => (
+              <li
+                key={item.name}
+                className="py-1 hover:underline cursor-pointer"
+              >
+                {item.name}
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="p-3">
-          {" "}
-          <div className="text-2xl font-semibold py-4">Help</div>
-          <li className="list-none">
-            <ul className="py-1 hover:underline cursor-pointer">
-              Walk in support center
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              User Help Center{" "}
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              Rider Help Center
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              Marchant Help Center{" "}
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              Live Chat for Driver
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              Helpline +1111 111 11
-            </ul>
-            <ul className="py-1 hover:underline cursor-pointer">
-              Emergency helpline +12345
-            </ul>
-          </li>
+        <div className="text-center md:p-3">
+          <div
+            onClick={() =>
+              setOpenAccordion((prev) => ({
+                Platform: false,
+                Earn: false,
+                Marchant: false,
+                Help: !prev.Help,
+              }))
+            }
+            className="text-2xl font-semibold md:py-4 py-1 cursor-pointer md:cursor-defalit"
+          >
+            Help
+          </div>
+          <AnimatePresence key={"animate presence help"}>
+            {openAccordion.Help && (
+              <motion.ul
+                key={"HelpSection"}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{
+                  opacity: openAccordion.Help ? 1 : 0,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.5,
+                  ease: "linear",
+                  type: "tween",
+                }}
+                exit={{
+                  opacity: 0,
+                  y: -20,
+                }}
+                className="list-none"
+              >
+                {footerLinks.Help.map((item, i) => (
+                  <motion.li
+                    initial={{
+                      opacity: 0,
+                      y: -10,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      y: -10,
+                    }}
+                    transition={{
+                      delay: i * 0.05,
+                      duration: 0.1,
+                      ease: "linear",
+                      type: "tween",
+                    }}
+                    key={item.name}
+                    className="py-1 hover:underline cursor-pointer"
+                  >
+                    {item.name}
+                  </motion.li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
+          <ul className="list-none Help hidden md:block">
+            {footerLinks.Help.map((item) => (
+              <li
+                key={item.name}
+                className="py-1 hover:underline cursor-pointer"
+              >
+                {item.name}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
       <div className="py-5  border-b-2 w-[80vw] mx-auto">
-        <div className="flex justify-between">
-          <div className=" hidden md:flex cursor-pointer items-center">
-            {" "}
+        <div className="flex items-center justify-between">
+          <Link href={"/"} className="flex  cursor-pointer items-center">
             <Image
               draggable="false"
               src={logo}
-              className="border rounded-full"
+              className="border rounded-flil"
               width={40}
               height={40}
               alt="logo"
             />
-            <div className="text-2xl px-3">AutoLane</div>
-          </div>
-          <div className="px-3 justify-center gap-4 flex">
+            <div className="md:text-2xl  px-1 md:px-3">AutoLane</div>
+          </Link>
+          <div className="sm:px-3 px-1 text-sm  justify-center gap-1 sm:gap-4 flex">
             <div className="md:text-xl hover:underline cursor-pointer">
               About us
             </div>
