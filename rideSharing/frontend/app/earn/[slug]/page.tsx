@@ -2,16 +2,16 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import motorcycle from "../../images/vehicleImage/motorcycle.jpeg";
-import car from "../../images/vehicleImage/car.jpeg";
-import cycle from "../../images/vehicleImage/cycle.jpeg";
+import motorcycle from "../../../images/vehicleImage/motorcycle.jpeg";
+import car from "../../../images/vehicleImage/car.jpeg";
+import cycle from "../../../images/vehicleImage/cycle.jpeg";
 import EarnUsingVehicleBar from "@/components/motion/EarnUsingVehicleBar";
 import Form from "@/components/EarnComponents/Form";
-
 import { useParams } from "next/navigation";
 
 const page = () => {
-  const params = useParams<{ tag: string; item: string }>();
+  const params = useParams();
+
   console.log(params);
   return (
     <div className="w-[90vw] mx-auto text-center sm:w-[80vw] pb-10">
@@ -25,7 +25,7 @@ const page = () => {
         <div className="grid grid-cols-1  md:grid-cols-2">
           <div>
             <div className="h-28 flex gap-8">
-              <Link href={"earn-with-motorcycle"} className="cursor-pointer">
+              <Link href={"/earn/motorcycle"} className="cursor-pointer">
                 <Image
                   className=""
                   alt="motorcycle image"
@@ -33,9 +33,9 @@ const page = () => {
                   width={1000}
                   height={1000}
                 />
-                <EarnUsingVehicleBar />
+                {params.slug == "motorcycle" && <EarnUsingVehicleBar />}
               </Link>
-              <Link href={"earn-with-car"} className=" cursor-pointer">
+              <Link href={"/earn/car"} className=" cursor-pointer">
                 <Image
                   className=""
                   alt="car image"
@@ -43,8 +43,9 @@ const page = () => {
                   width={1000}
                   height={1000}
                 />
+                {params.slug == "car" && <EarnUsingVehicleBar />}
               </Link>
-              <Link href={"earn-with-cycle"} className="cursor-pointer">
+              <Link href={"/earn/cycle"} className="cursor-pointer">
                 <Image
                   className=""
                   alt="cycle image"
@@ -52,9 +53,10 @@ const page = () => {
                   width={1000}
                   height={1000}
                 />
+                {params.slug == "cycle" && <EarnUsingVehicleBar />}
               </Link>
             </div>
-            <Form />
+            <Form params={params} />
           </div>
         </div>
       </div>

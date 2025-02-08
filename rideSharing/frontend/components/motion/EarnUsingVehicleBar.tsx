@@ -18,7 +18,7 @@ const EarnUsingVehicleBar = () => {
           scale: 0,
         }}
         transition={{
-          duration: 1,
+          duration: 0.7,
           ease: "easeInOut",
         }}
         className="w-full h-2 bg-yellow-500"

@@ -85,7 +85,7 @@ const Navbar = () => {
               />
             )}
           </AnimatePresence>
-          <div className="hidden cursor-pointer gap-4 sm:grid sm:grid-cols-4">
+          <div className="hidden cursor-pointer justify-center items-center gap-4 sm:grid sm:grid-cols-4">
             <motion.div
               onHoverStart={() => toggleHoverMenu("earn")}
               onHoverEnd={() => toggleHoverMenu("earn")}
@@ -103,7 +103,7 @@ const Navbar = () => {
               >
                 <div className="bg-yellow-100">
                   <Link
-                    href={"/earn-with-motorcycle"}
+                    href={"/earn/motorcycle"}
                     className="flex hover:bg-yellow-200 hover:ml-2 transition-all duration-300  rounded-md cursor-pointer items-center text-sm"
                   >
                     <PiMotorcycleFill className="border text-2xl m-2 " />
@@ -114,7 +114,7 @@ const Navbar = () => {
                   </Link>
 
                   <Link
-                    href={"/earn-with-car"}
+                    href={"/earn/car"}
                     className="flex hover:bg-yellow-200 hover:ml-2 transition-all duration-300  rounded-md cursor-pointer items-center text-sm"
                   >
                     <FaCar className="border text-2xl m-2 " />
@@ -124,7 +124,7 @@ const Navbar = () => {
                     </div>
                   </Link>
                   <Link
-                    href={"/earn-with-cycle"}
+                    href={"/earn/cycle"}
                     className="flex hover:bg-yellow-200 hover:ml-2 transition-all duration-300  rounded-md cursor-pointer items-center text-sm"
                   >
                     <IoIosBicycle className="border text-2xl m-2 " />

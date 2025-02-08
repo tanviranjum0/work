@@ -9,6 +9,7 @@ import { IoIosBicycle } from "react-icons/io";
 import { FaCar } from "react-icons/fa";
 import { motion, AnimatePresence } from "motion/react";
 import { HiOutlineBars3BottomRight } from "react-icons/hi2";
+import Link from "next/link";
 interface IProps {
   sidebarOpenTab: string;
   openSidebar: boolean;
@@ -88,27 +89,39 @@ const Sidebar = ({
                   ease: "easeInOut",
                 }}
               >
-                <div className="flex  hover:bg-yellow-200 hover:ml-3 transition-all duration-300  rounded-md cursor-pointer items-center text-sm mx-2">
+                <Link
+                  onClick={() => setOpenSidebar(false)}
+                  href={"/earn/motorcycle"}
+                  className="flex  hover:bg-yellow-200 hover:ml-3 transition-all duration-300  rounded-md cursor-pointer items-center text-sm mx-2"
+                >
                   <PiMotorcycleFill className="border text-2xl m-2 text-yellow-600" />
                   <div className="">
                     <div>Earn using MOTORCYCLE</div>
                     <div className="text-xs">Be a rider</div>
                   </div>
-                </div>
-                <div className="flex hover:bg-yellow-200 hover:ml-3 transition-all duration-300  rounded-md cursor-pointer items-center text-sm mx-2">
+                </Link>
+                <Link
+                  onClick={() => setOpenSidebar(false)}
+                  href={"/earn/car"}
+                  className="flex hover:bg-yellow-200 hover:ml-3 transition-all duration-300  rounded-md cursor-pointer items-center text-sm mx-2"
+                >
                   <FaCar className="border text-2xl m-2 text-yellow-600" />
                   <div className="">
                     <div>Earn using CAR</div>
                     <div className="text-xs">Be a captain</div>
                   </div>
-                </div>
-                <div className="flex hover:bg-yellow-200 hover:ml-3 transition-all duration-300  rounded-md cursor-pointer items-center text-sm mx-2">
+                </Link>
+                <Link
+                  onClick={() => setOpenSidebar(false)}
+                  href={"/earn/cycle"}
+                  className="flex hover:bg-yellow-200 hover:ml-3 transition-all duration-300  rounded-md cursor-pointer items-center text-sm mx-2"
+                >
                   <IoIosBicycle className="border text-2xl m-2 text-yellow-600" />
                   <div className="">
                     <div className="">Earn using BICYCLE</div>
                     <div className="text-xs">Be a cyclist</div>
                   </div>
-                </div>
+                </Link>
               </motion.div>
             )}
           </AnimatePresence>
