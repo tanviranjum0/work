@@ -9,9 +9,8 @@ import Body5 from "./Body5";
 import Footer from "./Footer";
 const Main = () => {
   return (
-    <div className="">
-      <div className=" mt-20 main-bg">
-        {/* <Navbar /> */}
+    <div>
+      <div className="mt-20 main-bg">
         <Body1 />
       </div>
       <div className="mt-[100vh]">
@@ -25,9 +24,6 @@ const Main = () => {
         <DownloadSection />
       </div>
       <Body5 />
-      {/* <div className="">
-        <Footer />
-      </div> */}
     </div>
   );
 };

@@ -260,7 +260,7 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
                       type="checkbox"
                       value=""
                       className="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 rounded-sm  "
-                      checked
+                      defaultChecked
                     />
                     <label
                       htmlFor="BikeRider"
@@ -305,7 +305,7 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
                     <input
                       id="Cycle Food Delivery"
                       type="checkbox"
-                      checked
+                      defaultChecked
                       value=""
                       className="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 rounded-sm  "
                     />
@@ -339,7 +339,7 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
                       id="AutoLaneCar"
                       type="checkbox"
                       value=""
-                      checked
+                      defaultChecked
                       className="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 rounded-sm  "
                     />
                     <label
