@@ -94,7 +94,6 @@ const page = () => {
                     <div className="text-2xl ml-5">Download drive app</div>
                   </div>
                   <div className={`${accordion.one && "-rotate-90"}`}>
-                    {" "}
                     <FaAngleDown />
                   </div>
                 </div>
@@ -143,7 +142,6 @@ const page = () => {
                     <div className="text-2xl ml-5">Keep your status online</div>
                   </div>
                   <div className={`${accordion.two && "-rotate-90"}`}>
-                    {" "}
                     <FaAngleDown />
                   </div>
                 </div>
@@ -185,7 +183,6 @@ const page = () => {
                     <div className="text-2xl ml-5">Get ride request</div>
                   </div>
                   <div className={`${accordion.three && "-rotate-90"}`}>
-                    {" "}
                     <FaAngleDown />
                   </div>
                 </div>

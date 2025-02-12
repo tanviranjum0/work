@@ -1,8 +1,30 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React from "react";
+import Link from "next/link";
+import React, { useContext } from "react";
+import { FormContext } from "../context/FormContext";
+import { data } from "@/@types.context";
 
 const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
+  const { data, setData } = useContext(FormContext);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (
+      e.target.id == "bikeRider" ||
+      e.target.id == "bikeFoodDelivery" ||
+      e.target.id == "bikeParcelDelivery" ||
+      e.target.id == "autoLaneCar" ||
+      e.target.id == "cycleFoodDelivery" ||
+      e.target.id == "cyclePercelDelivery"
+    ) {
+      setData({ ...data, [e.target.id]: e.target.checked });
+    } else {
+      setData({ ...data, [e.target.id]: e.target.value });
+    }
+  };
+
   let earning;
+
   if (params?.slug == "motorcycle") {
     earning = 3000;
   } else if (params?.slug == "car") {
@@ -21,6 +43,7 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
             First Name*
           </label>
           <input
+            onChange={handleChange}
             type="text"
             id="fname"
             className="shadow-xs cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:border-blue-500 block w-full p-2.5"
@@ -36,6 +59,7 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
             Last Name*
           </label>
           <input
+            onChange={handleChange}
             type="text"
             id="lname"
             className="shadow-xs cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:border-blue-500 block w-full p-2.5"
@@ -51,6 +75,7 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
             Your email
           </label>
           <input
+            onChange={handleChange}
             type="email"
             id="email"
             className="shadow-xs cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:border-blue-500 block w-full p-2.5"
@@ -71,6 +96,9 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
             </div>
 
             <input
+              onChange={(e) =>
+                handleChange(e as React.ChangeEvent<HTMLInputElement>)
+              }
               className="shadow-xs cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg  appearance-none m-0  focus:border-blue-500 pl-5 block w-full p-2.5"
               type="text"
               placeholder="123-456-5678"
@@ -88,6 +116,7 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
               Select an State
             </label>
             <select
+              onChange={(e) => handleChange(e)}
               id="countries"
               className="bg-gray-100 cursor-pointer border  text-gray-900 text-sm rounded-lg   w-full p-2.5 "
             >
@@ -254,11 +283,12 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
             <div>
               {params.slug == "motorcycle" && (
                 <div className="grid grid-cols-2 ">
-                  <div className="flex  my-5 items-center ">
+                  <div className="flex my-5 items-center ">
                     <input
-                      id="BikeRider"
+                      id="bikeRider"
+                      value="bikeRider"
                       type="checkbox"
-                      value=""
+                      onChange={handleChange}
                       className="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 rounded-sm  "
                       defaultChecked
                     />
@@ -271,9 +301,10 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
                   </div>
                   <div className="flex items-center">
                     <input
-                      id="foodDelivery"
+                      id="bikeFoodDelivery"
+                      value="bikeFoodDelivery"
                       type="checkbox"
-                      value=""
+                      onChange={handleChange}
                       className="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 rounded-sm  "
                     />
                     <label
@@ -285,13 +316,14 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
                   </div>
                   <div className="flex items-center">
                     <input
-                      id="ParcelDelivery"
+                      id="bikeParcelDelivery"
+                      value="bikeParcelDelivery"
+                      onChange={handleChange}
                       type="checkbox"
-                      value=""
                       className="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 rounded-sm  "
                     />
                     <label
-                      htmlFor="ParcelDelivery"
+                      htmlFor="bikeParcelDelivery"
                       className="ms-2 text-sm font-medium"
                     >
                       Parcel Delivery
@@ -303,10 +335,11 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
                 <div className="grid grid-cols-2 ">
                   <div className="flex  my-5 items-center ">
                     <input
-                      id="Cycle Food Delivery"
+                      id="cycleFoodDelivery"
                       type="checkbox"
+                      onChange={handleChange}
                       defaultChecked
-                      value=""
+                      value="cycleFoodDelivery"
                       className="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 rounded-sm  "
                     />
                     <label
@@ -319,8 +352,9 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
                   <div className="flex items-center">
                     <input
                       id="cyclePercelDelivery"
+                      value="cyclePercelDelivery"
                       type="checkbox"
-                      value=""
+                      onChange={handleChange}
                       className="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 rounded-sm  "
                     />
                     <label
@@ -336,9 +370,10 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
                 <div className="grid grid-cols-2 ">
                   <div className="flex  my-5 items-center ">
                     <input
-                      id="AutoLaneCar"
+                      id="autoLaneCar"
+                      value="autoLaneCar"
                       type="checkbox"
-                      value=""
+                      onChange={handleChange}
                       defaultChecked
                       className="w-4 h-4 text-yellow-600 bg-gray-100 border-gray-300 rounded-sm  "
                     />
@@ -360,12 +395,13 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
         </div>
 
         <div className="flex">
-          <button
+          <Link
+            href={`/earn/${params.slug}/form`}
             type="submit"
             className="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 hover:ml-1 hover:shadow-md transition-all duration-300 font-medium rounded-lg text-sm px-5 py-2.5"
           >
             Next Step
-          </button>
+          </Link>
         </div>
         <div className="text-xs flex gap-1 mt-2 text-left">
           By clicking this button, you are agreeing to AutoLane{" "}
