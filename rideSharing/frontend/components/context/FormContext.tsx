@@ -6,8 +6,8 @@ export const FormContext = createContext(null);
 const FormContextMain: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [data, setData] = useState<data>({
-    vehicle: "",
+  const [formData, setFormData] = useState<data>({
+    vehicleType: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -21,8 +21,8 @@ const FormContextMain: React.FC<{ children: React.ReactNode }> = ({
   });
 
   const contextValue = {
-    data,
-    setData,
+    formData,
+    setFormData,
   };
 
   return (

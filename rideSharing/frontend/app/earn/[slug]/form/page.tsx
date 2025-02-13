@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import { FormContext } from "@/components/context/FormContext";
 import Image from "next/image";
@@ -29,15 +30,18 @@ const carModels = {
 };
 
 const app = () => {
+  const { formData, setFormData } = useContext(FormContext);
+  const [identityType, setIdentityType] = useState();
+  console.log(identityType);
+  console.log(formData);
   const [imageFile, setImageFile] = useState({ imagePreview: avater });
   const [selectedVehicleBrand, setSelectedVehicleBrand] = useState({
     vehicleBrand: "toyota",
   });
-  const { data, setData } = useContext(FormContext);
   const handleBrandChange = (event: React.FormEvent<HTMLSelectElement>) => {
     console.log(event.target.value);
     setSelectedVehicleBrand({ vehicleBrand: event.target.value });
-    setData({ ...data, vehicleBrand: event.target.value });
+    setFormData({ ...formData, vehicleBrand: event.target.value });
   };
 
   const handleImageInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,12 +68,14 @@ const app = () => {
           <div className="flex w-full gap-4">
             <div className="flex w-full my-2 flex-col">
               <label
-                className="text-semibold  w-full text-md pb-1"
+                className="text-semibold w-full text-md pb-1"
                 htmlFor="First Name:*"
               >
                 First Name*
               </label>
               <input
+                disabled
+                defaultValue={`${formData.firstName}`}
                 type="text"
                 className=" border p-1 border-gray-200 w-full rounded"
               />
@@ -82,6 +88,8 @@ const app = () => {
                 Last Name
               </label>
               <input
+                disabled
+                defaultValue={`${formData.lastName}`}
                 type="text"
                 className=" border border-gray-200 p-1  w-full rounded"
               />
@@ -95,19 +103,21 @@ const app = () => {
               Phone Number*
             </label>
             <input
-              type="text"
+              type="number"
+              disabled
+              defaultValue={`${formData.phone}`}
               className=" border p-1 border-gray-200 w-full rounded"
             />
           </div>
           <div className="flex w-full my-2 flex-col">
             <label
               className="text-semibold  w-full text-md pb-1"
-              htmlFor="First Name:*"
+              htmlFor="Gender"
             >
               Gender*
             </label>
             <select
-              id="countries"
+              id="gender"
               className=" border p-2 border-gray-200 w-full rounded"
             >
               <option value="male" className="cursor-pointer">
@@ -139,36 +149,69 @@ const app = () => {
             >
               Services you want to provide
             </label>
-            {/* <input
-              type="email"
-              className="border p-1 border-gray-200 w-full rounded"
-            /> */}
+            <div className="flex gap-4">
+              {formData.bikeRider && (
+                <div className="w-full flex items-center px-3 py-2 text-yellow-800 bg-gray-100 border-gray-300 rounded-sm ">
+                  ✔ Bike Rider
+                </div>
+              )}
+              {formData.foodDelivery && (
+                <div className="w-full flex items-center px-3 py-2 text-yellow-800 bg-gray-100 border-gray-300 rounded-sm ">
+                  ✔ Food Delivery
+                </div>
+              )}
+              {formData.parcelDelivery && (
+                <div className="w-full flex items-center px-3 py-2 text-yellow-800 bg-gray-100 border-gray-300 rounded-sm ">
+                  ✔ Parcel Delivery
+                </div>
+              )}
+              {formData.autoLaneCar && (
+                <div className="w-full flex items-center px-3 py-2 text-yellow-800 bg-gray-100 border-gray-300 rounded-sm ">
+                  ✔ AutoLane Car
+                </div>
+              )}
+              {formData.cycleFoodDelivery && (
+                <div className="w-full flex items-center px-3 py-2 text-yellow-800 bg-gray-100 border-gray-300 rounded-sm ">
+                  ✔ Cycle Food Deliery
+                </div>
+              )}
+              {formData.cyclePercelDelivery && (
+                <div className="w-full flex items-center px-3 py-2 text-yellow-800 bg-gray-100 border-gray-300 rounded-sm ">
+                  ✔ Cycle Parcel Delivery
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex w-full my-2 flex-col">
             <label
               className="text-semibold  w-full text-md pb-1"
-              htmlFor="First Name:*"
+              htmlFor="  Select Identity Type*"
             >
-              Select Your Identity*
+              Select Identity Type*
             </label>
             <select
-              id="countries"
-              className=" border p-2 border-gray-200 w-full rounded"
+              id="id"
+              className="cursor-pointer border p-2 border-gray-200 w-full rounded"
             >
-              <option value="nid" className="cursor-pointer">
+              <option
+                value={"nid"}
+                onClick={() => setIdentityType("nid")}
+                className="cursor-pointer"
+              >
                 National ID
               </option>
-              <option value="passport" className="cursor-pointer">
+              <option
+                value={"passport"}
+                onClick={() => setIdentityType("passport")}
+                className="cursor-pointer"
+              >
                 Passport
               </option>
             </select>
           </div>
           <div className="flex w-full my-2 flex-col">
-            <label
-              className="text-semibold  w-full text-md pb-1"
-              htmlFor="First Name:*"
-            >
-              ID Number
+            <label className="text-semibold  w-full text-md pb-1" htmlFor="Id">
+              {identityType} Number
             </label>
             <input
               type="text"
@@ -178,7 +221,7 @@ const app = () => {
           <div className="flex w-full my-2 flex-col">
             <label
               className="text-semibold  w-full text-md pb-1"
-              htmlFor="First Name:*"
+              htmlFor="Refferal Code"
             >
               Refferal Code
             </label>

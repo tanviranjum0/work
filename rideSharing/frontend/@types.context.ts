@@ -1,5 +1,5 @@
-export interface data {
-  vehicle: "";
+export interface formData {
+  vehicleType: "";
   firstName: "";
   lastName: "";
   email: "";
