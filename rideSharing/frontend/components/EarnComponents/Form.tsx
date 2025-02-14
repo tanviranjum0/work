@@ -12,7 +12,6 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
   const [formError, setFormError] = useState("");
 
   const handleRedirectToForm = async () => {
-    console.log(formData);
     setFormError("");
     if (params.slug == "motorcycle") {
       if (
@@ -53,6 +52,7 @@ const Form: React.FC<{ params: { slug: string } }> = ({ params }) => {
     }
     {
       await setFormData({ ...formData, vehicleType: params.slug });
+      localStorage.setItem("formData", formData);
       router.push(`/earn/${params.slug}/form`);
     }
   };

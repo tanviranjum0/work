@@ -4,6 +4,7 @@ import { FormContext } from "@/components/context/FormContext";
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 import avater from "../../../../images/appRelated/avater.jpeg";
+import { useRouter, useParams } from "next/navigation";
 
 const carModels = {
   toyota: ["Corolla", "Camry", "Rav4", "Highlander"],
@@ -31,15 +32,35 @@ const carModels = {
 
 const app = () => {
   const { formData, setFormData } = useContext(FormContext);
-  const [identityType, setIdentityType] = useState();
-  console.log(identityType);
-  console.log(formData);
+
+  const router = useRouter();
+  const params = useParams<{ slug: string }>();
+  if (formData.vehicleType == "") {
+    router.push(`/earn/${params.slug}`);
+  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(formData);
+    if (e.target.id == "idType") {
+      setFormData({ ...formData, idType: null });
+
+      document.getElementById("IdNumber").value = "";
+
+      if (e.target.value == "passport") {
+        setNid(false);
+      } else {
+        setNid(true);
+      }
+    }
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+    console.log(formData);
+  };
+  const [nid, setNid] = useState(true);
+
   const [imageFile, setImageFile] = useState({ imagePreview: avater });
   const [selectedVehicleBrand, setSelectedVehicleBrand] = useState({
     vehicleBrand: "toyota",
   });
   const handleBrandChange = (event: React.FormEvent<HTMLSelectElement>) => {
-    console.log(event.target.value);
     setSelectedVehicleBrand({ vehicleBrand: event.target.value });
     setFormData({ ...formData, vehicleBrand: event.target.value });
   };
@@ -60,7 +81,7 @@ const app = () => {
 
   return (
     <div className="pb-20 bg-yellow-50">
-      <div className="w-[50vw] shadow-lg p-2 mb-10 rounded-md mx-auto">
+      <div className="w-[90vw] md:w-[50vw] shadow-lg p-2 mb-10 rounded-md mx-auto">
         <div className="h-14 bg-gray-200 p-2 font-semibold text-2xl">
           01 Personal Information
         </div>
@@ -118,6 +139,7 @@ const app = () => {
             </label>
             <select
               id="gender"
+              onChange={handleChange}
               className=" border p-2 border-gray-200 w-full rounded"
             >
               <option value="male" className="cursor-pointer">
@@ -137,8 +159,10 @@ const app = () => {
             </label>
             <input
               type="date"
+              onChange={handleChange}
               name="dateOfBirth"
               id="DOB"
+              min="2006-01-01"
               className="border p-2 border-gray-200 w-full rounded"
             />
           </div>
@@ -190,31 +214,26 @@ const app = () => {
               Select Identity Type*
             </label>
             <select
-              id="id"
+              id="idType"
+              onChange={handleChange}
               className="cursor-pointer border p-2 border-gray-200 w-full rounded"
             >
-              <option
-                value={"nid"}
-                onClick={() => setIdentityType("nid")}
-                className="cursor-pointer"
-              >
+              <option value={"nid"} className="cursor-pointer">
                 National ID
               </option>
-              <option
-                value={"passport"}
-                onClick={() => setIdentityType("passport")}
-                className="cursor-pointer"
-              >
+              <option value={"passport"} className="cursor-pointer">
                 Passport
               </option>
             </select>
           </div>
           <div className="flex w-full my-2 flex-col">
             <label className="text-semibold  w-full text-md pb-1" htmlFor="Id">
-              {identityType} Number
+              {nid ? "National Id" : "Passport"} Number
             </label>
             <input
+              id="IdNumber"
               type="text"
+              onChange={handleChange}
               className=" border p-1 border-gray-200 w-full rounded"
             />
           </div>
@@ -226,18 +245,17 @@ const app = () => {
               Refferal Code
             </label>
             <input
+              id="RefferalCode"
               type="text"
+              onChange={handleChange}
               className=" border p-1 border-gray-200 w-full rounded"
             />
           </div>
           <div className="flex w-full my-2 flex-col">
-            <label
-              className="text-semibold  w-full text-md pb-1"
-              htmlFor="First Name:*"
-            >
+            <div className="text-semibold  w-full text-md pb-1">
               Upload your photo *
-            </label>
-            <div className="flex justify-between gap-4">
+            </div>
+            <div className="flex  flex-col md:flex-row gap-4">
               <Image
                 className="h-36 w-36"
                 src={imageFile.imagePreview}
@@ -258,7 +276,7 @@ const app = () => {
           </div>
         </div>
       </div>
-      <div className="w-[50vw] p-2 shadow-lg pb-10  rounded-md mx-auto">
+      <div className="w-[90vw] md:w-[50vw] p-2 shadow-lg pb-10  rounded-md mx-auto">
         <div className="h-14 bg-gray-200 p-2 font-semibold text-2xl">
           02 Vehicle Information
         </div>
@@ -272,7 +290,7 @@ const app = () => {
                 Select Brand*
               </label>
               <select
-                id="brand"
+                id="vehicleBrand"
                 defaultValue={"toyota"}
                 className="border p-2 border-gray-200 w-full rounded"
                 onChange={handleBrandChange}
@@ -308,8 +326,9 @@ const app = () => {
                 Select Model*
               </label>
               <select
-                id="brand"
+                id="vehicleModel"
                 defaultValue={"toyota"}
+                onChange={handleChange}
                 className="border p-2 border-gray-200 w-full rounded"
               >
                 {carModels[selectedVehicleBrand.vehicleBrand].map((model) => {
@@ -332,6 +351,7 @@ const app = () => {
           </label>
           <input
             type="text"
+            onChange={handleChange}
             id="registrationNumber"
             className="border p-1 border-gray-200 w-full rounded"
           />
@@ -344,6 +364,7 @@ const app = () => {
             Select Year*
           </label>
           <select
+            onChange={handleChange}
             id="RegYear"
             defaultValue={"2025"}
             className="border p-2 border-gray-200 w-full rounded"
@@ -414,6 +435,7 @@ const app = () => {
           </label>
           <input
             type="text"
+            onChange={handleChange}
             id="taxTokenNumber"
             className="border p-1 border-gray-200 w-full rounded"
           />
@@ -427,6 +449,7 @@ const app = () => {
           </label>
           <input
             type="text"
+            onChange={handleChange}
             id="fitnessNumber"
             className="border p-1 border-gray-200 w-full rounded"
           />

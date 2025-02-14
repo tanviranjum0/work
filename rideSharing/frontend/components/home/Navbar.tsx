@@ -154,27 +154,40 @@ const Navbar = () => {
                 variants={subMenuAnimate}
               >
                 <div className="bg-yellow-100">
-                  <div className="flex hover:bg-yellow-200 hover:ml-2 transition-all duration-300  rounded-md cursor-pointer items-center text-sm">
+                  <Link
+                    href={"/motorcycle"}
+                    className="flex hover:bg-yellow-200 hover:ml-2 transition-all duration-300  rounded-md cursor-pointer items-center text-sm"
+                  >
                     <PiMotorcycleFill className="border text-2xl m-2 " />
                     <div className="cursor-pointer p-2 transition-all duration-300 hover:bg-yellow-200">
                       <div>MOTORCYCLE</div>
-                      <div className="text-xs">Save time in traffic</div>
+                      <div className="text-xs">Beat the traffic, Save time</div>
                     </div>
-                  </div>
-                  <div className="flex hover:bg-yellow-200 hover:ml-2 transition-all duration-300  rounded-md cursor-pointer items-center text-sm">
+                  </Link>
+                  <Link
+                    href={"/car"}
+                    className="flex hover:bg-yellow-200 hover:ml-2 transition-all duration-300  rounded-md cursor-pointer items-center text-sm"
+                  >
                     <FaCar className="border text-2xl m-2 " />
                     <div className="cursor-pointer p-2 transition-all duration-300 hover:bg-yellow-200">
-                      <div>Earn using Car</div>
-                      <div className="text-xs">Be a captain</div>
+                      <div>Car</div>
+                      <div className="text-xs">
+                        Travel in comfort, at your convenience
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex hover:bg-yellow-200 hover:ml-2 transition-all duration-300  rounded-md cursor-pointer items-center text-sm">
+                  </Link>
+                  <Link
+                    href={"/food"}
+                    className="flex hover:bg-yellow-200 hover:ml-2 transition-all duration-300  rounded-md cursor-pointer items-center text-sm"
+                  >
                     <IoIosBicycle className="border text-2xl m-2 " />
                     <div className="cursor-pointer p-2 transition-all duration-300 hover:bg-yellow-200">
-                      <div>Earn using Cycle</div>
-                      <div className="text-xs">Be a cyclist</div>
+                      <div>Food</div>
+                      <div className="text-xs">
+                        Get your food in less than an hour
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               </motion.div>
             </motion.div>

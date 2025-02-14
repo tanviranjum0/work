@@ -9,6 +9,13 @@
   background-position: center;
   inset: 0;
 }
+.bike-bg {
+  position: absolute;
+  background-image: url("../images/appRelated/bike-background2.jpeg");
+  background-size: cover;
+  background-position: center;
+  inset: 0;
+}
 
 .menu-item {
   width: 200px;
