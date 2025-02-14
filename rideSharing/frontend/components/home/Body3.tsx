@@ -1,5 +1,5 @@
 import React from "react";
-
+import Link from "next/link";
 const Body3 = () => {
   return (
     <div>
@@ -36,9 +36,12 @@ const Body3 = () => {
           <div className="text-center md:text-lg py-2 md:py-4">
             Become a captain, rider or foodman on the highest earning platform!
           </div>
-          <div className="md:px-6 px-4 mx-auto flex items-center gap-2 mt-4 py-2 font-medium text-2xl md:text-3xl z-10 bg-yellow-300 text-black w-fit cursor-pointer transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] active:scale-95">
+          <Link
+            href={"/earn/motorcycle"}
+            className="md:px-6 px-4 mx-auto flex items-center gap-2 mt-4 py-2 font-medium text-2xl md:text-3xl z-10 bg-yellow-300 text-black w-fit cursor-pointer transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] active:scale-95"
+          >
             Start Earning
-          </div>
+          </Link>
         </div>
       </div>
     </div>

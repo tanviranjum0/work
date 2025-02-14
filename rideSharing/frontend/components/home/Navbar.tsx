@@ -6,6 +6,7 @@ import { PiMotorcycleFill } from "react-icons/pi";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoIosBicycle } from "react-icons/io";
 import { FaCar } from "react-icons/fa";
+import { FaVanShuttle } from "react-icons/fa6";
 import { FaAngleDown } from "react-icons/fa";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
@@ -186,6 +187,16 @@ const Navbar = () => {
                       <div className="text-xs">
                         Get your food in less than an hour
                       </div>
+                    </div>
+                  </Link>
+                  <Link
+                    href={"/courier"}
+                    className="flex hover:bg-yellow-200 hover:ml-2 transition-all duration-300  rounded-md cursor-pointer items-center text-sm"
+                  >
+                    <FaVanShuttle className="border text-2xl m-2 " />
+                    <div className="cursor-pointer p-2 transition-all duration-300 hover:bg-yellow-200">
+                      <div>Courier</div>
+                      <div className="text-xs">Trusted & Reliable Delivery</div>
                     </div>
                   </Link>
                 </div>
