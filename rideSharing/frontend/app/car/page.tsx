@@ -17,11 +17,12 @@ import { FaCar } from "react-icons/fa";
 import smallRoad from "../../images/BikeRouting/road-bike-mobile.png";
 import pay from "../../images/BikeRouting/pay-info.png";
 import Options from "@/components/car/Options";
+import Accordion from "@/components/car/Accordion";
 const page = () => {
   return (
     <div>
       <div className="car-bg mt-20">
-        <div className="m-3 mt-40 sm:mt-0 md:m-24 opacity-100">
+        <div className="m-10 mt-40 sm:mt-0 md:m-24 opacity-100">
           <div className="text-xl md:text-2xl opacity-100">AutoLane Car</div>
           <div className="text-2xl md:text-5xl">
             Travel in comfort, at your Convenience
@@ -39,7 +40,6 @@ const page = () => {
         </div>
       </div>
       <div className="mt-[100vh]">
-        <Options />
         <div className="grid mx-auto w-[90vw] md:w-[80vw]  grid-cols-1 md:grid-cols-3 gap-24">
           <div className="">
             <Image alt="motorcycle-1" src={img1} width={1000} height={1000} />
@@ -57,9 +57,9 @@ const page = () => {
               Comfort With Affordability
             </div>
             <div className="text-lg text-center">
-              With AutoLane’s competitive rates, even when you ride-share with
-              Car Plus you’ll be travelling with ease and comfort that is
-              affordable.
+              With AutoLane&apos;s competitive rates, even when you ride-share
+              with Car Plus you&apos;ll be travelling with ease and comfort that
+              is affordable.
             </div>
           </div>
           <div className="text-lg text-center">
@@ -73,6 +73,7 @@ const page = () => {
             </div>
           </div>
         </div>
+        <Options />
         <div className="md:w-[80vw] w-[90vw] items-center justify-between my-20 gap-5 grid grid-cols-1 md:grid-cols-2 mx-auto">
           <div className="p-14 hidden md:block ">
             <Image src={mapImage} alt="map image" width={250} height={300} />
@@ -201,6 +202,7 @@ const page = () => {
           />
         </div>
       </div>
+      <Accordion />
     </div>
   );
 };
