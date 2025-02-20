@@ -190,12 +190,12 @@ const Navbar = () => {
                     </div>
                   </Link>
                   <Link
-                    href={"/courier"}
+                    href={"/parcel"}
                     className="flex hover:bg-yellow-200 hover:ml-2 transition-all duration-300  rounded-md cursor-pointer items-center text-sm"
                   >
                     <FaVanShuttle className="border text-2xl m-2 " />
                     <div className="cursor-pointer p-2 transition-all duration-300 hover:bg-yellow-200">
-                      <div>Courier</div>
+                      <div>Parcel</div>
                       <div className="text-xs">Trusted & Reliable Delivery</div>
                     </div>
                   </Link>
@@ -249,7 +249,9 @@ const Navbar = () => {
                     >
                       <div className="flex gap-2 items-center">
                         <FaPhoneAlt />
-                        <span>Helpline +1 1111 1111 11</span>
+                        <Link href={"tel:+11111111111"}>
+                          Helpline +1 1111 1111 11
+                        </Link>
                       </div>
                     </a>
                   </div>
@@ -258,7 +260,7 @@ const Navbar = () => {
             </motion.div>
             <div>
               <div className="flex justify-center items-center">
-                <span>Blog</span>
+                <Link href={"/blog"}>Blog</Link>
               </div>
             </div>
           </div>

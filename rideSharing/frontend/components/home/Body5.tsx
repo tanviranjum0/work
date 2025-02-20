@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const Body5 = () => {
@@ -12,9 +13,12 @@ const Body5 = () => {
         </div>
       </div>
       <div className="flex justify-center items-center">
-        <div className="px-6 flex items-center gap-2 mt-2 py-2 font-medium text-3xl z-10 bg-yellow-300 text-black w-fit transition-all cursor-pointer shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] active:scale-95">
-          Explore Courier
-        </div>
+        <Link
+          href={"/parcel"}
+          className="px-6 flex items-center gap-2 mt-2 py-2 font-medium text-3xl z-10 bg-yellow-300 text-black w-fit transition-all cursor-pointer shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] active:scale-95"
+        >
+          Explore parcel
+        </Link>
       </div>
     </div>
   );

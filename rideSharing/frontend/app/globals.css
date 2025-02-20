@@ -16,6 +16,20 @@
   background-position: center;
   inset: 0;
 }
+.parcel-bg {
+  position: absolute;
+  background-image: url("../images/parcel/woman-holding-parcel-box.jpg");
+  background-size: cover;
+  background-position: center;
+  inset: 0;
+}
+.food-bg {
+  position: absolute;
+  background-image: url("../images/foodPage/women-holding-burger.jpg");
+  background-size: cover;
+  background-position: center;
+  inset: 0;
+}
 .car-bg {
   position: absolute;
   background-image: url("../images/appRelated/women-infront-car.jpg");

@@ -26,19 +26,19 @@ const Footer = () => {
 
   const footerLinks: footerLinksType = {
     Platform: [
-      { name: "AutoLane Bike", href: "/" },
-      { name: "AutoLane Car", href: "/" },
-      { name: "AutoLane Food", href: "/" },
+      { name: "AutoLane Bike", href: "/motorcycle" },
+      { name: "AutoLane Car", href: "/car" },
+      { name: "AutoLane Food", href: "/food" },
       { name: "AutoLane Shop", href: "/" },
-      { name: "AutoLane Parcel", href: "/" },
+      { name: "AutoLane Parcel", href: "/parcel" },
       { name: "AutoLane Couriers", href: "/" },
       { name: "AutoLane Rental", href: "/" },
       { name: "AutoLane Maps", href: "/" },
     ],
     Earn: [
-      { name: "Earn with Bike", href: "/" },
-      { name: "Earn with Car", href: "/" },
-      { name: "Earn with Cycle", href: "/" },
+      { name: "Earn with Bike", href: "/earn/motorcycle" },
+      { name: "Earn with Car", href: "/earn/car" },
+      { name: "Earn with Cycle", href: "/earn/cycle" },
     ],
     Marchant: [
       { name: "Courier Marchant Sign Up", href: "/" },
@@ -71,7 +71,7 @@ const Footer = () => {
                 Help: false,
               }))
             }
-            className="text-2xl font-semibold md:py-4 py-1 cursor-pointer md:cursor-defalit"
+            className="text-2xl font-semibold md:py-4 py-1 cursor-pointer "
           >
             Platform
           </div>
@@ -115,7 +115,7 @@ const Footer = () => {
                     key={item.name}
                     className="py-1 hover:underline cursor-pointer"
                   >
-                    {item.name}
+                    <Link href={item.href}> {item.name}</Link>
                   </motion.li>
                 ))}
               </motion.ul>
@@ -127,7 +127,7 @@ const Footer = () => {
                 key={item.name}
                 className="py-1 hover:underline cursor-pointer"
               >
-                {item.name}
+                <Link href={item.href}> {item.name}</Link>
               </motion.li>
             ))}
           </ul>
@@ -185,7 +185,7 @@ const Footer = () => {
                     key={item.name}
                     className="py-1 hover:underline cursor-pointer"
                   >
-                    {item.name}
+                    <Link href={item.href}> {item.name}</Link>
                   </motion.li>
                 ))}
               </motion.ul>
@@ -197,7 +197,7 @@ const Footer = () => {
                 key={item.name}
                 className="py-1 hover:underline cursor-pointer"
               >
-                {item.name}
+                <Link href={item.href}> {item.name}</Link>
               </li>
             ))}
           </ul>
@@ -259,7 +259,7 @@ const Footer = () => {
                     key={item.name}
                     className="py-1 hover:underline cursor-pointer"
                   >
-                    {item.name}
+                    <Link href={item.href}> {item.name}</Link>
                   </motion.li>
                 ))}
               </motion.ul>
@@ -271,7 +271,7 @@ const Footer = () => {
                 key={item.name}
                 className="py-1 hover:underline cursor-pointer"
               >
-                {item.name}
+                <Link href={item.href}> {item.name}</Link>
               </li>
             ))}
           </ul>
@@ -333,7 +333,7 @@ const Footer = () => {
                     key={item.name}
                     className="py-1 hover:underline cursor-pointer"
                   >
-                    {item.name}
+                    <Link href={item.href}> {item.name}</Link>
                   </motion.li>
                 ))}
               </motion.ul>
@@ -345,7 +345,7 @@ const Footer = () => {
                 key={item.name}
                 className="py-1 hover:underline cursor-pointer"
               >
-                {item.name}
+                <Link href={item.href}> {item.name}</Link>
               </li>
             ))}
           </ul>
