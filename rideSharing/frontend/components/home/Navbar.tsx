@@ -4,10 +4,16 @@ import logo from "../../public/logo.jpg";
 import { FiMessageCircle } from "react-icons/fi";
 import { PiMotorcycleFill } from "react-icons/pi";
 import { FaPhoneAlt } from "react-icons/fa";
+import { MdBusinessCenter } from "react-icons/md";
+import { FaLocationDot } from "react-icons/fa6";
 import { IoIosBicycle } from "react-icons/io";
+import { IoIosSettings } from "react-icons/io";
 import { FaCar } from "react-icons/fa";
 import { FaVanShuttle } from "react-icons/fa6";
+import { CgProfile } from "react-icons/cg";
+import { MdOutlinePayments } from "react-icons/md";
 import { FaAngleDown } from "react-icons/fa";
+import profile from "../../images/carInterface.png";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { HiOutlineBars3BottomRight } from "react-icons/hi2";
@@ -21,6 +27,7 @@ const Navbar = () => {
     earn: false,
     services: false,
     help: false,
+    profile: false,
   });
   const toggleHoverMenu = (section: string) => {
     if (section == "earn") {
@@ -29,6 +36,8 @@ const Navbar = () => {
       toggleHover((prev) => ({ ...prev, services: !prev.services }));
     } else if (section == "help") {
       toggleHover((prev) => ({ ...prev, help: !prev.help }));
+    } else if (section == "profile") {
+      toggleHover((prev) => ({ ...prev, profile: !prev.profile }));
     }
   };
 
@@ -86,13 +95,12 @@ const Navbar = () => {
               />
             )}
           </AnimatePresence>
-          <div className="hidden cursor-pointer justify-center items-center gap-4 sm:grid sm:grid-cols-4">
+          <div className="hidden cursor-pointer justify-center items-center gap-4 sm:grid sm:grid-cols-5">
             <motion.div
               onHoverStart={() => toggleHoverMenu("earn")}
               onHoverEnd={() => toggleHoverMenu("earn")}
             >
               <div className="flex items-center justify-center">
-                {" "}
                 <span>Earn</span>
                 <FaAngleDown className="text-xs ml-2" />
               </div>
@@ -143,7 +151,6 @@ const Navbar = () => {
               onHoverEnd={() => toggleHoverMenu("services")}
             >
               <div className="flex items-center justify-center">
-                {" "}
                 <span className="">Services</span>
                 <FaAngleDown className="text-xs ml-2" />
               </div>
@@ -209,7 +216,6 @@ const Navbar = () => {
               onHoverEnd={() => toggleHoverMenu("help")}
             >
               <div className="flex justify-center items-center">
-                {" "}
                 <span>Help</span>
                 <FaAngleDown className="text-xs ml-2" />
               </div>
@@ -222,28 +228,16 @@ const Navbar = () => {
               >
                 <div className="bg-yellow-100">
                   <div className="py-1 rounded-md ">
-                    <a
-                      href="#"
-                      className="block hover:ml-2 rounded transition-all duration-300 px-4 py-2 hover:bg-yellow-200 text-sm "
-                    >
-                      User help center
-                    </a>
-                    <a
-                      href="#"
-                      className="block hover:ml-2 rounded transition-all duration-300 px-4 py-2 hover:bg-yellow-200 text-sm "
-                    >
-                      Rider/Captain help center
-                    </a>
-                    <a
-                      href="#"
-                      className="block hover:ml-2 transition-all duration-300 border-t-2 border-blackpx-4 py-2 text-sm "
+                    <Link
+                      href={"/contact"}
+                      className="block hover:ml-2 transition-all duration-300 px-4 py-2 text-sm "
                     >
                       <div className="flex gap-2 items-center">
                         <FiMessageCircle />
                         <span>Message Support</span>
                       </div>
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href="#"
                       className="block hover:ml-2 transition-all duration-300 border-t-2 border-blackpx-4 py-2 text-sm "
                     >
@@ -253,17 +247,89 @@ const Navbar = () => {
                           Helpline +1 1111 1111 11
                         </Link>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </motion.div>
             </motion.div>
             <div>
-              <div className="flex justify-center items-center">
+              <div className="flex">
                 <Link href={"/blog"}>Blog</Link>
               </div>
             </div>
           </div>
+
+          <motion.div
+            className="ml-5"
+            onHoverStart={() => toggleHoverMenu("profile")}
+            onHoverEnd={() => toggleHoverMenu("profile")}
+          >
+            <div className="flex gap-4 transition-all duration-200 py-2 px-3 hover:bg-yellow-400 rounded-xl shadow-lg cursor-pointer justify-center items-center">
+              <Image
+                className=" w-8 h-8 rounded-lg"
+                src={profile}
+                alt="profile"
+                width={1000}
+                height={1000}
+              />
+              <div>
+                <div className="text-sm">@tanviranjum</div>
+                <div className="">$ 100 USD</div>
+              </div>
+            </div>
+            <motion.div
+              className="sub-menu"
+              initial="exit"
+              animate={isHover.profile ? "enter" : "exit"}
+              variants={subMenuAnimate}
+            >
+              <Link
+                href={"/autolane/profile"}
+                className="block hover:ml-2 transition-all duration-300 px-4 py-2 text-sm "
+              >
+                <div className="flex gap-2 items-center">
+                  <CgProfile />
+                  <span>Profile</span>
+                </div>
+              </Link>{" "}
+              <Link
+                href={"/autolane/business-profile"}
+                className="block hover:ml-2 transition-all duration-300 px-4 py-2 text-sm "
+              >
+                <div className="flex gap-2 items-center">
+                  <MdBusinessCenter />
+                  <span>Business Profile</span>
+                </div>
+              </Link>{" "}
+              <Link
+                href={"/autolane/digital-payment"}
+                className="block hover:ml-2 transition-all duration-300 px-4 py-2 text-sm "
+              >
+                <div className="flex gap-2 items-center">
+                  <MdOutlinePayments />
+                  <span>Digital Payment</span>
+                </div>
+              </Link>
+              <Link
+                href={"/autolane/saved-address"}
+                className="block hover:ml-2 transition-all duration-300 px-4 py-2 text-sm "
+              >
+                <div className="flex gap-2 items-center">
+                  <FaLocationDot />
+                  <span>Saved Address</span>
+                </div>
+              </Link>
+              <Link
+                href={"/autolane/settings"}
+                className="block hover:ml-2 transition-all duration-300 px-4 py-2 text-sm "
+              >
+                <div className="flex gap-2 items-center">
+                  <IoIosSettings />
+                  <span>Settings</span>
+                </div>
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </HideNav>

@@ -26,17 +26,16 @@ const Footer = () => {
 
   const footerLinks: footerLinksType = {
     Platform: [
-      { name: "AutoLane Bike", href: "/motorcycle" },
+      { name: "AutoLane Motorcycle", href: "/motorcycle" },
       { name: "AutoLane Car", href: "/car" },
       { name: "AutoLane Food", href: "/food" },
       { name: "AutoLane Shop", href: "/" },
       { name: "AutoLane Parcel", href: "/parcel" },
-      { name: "AutoLane Couriers", href: "/" },
-      { name: "AutoLane Rental", href: "/" },
+
       { name: "AutoLane Maps", href: "/" },
     ],
     Earn: [
-      { name: "Earn with Bike", href: "/earn/motorcycle" },
+      { name: "Earn with Motorcycle", href: "/earn/motorcycle" },
       { name: "Earn with Car", href: "/earn/car" },
       { name: "Earn with Cycle", href: "/earn/cycle" },
     ],
@@ -48,13 +47,8 @@ const Footer = () => {
       { name: "Resto Marchant Login", href: "/" },
     ],
     Help: [
-      { name: "Walk in support center", href: "/" },
-      { name: "User Help Center", href: "/" },
-      { name: "Rider Help Center", href: "/" },
-      { name: "Marchant Help Center", href: "/" },
-      { name: "Live Chat for Driver", href: "/" },
       { name: "Helpline +1111 111 11", href: "/" },
-      { name: "Emergency helpline +12345", href: "/" },
+      { name: "Emergency Contact", href: "/contact" },
     ],
   };
 
@@ -368,12 +362,18 @@ const Footer = () => {
             <div className="md:text-xl hover:underline cursor-pointer">
               About us
             </div>
-            <div className="md:text-xl hover:underline cursor-pointer">
+            <Link
+              href={"/blog"}
+              className="md:text-xl hover:underline cursor-pointer"
+            >
               Blog
-            </div>
-            <div className="md:text-xl hover:underline cursor-pointer">
+            </Link>
+            <Link
+              href={"/contact"}
+              className="md:text-xl hover:underline cursor-pointer"
+            >
               Contact
-            </div>
+            </Link>
             <div className="md:text-xl hover:underline cursor-pointer">T/C</div>
           </div>
         </div>
