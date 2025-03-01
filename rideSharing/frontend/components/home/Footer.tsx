@@ -116,7 +116,7 @@ const Footer = () => {
             )}
           </AnimatePresence>
           <ul className="list-none Platform hidden md:block">
-            {footerLinks.Platform.map((item, i) => (
+            {footerLinks.Platform.map((item) => (
               <motion.li
                 key={item.name}
                 className="py-1 hover:underline cursor-pointer"

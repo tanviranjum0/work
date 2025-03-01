@@ -216,21 +216,21 @@ const Sidebar = ({
                 }}
               >
                 <div className="py-1 rounded-md ">
-                  <a
-                    href="#"
+                  <Link
+                    href="/"
                     className="block px-4 py-2 hover:bg-yellow-200 text-sm text-gray-700  "
                   >
                     User help center
-                  </a>
+                  </Link>
 
-                  <a
+                  <Link
                     href="#"
                     className="block px-4 py-2 border-t-2 border-black hover:bg-yellow-200 text-sm text-gray-700 "
                   >
                     Rider/Captain help center
-                  </a>
+                  </Link>
 
-                  <a
+                  <Link
                     href="#"
                     className="block border-t-2 border-black px-4 py-2 text-sm text-gray-700 "
                   >
@@ -238,9 +238,9 @@ const Sidebar = ({
                       <FiMessageCircle />
                       <span>Message Support</span>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a
+                  <Link
                     href="#"
                     className="block border-t-2 border-black px-4 py-2 text-sm text-gray-700 "
                   >
@@ -248,7 +248,7 @@ const Sidebar = ({
                       <FaPhoneAlt />
                       <span>Helpline +1 1111 1111 11</span>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </motion.div>
             )}

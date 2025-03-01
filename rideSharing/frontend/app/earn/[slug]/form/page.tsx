@@ -6,6 +6,22 @@ import React, { useContext, useState } from "react";
 import avater from "../../../../images/appRelated/avater.jpeg";
 import { useRouter, useParams } from "next/navigation";
 
+interface formdata {
+  vehicleType: "";
+  firstName: "";
+  lastName: "";
+  email: "";
+  phone: "";
+  bikeRider: false;
+  foodDelivery: false;
+  parcelDelivary: false;
+  autoLaneCar: false;
+  state: "";
+  terms: false;
+}
+interface setFormdata {
+  setFormData: React.Dispatch<React.SetStateAction<string>>;
+}
 const carModels = {
   toyota: ["Corolla", "Camry", "Rav4", "Highlander"],
   honda: ["Civic", "Accord", "CR-V", "Pilot"],
@@ -31,7 +47,10 @@ const carModels = {
 };
 
 const app = () => {
-  const { formData, setFormData } = useContext(FormContext);
+  const { formData, setFormData } = useContext<{
+    formData: formdata;
+    setFormData: setFormdata;
+  }>(FormContext);
 
   const router = useRouter();
   const params = useParams<{ slug: string }>();

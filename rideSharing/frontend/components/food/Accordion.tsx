@@ -415,7 +415,7 @@ const Accordion = () => {
                     2
                   </div>
                   <div className="sm:text-xl font-semibold md:text-2xl ml-5">
-                    My foodman's number is unreachable. What should i do?
+                    My foodman&apos;s number is unreachable. What should i do?
                   </div>
                 </div>
                 <div className={`${accordion.two && "-rotate-90"}`}>

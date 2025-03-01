@@ -238,14 +238,12 @@ const Navbar = () => {
                       </div>
                     </Link>
                     <Link
-                      href="#"
+                      href={"tel:+11111111111"}
                       className="block hover:ml-2 transition-all duration-300 border-t-2 border-blackpx-4 py-2 text-sm "
                     >
                       <div className="flex gap-2 items-center">
                         <FaPhoneAlt />
-                        <Link href={"tel:+11111111111"}>
-                          Helpline +1 1111 1111 11
-                        </Link>
+                        <div>Helpline +1 1111 1111 11</div>
                       </div>
                     </Link>
                   </div>

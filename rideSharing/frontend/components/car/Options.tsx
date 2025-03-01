@@ -58,7 +58,7 @@ const Options = () => {
             `Experience peak comfort and safety with our well-maintained cars
           ideal for small groups of 4 or individuals.`}
           {selectedOption == "basic" &&
-            `Our affordable AC cars can host up to 4 people and it's perfect for your daily commute`}
+            `Our affordable AC cars can host up to 4 people and it&apos;s perfect for your daily commute`}
           {selectedOption == "max" &&
             `7-seater vehicles that can host up to 6 passengers comfortably, making them perfect for group outings & hangouts.`}
         </div>

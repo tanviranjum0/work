@@ -12,7 +12,6 @@ import google from "../../images/appdownloadicon/Google-Play-ds.png";
 import apple from "../../images/appdownloadicon/App-Store-ds.png";
 import foodSelect from "../../images/foodPage/Select-and-set-your-food-2.jpg";
 import foodDelivary from "../../images/foodPage/pathao-food-delivery-3.jpg";
-import standMan from "../../images/appRelated/rider.jpg";
 import road from "../../images/BikeRouting/road.png";
 import Accordion from "../../components/food/Accordion";
 import smallRoad from "../../images/BikeRouting/road-bike-mobile.png";

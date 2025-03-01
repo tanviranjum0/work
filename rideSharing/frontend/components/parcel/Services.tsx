@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import { FaGift } from "react-icons/fa";
 import { GrDocumentText } from "react-icons/gr";
