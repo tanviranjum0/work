@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<!-- 
+Appster
+Author: Hencework
+
+-->
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appster - A Bootstrap based library of modern, reusable and flexible components designed specially for SaaS web applications.</title>
+    <meta name="description" content="A library of modern, reusable and flexible components for your SaaS web applications by hencework. Based on Bootstrap."/>
+    
+	<!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+	
+	<!-- CSS -->
+    <link href="dist/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#vertical_nav" data-bs-offset="190">
+   	<!-- Wrapper -->
+	<div class="hk-wrapper" data-layout="vertical" data-layout-style="default" data-menu="light" data-footer="simple" data-aside="sticky">
+		<!-- Top Navbar -->
+		<nav class="hk-navbar navbar navbar-expand-xl navbar-light fixed-top border-0">
+			<div class="container-xxl">
+			<!-- Start Nav -->
+			<div class="nav-start-wrap">
+				<button class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover navbar-toggle d-xl-none"><span class="icon"><span class="feather-icon"><i data-feather="align-left"></i></span></span></button>
+					
+				<!-- Search -->
+				<form id="doc-list" class="dropdown navbar-search doc-search">
+					<div class="dropdown-toggle no-caret" data-bs-toggle="dropdown" data-dropdown-animation data-bs-auto-close="outside">
+						<a href="#" class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover d-xl-none"><span class="icon"><span class="feather-icon"><i data-feather="search"></i></span></span></a>
+						<div class="input-group d-xl-flex d-none">
+							<span class="input-affix-wrapper input-search affix-border">
+								<input type="text" class="form-control doc-form-control fuzzy-search bg-transparent"  data-navbar-search-close="false" placeholder="Search in docs" aria-label="Search">
+								<span class="input-suffix"><span>/</span>
+									<span class="btn-input-clear"><span class="feather-icon"><i data-feather="x"></i></span></span>
+									<span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
+										<span class="sr-only">Loading...</span>
+									</span>
+								</span>
+							</span>
+						</div>
+					</div>
+					<div class="dropdown-menu">
+						<!-- Mobile Search -->
+						<div class="dropdown-item d-xl-none bg-transparent px-0">
+							<div class="input-group mobile-search">
+								<span class="input-affix-wrapper input-search">
+									<input type="text" class="form-control fuzzy-search" placeholder="Search in docs" aria-label="Search">
+									<span class="input-suffix">
+										<span class="btn-input-clear"><span class="feather-icon"><i data-feather="x"></i></span></span>
+										<span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
+											<span class="sr-only">Loading...</span>
+										</span>
+									</span>
+								</span>
+							</div>
+						</div>
+						<!--/ Mobile Search -->
+						<div data-simplebar class="dropdown-body">
+							<ul class="list p-0 m-0"></ul>
+							<div class="no-result text-center p-3">
+								<div class="svg-icon fs-1 mb-3">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-x" viewBox="0 0 16 16">
+										<path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181L15.546 8H14.54l.265-2.91A1 1 0 0 0 13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91H9v1H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zm6.339-1.577A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
+										<path d="M11.854 10.146a.5.5 0 0 0-.707.708L12.293 12l-1.146 1.146a.5.5 0 0 0 .707.708L13 12.707l1.146 1.147a.5.5 0 0 0 .708-.708L13.707 12l1.147-1.146a.5.5 0 0 0-.707-.708L13 11.293l-1.146-1.147z"/>
+									  </svg>
+								</div>
+								
+								<h6>No result found</h6>
+								<p class="fs-7">Please try with different query</p>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- /Search -->
+			</div>
+			<!-- /Start Nav -->
+			
+			<!-- End Nav -->
+			<div class="nav-end-wrap">
+				<ul class="navbar-nav flex-row">
+					<li class="nav-item me-2">
+						<select class="form-select doc-form-control doc-select w-100p">
+							<option value="1">Html</option>
+							<option value="2" disabled>React</option>
+						</select>
+					</li>
+					<li class="nav-item me-2">
+						<a href="#/contact"  class="btn btn-soft-secondary"><span><span>Get Support</span><span class="icon"><span class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+						  </svg></span></span></span></a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="btn btn-icon btn-flush-dark flush-soft-hover"><span class="icon"><span class="feather-icon"><i data-feather="moon"></i></span></span></a>
+					</li>
+				</ul>
+			</div>
+			<!-- /End Nav -->
+			</div>									
+		</nav>
+		<!-- /Top Navbar -->
+
+        <!-- Vertical Nav -->
+        <div class="hk-menu doc-menu">
+			<!-- Brand -->
+			<div class="menu-header">
+				<span>
+					<a class="d-flex navbar-brand me-2" href="#">
+						<img class="brand-img img-fluid" src="dist/img/logo-light.svg" alt="brand" />
+					</a>
+					<a href="change-log.html" class="d-flex"><span class="badge rounded badge-soft-blue badge-sm">v1.0</span></a>
+				</span>
+			</div>
+			<!-- /Brand -->
+
+			<!-- Main Menu -->
+			<div data-simplebar class="nicescroll-bar">
+				<div class="menu-content-wrap">
+					<div class="menu-group">
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="index.html">
+									<span class="nav-link-text">Introduction</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="getting-started.html">
+									<span class="nav-link-text">Getting Started</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="customization.html">
+									<span class="nav-link-text">Customization</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dark-theme.html">
+									<span class="nav-link-text">Dark Theme</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="credit.html">
+									<span class="nav-link-text">Credit</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="change-log.html">
+									<span class="nav-link-text">Change Log</span>
+								</a>
+							</li>
+						</ul>	
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Utilities</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="grid-system.html"><span class="nav-link-text">Grid</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="typography.html"><span class="nav-link-text">Typography</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="background.html"><span class="nav-link-text">Background</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="border.html"><span class="nav-link-text">Border</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="colors.html"><span class="nav-link-text">Color</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="shadow.html"><span class="nav-link-text">Shadow</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="sizing.html"><span class="nav-link-text">Sizing</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="spacing.html"><span class="nav-link-text">Spacing</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="shapes.html"><span class="nav-link-text">Shapes</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="seperators.html"><span class="nav-link-text">Seperators</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="media-object.html"><span class="nav-link-text">Media Objects</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="embeds.html"><span class="nav-link-text">Embeds</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="images.html"><span class="nav-link-text">Images</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="icon-fonts.html"><span class="nav-link-text">Icon Fonts</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Data Display</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="avatar.html"><span class="nav-link-text">Avatar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="accordion.html"><span class="nav-link-text">Accordion</span></a>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="badge.html"><span class="nav-link-text">Badges</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-badges.html"><span class="nav-link-text">Advanced Badges</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tooltip.html"><span class="nav-link-text">Tooltip</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="popovers.html"><span class="nav-link-text">Popovers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="modal.html"><span class="nav-link-text">Modal</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="cards.html"><span class="nav-link-text">Cards</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="carousel.html"><span class="nav-link-text">Carousel</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="collapse.html"><span class="nav-link-text">Collapse</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="list-group.html"><span class="nav-link-text">List Group</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="ribbons.html"><span class="nav-link-text">Ribbons</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="drawer.html"><span class="nav-link-text">Drawers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="offcanvas.html"><span class="nav-link-text">Offcanvas</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="empty-states.html"><span class="nav-link-text">Empty States</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="callout.html"><span class="nav-link-text">Callout</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Data Entry</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="buttons.html"><span class="nav-link-text">Buttons</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-element.html"><span class="nav-link-text">Form Elements</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="input-groups.html"><span class="nav-link-text">Input Groups</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-layout.html"><span class="nav-link-text">Form Layout</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-mask.html"><span class="nav-link-text">Form Masks</span></a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link" href="form-validation.html"><span class="nav-link-text">Form Validation</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-form-ui.html"><span class="nav-link-text">Advance Form UI</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="cropperjs.html"><span class="nav-link-text">Cropperjs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropify.html"><span class="nav-link-text">Dropify</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropzone.html"><span class="nav-link-text">Dropzone</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="date-picker.html"><span class="nav-link-text">Date Picker</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="color-picker.html"><span class="nav-link-text">Color Picker</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="select2.html"><span class="nav-link-text">Select2</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="range-slider.html"><span class="nav-link-text">Range slider</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="input-spinner.html"><span class="nav-link-text">Input Spinner</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-wizard.html"><span class="nav-link-text">Form Wizard</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tinymce.html"><span class="nav-link-text">Tinymce</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="chips.html"><span class="nav-link-text">Chips</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="ratings.html"><span class="nav-link-text">Rating</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-search.html"><span class="nav-link-text">Page Search</span></a>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Feedback</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="sweet-alert.html"><span class="nav-link-text">Sweet Alert</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="notification.html"><span class="nav-link-text">Notifications</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toast.html"><span class="nav-link-text">Toastr</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tour.html"><span class="nav-link-text">Tour</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="timeout.html"><span class="nav-link-text">Timeout</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="alerts.html"><span class="nav-link-text">Alerts</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="placeholders.html"><span class="nav-link-text">Placeholders</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="spinner.html"><span class="nav-link-text">Spinners</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="progress.html"><span class="nav-link-text">Progress</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toasts.html"><span class="nav-link-text">Bootstrap Toasts</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="clipboard.html"><span class="nav-link-text">Clipboard</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Tables</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="basic-table.html"><span class="nav-link-text">Basic Tables</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="data-table.html"><span class="nav-link-text">Data Tables</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-table-ui.html"><span class="nav-link-text">Advance Table UI</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Charts</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="charts.html"><span class="nav-link-text">Charts</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Maps</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="google-map.html"><span class="nav-link-text">Google Maps</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="vector-map.html"><span class="nav-link-text">Vector Maps</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="animated-map.html"><span class="nav-link-text">Animated Maps</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Navigation</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="breadcrumb.html"><span class="nav-link-text">Breadcrumbs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropdowns.html"><span class="nav-link-text">Dropdowns</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="nav.html"><span class="nav-link-text">Nav</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="nav-tabs.html"><span class="nav-link-text">Tabs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_wizard">
+									<span class="nav-link-text">Wizard</span>
+								</a>
+								<ul id="dash_wizard" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="vertical-wizard.html">
+													<span class="nav-link-text">Vertical Wizard</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="horizontal-wizard.html">
+													<span class="nav-link-text">Horizontal Wizard</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="pagination.html"><span class="nav-link-text">Pagination</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toolbar.html"><span class="nav-link-text">Toolbar</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Behavioral</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="scrollspy.html"><span class="nav-link-text">Scroll Spy</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="sticky-element.html"><span class="nav-link-text">Sticky Elements</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="draggable.html"><span class="nav-link-text">Draggable</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="scrollable-content.html"><span class="nav-link-text">Scrollable Content</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="footers.html"><span class="nav-link-text">Fixed Footer</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="loadmore.html"><span class="nav-link-text">Load More</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Layout</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_menu">
+									<span class="nav-link-text">Menus</span>
+								</a>
+								<ul id="dash_menu" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="classic-menu.html">
+													<span class="nav-link-text">Classic Menu</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="horizontal-menu.html">
+													<span class="nav-link-text">Horizontal Menu</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="navbar-menu.html">
+													<span class="nav-link-text">Navbar Menu</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="navbar.html"><span class="nav-link-text">Navbar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-header.html"><span class="nav-link-text">Page Headers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="content-sidebar.html"><span class="nav-link-text">Content Sidebar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-footers.html"><span class="nav-link-text">Page Footers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_pg_layout">
+									<span class="nav-link-text">Page Layout</span>
+								</a>
+								<ul id="dash_pg_layout" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="page-without-sidebar.html">
+													<span class="nav-link-text">No Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-left-sidebar.html">
+													<span class="nav-link-text">Left Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-right-sidebar.html">
+													<span class="nav-link-text">Right Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-both-sidebar.html">
+													<span class="nav-link-text">Both Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="empty-page.html">
+													<span class="nav-link-text">Empty State</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					
+					
+				</div>
+			</div>
+			<!-- /Main Menu -->
+		</div>
+        <div id="hk_menu_backdrop" class="hk-menu-backdrop"></div>
+        <!-- /Vertical Nav -->
+
+		<!-- Explore Button -->
+       	<a href="#"  class="btn  btn-custom  btn-success btn-floating btn-demo-explore position-fixed btn-lg"> <span><span class="icon"><span class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection-fill" viewBox="0 0 16 16">
+			<path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z"/>
+		</svg></span> </span><span>Explore Templates</span></span></a>
+		<!-- /Explore Button -->
+
+		<!-- Main Content -->
+		<div class="hk-pg-wrapper">
+			<!-- Container -->
+			<div class="container-xxl">
+				<!-- Row -->
+				<div class="row">
+					<div class="col-xxl-10 col-xl-12">
+						<!-- Page Header -->
+						<div class="hk-pg-header doc-pg-header pt-6 pb-4">
+							<h1 class="display-6">Validation</h1>
+							<p class="p-lg">Provide valuable, actionable feedback to your users with HTML5 form <a href="https://getbootstrap.com/docs/5.1/forms/validation/" >validation</a>, via browser default behaviors or custom styles and JavaScript.</p>
+						</div>
+						<!-- /Page Header -->
+						
+						<!-- Page Body -->
+						<div class="hk-pg-body">
+							<section id="sec_1" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Custom styles</h5>
+									<p>For custom Bootstrap form validation messages, you’ll need to add the <code>novalidate</code> boolean attribute to your form. For server side validation <a href="https://getbootstrap.com/docs/4.5/components/forms/#server-side" >read full documentation</a>.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#script_tab">
+													<span class="nav-link-text">Script</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<form class="row g-3 needs-validation" novalidate>
+																<div class="col-md-4">
+																	<label for="validationCustom01" class="form-label">First name</label>
+																	<input type="text" class="form-control" id="validationCustom01" value="Mark" required>
+																	<div class="valid-feedback">
+																		Looks good!
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<label for="validationCustom02" class="form-label">Last name</label>
+																	<input type="text" class="form-control" id="validationCustom02" value="Otto" required>
+																	<div class="valid-feedback">
+																		Looks good!
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<label for="validationCustomUsername" class="form-label">Username</label>
+																	<div class="input-group has-validation">
+																		<span class="input-group-text" id="inputGroupPrepend">@</span>
+																		<input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+																		<div class="invalid-feedback">
+																		Please choose a username.
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6">
+																	<label for="validationCustom03" class="form-label">City</label>
+																	<input type="text" class="form-control" id="validationCustom03" required>
+																	<div class="invalid-feedback">
+																		Please provide a valid city.
+																	</div>
+																</div>
+																<div class="col-md-3">
+																	<label for="validationCustom04" class="form-label">State</label>
+																	<select class="form-select" id="validationCustom04" required>
+																		<option selected disabled value="">Choose...</option>
+																		<option>...</option>
+																	</select>
+																	<div class="invalid-feedback">
+																		Please select a valid state.
+																	</div>
+																</div>
+																<div class="col-md-3">
+																	<label for="validationCustom05" class="form-label">Zip</label>
+																	<input type="text" class="form-control" id="validationCustom05" required>
+																	<div class="invalid-feedback">
+																		Please provide a valid zip.
+																	</div>
+																</div>
+																<div class="col-12">
+																	<div class="form-check">
+																		<input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+																		<label class="form-check-label" for="invalidCheck">
+																		Agree to terms and conditions
+																		</label>
+																		<div class="invalid-feedback">
+																		You must agree before submitting.
+																		</div>
+																	</div>
+																</div>
+																<div class="col-12">
+																  <button class="btn btn-primary" type="submit">Submit form</button>
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;form class=&quot;row g-3 needs-validation&quot; novalidate&gt;
+	&lt;div class=&quot;col-md-4&quot;&gt;
+		&lt;label for=&quot;validationCustom01&quot; class=&quot;form-label&quot;&gt;First name&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationCustom01&quot; value=&quot;Mark&quot; required&gt;
+		&lt;div class=&quot;valid-feedback&quot;&gt;
+			Looks good!
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-4&quot;&gt;
+		&lt;label for=&quot;validationCustom02&quot; class=&quot;form-label&quot;&gt;Last name&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationCustom02&quot; value=&quot;Otto&quot; required&gt;
+		&lt;div class=&quot;valid-feedback&quot;&gt;
+			Looks good!
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-4&quot;&gt;
+		&lt;label for=&quot;validationCustomUsername&quot; class=&quot;form-label&quot;&gt;Username&lt;/label&gt;
+		&lt;div class=&quot;input-group has-validation&quot;&gt;
+			&lt;span class=&quot;input-group-text&quot; id=&quot;inputGroupPrepend&quot;&gt;@&lt;/span&gt;
+			&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationCustomUsername&quot; aria-describedby=&quot;inputGroupPrepend&quot; required&gt;
+			&lt;div class=&quot;invalid-feedback&quot;&gt;
+			Please choose a username.
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-6&quot;&gt;
+		&lt;label for=&quot;validationCustom03&quot; class=&quot;form-label&quot;&gt;City&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationCustom03&quot; required&gt;
+		&lt;div class=&quot;invalid-feedback&quot;&gt;
+			Please provide a valid city.
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-3&quot;&gt;
+		&lt;label for=&quot;validationCustom04&quot; class=&quot;form-label&quot;&gt;State&lt;/label&gt;
+		&lt;select class=&quot;form-select&quot; id=&quot;validationCustom04&quot; required&gt;
+			&lt;option selected disabled value=&quot;&quot;&gt;Choose...&lt;/option&gt;
+			&lt;option&gt;...&lt;/option&gt;
+		&lt;/select&gt;
+		&lt;div class=&quot;invalid-feedback&quot;&gt;
+			Please select a valid state.
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-3&quot;&gt;
+		&lt;label for=&quot;validationCustom05&quot; class=&quot;form-label&quot;&gt;Zip&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationCustom05&quot; required&gt;
+		&lt;div class=&quot;invalid-feedback&quot;&gt;
+			Please provide a valid zip.
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-12&quot;&gt;
+		&lt;div class=&quot;form-check&quot;&gt;
+			&lt;input class=&quot;form-check-input&quot; type=&quot;checkbox&quot; value=&quot;&quot; id=&quot;invalidCheck&quot; required&gt;
+			&lt;label class=&quot;form-check-label&quot; for=&quot;invalidCheck&quot;&gt;
+			Agree to terms and conditions
+			&lt;/label&gt;
+			&lt;div class=&quot;invalid-feedback&quot;&gt;
+			You must agree before submitting.
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-12&quot;&gt;
+		&lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot;&gt;Submit form&lt;/button&gt;
+	&lt;/div&gt;
+&lt;/form&gt;</code>
+													</pre>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="script_tab">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-javascript">
+														<code class="language-javascript">
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+	'use strict'
+
+	// Fetch all the forms we want to apply custom Bootstrap validation styles to
+	var forms = document.querySelectorAll('.needs-validation')
+
+	// Loop over them and prevent submission
+	Array.prototype.slice.call(forms)
+	.forEach(function (form) {
+		form.addEventListener('submit', function (event) {
+		if (!form.checkValidity()) {
+			event.preventDefault()
+			event.stopPropagation()
+		}
+
+		form.classList.add('was-validated')
+		}, false)
+	})
+})()</code>
+													</pre>	
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_2" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Browser defaults</h5>
+									<p>Not interested in custom validation feedback messages or writing JavaScript to change form behaviors? All good, you can use the browser defaults. Try submitting the form below.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_1">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_1">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_1">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<form class="row g-3">
+																<div class="col-md-4">
+																	<label for="validationDefault01" class="form-label">First name</label>
+																	<input type="text" class="form-control" id="validationDefault01" value="Mark" required>
+																</div>
+																<div class="col-md-4">
+																	<label for="validationDefault02" class="form-label">Last name</label>
+																	<input type="text" class="form-control" id="validationDefault02" value="Otto" required>
+																</div>
+																<div class="col-md-4">
+																	<label for="validationDefaultUsername" class="form-label">Username</label>
+																	<div class="input-group">
+																		<span class="input-group-text" id="inputGroupPrepend2">@</span>
+																		<input type="text" class="form-control" id="validationDefaultUsername"  aria-describedby="inputGroupPrepend2" required>
+																	</div>
+																</div>
+																<div class="col-md-6">
+																	<label for="validationDefault03" class="form-label">City</label>
+																	<input type="text" class="form-control" id="validationDefault03" required>
+																</div>
+																<div class="col-md-3">
+																	<label for="validationDefault04" class="form-label">State</label>
+																	<select class="form-select" id="validationDefault04" required>
+																		<option selected disabled value="">Choose...</option>
+																		<option>...</option>
+																	</select>
+																</div>
+																<div class="col-md-3">
+																	<label for="validationDefault05" class="form-label">Zip</label>
+																	<input type="text" class="form-control" id="validationDefault05" required>
+																</div>
+																<div class="col-12">
+																	<div class="form-check">
+																		<input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+																		<label class="form-check-label" for="invalidCheck2">
+																		Agree to terms and conditions
+																		</label>
+																	</div>
+																</div>
+																<div class="col-12">
+																	<button class="btn btn-primary" type="submit">Submit form</button>
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_1">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;form class=&quot;row g-3&quot;&gt;
+	&lt;div class=&quot;col-md-4&quot;&gt;
+		&lt;label for=&quot;validationDefault01&quot; class=&quot;form-label&quot;&gt;First name&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationDefault01&quot; value=&quot;Mark&quot; required&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-4&quot;&gt;
+		&lt;label for=&quot;validationDefault02&quot; class=&quot;form-label&quot;&gt;Last name&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationDefault02&quot; value=&quot;Otto&quot; required&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-4&quot;&gt;
+		&lt;label for=&quot;validationDefaultUsername&quot; class=&quot;form-label&quot;&gt;Username&lt;/label&gt;
+		&lt;div class=&quot;input-group&quot;&gt;
+			&lt;span class=&quot;input-group-text&quot; id=&quot;inputGroupPrepend2&quot;&gt;@&lt;/span&gt;
+			&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationDefaultUsername&quot;  aria-describedby=&quot;inputGroupPrepend2&quot; required&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-6&quot;&gt;
+		&lt;label for=&quot;validationDefault03&quot; class=&quot;form-label&quot;&gt;City&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationDefault03&quot; required&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-3&quot;&gt;
+		&lt;label for=&quot;validationDefault04&quot; class=&quot;form-label&quot;&gt;State&lt;/label&gt;
+		&lt;select class=&quot;form-select&quot; id=&quot;validationDefault04&quot; required&gt;
+			&lt;option selected disabled value=&quot;&quot;&gt;Choose...&lt;/option&gt;
+			&lt;option&gt;...&lt;/option&gt;
+		&lt;/select&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-3&quot;&gt;
+		&lt;label for=&quot;validationDefault05&quot; class=&quot;form-label&quot;&gt;Zip&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationDefault05&quot; required&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-12&quot;&gt;
+		&lt;div class=&quot;form-check&quot;&gt;
+			&lt;input class=&quot;form-check-input&quot; type=&quot;checkbox&quot; value=&quot;&quot; id=&quot;invalidCheck2&quot; required&gt;
+			&lt;label class=&quot;form-check-label&quot; for=&quot;invalidCheck2&quot;&gt;
+			Agree to terms and conditions
+			&lt;/label&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-12&quot;&gt;
+		&lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot;&gt;Submit form&lt;/button&gt;
+	&lt;/div&gt;
+&lt;/form&gt;</code>
+												</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_3" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Server side</h5>
+									<p>In case you require server-side validation, you can indicate invalid and valid form fields with <code>.is-invalid</code> and <code>.is-valid</code>. Note that <code>.invalid-feedback</code> is also supported with these classes.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_2">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_2">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_2">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<form class="row g-3">
+																<div class="col-md-4">
+																	<label for="validationServer01" class="form-label">First name</label>
+																	<input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required>
+																	<div class="valid-feedback">
+																		Looks good!
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<label for="validationServer02" class="form-label">Last name</label>
+																	<input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
+																	<div class="valid-feedback">
+																		Looks good!
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<label for="validationServerUsername" class="form-label">Username</label>
+																	<div class="input-group has-validation">
+																		<span class="input-group-text" id="inputGroupPrepend3">@</span>
+																		<input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
+																		<div id="validationServerUsernameFeedback" class="invalid-feedback">
+																			Please choose a username.
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6">
+																	<label for="validationServer03" class="form-label">City</label>
+																	<input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer03Feedback" required>
+																	<div id="validationServer03Feedback" class="invalid-feedback">
+																		Please provide a valid city.
+																	</div>
+																</div>
+																<div class="col-md-3">
+																	<label for="validationServer04" class="form-label">State</label>
+																	<select class="form-select is-invalid" id="validationServer04" aria-describedby="validationServer04Feedback" required>
+																		<option selected disabled value="">Choose...</option>
+																		<option>...</option>
+																	</select>
+																	<div id="validationServer04Feedback" class="invalid-feedback">
+																		Please select a valid state.
+																	</div>
+																</div>
+																<div class="col-md-3">
+																	<label for="validationServer05" class="form-label">Zip</label>
+																	<input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
+																	<div id="validationServer05Feedback" class="invalid-feedback">
+																		Please provide a valid zip.
+																	</div>
+																</div>
+																<div class="col-12">
+																	<div class="form-check">
+																		<input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
+																		<label class="form-check-label" for="invalidCheck3">
+																		Agree to terms and conditions
+																		</label>
+																		<div id="invalidCheck3Feedback" class="invalid-feedback">
+																			You must agree before submitting.
+																		</div>
+																	</div>
+																</div>
+																<div class="col-12">
+																	<button class="btn btn-primary" type="submit">Submit form</button>
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_2">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;form class=&quot;row g-3&quot;&gt;
+	&lt;div class=&quot;col-md-4&quot;&gt;
+		&lt;label for=&quot;validationServer01&quot; class=&quot;form-label&quot;&gt;First name&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control is-valid&quot; id=&quot;validationServer01&quot; value=&quot;Mark&quot; required&gt;
+		&lt;div class=&quot;valid-feedback&quot;&gt;
+			Looks good!
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-4&quot;&gt;
+		&lt;label for=&quot;validationServer02&quot; class=&quot;form-label&quot;&gt;Last name&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control is-valid&quot; id=&quot;validationServer02&quot; value=&quot;Otto&quot; required&gt;
+		&lt;div class=&quot;valid-feedback&quot;&gt;
+			Looks good!
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-4&quot;&gt;
+		&lt;label for=&quot;validationServerUsername&quot; class=&quot;form-label&quot;&gt;Username&lt;/label&gt;
+		&lt;div class=&quot;input-group has-validation&quot;&gt;
+			&lt;span class=&quot;input-group-text&quot; id=&quot;inputGroupPrepend3&quot;&gt;@&lt;/span&gt;
+			&lt;input type=&quot;text&quot; class=&quot;form-control is-invalid&quot; id=&quot;validationServerUsername&quot; aria-describedby=&quot;inputGroupPrepend3 validationServerUsernameFeedback&quot; required&gt;
+			&lt;div id=&quot;validationServerUsernameFeedback&quot; class=&quot;invalid-feedback&quot;&gt;
+				Please choose a username.
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-6&quot;&gt;
+		&lt;label for=&quot;validationServer03&quot; class=&quot;form-label&quot;&gt;City&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control is-invalid&quot; id=&quot;validationServer03&quot; aria-describedby=&quot;validationServer03Feedback&quot; required&gt;
+		&lt;div id=&quot;validationServer03Feedback&quot; class=&quot;invalid-feedback&quot;&gt;
+			Please provide a valid city.
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-3&quot;&gt;
+		&lt;label for=&quot;validationServer04&quot; class=&quot;form-label&quot;&gt;State&lt;/label&gt;
+		&lt;select class=&quot;form-select is-invalid&quot; id=&quot;validationServer04&quot; aria-describedby=&quot;validationServer04Feedback&quot; required&gt;
+			&lt;option selected disabled value=&quot;&quot;&gt;Choose...&lt;/option&gt;
+			&lt;option&gt;...&lt;/option&gt;
+		&lt;/select&gt;
+		&lt;div id=&quot;validationServer04Feedback&quot; class=&quot;invalid-feedback&quot;&gt;
+			Please select a valid state.
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-3&quot;&gt;
+		&lt;label for=&quot;validationServer05&quot; class=&quot;form-label&quot;&gt;Zip&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control is-invalid&quot; id=&quot;validationServer05&quot; aria-describedby=&quot;validationServer05Feedback&quot; required&gt;
+		&lt;div id=&quot;validationServer05Feedback&quot; class=&quot;invalid-feedback&quot;&gt;
+			Please provide a valid zip.
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-12&quot;&gt;
+		&lt;div class=&quot;form-check&quot;&gt;
+			&lt;input class=&quot;form-check-input is-invalid&quot; type=&quot;checkbox&quot; value=&quot;&quot; id=&quot;invalidCheck3&quot; aria-describedby=&quot;invalidCheck3Feedback&quot; required&gt;
+			&lt;label class=&quot;form-check-label&quot; for=&quot;invalidCheck3&quot;&gt;
+			Agree to terms and conditions
+			&lt;/label&gt;
+			&lt;div id=&quot;invalidCheck3Feedback&quot; class=&quot;invalid-feedback&quot;&gt;
+				You must agree before submitting.
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-12&quot;&gt;
+		&lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot;&gt;Submit form&lt;/button&gt;
+	&lt;/div&gt;
+&lt;/form&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_4" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Supported elements</h5>
+									<p>Form validation styles are also available for bootstrap custom form controls.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_3">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_3">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_3">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<form class="was-validated">
+																<div class="mb-3">
+																	<label for="validationTextarea" class="form-label">Textarea</label>
+																	<textarea class="form-control is-invalid" id="validationTextarea" placeholder="Required example textarea" required></textarea>
+																	<div class="invalid-feedback">
+																		Please enter a message in the textarea.
+																	</div>
+																</div>
+															  
+																<div class="form-check mb-3">
+																	<input type="checkbox" class="form-check-input" id="validationFormCheck1" required>
+																	<label class="form-check-label" for="validationFormCheck1">Check this checkbox</label>
+																	<div class="invalid-feedback">Example invalid feedback text</div>
+																</div>
+															  
+																<div class="form-check">
+																  	<input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" required>
+																  	<label class="form-check-label" for="validationFormCheck2">Toggle this radio</label>
+																</div>
+																<div class="form-check mb-3">
+																  	<input type="radio" class="form-check-input" id="validationFormCheck3" name="radio-stacked" required>
+																  	<label class="form-check-label" for="validationFormCheck3">Or toggle this other radio</label>
+																  	<div class="invalid-feedback">More example invalid feedback text</div>
+																</div>
+															  
+																<div class="mb-3">
+																	<select class="form-select" required aria-label="select example">
+																		<option value="">Open this select menu</option>
+																		<option value="1">One</option>
+																		<option value="2">Two</option>
+																		<option value="3">Three</option>
+																	</select>
+																  	<div class="invalid-feedback">Example invalid select feedback</div>
+																</div>
+															  
+																<div class="mb-3">
+																	<input type="file" class="form-control" aria-label="file example" required>
+																	<div class="invalid-feedback">Example invalid form file feedback</div>
+																</div>
+															  
+																<div class="mb-3">
+																  	<button class="btn btn-primary" type="submit" disabled>Submit form</button>
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_3">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;form class=&quot;was-validated&quot;&gt;
+	&lt;div class=&quot;mb-3&quot;&gt;
+		&lt;label for=&quot;validationTextarea&quot; class=&quot;form-label&quot;&gt;Textarea&lt;/label&gt;
+		&lt;textarea class=&quot;form-control is-invalid&quot; id=&quot;validationTextarea&quot; placeholder=&quot;Required example textarea&quot; required&gt;&lt;/textarea&gt;
+		&lt;div class=&quot;invalid-feedback&quot;&gt;
+			Please enter a message in the textarea.
+		&lt;/div&gt;
+	&lt;/div&gt;
+	
+	&lt;div class=&quot;form-check mb-3&quot;&gt;
+		&lt;input type=&quot;checkbox&quot; class=&quot;form-check-input&quot; id=&quot;validationFormCheck1&quot; required&gt;
+		&lt;label class=&quot;form-check-label&quot; for=&quot;validationFormCheck1&quot;&gt;Check this checkbox&lt;/label&gt;
+		&lt;div class=&quot;invalid-feedback&quot;&gt;Example invalid feedback text&lt;/div&gt;
+	&lt;/div&gt;
+	
+	&lt;div class=&quot;form-check&quot;&gt;
+			&lt;input type=&quot;radio&quot; class=&quot;form-check-input&quot; id=&quot;validationFormCheck2&quot; name=&quot;radio-stacked&quot; required&gt;
+			&lt;label class=&quot;form-check-label&quot; for=&quot;validationFormCheck2&quot;&gt;Toggle this radio&lt;/label&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;form-check mb-3&quot;&gt;
+			&lt;input type=&quot;radio&quot; class=&quot;form-check-input&quot; id=&quot;validationFormCheck3&quot; name=&quot;radio-stacked&quot; required&gt;
+			&lt;label class=&quot;form-check-label&quot; for=&quot;validationFormCheck3&quot;&gt;Or toggle this other radio&lt;/label&gt;
+			&lt;div class=&quot;invalid-feedback&quot;&gt;More example invalid feedback text&lt;/div&gt;
+	&lt;/div&gt;
+	
+	&lt;div class=&quot;mb-3&quot;&gt;
+		&lt;select class=&quot;form-select&quot; required aria-label=&quot;select example&quot;&gt;
+			&lt;option value=&quot;&quot;&gt;Open this select menu&lt;/option&gt;
+			&lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
+			&lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
+			&lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
+		&lt;/select&gt;
+			&lt;div class=&quot;invalid-feedback&quot;&gt;Example invalid select feedback&lt;/div&gt;
+	&lt;/div&gt;
+	
+	&lt;div class=&quot;mb-3&quot;&gt;
+		&lt;input type=&quot;file&quot; class=&quot;form-control&quot; aria-label=&quot;file example&quot; required&gt;
+		&lt;div class=&quot;invalid-feedback&quot;&gt;Example invalid form file feedback&lt;/div&gt;
+	&lt;/div&gt;
+	
+	&lt;div class=&quot;mb-3&quot;&gt;
+			&lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot; disabled&gt;Submit form&lt;/button&gt;
+	&lt;/div&gt;
+&lt;/form&gt;</code>
+												</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_5" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Tooltips</h5>
+									<p>Swap the <code>.{valid|invalid}-feedback</code> classes for <code>.{valid|invalid}-tooltip</code> classes to display validation feedback in a styled tooltip.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_4">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_4">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_4">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<form class="row g-3 needs-validation" novalidate>
+																<div class="col-md-4 position-relative">
+																	<label for="validationTooltip01" class="form-label">First name</label>
+																	<input type="text" class="form-control" id="validationTooltip01" value="Mark" required>
+																	<div class="valid-tooltip">
+																		Looks good!
+																	</div>
+																</div>
+																<div class="col-md-4 position-relative">
+																	<label for="validationTooltip02" class="form-label">Last name</label>
+																	<input type="text" class="form-control" id="validationTooltip02" value="Otto" required>
+																	<div class="valid-tooltip">
+																		Looks good!
+																	</div>
+																</div>
+																<div class="col-md-4 position-relative">
+																	<label for="validationTooltipUsername" class="form-label">Username</label>
+																	<div class="input-group has-validation">
+																			<span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
+																			<input type="text" class="form-control" id="validationTooltipUsername" aria-describedby="validationTooltipUsernamePrepend" required>
+																			<div class="invalid-tooltip">
+																			Please choose a unique and valid username.
+																			</div>
+																	</div>
+																</div>
+																<div class="col-md-6 position-relative">
+																	<label for="validationTooltip03" class="form-label">City</label>
+																	<input type="text" class="form-control" id="validationTooltip03" required>
+																	<div class="invalid-tooltip">
+																		Please provide a valid city.
+																	</div>
+																</div>
+																<div class="col-md-3 position-relative">
+																	<label for="validationTooltip04" class="form-label">State</label>
+																	<select class="form-select" id="validationTooltip04" required>
+																		<option selected disabled value="">Choose...</option>
+																		<option>...</option>
+																	</select>
+																	<div class="invalid-tooltip">
+																		Please select a valid state.
+																	</div>
+																</div>
+																<div class="col-md-3 position-relative">
+																	<label for="validationTooltip05" class="form-label">Zip</label>
+																	<input type="text" class="form-control" id="validationTooltip05" required>
+																	<div class="invalid-tooltip">
+																		Please provide a valid zip.
+																	</div>
+																</div>
+																<div class="col-12">
+																  	<button class="btn btn-primary" type="submit">Submit form</button>
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_4">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;form class=&quot;row g-3 needs-validation&quot; novalidate&gt;
+	&lt;div class=&quot;col-md-4 position-relative&quot;&gt;
+		&lt;label for=&quot;validationTooltip01&quot; class=&quot;form-label&quot;&gt;First name&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationTooltip01&quot; value=&quot;Mark&quot; required&gt;
+		&lt;div class=&quot;valid-tooltip&quot;&gt;
+			Looks good!
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-4 position-relative&quot;&gt;
+		&lt;label for=&quot;validationTooltip02&quot; class=&quot;form-label&quot;&gt;Last name&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationTooltip02&quot; value=&quot;Otto&quot; required&gt;
+		&lt;div class=&quot;valid-tooltip&quot;&gt;
+			Looks good!
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-4 position-relative&quot;&gt;
+		&lt;label for=&quot;validationTooltipUsername&quot; class=&quot;form-label&quot;&gt;Username&lt;/label&gt;
+		&lt;div class=&quot;input-group has-validation&quot;&gt;
+				&lt;span class=&quot;input-group-text&quot; id=&quot;validationTooltipUsernamePrepend&quot;&gt;@&lt;/span&gt;
+				&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationTooltipUsername&quot; aria-describedby=&quot;validationTooltipUsernamePrepend&quot; required&gt;
+				&lt;div class=&quot;invalid-tooltip&quot;&gt;
+				Please choose a unique and valid username.
+				&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-6 position-relative&quot;&gt;
+		&lt;label for=&quot;validationTooltip03&quot; class=&quot;form-label&quot;&gt;City&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationTooltip03&quot; required&gt;
+		&lt;div class=&quot;invalid-tooltip&quot;&gt;
+			Please provide a valid city.
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-3 position-relative&quot;&gt;
+		&lt;label for=&quot;validationTooltip04&quot; class=&quot;form-label&quot;&gt;State&lt;/label&gt;
+		&lt;select class=&quot;form-select&quot; id=&quot;validationTooltip04&quot; required&gt;
+			&lt;option selected disabled value=&quot;&quot;&gt;Choose...&lt;/option&gt;
+			&lt;option&gt;...&lt;/option&gt;
+		&lt;/select&gt;
+		&lt;div class=&quot;invalid-tooltip&quot;&gt;
+			Please select a valid state.
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-md-3 position-relative&quot;&gt;
+		&lt;label for=&quot;validationTooltip05&quot; class=&quot;form-label&quot;&gt;Zip&lt;/label&gt;
+		&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;validationTooltip05&quot; required&gt;
+		&lt;div class=&quot;invalid-tooltip&quot;&gt;
+			Please provide a valid zip.
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-12&quot;&gt;
+			&lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot;&gt;Submit form&lt;/button&gt;
+	&lt;/div&gt;
+	&lt;/form&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+						</div>
+						<!-- /Page Body -->
+					</div>
+					<!-- Doc Links Nav -->
+					<div class="col-xxl-2 d-xxl-block d-none hk-aside">
+						<div data-simplebar class="nicescroll-bar">
+							<div class="nav-toc nav-doc">
+								<div class="nav-header">
+									<span>Jump to</span>
+								</div>
+								<ul id="vertical_nav" class="nav nav-light nav-vertical">
+									<li class="nav-item">
+										<a data-scroll href="#sec_1" class="nav-link active">
+											<span class="nav-link-text">Custom styles</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_2" class="nav-link">
+											<span class="nav-link-text">Browser defaults</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_3" class="nav-link">
+											<span class="nav-link-text">Server side</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_4" class="nav-link">
+											<span class="nav-link-text">Supported elements</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_5" class="nav-link">
+											<span class="nav-link-text">Tooltips</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /Doc Links Nav -->	
+				</div>
+				<!-- /Row -->
+			</div>
+			<!-- /Container -->
+			
+			<!-- Page Footer -->
+			<div class="hk-footer border-0">
+				<footer class="container-xxl footer">
+					<div class="row">
+						<div class="col-xl-12">
+							<p class="footer-text"><span class="copy-text"><a href="#" >Hencework</a> © <span id="copyright_year"></span> All rights reserved.</span></p>
+						</div>
+					</div>
+				</footer>
+            </div>
+            <!-- / Page Footer -->
+		</div>
+		<!-- /Main Content -->
+	</div>
+    <!-- /Wrapper -->
+
+	<!-- jQuery -->
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+   	<script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- FeatherIcons JS -->
+    <script src="dist/js/feather.min.js"></script>
+
+    <!-- Fancy Dropdown JS -->
+    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+
+	<!-- Smooth Scroll JS -->
+    <script src="dist/js/smooth-scroll.js"></script>
+	
+	<!-- Simplebar JS -->
+	<script src="vendors/simplebar/dist/simplebar.min.js"></script>
+	
+	<!-- Prism JS -->
+	<script src="dist/js/prism.js"></script>
+	
+	<!-- Clipboard JS -->
+    <script src="vendors/clipboard/dist/clipboard.min.js"></script>
+	<script src="dist/js/clipboard-init.js"></script>
+	
+	<!-- List JS -->
+	<script src="vendors/list.js/dist/list.min.js"></script>
+	
+	<!-- Highlight JS -->
+	<script src="dist/js/jquery.highlight-4.js"></script>
+	
+	<!-- Init JS -->
+	<script src="dist/js/doc-init.js"></script>
+    <script src="dist/js/init.js"></script>
+	<script src="dist/js/validation-data.js"></script>
+</body>
+</html>

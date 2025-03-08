@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<!-- 
+Appster
+Author: Hencework
+
+-->
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appster - A Bootstrap based library of modern, reusable and flexible components designed specially for SaaS web applications.</title>
+    <meta name="description" content="A library of modern, reusable and flexible components for your SaaS web applications by hencework. Based on Bootstrap."/>
+    
+	<!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+	
+	<!-- Sweetalert2 CSS -->
+	<link href="vendors/@sweetalert2/theme-bootstrap-4/bootstrap-4.min.css" rel="stylesheet" type="text/css">
+
+	<!-- CSS -->
+    <link href="dist/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#vertical_nav" data-bs-offset="190">
+   	<!-- Wrapper -->
+	<div class="hk-wrapper" data-layout="vertical" data-layout-style="default" data-menu="light" data-footer="simple" data-aside="sticky">
+		<!-- Top Navbar -->
+		<nav class="hk-navbar navbar navbar-expand-xl navbar-light fixed-top border-0">
+			<div class="container-xxl">
+			<!-- Start Nav -->
+			<div class="nav-start-wrap">
+				<button class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover navbar-toggle d-xl-none"><span class="icon"><span class="feather-icon"><i data-feather="align-left"></i></span></span></button>
+					
+				<!-- Search -->
+				<form id="doc-list" class="dropdown navbar-search doc-search">
+					<div class="dropdown-toggle no-caret" data-bs-toggle="dropdown" data-dropdown-animation data-bs-auto-close="outside">
+						<a href="#" class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover d-xl-none"><span class="icon"><span class="feather-icon"><i data-feather="search"></i></span></span></a>
+						<div class="input-group d-xl-flex d-none">
+							<span class="input-affix-wrapper input-search affix-border">
+								<input type="text" class="form-control doc-form-control fuzzy-search bg-transparent"  data-navbar-search-close="false" placeholder="Search in docs" aria-label="Search">
+								<span class="input-suffix"><span>/</span>
+									<span class="btn-input-clear"><span class="feather-icon"><i data-feather="x"></i></span></span>
+									<span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
+										<span class="sr-only">Loading...</span>
+									</span>
+								</span>
+							</span>
+						</div>
+					</div>
+					<div class="dropdown-menu">
+						<!-- Mobile Search -->
+						<div class="dropdown-item d-xl-none bg-transparent px-0">
+							<div class="input-group mobile-search">
+								<span class="input-affix-wrapper input-search">
+									<input type="text" class="form-control fuzzy-search" placeholder="Search in docs" aria-label="Search">
+									<span class="input-suffix">
+										<span class="btn-input-clear"><span class="feather-icon"><i data-feather="x"></i></span></span>
+										<span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
+											<span class="sr-only">Loading...</span>
+										</span>
+									</span>
+								</span>
+							</div>
+						</div>
+						<!--/ Mobile Search -->
+						<div data-simplebar class="dropdown-body">
+							<ul class="list p-0 m-0"></ul>
+							<div class="no-result text-center p-3">
+								<div class="svg-icon fs-1 mb-3">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-x" viewBox="0 0 16 16">
+										<path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181L15.546 8H14.54l.265-2.91A1 1 0 0 0 13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91H9v1H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zm6.339-1.577A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
+										<path d="M11.854 10.146a.5.5 0 0 0-.707.708L12.293 12l-1.146 1.146a.5.5 0 0 0 .707.708L13 12.707l1.146 1.147a.5.5 0 0 0 .708-.708L13.707 12l1.147-1.146a.5.5 0 0 0-.707-.708L13 11.293l-1.146-1.147z"/>
+									  </svg>
+								</div>
+								
+								<h6>No result found</h6>
+								<p class="fs-7">Please try with different query</p>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- /Search -->
+			</div>
+			<!-- /Start Nav -->
+			
+			<!-- End Nav -->
+			<div class="nav-end-wrap">
+				<ul class="navbar-nav flex-row">
+					<li class="nav-item me-2">
+						<select class="form-select doc-form-control doc-select w-100p">
+							<option value="1">Html</option>
+							<option value="2" disabled>React</option>
+						</select>
+					</li>
+					<li class="nav-item me-2">
+						<a href="#/contact"  class="btn btn-soft-secondary"><span><span>Get Support</span><span class="icon"><span class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+						  </svg></span></span></span></a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="btn btn-icon btn-flush-dark flush-soft-hover"><span class="icon"><span class="feather-icon"><i data-feather="moon"></i></span></span></a>
+					</li>
+				</ul>
+			</div>
+			<!-- /End Nav -->
+			</div>									
+		</nav>
+		<!-- /Top Navbar -->
+
+        <!-- Vertical Nav -->
+        <div class="hk-menu doc-menu">
+			<!-- Brand -->
+			<div class="menu-header">
+				<span>
+					<a class="d-flex navbar-brand me-2" href="#">
+						<img class="brand-img img-fluid" src="dist/img/logo-light.svg" alt="brand" />
+					</a>
+					<a href="change-log.html" class="d-flex"><span class="badge rounded badge-soft-blue badge-sm">v1.0</span></a>
+				</span>
+			</div>
+			<!-- /Brand -->
+
+			<!-- Main Menu -->
+			<div data-simplebar class="nicescroll-bar">
+				<div class="menu-content-wrap">
+					<div class="menu-group">
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="index.html">
+									<span class="nav-link-text">Introduction</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="getting-started.html">
+									<span class="nav-link-text">Getting Started</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="customization.html">
+									<span class="nav-link-text">Customization</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dark-theme.html">
+									<span class="nav-link-text">Dark Theme</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="credit.html">
+									<span class="nav-link-text">Credit</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="change-log.html">
+									<span class="nav-link-text">Change Log</span>
+								</a>
+							</li>
+						</ul>	
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Utilities</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="grid-system.html"><span class="nav-link-text">Grid</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="typography.html"><span class="nav-link-text">Typography</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="background.html"><span class="nav-link-text">Background</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="border.html"><span class="nav-link-text">Border</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="colors.html"><span class="nav-link-text">Color</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="shadow.html"><span class="nav-link-text">Shadow</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="sizing.html"><span class="nav-link-text">Sizing</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="spacing.html"><span class="nav-link-text">Spacing</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="shapes.html"><span class="nav-link-text">Shapes</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="seperators.html"><span class="nav-link-text">Seperators</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="media-object.html"><span class="nav-link-text">Media Objects</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="embeds.html"><span class="nav-link-text">Embeds</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="images.html"><span class="nav-link-text">Images</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="icon-fonts.html"><span class="nav-link-text">Icon Fonts</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Data Display</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="avatar.html"><span class="nav-link-text">Avatar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="accordion.html"><span class="nav-link-text">Accordion</span></a>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="badge.html"><span class="nav-link-text">Badges</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-badges.html"><span class="nav-link-text">Advanced Badges</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tooltip.html"><span class="nav-link-text">Tooltip</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="popovers.html"><span class="nav-link-text">Popovers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="modal.html"><span class="nav-link-text">Modal</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="cards.html"><span class="nav-link-text">Cards</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="carousel.html"><span class="nav-link-text">Carousel</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="collapse.html"><span class="nav-link-text">Collapse</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="list-group.html"><span class="nav-link-text">List Group</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="ribbons.html"><span class="nav-link-text">Ribbons</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="drawer.html"><span class="nav-link-text">Drawers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="offcanvas.html"><span class="nav-link-text">Offcanvas</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="empty-states.html"><span class="nav-link-text">Empty States</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="callout.html"><span class="nav-link-text">Callout</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Data Entry</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="buttons.html"><span class="nav-link-text">Buttons</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-element.html"><span class="nav-link-text">Form Elements</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="input-groups.html"><span class="nav-link-text">Input Groups</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-layout.html"><span class="nav-link-text">Form Layout</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-mask.html"><span class="nav-link-text">Form Masks</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-validation.html"><span class="nav-link-text">Form Validation</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-form-ui.html"><span class="nav-link-text">Advance Form UI</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="cropperjs.html"><span class="nav-link-text">Cropperjs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropify.html"><span class="nav-link-text">Dropify</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropzone.html"><span class="nav-link-text">Dropzone</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="date-picker.html"><span class="nav-link-text">Date Picker</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="color-picker.html"><span class="nav-link-text">Color Picker</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="select2.html"><span class="nav-link-text">Select2</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="range-slider.html"><span class="nav-link-text">Range slider</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="input-spinner.html"><span class="nav-link-text">Input Spinner</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-wizard.html"><span class="nav-link-text">Form Wizard</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tinymce.html"><span class="nav-link-text">Tinymce</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="chips.html"><span class="nav-link-text">Chips</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="ratings.html"><span class="nav-link-text">Rating</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-search.html"><span class="nav-link-text">Page Search</span></a>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Feedback</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="sweet-alert.html"><span class="nav-link-text">Sweet Alert</span></a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link" href="notification.html"><span class="nav-link-text">Notifications</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toast.html"><span class="nav-link-text">Toastr</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tour.html"><span class="nav-link-text">Tour</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="timeout.html"><span class="nav-link-text">Timeout</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="alerts.html"><span class="nav-link-text">Alerts</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="placeholders.html"><span class="nav-link-text">Placeholders</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="spinner.html"><span class="nav-link-text">Spinners</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="progress.html"><span class="nav-link-text">Progress</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toasts.html"><span class="nav-link-text">Bootstrap Toasts</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="clipboard.html"><span class="nav-link-text">Clipboard</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Tables</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="basic-table.html"><span class="nav-link-text">Basic Tables</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="data-table.html"><span class="nav-link-text">Data Tables</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-table-ui.html"><span class="nav-link-text">Advance Table UI</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Charts</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="charts.html"><span class="nav-link-text">Charts</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Maps</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="google-map.html"><span class="nav-link-text">Google Maps</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="vector-map.html"><span class="nav-link-text">Vector Maps</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="animated-map.html"><span class="nav-link-text">Animated Maps</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Navigation</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="breadcrumb.html"><span class="nav-link-text">Breadcrumbs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropdowns.html"><span class="nav-link-text">Dropdowns</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="nav.html"><span class="nav-link-text">Nav</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="nav-tabs.html"><span class="nav-link-text">Tabs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_wizard">
+									<span class="nav-link-text">Wizard</span>
+								</a>
+								<ul id="dash_wizard" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="vertical-wizard.html">
+													<span class="nav-link-text">Vertical Wizard</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="horizontal-wizard.html">
+													<span class="nav-link-text">Horizontal Wizard</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="pagination.html"><span class="nav-link-text">Pagination</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toolbar.html"><span class="nav-link-text">Toolbar</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Behavioral</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="scrollspy.html"><span class="nav-link-text">Scroll Spy</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="sticky-element.html"><span class="nav-link-text">Sticky Elements</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="draggable.html"><span class="nav-link-text">Draggable</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="scrollable-content.html"><span class="nav-link-text">Scrollable Content</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="footers.html"><span class="nav-link-text">Fixed Footer</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="loadmore.html"><span class="nav-link-text">Load More</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Layout</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_menu">
+									<span class="nav-link-text">Menus</span>
+								</a>
+								<ul id="dash_menu" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="classic-menu.html">
+													<span class="nav-link-text">Classic Menu</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="horizontal-menu.html">
+													<span class="nav-link-text">Horizontal Menu</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="navbar-menu.html">
+													<span class="nav-link-text">Navbar Menu</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="navbar.html"><span class="nav-link-text">Navbar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-header.html"><span class="nav-link-text">Page Headers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="content-sidebar.html"><span class="nav-link-text">Content Sidebar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-footers.html"><span class="nav-link-text">Page Footers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_pg_layout">
+									<span class="nav-link-text">Page Layout</span>
+								</a>
+								<ul id="dash_pg_layout" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="page-without-sidebar.html">
+													<span class="nav-link-text">No Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-left-sidebar.html">
+													<span class="nav-link-text">Left Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-right-sidebar.html">
+													<span class="nav-link-text">Right Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-both-sidebar.html">
+													<span class="nav-link-text">Both Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="empty-page.html">
+													<span class="nav-link-text">Empty State</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					
+					
+				</div>
+			</div>
+			<!-- /Main Menu -->
+		</div>
+        <div id="hk_menu_backdrop" class="hk-menu-backdrop"></div>
+        <!-- /Vertical Nav -->
+
+		<!-- Explore Button -->
+       	<a href="#"  class="btn  btn-custom  btn-success btn-floating btn-demo-explore position-fixed btn-lg"> <span><span class="icon"><span class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection-fill" viewBox="0 0 16 16">
+			<path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z"/>
+		</svg></span> </span><span>Explore Templates</span></span></a>
+		<!-- /Explore Button -->
+
+		<!-- Main Content -->
+		<div class="hk-pg-wrapper">
+			<!-- Container -->
+			<div class="container-xxl">
+				<!-- Row -->
+				<div class="row">
+					<div class="col-xxl-10 col-xl-12">
+						<!-- Page Header -->
+						<div class="hk-pg-header doc-pg-header pt-6 pb-4">
+							<h1 class="display-6">Notification</h1>
+							<p class="p-lg">This plugin helps to turn standard bootstrap alerts into "growl" like notifications. check <a href="https://grotesquegentleadvance--samkhaled.repl.co/" >documentation</a>.</p>
+						</div>
+						<!-- /Page Header -->
+						
+						<!-- Page Body -->
+						<div class="hk-pg-body">
+							<section id="sec_1" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Contextual Notification</h5>
+									<p>It uses the structure of default alerts in notification popup.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#script_tab">
+													<span class="nav-link-text">Script</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab">
+												<div class="hstack flex-wrap align-items-start gap-3 p-4">
+													<button id="primary_notification" class="btn btn-primary">Primary Message</button>
+													<button id="warning_notification" class="btn btn-warning">Warning Message</button>
+													<button id="danger_notification" class="btn btn-danger">Danger Message</button>
+													<button id="info_notification" class="btn btn-info">Info Message</button>
+													<button id="success_notification" class="btn btn-success">Success Message</button>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;button id=&quot;primary_notification&quot; class=&quot;btn btn-primary&quot;&gt;Primary Message&lt;/button&gt;
+&lt;button id=&quot;warning_notification&quot; class=&quot;btn btn-warning&quot;&gt;Warning Message&lt;/button&gt;
+&lt;button id=&quot;danger_notification&quot; class=&quot;btn btn-danger&quot;&gt;Danger Message&lt;/button&gt;
+&lt;button id=&quot;info_notification&quot; class=&quot;btn btn-info&quot;&gt;Info Message&lt;/button&gt;
+&lt;button id=&quot;success_notification&quot; class=&quot;btn btn-success&quot;&gt;Success Message&lt;/button&gt;</code>
+													</pre>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="script_tab">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-javascript">
+														<code class="language-javascript">
+&lt;!-- Bootstrap Notify JS --&gt;
+&lt;script src=&quot;dist/js/bootstrap-notify.min.js&quot;&gt;&lt;/script&gt;
+
+setTimeout(function(){
+	$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+},100);
+$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+	animate: {
+		enter: 'animated bounceInDown',
+		exit: 'animated bounceOutUp'
+	},
+	type: "dismissible alert-primary",
+		delay:50000000
+});
+$('#primary_notification').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "primary",
+		allow_dismiss:false
+	});
+});
+$('#warning_notification').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "warning",
+		allow_dismiss:false
+	});
+});
+$('#info_notification').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "info",
+		allow_dismiss:false
+	});
+});	
+$('#success_notification').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "success",
+		allow_dismiss:false
+	});
+});	
+$('#danger_notification').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "danger",
+		allow_dismiss:false
+	});
+});</code>
+													</pre>	
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_2" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Dismisable Notification</h5>
+									<p>In dismisable notification user can dissmis the alert notifications.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_1">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_1">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#script_tab_1">
+													<span class="nav-link-text">Script</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_1">
+												<div class="hstack flex-wrap align-items-start gap-3 p-4">
+													<button id="d_primary_notification" class="btn btn-primary">Primary Message</button>
+													<button id="d_warning_notification" class="btn btn-warning">Warning Message</button>
+													<button id="d_danger_notification" class="btn btn-danger">Danger Message</button>
+													<button id="d_info_notification" class="btn btn-info">Info Message</button>
+													<button id="d_success_notification" class="btn btn-success">Success Message</button>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_1">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;button id=&quot;d_primary_notification&quot; class=&quot;btn btn-primary&quot;&gt;Primary Message&lt;/button&gt;
+&lt;button id=&quot;d_warning_notification&quot; class=&quot;btn btn-warning&quot;&gt;Warning Message&lt;/button&gt;
+&lt;button id=&quot;d_danger_notification&quot; class=&quot;btn btn-danger&quot;&gt;Danger Message&lt;/button&gt;
+&lt;button id=&quot;d_info_notification&quot; class=&quot;btn btn-info&quot;&gt;Info Message&lt;/button&gt;
+&lt;button id=&quot;d_success_notification&quot; class=&quot;btn btn-success&quot;&gt;Success Message&lt;/button&gt;</code>
+												</pre>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="script_tab_1">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-javascript">
+														<code class="language-javascript">
+$('#d_primary_notification').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "dismissible alert-primary",
+	});
+});
+$('#d_warning_notification').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "dismissible alert-warning",
+	});
+});
+$('#d_info_notification').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "dismissible alert-info",
+	});
+});	
+$('#d_success_notification').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "dismissible alert-success",
+	});
+});	
+$('#d_danger_notification').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "dismissible alert-danger",
+	});
+});</code>
+													</pre>	
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_3" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Inverse Notification</h5>
+									<p>It uses the structure of inverse alerts in notification popup.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_2">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_2">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#script_tab_2">
+													<span class="nav-link-text">Script</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_2">
+												<div class="hstack flex-wrap align-items-start gap-3 p-4">
+													<button id="primary_notification_inverse" class="btn btn-primary">Primary Message</button>
+													<button id="warning_notification_inverse" class="btn btn-warning">Warning Message</button>
+													<button id="danger_notification_inverse" class="btn btn-danger">Danger Message</button>
+													<button id="info_notification_inverse" class="btn btn-info">Info Message</button>
+													<button id="success_notification_inverse" class="btn btn-success">Success Message</button>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_2">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;button id=&quot;primary_notification_inverse&quot; class=&quot;btn btn-primary&quot;&gt;Primary Message&lt;/button&gt;
+&lt;button id=&quot;warning_notification_inverse&quot; class=&quot;btn btn-warning&quot;&gt;Warning Message&lt;/button&gt;
+&lt;button id=&quot;danger_notification_inverse&quot; class=&quot;btn btn-danger&quot;&gt;Danger Message&lt;/button&gt;
+&lt;button id=&quot;info_notification_inverse&quot; class=&quot;btn btn-info&quot;&gt;Info Message&lt;/button&gt;
+&lt;button id=&quot;success_notification_inverse&quot; class=&quot;btn btn-success&quot;&gt;Success Message&lt;/button&gt;</code>
+													</pre>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="script_tab_2">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-javascript">
+														<code class="language-javascript">
+$('#primary_notification_inverse').on('click', function(event) {
+	event.preventDefault();
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "inv alert-inv-primary",
+		allow_dismiss:false,
+		delay:50000000
+	});
+});
+$('#warning_notification_inverse').on('click', function(event) {
+	event.preventDefault();
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "inv alert-inv-warning",
+		allow_dismiss:false
+	});
+});
+$('#info_notification_inverse').on('click', function(event) {
+	event.preventDefault();
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "inv alert-inv-info",
+		allow_dismiss:false
+	});
+});	
+$('#success_notification_inverse').on('click', function(event) {
+	event.preventDefault();
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "inv alert-inv-success",
+		allow_dismiss:false
+	});
+});	
+$('#danger_notification_inverse').on('click', function(event) {
+	event.preventDefault();
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "inv alert-inv-danger",
+		allow_dismiss:false
+	});
+});</code>
+													</pre>	
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_4" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Position</h5>
+									<p>You can change the position of notification according to your requiremnt.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_3">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_3">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#script_tab_3">
+													<span class="nav-link-text">Script</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_3">
+												<div class="hstack flex-wrap align-items-start gap-3 p-4">
+													<button id="top_right_pos" class="btn btn-primary">Top Right</button>
+													<button id="bottom_right_pos" class="btn btn-warning">Bottom Right</button>
+													<button id="top_left_pos" class="btn btn-danger">Top Left</button>
+													<button id="top_center_pos" class="btn btn-info">Top Center</button>
+													<button id="bottom_left_pos" class="btn btn-success">bottom Left</button>
+													<button id="bottom_center_pos" class="btn btn-pink">bottom Center</button>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_3">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;button id=&quot;top_right_pos&quot; class=&quot;btn btn-primary&quot;&gt;Top Right&lt;/button&gt;
+&lt;button id=&quot;bottom_right_pos&quot; class=&quot;btn btn-warning&quot;&gt;Bottom Right&lt;/button&gt;
+&lt;button id=&quot;top_left_pos&quot; class=&quot;btn btn-danger&quot;&gt;Top Left&lt;/button&gt;
+&lt;button id=&quot;top_center_pos&quot; class=&quot;btn btn-info&quot;&gt;Top Center&lt;/button&gt;
+&lt;button id=&quot;bottom_left_pos&quot; class=&quot;btn btn-success&quot;&gt;bottom Left&lt;/button&gt;
+&lt;button id=&quot;bottom_center_pos&quot; class=&quot;btn btn-pink&quot;&gt;bottom Center&lt;/button&gt;</code>
+												</pre>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="script_tab_3">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-javascript">
+														<code class="language-javascript">
+$('#top_right_pos').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "dismissible alert-primary",
+		placement: {
+			from: "top",
+			align: "right"
+		},
+	});
+});
+$('#bottom_right_pos').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "dismissible alert-primary",
+		placement: {
+			from: "bottom",
+			align: "right"
+		},
+	});
+});
+$('#top_left_pos').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "dismissible alert-primary",
+		placement: {
+			from: "top",
+			align: "left"
+		},
+	});
+});
+$('#bottom_left_pos').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "dismissible alert-primary",
+		placement: {
+			from: "bottom",
+			align: "left"
+		},
+	});
+});
+$('#bottom_center_pos').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInUp',
+			exit: 'animated bounceOutUp'
+		},
+		type: "dismissible alert-primary",
+		placement: {
+			from: "bottom",
+			align: "center"
+		},
+	});
+});
+$('#top_center_pos').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: "dismissible alert-primary",
+		placement: {
+			from: "top",
+			align: "center"
+		},
+	});
+});</code>
+													</pre>	
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_5" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Animation</h5>
+									<p>You can add animate.css animations.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_4">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_4">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#script_tab_4">
+													<span class="nav-link-text">Script</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_4">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col-sm-4">
+															<select class="form-control custom-select" id="hk_notify_animate_enter">
+																<optgroup label="Attention Seekers">
+																	<option value="bounce">bounce</option>
+																	<option value="flash">flash</option>
+																  <option value="pulse">pulse</option>
+																  <option value="rubberBand">rubberBand</option>
+																  <option value="flip">flip</option>
+																  <option value="shake">shake</option>
+																  <option value="swing">swing</option>
+																  <option value="tada">tada</option>
+																  <option value="wobble">wobble</option>
+																  <option value="jello">jello</option>
+																</optgroup>
+		
+																<optgroup label="Bouncing Entrances">
+																  <option value="bounceIn">bounceIn</option>
+																  <option value="bounceInDown">bounceInDown</option>
+																  <option value="bounceInLeft">bounceInLeft</option>
+																  <option value="bounceInRight">bounceInRight</option>
+																  <option value="bounceInUp">bounceInUp</option>
+																</optgroup>
+																<optgroup label="Fading Entrances">
+																  <option value="fadeIn">fadeIn</option>
+																  <option value="fadeInDown">fadeInDown</option>
+																  <option value="fadeInDownBig">fadeInDownBig</option>
+																  <option value="fadeInLeft">fadeInLeft</option>
+																  <option value="fadeInLeftBig">fadeInLeftBig</option>
+																  <option value="fadeInRight">fadeInRight</option>
+																  <option value="fadeInRightBig">fadeInRightBig</option>
+																  <option value="fadeInUp">fadeInUp</option>
+																  <option value="fadeInUpBig">fadeInUpBig</option>
+																</optgroup>
+		
+																<optgroup label="Flippers">
+																  <option value="flipInX">flipInX</option>
+																  <option value="flipInY">flipInY</option>
+																</optgroup>
+		
+																<optgroup label="Lightspeed">
+																  <option value="lightSpeedIn">lightSpeedIn</option>
+																</optgroup>
+		
+																<optgroup label="Rotating Entrances">
+																  <option value="rotateIn">rotateIn</option>
+																  <option value="rotateInDownLeft">rotateInDownLeft</option>
+																  <option value="rotateInDownRight">rotateInDownRight</option>
+																  <option value="rotateInUpLeft">rotateInUpLeft</option>
+																  <option value="rotateInUpRight">rotateInUpRight</option>
+																</optgroup>
+		
+																<optgroup label="Sliding Entrances">
+																  <option value="slideInUp">slideInUp</option>
+																  <option value="slideInDown">slideInDown</option>
+																  <option value="slideInLeft">slideInLeft</option>
+																  <option value="slideInRight">slideInRight</option>
+		
+																</optgroup>
+																
+																<optgroup label="Zoom Entrances">
+																  <option value="zoomIn">zoomIn</option>
+																  <option value="zoomInDown">zoomInDown</option>
+																  <option value="zoomInLeft">zoomInLeft</option>
+																  <option value="zoomInRight">zoomInRight</option>
+																  <option value="zoomInUp">zoomInUp</option>
+																</optgroup>
+																
+																<optgroup label="Specials">
+																 <option value="rollIn">rollIn</option>
+																</optgroup>
+															</select>
+														</div>
+														<div class="col-sm-4">
+															<select class="form-control custom-select" id="hk_notify_animate_exit">
+																<optgroup label="Bouncing Exits">
+																  <option value="bounceOut">bounceOut</option>
+																  <option value="bounceOutDown">bounceOutDown</option>
+																  <option value="bounceOutLeft">bounceOutLeft</option>
+																  <option value="bounceOutRight">bounceOutRight</option>
+																  <option value="bounceOutUp">bounceOutUp</option>
+																</optgroup>
+																<optgroup label="Fading Exits">
+																  <option value="fadeOut">fadeOut</option>
+																  <option value="fadeOutDown">fadeOutDown</option>
+																  <option value="fadeOutDownBig">fadeOutDownBig</option>
+																  <option value="fadeOutLeft">fadeOutLeft</option>
+																  <option value="fadeOutLeftBig">fadeOutLeftBig</option>
+																  <option value="fadeOutRight">fadeOutRight</option>
+																  <option value="fadeOutRightBig">fadeOutRightBig</option>
+																  <option value="fadeOutUp">fadeOutUp</option>
+																  <option value="fadeOutUpBig">fadeOutUpBig</option>
+																</optgroup>
+		
+																<optgroup label="Flippers">
+																   <option value="flipOutX">flipOutX</option>
+																  <option value="flipOutY">flipOutY</option>
+																</optgroup>
+		
+																<optgroup label="Lightspeed">
+																 <option value="lightSpeedOut">lightSpeedOut</option>
+																</optgroup>
+		
+																<optgroup label="Rotating Exits">
+																  <option value="rotateOut">rotateOut</option>
+																  <option value="rotateOutDownLeft">rotateOutDownLeft</option>
+																  <option value="rotateOutDownRight">rotateOutDownRight</option>
+																  <option value="rotateOutUpLeft">rotateOutUpLeft</option>
+																  <option value="rotateOutUpRight">rotateOutUpRight</option>
+																</optgroup>
+		
+																<optgroup label="Sliding Exits">
+																  <option value="slideOutUp">slideOutUp</option>
+																  <option value="slideOutDown">slideOutDown</option>
+																  <option value="slideOutLeft">slideOutLeft</option>
+																  <option value="slideOutRight">slideOutRight</option>
+																  
+																</optgroup>
+																
+																<optgroup label="Zoom Exits">
+																  <option value="zoomOut">zoomOut</option>
+																  <option value="zoomOutDown">zoomOutDown</option>
+																  <option value="zoomOutLeft">zoomOutLeft</option>
+																  <option value="zoomOutRight">zoomOutRight</option>
+																  <option value="zoomOutUp">zoomOutUp</option>
+																</optgroup>
+		
+																<optgroup label="Specials">
+																  <option value="hinge">hinge</option>
+																	<option value="rollOut">rollOut</option>
+																</optgroup>
+															</select>
+														</div>
+														<div class="col-sm-4">
+															<button id="check_anim_notify" class="btn btn-info">Check Animation</button>
+														</div>
+													</div>
+												</div>
+												
+											</div>
+											<div class="tab-pane fade" id="html_tab_4">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;row&quot;&gt;
+	&lt;div class=&quot;col-sm-4&quot;&gt;
+		&lt;select class=&quot;form-control custom-select&quot; id=&quot;hk_notify_animate_enter&quot;&gt;
+			&lt;optgroup label=&quot;Attention Seekers&quot;&gt;
+				&lt;option value=&quot;bounce&quot;&gt;bounce&lt;/option&gt;
+				&lt;option value=&quot;flash&quot;&gt;flash&lt;/option&gt;
+				&lt;option value=&quot;pulse&quot;&gt;pulse&lt;/option&gt;
+				&lt;option value=&quot;rubberBand&quot;&gt;rubberBand&lt;/option&gt;
+				&lt;option value=&quot;flip&quot;&gt;flip&lt;/option&gt;
+				&lt;option value=&quot;shake&quot;&gt;shake&lt;/option&gt;
+				&lt;option value=&quot;swing&quot;&gt;swing&lt;/option&gt;
+				&lt;option value=&quot;tada&quot;&gt;tada&lt;/option&gt;
+				&lt;option value=&quot;wobble&quot;&gt;wobble&lt;/option&gt;
+				&lt;option value=&quot;jello&quot;&gt;jello&lt;/option&gt;
+			&lt;/optgroup&gt;
+
+			&lt;optgroup label=&quot;Bouncing Entrances&quot;&gt;
+				&lt;option value=&quot;bounceIn&quot;&gt;bounceIn&lt;/option&gt;
+				&lt;option value=&quot;bounceInDown&quot;&gt;bounceInDown&lt;/option&gt;
+				&lt;option value=&quot;bounceInLeft&quot;&gt;bounceInLeft&lt;/option&gt;
+				&lt;option value=&quot;bounceInRight&quot;&gt;bounceInRight&lt;/option&gt;
+				&lt;option value=&quot;bounceInUp&quot;&gt;bounceInUp&lt;/option&gt;
+			&lt;/optgroup&gt;
+			&lt;optgroup label=&quot;Fading Entrances&quot;&gt;
+				&lt;option value=&quot;fadeIn&quot;&gt;fadeIn&lt;/option&gt;
+				&lt;option value=&quot;fadeInDown&quot;&gt;fadeInDown&lt;/option&gt;
+				&lt;option value=&quot;fadeInDownBig&quot;&gt;fadeInDownBig&lt;/option&gt;
+				&lt;option value=&quot;fadeInLeft&quot;&gt;fadeInLeft&lt;/option&gt;
+				&lt;option value=&quot;fadeInLeftBig&quot;&gt;fadeInLeftBig&lt;/option&gt;
+				&lt;option value=&quot;fadeInRight&quot;&gt;fadeInRight&lt;/option&gt;
+				&lt;option value=&quot;fadeInRightBig&quot;&gt;fadeInRightBig&lt;/option&gt;
+				&lt;option value=&quot;fadeInUp&quot;&gt;fadeInUp&lt;/option&gt;
+				&lt;option value=&quot;fadeInUpBig&quot;&gt;fadeInUpBig&lt;/option&gt;
+			&lt;/optgroup&gt;
+
+			&lt;optgroup label=&quot;Flippers&quot;&gt;
+				&lt;option value=&quot;flipInX&quot;&gt;flipInX&lt;/option&gt;
+				&lt;option value=&quot;flipInY&quot;&gt;flipInY&lt;/option&gt;
+			&lt;/optgroup&gt;
+
+			&lt;optgroup label=&quot;Lightspeed&quot;&gt;
+				&lt;option value=&quot;lightSpeedIn&quot;&gt;lightSpeedIn&lt;/option&gt;
+			&lt;/optgroup&gt;
+
+			&lt;optgroup label=&quot;Rotating Entrances&quot;&gt;
+				&lt;option value=&quot;rotateIn&quot;&gt;rotateIn&lt;/option&gt;
+				&lt;option value=&quot;rotateInDownLeft&quot;&gt;rotateInDownLeft&lt;/option&gt;
+				&lt;option value=&quot;rotateInDownRight&quot;&gt;rotateInDownRight&lt;/option&gt;
+				&lt;option value=&quot;rotateInUpLeft&quot;&gt;rotateInUpLeft&lt;/option&gt;
+				&lt;option value=&quot;rotateInUpRight&quot;&gt;rotateInUpRight&lt;/option&gt;
+			&lt;/optgroup&gt;
+
+			&lt;optgroup label=&quot;Sliding Entrances&quot;&gt;
+				&lt;option value=&quot;slideInUp&quot;&gt;slideInUp&lt;/option&gt;
+				&lt;option value=&quot;slideInDown&quot;&gt;slideInDown&lt;/option&gt;
+				&lt;option value=&quot;slideInLeft&quot;&gt;slideInLeft&lt;/option&gt;
+				&lt;option value=&quot;slideInRight&quot;&gt;slideInRight&lt;/option&gt;
+
+			&lt;/optgroup&gt;
+			
+			&lt;optgroup label=&quot;Zoom Entrances&quot;&gt;
+				&lt;option value=&quot;zoomIn&quot;&gt;zoomIn&lt;/option&gt;
+				&lt;option value=&quot;zoomInDown&quot;&gt;zoomInDown&lt;/option&gt;
+				&lt;option value=&quot;zoomInLeft&quot;&gt;zoomInLeft&lt;/option&gt;
+				&lt;option value=&quot;zoomInRight&quot;&gt;zoomInRight&lt;/option&gt;
+				&lt;option value=&quot;zoomInUp&quot;&gt;zoomInUp&lt;/option&gt;
+			&lt;/optgroup&gt;
+			
+			&lt;optgroup label=&quot;Specials&quot;&gt;
+				&lt;option value=&quot;rollIn&quot;&gt;rollIn&lt;/option&gt;
+			&lt;/optgroup&gt;
+		&lt;/select&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-sm-4&quot;&gt;
+		&lt;select class=&quot;form-control custom-select&quot; id=&quot;hk_notify_animate_exit&quot;&gt;
+			&lt;optgroup label=&quot;Bouncing Exits&quot;&gt;
+				&lt;option value=&quot;bounceOut&quot;&gt;bounceOut&lt;/option&gt;
+				&lt;option value=&quot;bounceOutDown&quot;&gt;bounceOutDown&lt;/option&gt;
+				&lt;option value=&quot;bounceOutLeft&quot;&gt;bounceOutLeft&lt;/option&gt;
+				&lt;option value=&quot;bounceOutRight&quot;&gt;bounceOutRight&lt;/option&gt;
+				&lt;option value=&quot;bounceOutUp&quot;&gt;bounceOutUp&lt;/option&gt;
+			&lt;/optgroup&gt;
+			&lt;optgroup label=&quot;Fading Exits&quot;&gt;
+				&lt;option value=&quot;fadeOut&quot;&gt;fadeOut&lt;/option&gt;
+				&lt;option value=&quot;fadeOutDown&quot;&gt;fadeOutDown&lt;/option&gt;
+				&lt;option value=&quot;fadeOutDownBig&quot;&gt;fadeOutDownBig&lt;/option&gt;
+				&lt;option value=&quot;fadeOutLeft&quot;&gt;fadeOutLeft&lt;/option&gt;
+				&lt;option value=&quot;fadeOutLeftBig&quot;&gt;fadeOutLeftBig&lt;/option&gt;
+				&lt;option value=&quot;fadeOutRight&quot;&gt;fadeOutRight&lt;/option&gt;
+				&lt;option value=&quot;fadeOutRightBig&quot;&gt;fadeOutRightBig&lt;/option&gt;
+				&lt;option value=&quot;fadeOutUp&quot;&gt;fadeOutUp&lt;/option&gt;
+				&lt;option value=&quot;fadeOutUpBig&quot;&gt;fadeOutUpBig&lt;/option&gt;
+			&lt;/optgroup&gt;
+
+			&lt;optgroup label=&quot;Flippers&quot;&gt;
+				&lt;option value=&quot;flipOutX&quot;&gt;flipOutX&lt;/option&gt;
+				&lt;option value=&quot;flipOutY&quot;&gt;flipOutY&lt;/option&gt;
+			&lt;/optgroup&gt;
+
+			&lt;optgroup label=&quot;Lightspeed&quot;&gt;
+				&lt;option value=&quot;lightSpeedOut&quot;&gt;lightSpeedOut&lt;/option&gt;
+			&lt;/optgroup&gt;
+
+			&lt;optgroup label=&quot;Rotating Exits&quot;&gt;
+				&lt;option value=&quot;rotateOut&quot;&gt;rotateOut&lt;/option&gt;
+				&lt;option value=&quot;rotateOutDownLeft&quot;&gt;rotateOutDownLeft&lt;/option&gt;
+				&lt;option value=&quot;rotateOutDownRight&quot;&gt;rotateOutDownRight&lt;/option&gt;
+				&lt;option value=&quot;rotateOutUpLeft&quot;&gt;rotateOutUpLeft&lt;/option&gt;
+				&lt;option value=&quot;rotateOutUpRight&quot;&gt;rotateOutUpRight&lt;/option&gt;
+			&lt;/optgroup&gt;
+
+			&lt;optgroup label=&quot;Sliding Exits&quot;&gt;
+				&lt;option value=&quot;slideOutUp&quot;&gt;slideOutUp&lt;/option&gt;
+				&lt;option value=&quot;slideOutDown&quot;&gt;slideOutDown&lt;/option&gt;
+				&lt;option value=&quot;slideOutLeft&quot;&gt;slideOutLeft&lt;/option&gt;
+				&lt;option value=&quot;slideOutRight&quot;&gt;slideOutRight&lt;/option&gt;
+				
+			&lt;/optgroup&gt;
+			
+			&lt;optgroup label=&quot;Zoom Exits&quot;&gt;
+				&lt;option value=&quot;zoomOut&quot;&gt;zoomOut&lt;/option&gt;
+				&lt;option value=&quot;zoomOutDown&quot;&gt;zoomOutDown&lt;/option&gt;
+				&lt;option value=&quot;zoomOutLeft&quot;&gt;zoomOutLeft&lt;/option&gt;
+				&lt;option value=&quot;zoomOutRight&quot;&gt;zoomOutRight&lt;/option&gt;
+				&lt;option value=&quot;zoomOutUp&quot;&gt;zoomOutUp&lt;/option&gt;
+			&lt;/optgroup&gt;
+
+			&lt;optgroup label=&quot;Specials&quot;&gt;
+				&lt;option value=&quot;hinge&quot;&gt;hinge&lt;/option&gt;
+				&lt;option value=&quot;rollOut&quot;&gt;rollOut&lt;/option&gt;
+			&lt;/optgroup&gt;
+		&lt;/select&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;col-sm-4&quot;&gt;
+		&lt;button id=&quot;check_anim_notify&quot; class=&quot;btn btn-info&quot;&gt;Check Animation&lt;/button&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+												</pre>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="script_tab_4">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-javascript">
+														<code class="language-javascript">
+$('#check_anim_notify').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify("Enter: Bounce In from TopExit: Bounce Up and Out", {
+		animate: {
+			enter: "animated " + $("#hk_notify_animate_enter").val(),
+			exit: "animated " + $("#hk_notify_animate_exit").val()
+		},
+		type: "dismissible alert-primary",
+		placement: {
+			from: "top",
+			align: "left"
+		},
+	});
+});</code>
+													</pre>	
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_6" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Custom URL</h5>
+									<p>You can provide custom URLs inside notifications.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_5">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_5">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#script_tab_5">
+													<span class="nav-link-text">Script</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_5">
+												<div class="hstack flex-wrap align-items-start gap-3 p-4">
+													<button id="url_notify" class="btn btn-primary">Custom URL</button>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_5">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;button id=&quot;url_notify&quot; class=&quot;btn btn-primary&quot;&gt;Custom URL&lt;/button&gt;</code>
+												</pre>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="script_tab_5">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-javascript">
+														<code class="language-javascript">
+$('#url_notify').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+		$.notify({
+			message: "Check out my twitter account by clicking on this notification!",
+			url: "https://twitter.com/hencework",
+			target: "_self"
+		},{
+			animate: {
+				enter: 'animated bounceInDown',
+				exit: 'animated bounceOutUp'
+			},
+			type: "dismissible alert-primary",
+			delay:50000000
+		});
+});</code>
+													</pre>	
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_7" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Icon</h5>
+									<p>Icon can improves the notifications.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_6">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_6">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#script_tab_6">
+													<span class="nav-link-text">Script</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_6">
+												<div class="hstack flex-wrap align-items-start gap-3 p-4">
+													<button id="icon_notify" class="btn btn-primary">Icon</button>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_6">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;button id=&quot;icon_notify&quot; class=&quot;btn btn-primary&quot;&gt;Icon&lt;/button&gt;</code>
+												</pre>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="script_tab_6">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-javascript">
+														<code class="language-javascript">
+$('#icon_notify').on('click', function(event) {
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	event.preventDefault();
+	$.notify({
+		icon: 'ri-award-line mr-5',
+		message: "You're not limited to just Bootstrap Font Icons",
+		placement: {
+			from: "top",
+			align: "left"
+		},
+	},{	type: "dismissible alert-primary",delay:50000000});
+});</code>
+													</pre>	
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_8" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>With Title</h5>
+									<p>You can add titles inside notifications.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_7">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_7">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#script_tab_7">
+													<span class="nav-link-text">Script</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_7">
+												<div class="hstack flex-wrap align-items-start gap-3 p-4">
+													<button id="title_notify" class="btn btn-primary">Demo</button>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_7">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;button id=&quot;title_notify&quot; class=&quot;btn btn-primary&quot;&gt;Demo&lt;/button&gt;</code>
+												</pre>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="script_tab_7">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-javascript">
+														<code class="language-javascript">
+$('#title_notify').on('click', function(event) {
+	event.preventDefault();
+	setTimeout(function(){
+		$('.alert.alert-dismissible .close').addClass('btn-close').removeClass('close');
+	},100);
+	$.notify({
+		title: '<strong>Heads up!</strong>',
+		message: "You're not limited to just Bootstrap Font Icons",
+	},{
+		type: "dismissible alert-primary",
+	});
+});</code>
+													</pre>	
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_9" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Update Notify</h5>
+									<p>Custom progress bar anmations for updates.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_8">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_8">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#script_tab_8">
+													<span class="nav-link-text">Script</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_8">
+												<div class="hstack flex-wrap align-items-start gap-3 p-4">
+													<button id="update_notify" class="btn btn-primary">Demo</button>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_8">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;button id=&quot;update_notify&quot; class=&quot;btn btn-primary&quot;&gt;Demo&lt;/button&gt;</code>
+												</pre>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="script_tab_8">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-javascript">
+														<code class="language-javascript">
+$('#update_notify').on('click', function(event) {
+	var notify = $.notify('<strong>Saving</strong> Do not close this page...', {
+		type: 'success',
+		allow_dismiss: false,
+		showProgressbar: true,
+	});
+
+	setTimeout(function() {
+		notify.update('message', '<strong>Saving</strong> Page Data.');
+	}, 1000);
+
+	setTimeout(function() {
+		notify.update('message', '<strong>Saving</strong> User Data.');
+	}, 2000);
+
+	setTimeout(function() {
+		notify.update('message', '<strong>Saving</strong> Profile Data.');
+	}, 3000);
+
+	setTimeout(function() {
+		notify.update('message', '<strong>Checking</strong> for errors.');
+	}, 4000);
+});	</code>
+													</pre>	
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+						</div>
+						<!-- /Page Body -->
+					</div>
+					<!-- Doc Links Nav -->
+					<div class="col-xxl-2 d-xxl-block d-none hk-aside">
+						<div data-simplebar class="nicescroll-bar">
+							<div class="nav-toc nav-doc">
+								<div class="nav-header">
+									<span>Jump to</span>
+								</div>
+								<ul id="vertical_nav" class="nav nav-light nav-vertical">
+									<li class="nav-item">
+										<a data-scroll href="#sec_1" class="nav-link active">
+											<span class="nav-link-text">Contextual Notification</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_2" class="nav-link">
+											<span class="nav-link-text">Dismisable Notification</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_3" class="nav-link">
+											<span class="nav-link-text">Inverse Notification</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_4" class="nav-link">
+											<span class="nav-link-text">Position</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_5" class="nav-link">
+											<span class="nav-link-text">Animation</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_6" class="nav-link">
+											<span class="nav-link-text">Custom URL</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_7" class="nav-link">
+											<span class="nav-link-text">Icon</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_8" class="nav-link">
+											<span class="nav-link-text">With Title</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_9" class="nav-link">
+											<span class="nav-link-text">Update Notify</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /Doc Links Nav -->	
+				</div>
+				<!-- /Row -->
+			</div>
+			<!-- /Container -->
+			
+			<!-- Page Footer -->
+			<div class="hk-footer border-0">
+				<footer class="container-xxl footer">
+					<div class="row">
+						<div class="col-xl-12">
+							<p class="footer-text"><span class="copy-text"><a href="#" >Hencework</a> © <span id="copyright_year"></span> All rights reserved.</span></p>
+						</div>
+					</div>
+				</footer>
+            </div>
+            <!-- / Page Footer -->
+		</div>
+		<!-- /Main Content -->
+	</div>
+    <!-- /Wrapper -->
+
+	<!-- jQuery -->
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+   	<script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- FeatherIcons JS -->
+    <script src="dist/js/feather.min.js"></script>
+
+    <!-- Fancy Dropdown JS -->
+    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+
+	<!-- Smooth Scroll JS -->
+    <script src="dist/js/smooth-scroll.js"></script>
+	
+	<!-- Simplebar JS -->
+	<script src="vendors/simplebar/dist/simplebar.min.js"></script>
+	
+	<!-- Prism JS -->
+	<script src="dist/js/prism.js"></script>
+	
+	<!-- Clipboard JS -->
+    <script src="vendors/clipboard/dist/clipboard.min.js"></script>
+	<script src="dist/js/clipboard-init.js"></script>
+	
+	<!-- List JS -->
+	<script src="vendors/list.js/dist/list.min.js"></script>
+	
+	<!-- Highlight JS -->
+	<script src="dist/js/jquery.highlight-4.js"></script>
+	
+	<!-- Bootstrap Notify JS -->
+	<script src="dist/js/bootstrap-notify.min.js"></script>
+	<script src="dist/js/notification-init.js"></script>
+
+	<!-- Init JS -->
+	<script src="dist/js/doc-init.js"></script>
+    <script src="dist/js/init.js"></script>
+</body>
+</html>
