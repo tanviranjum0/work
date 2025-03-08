@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test</title>
+  </head>
+  <body
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    "
+  >
+    <form
+      action="http://localhost:4000"
+      enctype="multipart/form-data"
+      method="post"
+      id="myForm"
+      onsubmit="return handleSubmit(event)"
+    >
+      <input type="text" id="name" />
+      <input type="file" name="image" id="file" />
+    </form>
+    <button onclick="return handleSubmit(event);">Submit</button>
+  </body>
+  <script>
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      const name = await document.getElementById("name").value;
+      const file = await document.getElementById("file").files[0];
+      const formData = await new FormData();
+      await formData.append("image", file);
+      await formData.append("name", name);
+      const res = await fetch("http://localhost:4000", {
+        body: formData,
+        method: "POST",
+      });
+      const data = await res.json();
+      if (data.message == "Holla") return (window.location.href = "login.html");
+      console.log(data);
+    };
+  </script>
+</html>

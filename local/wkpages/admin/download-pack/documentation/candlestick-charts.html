@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<!-- 
+Appster
+Author: Hencework
+
+-->
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appster - A Bootstrap based library of modern, reusable and flexible components designed specially for SaaS web applications.</title>
+    <meta name="description" content="A library of modern, reusable and flexible components for your SaaS web applications by hencework. Based on Bootstrap."/>
+    
+	<!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+	
+	<!-- CSS -->
+    <link href="dist/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#vertical_nav" data-bs-offset="190">
+   	<!-- Wrapper -->
+	<div class="hk-wrapper" data-layout="vertical" data-layout-style="default" data-menu="light" data-footer="simple" data-aside="sticky">
+		<!-- Top Navbar -->
+		<nav class="hk-navbar navbar navbar-expand-xl navbar-light fixed-top border-0">
+			<div class="container-xxl">
+			<!-- Start Nav -->
+			<div class="nav-start-wrap">
+				<button class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover navbar-toggle d-xl-none"><span class="icon"><span class="feather-icon"><i data-feather="align-left"></i></span></span></button>
+					
+				<!-- Search -->
+				<form id="doc-list" class="dropdown navbar-search doc-search">
+					<div class="dropdown-toggle no-caret" data-bs-toggle="dropdown" data-dropdown-animation data-bs-auto-close="outside">
+						<a href="#" class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover d-xl-none"><span class="icon"><span class="feather-icon"><i data-feather="search"></i></span></span></a>
+						<div class="input-group d-xl-flex d-none">
+							<span class="input-affix-wrapper input-search affix-border">
+								<input type="text" class="form-control doc-form-control fuzzy-search bg-transparent"  data-navbar-search-close="false" placeholder="Search in docs" aria-label="Search">
+								<span class="input-suffix"><span>/</span>
+									<span class="btn-input-clear"><span class="feather-icon"><i data-feather="x"></i></span></span>
+									<span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
+										<span class="sr-only">Loading...</span>
+									</span>
+								</span>
+							</span>
+						</div>
+					</div>
+					<div class="dropdown-menu">
+						<!-- Mobile Search -->
+						<div class="dropdown-item d-xl-none bg-transparent px-0">
+							<div class="input-group mobile-search">
+								<span class="input-affix-wrapper input-search">
+									<input type="text" class="form-control fuzzy-search" placeholder="Search in docs" aria-label="Search">
+									<span class="input-suffix">
+										<span class="btn-input-clear"><span class="feather-icon"><i data-feather="x"></i></span></span>
+										<span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
+											<span class="sr-only">Loading...</span>
+										</span>
+									</span>
+								</span>
+							</div>
+						</div>
+						<!--/ Mobile Search -->
+						<div data-simplebar class="dropdown-body">
+							<ul class="list p-0 m-0"></ul>
+							<div class="no-result text-center p-3">
+								<div class="svg-icon fs-1 mb-3">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-x" viewBox="0 0 16 16">
+										<path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181L15.546 8H14.54l.265-2.91A1 1 0 0 0 13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91H9v1H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zm6.339-1.577A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
+										<path d="M11.854 10.146a.5.5 0 0 0-.707.708L12.293 12l-1.146 1.146a.5.5 0 0 0 .707.708L13 12.707l1.146 1.147a.5.5 0 0 0 .708-.708L13.707 12l1.147-1.146a.5.5 0 0 0-.707-.708L13 11.293l-1.146-1.147z"/>
+									  </svg>
+								</div>
+								
+								<h6>No result found</h6>
+								<p class="fs-7">Please try with different query</p>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- /Search -->
+			</div>
+			<!-- /Start Nav -->
+			
+			<!-- End Nav -->
+			<div class="nav-end-wrap">
+				<ul class="navbar-nav flex-row">
+					<li class="nav-item me-2">
+						<select class="form-select doc-form-control doc-select w-100p">
+							<option value="1">Html</option>
+							<option value="2" disabled>React</option>
+						</select>
+					</li>
+					<li class="nav-item me-2">
+						<a href="#/contact"  class="btn btn-soft-secondary"><span><span>Get Support</span><span class="icon"><span class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+						  </svg></span></span></span></a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="btn btn-icon btn-flush-dark flush-soft-hover"><span class="icon"><span class="feather-icon"><i data-feather="moon"></i></span></span></a>
+					</li>
+				</ul>
+			</div>
+			<!-- /End Nav -->
+			</div>									
+		</nav>
+		<!-- /Top Navbar -->
+
+        <!-- Vertical Nav -->
+        <div class="hk-menu doc-menu">
+			<!-- Brand -->
+			<div class="menu-header">
+				<span>
+					<a class="d-flex navbar-brand me-2" href="#">
+						<img class="brand-img img-fluid" src="dist/img/logo-light.svg" alt="brand" />
+					</a>
+					<a href="change-log.html" class="d-flex"><span class="badge rounded badge-soft-blue badge-sm">v1.0</span></a>
+				</span>
+			</div>
+			<!-- /Brand -->
+
+			<!-- Main Menu -->
+			<div data-simplebar class="nicescroll-bar">
+				<div class="menu-content-wrap">
+					<div class="menu-group">
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="index.html">
+									<span class="nav-link-text">Introduction</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="getting-started.html">
+									<span class="nav-link-text">Getting Started</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="customization.html">
+									<span class="nav-link-text">Customization</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dark-theme.html">
+									<span class="nav-link-text">Dark Theme</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="credit.html">
+									<span class="nav-link-text">Credit</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="change-log.html">
+									<span class="nav-link-text">Change Log</span>
+								</a>
+							</li>
+						</ul>	
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Utilities</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="grid-system.html"><span class="nav-link-text">Grid</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="typography.html"><span class="nav-link-text">Typography</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="background.html"><span class="nav-link-text">Background</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="border.html"><span class="nav-link-text">Border</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="colors.html"><span class="nav-link-text">Color</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="shadow.html"><span class="nav-link-text">Shadow</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="sizing.html"><span class="nav-link-text">Sizing</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="spacing.html"><span class="nav-link-text">Spacing</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="shapes.html"><span class="nav-link-text">Shapes</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="seperators.html"><span class="nav-link-text">Seperators</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="media-object.html"><span class="nav-link-text">Media Objects</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="embeds.html"><span class="nav-link-text">Embeds</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="images.html"><span class="nav-link-text">Images</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="icon-fonts.html"><span class="nav-link-text">Icon Fonts</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Data Display</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="avatar.html"><span class="nav-link-text">Avatar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="accordion.html"><span class="nav-link-text">Accordion</span></a>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="badge.html"><span class="nav-link-text">Badges</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-badges.html"><span class="nav-link-text">Advanced Badges</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tooltip.html"><span class="nav-link-text">Tooltip</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="popovers.html"><span class="nav-link-text">Popovers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="modal.html"><span class="nav-link-text">Modal</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="cards.html"><span class="nav-link-text">Cards</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="carousel.html"><span class="nav-link-text">Carousel</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="collapse.html"><span class="nav-link-text">Collapse</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="list-group.html"><span class="nav-link-text">List Group</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="ribbons.html"><span class="nav-link-text">Ribbons</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="drawer.html"><span class="nav-link-text">Drawers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="offcanvas.html"><span class="nav-link-text">Offcanvas</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="empty-states.html"><span class="nav-link-text">Empty States</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="callout.html"><span class="nav-link-text">Callout</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Data Entry</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="buttons.html"><span class="nav-link-text">Buttons</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-element.html"><span class="nav-link-text">Form Elements</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="input-groups.html"><span class="nav-link-text">Input Groups</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-layout.html"><span class="nav-link-text">Form Layout</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-mask.html"><span class="nav-link-text">Form Masks</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-validation.html"><span class="nav-link-text">Form Validation</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-form-ui.html"><span class="nav-link-text">Advance Form UI</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="cropperjs.html"><span class="nav-link-text">Cropperjs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropify.html"><span class="nav-link-text">Dropify</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropzone.html"><span class="nav-link-text">Dropzone</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="date-picker.html"><span class="nav-link-text">Date Picker</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="color-picker.html"><span class="nav-link-text">Color Picker</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="select2.html"><span class="nav-link-text">Select2</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="range-slider.html"><span class="nav-link-text">Range slider</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="input-spinner.html"><span class="nav-link-text">Input Spinner</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-wizard.html"><span class="nav-link-text">Form Wizard</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tinymce.html"><span class="nav-link-text">Tinymce</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="chips.html"><span class="nav-link-text">Chips</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="ratings.html"><span class="nav-link-text">Rating</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-search.html"><span class="nav-link-text">Page Search</span></a>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Feedback</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="sweet-alert.html"><span class="nav-link-text">Sweet Alert</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="notification.html"><span class="nav-link-text">Notifications</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toast.html"><span class="nav-link-text">Toastr</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tour.html"><span class="nav-link-text">Tour</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="timeout.html"><span class="nav-link-text">Timeout</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="alerts.html"><span class="nav-link-text">Alerts</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="placeholders.html"><span class="nav-link-text">Placeholders</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="spinner.html"><span class="nav-link-text">Spinners</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="progress.html"><span class="nav-link-text">Progress</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toasts.html"><span class="nav-link-text">Bootstrap Toasts</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="clipboard.html"><span class="nav-link-text">Clipboard</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Tables</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="basic-table.html"><span class="nav-link-text">Basic Tables</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="data-table.html"><span class="nav-link-text">Data Tables</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-table-ui.html"><span class="nav-link-text">Advance Table UI</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Charts</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item active">
+								<a class="nav-link" href="charts.html"><span class="nav-link-text">Charts</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Maps</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="google-map.html"><span class="nav-link-text">Google Maps</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="vector-map.html"><span class="nav-link-text">Vector Maps</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="animated-map.html"><span class="nav-link-text">Animated Maps</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Navigation</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="breadcrumb.html"><span class="nav-link-text">Breadcrumbs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropdowns.html"><span class="nav-link-text">Dropdowns</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="nav.html"><span class="nav-link-text">Nav</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="nav-tabs.html"><span class="nav-link-text">Tabs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_wizard">
+									<span class="nav-link-text">Wizard</span>
+								</a>
+								<ul id="dash_wizard" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="vertical-wizard.html">
+													<span class="nav-link-text">Vertical Wizard</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="horizontal-wizard.html">
+													<span class="nav-link-text">Horizontal Wizard</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="pagination.html"><span class="nav-link-text">Pagination</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toolbar.html"><span class="nav-link-text">Toolbar</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Behavioral</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="scrollspy.html"><span class="nav-link-text">Scroll Spy</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="sticky-element.html"><span class="nav-link-text">Sticky Elements</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="draggable.html"><span class="nav-link-text">Draggable</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="scrollable-content.html"><span class="nav-link-text">Scrollable Content</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="footers.html"><span class="nav-link-text">Fixed Footer</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="loadmore.html"><span class="nav-link-text">Load More</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Layout</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_menu">
+									<span class="nav-link-text">Menus</span>
+								</a>
+								<ul id="dash_menu" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="classic-menu.html">
+													<span class="nav-link-text">Classic Menu</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="horizontal-menu.html">
+													<span class="nav-link-text">Horizontal Menu</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="navbar-menu.html">
+													<span class="nav-link-text">Navbar Menu</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="navbar.html"><span class="nav-link-text">Navbar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-header.html"><span class="nav-link-text">Page Headers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="content-sidebar.html"><span class="nav-link-text">Content Sidebar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-footers.html"><span class="nav-link-text">Page Footers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_pg_layout">
+									<span class="nav-link-text">Page Layout</span>
+								</a>
+								<ul id="dash_pg_layout" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="page-without-sidebar.html">
+													<span class="nav-link-text">No Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-left-sidebar.html">
+													<span class="nav-link-text">Left Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-right-sidebar.html">
+													<span class="nav-link-text">Right Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-both-sidebar.html">
+													<span class="nav-link-text">Both Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="empty-page.html">
+													<span class="nav-link-text">Empty State</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					
+					
+				</div>
+			</div>
+			<!-- /Main Menu -->
+		</div>
+        <div id="hk_menu_backdrop" class="hk-menu-backdrop"></div>
+        <!-- /Vertical Nav -->
+
+		<!-- Explore Button -->
+       	<a href="#"  class="btn  btn-custom  btn-success btn-floating btn-demo-explore position-fixed btn-lg"> <span><span class="icon"><span class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection-fill" viewBox="0 0 16 16">
+			<path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z"/>
+		</svg></span> </span><span>Explore Templates</span></span></a>
+		<!-- /Explore Button -->
+
+		<!-- Main Content -->
+		<div class="hk-pg-wrapper">
+			<!-- Container -->
+			<div class="container-xxl">
+				<!-- Row -->
+				<div class="row">
+					<div class="col-xxl-10 col-xl-12">
+						<!-- Page Header -->
+						<div class="hk-pg-header doc-pg-header pt-6 pb-4">
+							<h1 class="display-6">Candlestick Charts</h1>
+							<p class="p-lg">A <a href="https://apexcharts.com/docs/chart-types/candlestick/" >Candlestick charts</a> are the financial charts used to describe price movements of a security, derivative, or currency.</p>
+						</div>
+						<!-- /Page Header -->
+						
+						<!-- Page Body -->
+						<div class="hk-pg-body">
+							<section id="sec_1" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Basic example</h5>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#script_tab">
+													<span class="nav-link-text">Script</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div id="cs_chart_1"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div id=&quot;cs_chart_1&quot;&gt;&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="script_tab">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-javascript">
+														<code class="language-javascript">
+&lt;!-- Apex JS --&gt;
+&lt;script src=&quot;vendors/apexcharts/dist/apexcharts.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;dist/js/ohlc.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;dist/js/candlestick-chart-init.js&quot;&gt;&lt;/script&gt;
+/*Basic Chart*/
+var options = {
+    series: [{
+        data: [{
+                x: new Date(1538778600000),
+                y: [6629.81, 6650.5, 6623.04, 6633.33]
+            },
+            {
+                x: new Date(1538780400000),
+                y: [6632.01, 6643.59, 6620, 6630.11]
+            },
+            {
+                x: new Date(1538782200000),
+                y: [6630.71, 6648.95, 6623.34, 6635.65]
+            },
+            {
+                x: new Date(1538784000000),
+                y: [6635.65, 6651, 6629.67, 6638.24]
+            },
+            {
+                x: new Date(1538785800000),
+                y: [6638.24, 6640, 6620, 6624.47]
+            },
+            {
+                x: new Date(1538787600000),
+                y: [6624.53, 6636.03, 6621.68, 6624.31]
+            },
+            {
+                x: new Date(1538789400000),
+                y: [6624.61, 6632.2, 6617, 6626.02]
+            },
+            {
+                x: new Date(1538791200000),
+                y: [6627, 6627.62, 6584.22, 6603.02]
+            },
+            {
+                x: new Date(1538793000000),
+                y: [6605, 6608.03, 6598.95, 6604.01]
+            },
+            {
+                x: new Date(1538794800000),
+                y: [6604.5, 6614.4, 6602.26, 6608.02]
+            },
+            {
+                x: new Date(1538796600000),
+                y: [6608.02, 6610.68, 6601.99, 6608.91]
+            },
+            {
+                x: new Date(1538798400000),
+                y: [6608.91, 6618.99, 6608.01, 6612]
+            },
+            {
+                x: new Date(1538800200000),
+                y: [6612, 6615.13, 6605.09, 6612]
+            },
+            {
+                x: new Date(1538802000000),
+                y: [6612, 6624.12, 6608.43, 6622.95]
+            },
+            {
+                x: new Date(1538803800000),
+                y: [6623.91, 6623.91, 6615, 6615.67]
+            },
+            {
+                x: new Date(1538805600000),
+                y: [6618.69, 6618.74, 6610, 6610.4]
+            },
+            {
+                x: new Date(1538807400000),
+                y: [6611, 6622.78, 6610.4, 6614.9]
+            },
+            {
+                x: new Date(1538809200000),
+                y: [6614.9, 6626.2, 6613.33, 6623.45]
+            },
+            {
+                x: new Date(1538811000000),
+                y: [6623.48, 6627, 6618.38, 6620.35]
+            },
+            {
+                x: new Date(1538812800000),
+                y: [6619.43, 6620.35, 6610.05, 6615.53]
+            },
+            {
+                x: new Date(1538814600000),
+                y: [6615.53, 6617.93, 6610, 6615.19]
+            },
+            {
+                x: new Date(1538816400000),
+                y: [6615.19, 6621.6, 6608.2, 6620]
+            },
+            {
+                x: new Date(1538818200000),
+                y: [6619.54, 6625.17, 6614.15, 6620]
+            },
+            {
+                x: new Date(1538820000000),
+                y: [6620.33, 6634.15, 6617.24, 6624.61]
+            },
+            {
+                x: new Date(1538821800000),
+                y: [6625.95, 6626, 6611.66, 6617.58]
+            },
+            {
+                x: new Date(1538823600000),
+                y: [6619, 6625.97, 6595.27, 6598.86]
+            },
+            {
+                x: new Date(1538825400000),
+                y: [6598.86, 6598.88, 6570, 6587.16]
+            },
+            {
+                x: new Date(1538827200000),
+                y: [6588.86, 6600, 6580, 6593.4]
+            },
+            {
+                x: new Date(1538829000000),
+                y: [6593.99, 6598.89, 6585, 6587.81]
+            },
+            {
+                x: new Date(1538830800000),
+                y: [6587.81, 6592.73, 6567.14, 6578]
+            },
+            {
+                x: new Date(1538832600000),
+                y: [6578.35, 6581.72, 6567.39, 6579]
+            },
+            {
+                x: new Date(1538834400000),
+                y: [6579.38, 6580.92, 6566.77, 6575.96]
+            },
+            {
+                x: new Date(1538836200000),
+                y: [6575.96, 6589, 6571.77, 6588.92]
+            },
+            {
+                x: new Date(1538838000000),
+                y: [6588.92, 6594, 6577.55, 6589.22]
+            },
+            {
+                x: new Date(1538839800000),
+                y: [6589.3, 6598.89, 6589.1, 6596.08]
+            },
+            {
+                x: new Date(1538841600000),
+                y: [6597.5, 6600, 6588.39, 6596.25]
+            },
+            {
+                x: new Date(1538843400000),
+                y: [6598.03, 6600, 6588.73, 6595.97]
+            },
+            {
+                x: new Date(1538845200000),
+                y: [6595.97, 6602.01, 6588.17, 6602]
+            },
+            {
+                x: new Date(1538847000000),
+                y: [6602, 6607, 6596.51, 6599.95]
+            },
+            {
+                x: new Date(1538848800000),
+                y: [6600.63, 6601.21, 6590.39, 6591.02]
+            },
+            {
+                x: new Date(1538850600000),
+                y: [6591.02, 6603.08, 6591, 6591]
+            },
+            {
+                x: new Date(1538852400000),
+                y: [6591, 6601.32, 6585, 6592]
+            },
+            {
+                x: new Date(1538854200000),
+                y: [6593.13, 6596.01, 6590, 6593.34]
+            },
+            {
+                x: new Date(1538856000000),
+                y: [6593.34, 6604.76, 6582.63, 6593.86]
+            },
+            {
+                x: new Date(1538857800000),
+                y: [6593.86, 6604.28, 6586.57, 6600.01]
+            },
+            {
+                x: new Date(1538859600000),
+                y: [6601.81, 6603.21, 6592.78, 6596.25]
+            },
+            {
+                x: new Date(1538861400000),
+                y: [6596.25, 6604.2, 6590, 6602.99]
+            },
+            {
+                x: new Date(1538863200000),
+                y: [6602.99, 6606, 6584.99, 6587.81]
+            },
+            {
+                x: new Date(1538865000000),
+                y: [6587.81, 6595, 6583.27, 6591.96]
+            },
+            {
+                x: new Date(1538866800000),
+                y: [6591.97, 6596.07, 6585, 6588.39]
+            },
+            {
+                x: new Date(1538868600000),
+                y: [6587.6, 6598.21, 6587.6, 6594.27]
+            },
+            {
+                x: new Date(1538870400000),
+                y: [6596.44, 6601, 6590, 6596.55]
+            },
+            {
+                x: new Date(1538872200000),
+                y: [6598.91, 6605, 6596.61, 6600.02]
+            },
+            {
+                x: new Date(1538874000000),
+                y: [6600.55, 6605, 6589.14, 6593.01]
+            },
+            {
+                x: new Date(1538875800000),
+                y: [6593.15, 6605, 6592, 6603.06]
+            },
+            {
+                x: new Date(1538877600000),
+                y: [6603.07, 6604.5, 6599.09, 6603.89]
+            },
+            {
+                x: new Date(1538879400000),
+                y: [6604.44, 6604.44, 6600, 6603.5]
+            },
+            {
+                x: new Date(1538881200000),
+                y: [6603.5, 6603.99, 6597.5, 6603.86]
+            },
+            {
+                x: new Date(1538883000000),
+                y: [6603.85, 6605, 6600, 6604.07]
+            },
+            {
+                x: new Date(1538884800000),
+                y: [6604.98, 6606, 6604.07, 6606]
+            },
+        ]
+    }],
+    chart: {
+        type: 'candlestick',
+        height: 350
+    },
+    title: {
+        text: 'CandleStick Chart',
+        align: 'left'
+    },
+    xaxis: {
+        type: 'datetime'
+    },
+    yaxis: {
+        tooltip: {
+            enabled: true
+        }
+    },
+	legend: {
+        position: 'top',
+        horizontalAlign: 'left'
+    },
+	plotOptions: {
+        candlestick: {
+            colors: {
+            upward: '#ff0000',
+            downward: '#008FFB'
+            }
+        }
+    }
+};
+var chart = new ApexCharts(document.querySelector("#cs_chart_1"), options);
+chart.render();
+</code>
+													</pre>	
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_2" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Combo chart</h5>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_1">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_1">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#script_tab_1">
+													<span class="nav-link-text">Script</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_1">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div id="cs_chart_2"></div>
+															<div id="cs_bar_chart"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_1">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div id=&quot;cs_chart_2&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;cs_bar_chart&quot;&gt;&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="script_tab_1">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-javascript">
+														<code class="language-javascript">
+/*Combo Chart*/
+var options1 = {
+	series: [{
+		data: seriesData
+	}],
+	chart: {
+		type: 'candlestick',
+		height: 290,
+		id: 'candles',
+		toolbar: {
+			autoSelected: 'pan',
+			show: false
+		},
+		zoom: {
+			enabled: false
+		},
+	},
+	plotOptions: {
+        candlestick: {
+            colors: {
+                upward: '#ff0000',
+                downward: '#008FFB'
+            }
+        }
+    },
+	xaxis: {
+		type: 'datetime'
+	}
+};
+
+var chart1 = new ApexCharts(document.querySelector("#cs_chart_2"), options1);
+chart1.render();
+
+var optionsBar = {
+	series: [{
+		name: 'volume',
+		data: seriesDataLinear
+	}],
+	chart: {
+		height: 160,
+		type: 'bar',
+		brush: {
+			enabled: true,
+			target: 'candles'
+		},
+		selection: {
+			enabled: true,
+			xaxis: {
+				min: new Date('20 Jan 2017').getTime(),
+				max: new Date('10 Dec 2017').getTime()
+			},
+			fill: {
+				color: '#ccc',
+				opacity: 0.4
+			},
+			stroke: {
+				color: '#0D47A1',
+			}
+		},
+	},
+	dataLabels: {
+		enabled: false
+	},
+	plotOptions: {
+		bar: {
+			columnWidth: '80%',
+			colors: {
+				ranges: [{
+					from: -1000,
+					to: 0,
+					color: '#ff0000'
+				}, {
+					from: 1,
+					to: 10000,
+					color: '#008FFB'
+				}],
+
+			},
+		}
+	},
+	stroke: {
+		width: 0
+	},
+	xaxis: {
+		type: 'datetime',
+		axisBorder: {
+			offsetX: 13
+		}
+	},
+	yaxis: {
+		labels: {
+			show: false
+		}
+	}
+};
+
+var chartBar = new ApexCharts(document.querySelector("#cs_bar_chart"), optionsBar);
+chartBar.render();</code>
+													</pre>	
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+						</div>
+						<!-- /Page Body -->
+					</div>
+					<!-- Doc Links Nav -->
+					<div class="col-xxl-2 d-xxl-block d-none hk-aside">
+						<div data-simplebar class="nicescroll-bar">
+							<div class="nav-toc nav-doc">
+								<div class="nav-header">
+									<span>Jump to</span>
+								</div>
+								<ul id="vertical_nav" class="nav nav-light nav-vertical">
+									<li class="nav-item">
+										<a data-scroll href="#sec_1" class="nav-link active">
+											<span class="nav-link-text">Basic example</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_2" class="nav-link">
+											<span class="nav-link-text">Combo chart</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /Doc Links Nav -->	
+				</div>
+				<!-- /Row -->
+			</div>
+			<!-- /Container -->
+			
+			<!-- Page Footer -->
+			<div class="hk-footer border-0">
+				<footer class="container-xxl footer">
+					<div class="row">
+						<div class="col-xl-12">
+							<p class="footer-text"><span class="copy-text"><a href="#" >Hencework</a> © <span id="copyright_year"></span> All rights reserved.</span></p>
+						</div>
+					</div>
+				</footer>
+            </div>
+            <!-- / Page Footer -->
+		</div>
+		<!-- /Main Content -->
+	</div>
+    <!-- /Wrapper -->
+
+	<!-- jQuery -->
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+   	<script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- FeatherIcons JS -->
+    <script src="dist/js/feather.min.js"></script>
+
+    <!-- Fancy Dropdown JS -->
+    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+
+	<!-- Smooth Scroll JS -->
+    <script src="dist/js/smooth-scroll.js"></script>
+	
+	<!-- Simplebar JS -->
+	<script src="vendors/simplebar/dist/simplebar.min.js"></script>
+	
+	<!-- Prism JS -->
+	<script src="dist/js/prism.js"></script>
+	
+	<!-- Clipboard JS -->
+    <script src="vendors/clipboard/dist/clipboard.min.js"></script>
+	<script src="dist/js/clipboard-init.js"></script>
+	
+	<!-- List JS -->
+	<script src="vendors/list.js/dist/list.min.js"></script>
+	
+	<!-- Highlight JS -->
+	<script src="dist/js/jquery.highlight-4.js"></script>
+	
+	<!-- Apex JS -->
+	<script src="vendors/apexcharts/dist/apexcharts.min.js"></script>
+	<script src="dist/js/ohlc.js"></script>
+	<script src="dist/js/candlestick-chart-init.js"></script>
+
+	<!-- Init JS -->
+	<script src="dist/js/doc-init.js"></script>
+    <script src="dist/js/init.js"></script>
+</body>
+</html>

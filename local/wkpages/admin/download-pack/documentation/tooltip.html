@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<!-- 
+Appster
+Author: Hencework
+
+-->
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appster - A Bootstrap based library of modern, reusable and flexible components designed specially for SaaS web applications.</title>
+    <meta name="description" content="A library of modern, reusable and flexible components for your SaaS web applications by hencework. Based on Bootstrap."/>
+
+	<!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+	
+	<!-- CSS -->
+    <link href="dist/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#vertical_nav" data-bs-offset="190">
+   	<!-- Wrapper -->
+	<div class="hk-wrapper" data-layout="vertical" data-layout-style="default" data-menu="light" data-footer="simple" data-aside="sticky">
+		<!-- Top Navbar -->
+		<nav class="hk-navbar navbar navbar-expand-xl navbar-light fixed-top border-0">
+			<div class="container-xxl">
+			<!-- Start Nav -->
+			<div class="nav-start-wrap">
+				<button class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover navbar-toggle d-xl-none"><span class="icon"><span class="feather-icon"><i data-feather="align-left"></i></span></span></button>
+					
+				<!-- Search -->
+				<form id="doc-list" class="dropdown navbar-search doc-search">
+					<div class="dropdown-toggle no-caret" data-bs-toggle="dropdown" data-dropdown-animation data-bs-auto-close="outside">
+						<a href="#" class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover d-xl-none"><span class="icon"><span class="feather-icon"><i data-feather="search"></i></span></span></a>
+						<div class="input-group d-xl-flex d-none">
+							<span class="input-affix-wrapper input-search affix-border">
+								<input type="text" class="form-control doc-form-control fuzzy-search bg-transparent"  data-navbar-search-close="false" placeholder="Search in docs" aria-label="Search">
+								<span class="input-suffix"><span>/</span>
+									<span class="btn-input-clear"><span class="feather-icon"><i data-feather="x"></i></span></span>
+									<span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
+										<span class="sr-only">Loading...</span>
+									</span>
+								</span>
+							</span>
+						</div>
+					</div>
+					<div class="dropdown-menu">
+						<!-- Mobile Search -->
+						<div class="dropdown-item d-xl-none bg-transparent px-0">
+							<div class="input-group mobile-search">
+								<span class="input-affix-wrapper input-search">
+									<input type="text" class="form-control fuzzy-search" placeholder="Search in docs" aria-label="Search">
+									<span class="input-suffix">
+										<span class="btn-input-clear"><span class="feather-icon"><i data-feather="x"></i></span></span>
+										<span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
+											<span class="sr-only">Loading...</span>
+										</span>
+									</span>
+								</span>
+							</div>
+						</div>
+						<!--/ Mobile Search -->
+						<div data-simplebar class="dropdown-body">
+							<ul class="list p-0 m-0"></ul>
+							<div class="no-result text-center p-3">
+								<div class="svg-icon fs-1 mb-3">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-x" viewBox="0 0 16 16">
+										<path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181L15.546 8H14.54l.265-2.91A1 1 0 0 0 13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91H9v1H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zm6.339-1.577A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
+										<path d="M11.854 10.146a.5.5 0 0 0-.707.708L12.293 12l-1.146 1.146a.5.5 0 0 0 .707.708L13 12.707l1.146 1.147a.5.5 0 0 0 .708-.708L13.707 12l1.147-1.146a.5.5 0 0 0-.707-.708L13 11.293l-1.146-1.147z"/>
+									  </svg>
+								</div>
+								
+								<h6>No result found</h6>
+								<p class="fs-7">Please try with different query</p>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- /Search -->
+			</div>
+			<!-- /Start Nav -->
+			
+			<!-- End Nav -->
+			<div class="nav-end-wrap">
+				<ul class="navbar-nav flex-row">
+					<li class="nav-item me-2">
+						<select class="form-select doc-form-control doc-select w-100p">
+							<option value="1">Html</option>
+							<option value="2" disabled>React</option>
+						</select>
+					</li>
+					<li class="nav-item me-2">
+						<a href="#/contact"  class="btn btn-soft-secondary"><span><span>Get Support</span><span class="icon"><span class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+						  </svg></span></span></span></a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="btn btn-icon btn-flush-dark flush-soft-hover"><span class="icon"><span class="feather-icon"><i data-feather="moon"></i></span></span></a>
+					</li>
+				</ul>
+			</div>
+			<!-- /End Nav -->
+			</div>									
+		</nav>
+		<!-- /Top Navbar -->
+
+        <!-- Vertical Nav -->
+        <div class="hk-menu doc-menu">
+			<!-- Brand -->
+			<div class="menu-header">
+				<span>
+					<a class="d-flex navbar-brand me-2" href="#">
+						<img class="brand-img img-fluid" src="dist/img/logo-light.svg" alt="brand" />
+					</a>
+					<a href="change-log.html" class="d-flex"><span class="badge rounded badge-soft-blue badge-sm">v1.0</span></a>
+				</span>
+			</div>
+			<!-- /Brand -->
+
+			<!-- Main Menu -->
+			<div data-simplebar class="nicescroll-bar">
+				<div class="menu-content-wrap">
+					<div class="menu-group">
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="index.html">
+									<span class="nav-link-text">Introduction</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="getting-started.html">
+									<span class="nav-link-text">Getting Started</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="customization.html">
+									<span class="nav-link-text">Customization</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dark-theme.html">
+									<span class="nav-link-text">Dark Theme</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="credit.html">
+									<span class="nav-link-text">Credit</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="change-log.html">
+									<span class="nav-link-text">Change Log</span>
+								</a>
+							</li>
+						</ul>	
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Utilities</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="grid-system.html"><span class="nav-link-text">Grid</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="typography.html"><span class="nav-link-text">Typography</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="background.html"><span class="nav-link-text">Background</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="border.html"><span class="nav-link-text">Border</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="colors.html"><span class="nav-link-text">Color</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="shadow.html"><span class="nav-link-text">Shadow</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="sizing.html"><span class="nav-link-text">Sizing</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="spacing.html"><span class="nav-link-text">Spacing</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="shapes.html"><span class="nav-link-text">Shapes</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="seperators.html"><span class="nav-link-text">Seperators</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="media-object.html"><span class="nav-link-text">Media Objects</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="embeds.html"><span class="nav-link-text">Embeds</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="images.html"><span class="nav-link-text">Images</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="icon-fonts.html"><span class="nav-link-text">Icon Fonts</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Data Display</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="avatar.html"><span class="nav-link-text">Avatar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="accordion.html"><span class="nav-link-text">Accordion</span></a>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="badge.html"><span class="nav-link-text">Badges</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-badges.html"><span class="nav-link-text">Advanced Badges</span></a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link" href="tooltip.html"><span class="nav-link-text">Tooltip</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="popovers.html"><span class="nav-link-text">Popovers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="modal.html"><span class="nav-link-text">Modal</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="cards.html"><span class="nav-link-text">Cards</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="carousel.html"><span class="nav-link-text">Carousel</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="collapse.html"><span class="nav-link-text">Collapse</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="list-group.html"><span class="nav-link-text">List Group</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="ribbons.html"><span class="nav-link-text">Ribbons</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="drawer.html"><span class="nav-link-text">Drawers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="offcanvas.html"><span class="nav-link-text">Offcanvas</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="empty-states.html"><span class="nav-link-text">Empty States</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="callout.html"><span class="nav-link-text">Callout</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Data Entry</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="buttons.html"><span class="nav-link-text">Buttons</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-element.html"><span class="nav-link-text">Form Elements</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="input-groups.html"><span class="nav-link-text">Input Groups</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-layout.html"><span class="nav-link-text">Form Layout</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-mask.html"><span class="nav-link-text">Form Masks</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-validation.html"><span class="nav-link-text">Form Validation</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-form-ui.html"><span class="nav-link-text">Advance Form UI</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="cropperjs.html"><span class="nav-link-text">Cropperjs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropify.html"><span class="nav-link-text">Dropify</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropzone.html"><span class="nav-link-text">Dropzone</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="date-picker.html"><span class="nav-link-text">Date Picker</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="color-picker.html"><span class="nav-link-text">Color Picker</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="select2.html"><span class="nav-link-text">Select2</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="range-slider.html"><span class="nav-link-text">Range slider</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="input-spinner.html"><span class="nav-link-text">Input Spinner</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-wizard.html"><span class="nav-link-text">Form Wizard</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tinymce.html"><span class="nav-link-text">Tinymce</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="chips.html"><span class="nav-link-text">Chips</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="ratings.html"><span class="nav-link-text">Rating</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-search.html"><span class="nav-link-text">Page Search</span></a>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Feedback</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="sweet-alert.html"><span class="nav-link-text">Sweet Alert</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="notification.html"><span class="nav-link-text">Notifications</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toast.html"><span class="nav-link-text">Toastr</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tour.html"><span class="nav-link-text">Tour</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="timeout.html"><span class="nav-link-text">Timeout</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="alerts.html"><span class="nav-link-text">Alerts</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="placeholders.html"><span class="nav-link-text">Placeholders</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="spinner.html"><span class="nav-link-text">Spinners</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="progress.html"><span class="nav-link-text">Progress</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toasts.html"><span class="nav-link-text">Bootstrap Toasts</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="clipboard.html"><span class="nav-link-text">Clipboard</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Tables</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="basic-table.html"><span class="nav-link-text">Basic Tables</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="data-table.html"><span class="nav-link-text">Data Tables</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-table-ui.html"><span class="nav-link-text">Advance Table UI</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Charts</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="charts.html"><span class="nav-link-text">Charts</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Maps</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="google-map.html"><span class="nav-link-text">Google Maps</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="vector-map.html"><span class="nav-link-text">Vector Maps</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="animated-map.html"><span class="nav-link-text">Animated Maps</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Navigation</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="breadcrumb.html"><span class="nav-link-text">Breadcrumbs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropdowns.html"><span class="nav-link-text">Dropdowns</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="nav.html"><span class="nav-link-text">Nav</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="nav-tabs.html"><span class="nav-link-text">Tabs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_wizard">
+									<span class="nav-link-text">Wizard</span>
+								</a>
+								<ul id="dash_wizard" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="vertical-wizard.html">
+													<span class="nav-link-text">Vertical Wizard</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="horizontal-wizard.html">
+													<span class="nav-link-text">Horizontal Wizard</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="pagination.html"><span class="nav-link-text">Pagination</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toolbar.html"><span class="nav-link-text">Toolbar</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Behavioral</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="scrollspy.html"><span class="nav-link-text">Scroll Spy</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="sticky-element.html"><span class="nav-link-text">Sticky Elements</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="draggable.html"><span class="nav-link-text">Draggable</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="scrollable-content.html"><span class="nav-link-text">Scrollable Content</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="footers.html"><span class="nav-link-text">Fixed Footer</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="loadmore.html"><span class="nav-link-text">Load More</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Layout</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_menu">
+									<span class="nav-link-text">Menus</span>
+								</a>
+								<ul id="dash_menu" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="classic-menu.html">
+													<span class="nav-link-text">Classic Menu</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="horizontal-menu.html">
+													<span class="nav-link-text">Horizontal Menu</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="navbar-menu.html">
+													<span class="nav-link-text">Navbar Menu</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="navbar.html"><span class="nav-link-text">Navbar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-header.html"><span class="nav-link-text">Page Headers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="content-sidebar.html"><span class="nav-link-text">Content Sidebar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-footers.html"><span class="nav-link-text">Page Footers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_pg_layout">
+									<span class="nav-link-text">Page Layout</span>
+								</a>
+								<ul id="dash_pg_layout" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="page-without-sidebar.html">
+													<span class="nav-link-text">No Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-left-sidebar.html">
+													<span class="nav-link-text">Left Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-right-sidebar.html">
+													<span class="nav-link-text">Right Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-both-sidebar.html">
+													<span class="nav-link-text">Both Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="empty-page.html">
+													<span class="nav-link-text">Empty State</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					
+					
+				</div>
+			</div>
+			<!-- /Main Menu -->
+		</div>
+        <div id="hk_menu_backdrop" class="hk-menu-backdrop"></div>
+        <!-- /Vertical Nav -->
+
+		<!-- Explore Button -->
+       	<a href="#"  class="btn  btn-custom  btn-success btn-floating btn-demo-explore position-fixed btn-lg"> <span><span class="icon"><span class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection-fill" viewBox="0 0 16 16">
+			<path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z"/>
+		</svg></span> </span><span>Explore Templates</span></span></a>
+		<!-- /Explore Button -->
+
+		<!-- Main Content -->
+		<div class="hk-pg-wrapper">
+			<!-- Container -->
+			<div class="container-xxl">
+				<!-- Row -->
+				<div class="row">
+					<div class="col-xxl-10 col-xl-12">
+						<!-- Page Header -->
+						<div class="hk-pg-header doc-pg-header pt-6 pb-4">
+							<h1 class="display-6">Tooltip</h1>
+							<p class="p-lg">Documentation and examples for adding custom Bootstrap <a href="https://getbootstrap.com/docs/5.1/components/tooltips/" >tooltips</a> with CSS and JavaScript using CSS3 for animations and data-bs-attributes for local title storage.</p>
+						</div>
+						<!-- /Page Header -->
+						
+						<!-- Page Body -->
+						<div class="hk-pg-body">
+							<section id="sec_1" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Basic examples</h5>
+									<p>Add any preset modifier classes to change the appearance of a badge.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#data_tab">
+													<span class="nav-link-text">Data Attributes</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab">
+												<div class="hstack flex-wrap gap-3 p-4">
+													<button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+														Tooltip on top
+													</button>
+													<button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="Tooltip on right">
+														Tooltip on right
+													</button>
+													<button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">
+														Tooltip on bottom
+													</button>
+													<button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on left">
+														Tooltip on left
+													</button>
+													<button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-html="true" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+														Tooltip with HTML
+													</button>
+													<button type="button" class="btn btn-link" data-bs-toggle="tooltip" data-bs-html="true" title="<em>Tooltip</em> <u>on</u> <b>Link</b>">
+														Tooltip on Link
+													</button>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot; data-bs-toggle=&quot;tooltip&quot; data-bs-placement=&quot;top&quot; title=&quot;Tooltip on top&quot;&gt;
+	Tooltip on top
+&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot; data-bs-toggle=&quot;tooltip&quot; data-bs-placement=&quot;right&quot; title=&quot;Tooltip on right&quot;&gt;
+	Tooltip on right
+&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot; data-bs-toggle=&quot;tooltip&quot; data-bs-placement=&quot;bottom&quot; title=&quot;Tooltip on bottom&quot;&gt;
+	Tooltip on bottom
+&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot; data-bs-toggle=&quot;tooltip&quot; data-bs-placement=&quot;left&quot; title=&quot;Tooltip on left&quot;&gt;
+	Tooltip on left
+&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot; data-bs-toggle=&quot;tooltip&quot; data-bs-html=&quot;true&quot; title=&quot;&lt;em&gt;Tooltip&lt;/em&gt; &lt;u&gt;with&lt;/u&gt; &lt;b&gt;HTML&lt;/b&gt;&quot;&gt;
+	Tooltip with HTML
+&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-link&quot; data-bs-toggle=&quot;tooltip&quot; data-bs-html=&quot;true&quot; title=&quot;&lt;em&gt;Tooltip&lt;/em&gt; &lt;u&gt;on&lt;/u&gt; &lt;b&gt;Link&lt;/b&gt;&quot;&gt;
+	Tooltip on Link
+&lt;/button&gt;</code>
+													</pre>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="data_tab">
+												<div class="ref-table">
+													<table class="table table-borderless">
+														<thead class="thead-light">
+															<tr>
+																<th>Name</th>
+																<th>Values</th>
+																<th>description</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td><code>data-bs-toggle="tooltip" data-bs-placement="[value]"</code></td>
+																<td>top / right / bottom / left</td>
+																<td>Actives the toggle functionality</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_2" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Disabled elements</h5>
+									<p>Elements with the disabled attribute aren't interactive, meaning users cannot focus, hover, or click them to trigger a tooltip (or popover). As a workaround, you'll want to trigger the tooltip from a wrapper &lt;div&gt; or &lt;span&gt;, ideally made keyboard-focusable using <code>tabindex="0"</code>.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_1">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_1">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_1">
+												<div class="hstack flex-wrap gap-3 p-4">
+													<span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="Disabled tooltip">
+														<button class="btn btn-primary" type="button" disabled>Disabled button</button>
+													</span>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_1">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;span class=&quot;d-inline-block&quot; tabindex=&quot;0&quot; data-bs-toggle=&quot;tooltip&quot; title=&quot;Disabled tooltip&quot;&gt;
+	&lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; disabled&gt;Disabled button&lt;/button&gt;
+&lt;/span&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+						</div>
+						<!-- /Page Body -->
+					</div>
+					<!-- Doc Links Nav -->
+					<div class="col-xxl-2 d-xxl-block d-none hk-aside">
+						<div data-simplebar class="nicescroll-bar">
+							<div class="nav-toc nav-doc">
+								<div class="nav-header">
+									<span>Jump to</span>
+								</div>
+								<ul id="vertical_nav" class="nav nav-light nav-vertical">
+									<li class="nav-item">
+										<a data-scroll href="#sec_1" class="nav-link active">
+											<span class="nav-link-text">Basic examples</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_2" class="nav-link">
+											<span class="nav-link-text">Disabled elements</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /Doc Links Nav -->	
+				</div>
+				<!-- /Row -->
+			</div>
+			<!-- /Container -->
+			
+			<!-- Page Footer -->
+			<div class="hk-footer border-0">
+				<footer class="container-xxl footer">
+					<div class="row">
+						<div class="col-xl-12">
+							<p class="footer-text"><span class="copy-text"><a href="#" >Hencework</a> © <span id="copyright_year"></span> All rights reserved.</span></p>
+						</div>
+					</div>
+				</footer>
+            </div>
+            <!-- / Page Footer -->
+		</div>
+		<!-- /Main Content -->
+	</div>
+    <!-- /Wrapper -->
+
+	<!-- jQuery -->
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+   	<script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- FeatherIcons JS -->
+    <script src="dist/js/feather.min.js"></script>
+
+    <!-- Fancy Dropdown JS -->
+    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+
+	<!-- Smooth Scroll JS -->
+    <script src="dist/js/smooth-scroll.js"></script>
+	
+	<!-- Simplebar JS -->
+	<script src="vendors/simplebar/dist/simplebar.min.js"></script>
+	
+	<!-- Prism JS -->
+	<script src="dist/js/prism.js"></script>
+	
+	<!-- Clipboard JS -->
+    <script src="vendors/clipboard/dist/clipboard.min.js"></script>
+	<script src="dist/js/clipboard-init.js"></script>
+	
+	<!-- List JS -->
+	<script src="vendors/list.js/dist/list.min.js"></script>
+	
+	<!-- Highlight JS -->
+	<script src="dist/js/jquery.highlight-4.js"></script>
+	
+	<!-- Init JS -->
+	<script src="dist/js/doc-init.js"></script>
+    <script src="dist/js/init.js"></script>
+</body>
+</html>
