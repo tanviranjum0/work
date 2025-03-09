@@ -4,6 +4,10 @@ function valid(email) {
 }
 async function handleFormSubmit(event) {
   event.preventDefault();
+  const loader = document.getElementById("loader-signup");
+  const loaderButton = document.getElementById("loader-button-signup");
+  loader.classList.remove("visually-hidden");
+  loaderButton.classList.add("visually-hidden");
   const messageBox = document.getElementById("error-box");
   messageBox.textContent = "";
   const fullname = await document.getElementById("fullname-signup").value;
@@ -11,6 +15,37 @@ async function handleFormSubmit(event) {
   const email = await document.getElementById("email-signup").value;
   const password = await document.getElementById("password-signup").value;
   const image = await document.getElementById("avatar-signup").files[0];
+  if (fullname.length < 1) {
+    messageBox.textContent = "Fullname is required";
+    loader.classList.add("visually-hidden");
+    loaderButton.classList.remove("visually-hidden");
+    return;
+  }
+  if (username.length < 1) {
+    messageBox.textContent = "Password provide a desired username";
+    loader.classList.add("visually-hidden");
+    loaderButton.classList.remove("visually-hidden");
+    return;
+  }
+
+  if (!valid(email)) {
+    messageBox.textContent = "Invalid email address.";
+    loader.classList.add("visually-hidden");
+    loaderButton.classList.remove("visually-hidden");
+    return;
+  }
+  if (password.length < 6) {
+    messageBox.textContent = "Password should be at least 6 characters long.";
+    loader.classList.add("visually-hidden");
+    loaderButton.classList.remove("visually-hidden");
+    return;
+  }
+  if (image == undefined) {
+    messageBox.textContent = "Please choose an image.";
+    loader.classList.add("visually-hidden");
+    loaderButton.classList.remove("visually-hidden");
+    return;
+  }
   const res = await fetch(`http://localhost:3000/api/user/get-one`, {
     method: "post",
     headers: {
@@ -19,31 +54,10 @@ async function handleFormSubmit(event) {
     body: JSON.stringify({ email, username }),
   });
   const isEmailExist = await res.json();
-  // console.log(isEmailExist);
   if (isEmailExist) {
     messageBox.textContent = "Email or username already exists";
-    return;
-  }
-
-  if (fullname.length < 1) {
-    messageBox.textContent = "Fullname is required";
-    return;
-  }
-  if (username.length < 1) {
-    messageBox.textContent = "Password provide a desired username";
-    return;
-  }
-
-  if (!valid(email)) {
-    messageBox.textContent = "Invalid email address.";
-    return;
-  }
-  if (password.length < 6) {
-    messageBox.textContent = "Password should be at least 6 characters long.";
-    return;
-  }
-  if (image == undefined) {
-    messageBox.textContent = "Please choose an image.";
+    loader.classList.add("visually-hidden");
+    loaderButton.classList.remove("visually-hidden");
     return;
   }
 
@@ -69,31 +83,15 @@ async function handleFormSubmit(event) {
       },
     });
     const data = await serverRes.json();
-    // console.log(data);
+
     if (data.token) {
+      loader.classList.add("visually-hidden");
+      loaderButton.classList.remove("visually-hidden");
       localStorage.setItem("token", data.token);
       window.location.href = "index.html";
     }
   }
-  // console.log(imageUploadData);
-  // postData(fullname, username, email, password, image);
 }
-
-// async function postData(fullname, username, email, password, image) {
-//   const formData = new FormData();
-//   formData.append("fullname", fullname);
-//   formData.append("username", username);
-//   formData.append("image", image);
-//   formData.append("email", email);
-//   formData.append("password", password);
-//   const res = await fetch("http://localhost:3000/api/user/create", {
-//     body: formData,
-//     method: "POST",
-//   });
-//   const data = await res.json();
-//   console.log(data);
-//   console.log(res);
-// }
 
 const fileInput = document.getElementById("avatar-signup");
 fileInput.addEventListener("change", (event) => {
@@ -124,5 +122,4 @@ async function test() {
     }
   );
   const data = await res.json();
-  // console.log(data);
 }
