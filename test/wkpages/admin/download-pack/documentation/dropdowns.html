@@ -1,0 +1,3136 @@
+<!DOCTYPE html>
+<!-- 
+Appster
+Author: Hencework
+
+-->
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appster - A Bootstrap based library of modern, reusable and flexible components designed specially for SaaS web applications.</title>
+    <meta name="description" content="A library of modern, reusable and flexible components for your SaaS web applications by hencework. Based on Bootstrap."/>
+    
+	<!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+	
+	<!-- CSS -->
+    <link href="dist/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#vertical_nav" data-bs-offset="190">
+   	<!-- Wrapper -->
+	<div class="hk-wrapper" data-layout="vertical" data-layout-style="default" data-menu="light" data-footer="simple" data-aside="sticky">
+		<!-- Top Navbar -->
+		<nav class="hk-navbar navbar navbar-expand-xl navbar-light fixed-top border-0">
+			<div class="container-xxl">
+			<!-- Start Nav -->
+			<div class="nav-start-wrap">
+				<button class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover navbar-toggle d-xl-none"><span class="icon"><span class="feather-icon"><i data-feather="align-left"></i></span></span></button>
+					
+				<!-- Search -->
+				<form id="doc-list" class="dropdown navbar-search doc-search">
+					<div class="dropdown-toggle no-caret" data-bs-toggle="dropdown" data-dropdown-animation data-bs-auto-close="outside">
+						<a href="#" class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover d-xl-none"><span class="icon"><span class="feather-icon"><i data-feather="search"></i></span></span></a>
+						<div class="input-group d-xl-flex d-none">
+							<span class="input-affix-wrapper input-search affix-border">
+								<input type="text" class="form-control doc-form-control fuzzy-search bg-transparent"  data-navbar-search-close="false" placeholder="Search in docs" aria-label="Search">
+								<span class="input-suffix"><span>/</span>
+									<span class="btn-input-clear"><span class="feather-icon"><i data-feather="x"></i></span></span>
+									<span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
+										<span class="sr-only">Loading...</span>
+									</span>
+								</span>
+							</span>
+						</div>
+					</div>
+					<div class="dropdown-menu">
+						<!-- Mobile Search -->
+						<div class="dropdown-item d-xl-none bg-transparent px-0">
+							<div class="input-group mobile-search">
+								<span class="input-affix-wrapper input-search">
+									<input type="text" class="form-control fuzzy-search" placeholder="Search in docs" aria-label="Search">
+									<span class="input-suffix">
+										<span class="btn-input-clear"><span class="feather-icon"><i data-feather="x"></i></span></span>
+										<span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
+											<span class="sr-only">Loading...</span>
+										</span>
+									</span>
+								</span>
+							</div>
+						</div>
+						<!--/ Mobile Search -->
+						<div data-simplebar class="dropdown-body">
+							<ul class="list p-0 m-0"></ul>
+							<div class="no-result text-center p-3">
+								<div class="svg-icon fs-1 mb-3">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-x" viewBox="0 0 16 16">
+										<path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181L15.546 8H14.54l.265-2.91A1 1 0 0 0 13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91H9v1H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zm6.339-1.577A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
+										<path d="M11.854 10.146a.5.5 0 0 0-.707.708L12.293 12l-1.146 1.146a.5.5 0 0 0 .707.708L13 12.707l1.146 1.147a.5.5 0 0 0 .708-.708L13.707 12l1.147-1.146a.5.5 0 0 0-.707-.708L13 11.293l-1.146-1.147z"/>
+									  </svg>
+								</div>
+								
+								<h6>No result found</h6>
+								<p class="fs-7">Please try with different query</p>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- /Search -->
+			</div>
+			<!-- /Start Nav -->
+			
+			<!-- End Nav -->
+			<div class="nav-end-wrap">
+				<ul class="navbar-nav flex-row">
+					<li class="nav-item me-2">
+						<select class="form-select doc-form-control doc-select w-100p">
+							<option value="1">Html</option>
+							<option value="2" disabled>React</option>
+						</select>
+					</li>
+					<li class="nav-item me-2">
+						<a href="#/contact"  class="btn btn-soft-secondary"><span><span>Get Support</span><span class="icon"><span class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+						  </svg></span></span></span></a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="btn btn-icon btn-flush-dark flush-soft-hover"><span class="icon"><span class="feather-icon"><i data-feather="moon"></i></span></span></a>
+					</li>
+				</ul>
+			</div>
+			<!-- /End Nav -->
+			</div>									
+		</nav>
+		<!-- /Top Navbar -->
+
+        <!-- Vertical Nav -->
+        <div class="hk-menu doc-menu">
+			<!-- Brand -->
+			<div class="menu-header">
+				<span>
+					<a class="d-flex navbar-brand me-2" href="#">
+						<img class="brand-img img-fluid" src="dist/img/logo-light.svg" alt="brand" />
+					</a>
+					<a href="change-log.html" class="d-flex"><span class="badge rounded badge-soft-blue badge-sm">v1.0</span></a>
+				</span>
+			</div>
+			<!-- /Brand -->
+
+			<!-- Main Menu -->
+			<div data-simplebar class="nicescroll-bar">
+				<div class="menu-content-wrap">
+					<div class="menu-group">
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="index.html">
+									<span class="nav-link-text">Introduction</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="getting-started.html">
+									<span class="nav-link-text">Getting Started</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="customization.html">
+									<span class="nav-link-text">Customization</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dark-theme.html">
+									<span class="nav-link-text">Dark Theme</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="credit.html">
+									<span class="nav-link-text">Credit</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="change-log.html">
+									<span class="nav-link-text">Change Log</span>
+								</a>
+							</li>
+						</ul>	
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Utilities</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="grid-system.html"><span class="nav-link-text">Grid</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="typography.html"><span class="nav-link-text">Typography</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="background.html"><span class="nav-link-text">Background</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="border.html"><span class="nav-link-text">Border</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="colors.html"><span class="nav-link-text">Color</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="shadow.html"><span class="nav-link-text">Shadow</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="sizing.html"><span class="nav-link-text">Sizing</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="spacing.html"><span class="nav-link-text">Spacing</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="shapes.html"><span class="nav-link-text">Shapes</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="seperators.html"><span class="nav-link-text">Seperators</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="media-object.html"><span class="nav-link-text">Media Objects</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="embeds.html"><span class="nav-link-text">Embeds</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="images.html"><span class="nav-link-text">Images</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="icon-fonts.html"><span class="nav-link-text">Icon Fonts</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Data Display</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="avatar.html"><span class="nav-link-text">Avatar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="accordion.html"><span class="nav-link-text">Accordion</span></a>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="badge.html"><span class="nav-link-text">Badges</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-badges.html"><span class="nav-link-text">Advanced Badges</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tooltip.html"><span class="nav-link-text">Tooltip</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="popovers.html"><span class="nav-link-text">Popovers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="modal.html"><span class="nav-link-text">Modal</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="cards.html"><span class="nav-link-text">Cards</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="carousel.html"><span class="nav-link-text">Carousel</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="collapse.html"><span class="nav-link-text">Collapse</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="list-group.html"><span class="nav-link-text">List Group</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="ribbons.html"><span class="nav-link-text">Ribbons</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="drawer.html"><span class="nav-link-text">Drawers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="offcanvas.html"><span class="nav-link-text">Offcanvas</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="empty-states.html"><span class="nav-link-text">Empty States</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="callout.html"><span class="nav-link-text">Callout</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Data Entry</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="buttons.html"><span class="nav-link-text">Buttons</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-element.html"><span class="nav-link-text">Form Elements</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="input-groups.html"><span class="nav-link-text">Input Groups</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-layout.html"><span class="nav-link-text">Form Layout</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-mask.html"><span class="nav-link-text">Form Masks</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-validation.html"><span class="nav-link-text">Form Validation</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-form-ui.html"><span class="nav-link-text">Advance Form UI</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="cropperjs.html"><span class="nav-link-text">Cropperjs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropify.html"><span class="nav-link-text">Dropify</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="dropzone.html"><span class="nav-link-text">Dropzone</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="date-picker.html"><span class="nav-link-text">Date Picker</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="color-picker.html"><span class="nav-link-text">Color Picker</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="select2.html"><span class="nav-link-text">Select2</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="range-slider.html"><span class="nav-link-text">Range slider</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="input-spinner.html"><span class="nav-link-text">Input Spinner</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="form-wizard.html"><span class="nav-link-text">Form Wizard</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tinymce.html"><span class="nav-link-text">Tinymce</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="chips.html"><span class="nav-link-text">Chips</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="ratings.html"><span class="nav-link-text">Rating</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-search.html"><span class="nav-link-text">Page Search</span></a>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Feedback</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="sweet-alert.html"><span class="nav-link-text">Sweet Alert</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="notification.html"><span class="nav-link-text">Notifications</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toast.html"><span class="nav-link-text">Toastr</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="tour.html"><span class="nav-link-text">Tour</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="timeout.html"><span class="nav-link-text">Timeout</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="alerts.html"><span class="nav-link-text">Alerts</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="placeholders.html"><span class="nav-link-text">Placeholders</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="spinner.html"><span class="nav-link-text">Spinners</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="progress.html"><span class="nav-link-text">Progress</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toasts.html"><span class="nav-link-text">Bootstrap Toasts</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="clipboard.html"><span class="nav-link-text">Clipboard</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Tables</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="basic-table.html"><span class="nav-link-text">Basic Tables</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="data-table.html"><span class="nav-link-text">Data Tables</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="advance-table-ui.html"><span class="nav-link-text">Advance Table UI</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Charts</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="charts.html"><span class="nav-link-text">Charts</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Maps</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="google-map.html"><span class="nav-link-text">Google Maps</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="vector-map.html"><span class="nav-link-text">Vector Maps</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="animated-map.html"><span class="nav-link-text">Animated Maps</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Navigation</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="breadcrumb.html"><span class="nav-link-text">Breadcrumbs</span></a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link" href="dropdowns.html"><span class="nav-link-text">Dropdowns</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="nav.html"><span class="nav-link-text">Nav</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="nav-tabs.html"><span class="nav-link-text">Tabs</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_wizard">
+									<span class="nav-link-text">Wizard</span>
+								</a>
+								<ul id="dash_wizard" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="vertical-wizard.html">
+													<span class="nav-link-text">Vertical Wizard</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="horizontal-wizard.html">
+													<span class="nav-link-text">Horizontal Wizard</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="pagination.html"><span class="nav-link-text">Pagination</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="toolbar.html"><span class="nav-link-text">Toolbar</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Behavioral</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="scrollspy.html"><span class="nav-link-text">Scroll Spy</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="sticky-element.html"><span class="nav-link-text">Sticky Elements</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="draggable.html"><span class="nav-link-text">Draggable</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="scrollable-content.html"><span class="nav-link-text">Scrollable Content</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="footers.html"><span class="nav-link-text">Fixed Footer</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="loadmore.html"><span class="nav-link-text">Load More</span></a>
+							</li>
+						</ul>
+					</div>
+					<div class="menu-gap"></div>
+					<div class="menu-group">
+						<div class="nav-header">
+							<span>Layout</span>
+						</div>
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_menu">
+									<span class="nav-link-text">Menus</span>
+								</a>
+								<ul id="dash_menu" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="classic-menu.html">
+													<span class="nav-link-text">Classic Menu</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="horizontal-menu.html">
+													<span class="nav-link-text">Horizontal Menu</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="navbar-menu.html">
+													<span class="nav-link-text">Navbar Menu</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="navbar.html"><span class="nav-link-text">Navbar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-header.html"><span class="nav-link-text">Page Headers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="content-sidebar.html"><span class="nav-link-text">Content Sidebar</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="page-footers.html"><span class="nav-link-text">Page Footers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_pg_layout">
+									<span class="nav-link-text">Page Layout</span>
+								</a>
+								<ul id="dash_pg_layout" class="nav flex-column collapse   nav-children">
+									<li class="nav-item">
+										<ul class="nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="page-without-sidebar.html">
+													<span class="nav-link-text">No Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-left-sidebar.html">
+													<span class="nav-link-text">Left Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-right-sidebar.html">
+													<span class="nav-link-text">Right Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="page-with-both-sidebar.html">
+													<span class="nav-link-text">Both Sidebar</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="empty-page.html">
+													<span class="nav-link-text">Empty State</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					
+					
+				</div>
+			</div>
+			<!-- /Main Menu -->
+		</div>
+        <div id="hk_menu_backdrop" class="hk-menu-backdrop"></div>
+        <!-- /Vertical Nav -->
+
+		<!-- Explore Button -->
+       	<a href="#"  class="btn  btn-custom  btn-success btn-floating btn-demo-explore position-fixed btn-lg"> <span><span class="icon"><span class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection-fill" viewBox="0 0 16 16">
+			<path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z"/>
+		</svg></span> </span><span>Explore Templates</span></span></a>
+		<!-- /Explore Button -->
+
+		<!-- Main Content -->
+		<div class="hk-pg-wrapper">
+			<!-- Container -->
+			<div class="container-xxl">
+				<!-- Row -->
+				<div class="row">
+					<div class="col-xxl-10 col-xl-12">
+						<!-- Page Header -->
+						<div class="hk-pg-header doc-pg-header pt-6 pb-4">
+							<h1 class="display-6">Dropdowns</h1>
+							<p class="p-lg">Toggle contextual overlays for displaying lists of links and more with the Bootstrap dropdown plugin.. See official bootstrap <a class="link-theme" href="https://getbootstrap.com/docs/5.1/components/dropdowns/" >document</a></p>
+						</div>
+						<!-- /Page Header -->
+						
+						<!-- Page Body -->
+						<div class="hk-pg-body">
+							<section id="sec_1" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Basic example </h5>
+									<p>Wrap the dropdown’s toggle (your button or link) and the dropdown menu within <code>.dropdown</code>, or another element that declares <code>position: relative;</code>. Dropdowns can be triggered from <code>&lt;a&gt;</code> or <code>&lt;button&gt;</code> elements to better fit your potential needs.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab">
+												<div class="hstack flex-wrap gap-3 p-4">
+													<div class="dropdown">
+														<button aria-expanded="false" data-bs-toggle="dropdown" class="btn btn-secondary dropdown-toggle" type="button">Dropdown button</button>
+														<div role="menu" class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="dropdown">
+														<a href="#" aria-expanded="false" data-bs-toggle="dropdown" class="btn btn-secondary dropdown-toggle" role="button">Dropdown link</a>
+														<div role="menu" class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;dropdown&quot;&gt;
+	&lt;button aria-expanded=&quot;false&quot; data-bs-toggle=&quot;dropdown&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; type=&quot;button&quot;&gt;Dropdown button&lt;/button&gt;
+	&lt;div role=&quot;menu&quot; class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;dropdown&quot;&gt;
+	&lt;a href=&quot;#&quot; aria-expanded=&quot;false&quot; data-bs-toggle=&quot;dropdown&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; role=&quot;button&quot;&gt;Dropdown link&lt;/a&gt;
+	&lt;div role=&quot;menu&quot; class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_2" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Split button</h5>
+									<p>Similarly, create split button dropdowns with virtually the same markup as single button dropdowns, but with the addition of <code>.dropdown-toggle-split</code> for proper spacing around the dropdown caret.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_1">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_1">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_1">
+												<div class="hstack flex-wrap gap-3 p-4">
+													<div class="btn-group">
+														<button type="button" class="btn btn-secondary">Action</button>
+														<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+														  <span class="visually-hidden">Toggle Dropdown</span>
+														</button>
+														<ul class="dropdown-menu">
+														  <li><a class="dropdown-item" href="#">Action</a></li>
+														  <li><a class="dropdown-item" href="#">Another action</a></li>
+														  <li><a class="dropdown-item" href="#">Something else here</a></li>
+														  <li><hr class="dropdown-divider"></li>
+														  <li><a class="dropdown-item" href="#">Separated link</a></li>
+														</ul>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_1">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Action&lt;/button&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle dropdown-toggle-split&quot; data-bs-toggle=&quot;dropdown&quot; aria-expanded=&quot;false&quot;&gt;
+		&lt;span class=&quot;visually-hidden&quot;&gt;Toggle Dropdown&lt;/span&gt;
+	&lt;/button&gt;
+	&lt;ul class=&quot;dropdown-menu&quot;&gt;
+		&lt;li&gt;&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;hr class=&quot;dropdown-divider&quot;&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_3" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Sizing</h5>
+									<p>Button dropdowns work with buttons of all sizes, including default and split dropdown buttons.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_2">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_2">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_2">
+												<div class="hstack flex-wrap gap-3 p-4">
+													<div class="btn-group dropdown">
+														<button type="button" class="btn btn-secondary btn-lg dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															Large button
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="btn-group dropdown">
+														<button type="button" class="btn btn-secondary btn-lg">
+															Large split button
+														</button>
+														<button type="button" class="btn btn-secondary btn-lg dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															<span class="sr-only">Toggle Dropdown</span>
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="btn-group dropdown">
+														<button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															Small button
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="btn-group dropdown">
+														<button type="button" class="btn btn-secondary btn-sm">
+															Small split button
+														</button>
+														<button type="button" class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															<span class="sr-only">Toggle Dropdown</span>
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="btn-group dropdown">
+														<button type="button" class="btn btn-secondary btn-xs dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															Extra small button
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="btn-group dropdown">
+														<button type="button" class="btn btn-secondary btn-xs">
+															Extra small split button
+														</button>
+														<button type="button" class="btn btn-secondary btn-xs dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															<span class="sr-only">Toggle Dropdown</span>
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_2">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-lg dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Large button
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-lg&quot;&gt;
+		Large split button
+	&lt;/button&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-lg dropdown-toggle dropdown-toggle-split&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		&lt;span class=&quot;sr-only&quot;&gt;Toggle Dropdown&lt;/span&gt;
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-sm dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Small button
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-sm&quot;&gt;
+		Small split button
+	&lt;/button&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		&lt;span class=&quot;sr-only&quot;&gt;Toggle Dropdown&lt;/span&gt;
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-xs dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Extra small button
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-xs&quot;&gt;
+		Extra small split button
+	&lt;/button&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-xs dropdown-toggle dropdown-toggle-split&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		&lt;span class=&quot;sr-only&quot;&gt;Toggle Dropdown&lt;/span&gt;
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_4" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Dropdown directions</h5>
+									<p>Trigger dropdown menus above elements by adding <code>.dropup</code>, <code>.dropstart</code> or <code>.dropend</code> to the parent element.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_3">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_3">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_3">
+												<div class="hstack flex-wrap gap-3 p-4">
+													<div class="btn-group dropstart">
+														<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															dropleft
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="btn-group dropstart">
+														<button type="button" class="btn btn-secondary">
+															Split dropleft
+														</button>
+														<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															<span class="sr-only">Toggle Dropdown</span>
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="btn-group dropup">
+														<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															Dropup
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="btn-group dropup">
+														<button type="button" class="btn btn-secondary">
+															Split dropup
+														</button>
+														<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															<span class="sr-only">Toggle Dropdown</span>
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="btn-group dropend">
+														<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															dropright
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="btn-group dropend">
+														<button type="button" class="btn btn-secondary">
+															Split dropright
+														</button>
+														<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															<span class="sr-only">Toggle Dropdown</span>
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="btn-group">
+														<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+														  Right-aligned menu
+														</button>
+														<div class="dropdown-menu dropdown-menu-end">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="btn-group">
+														<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+														  Left-aligned, right-aligned lg
+														</button>
+														<div class="dropdown-menu dropdown-menu-lg-end">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+													<div class="btn-group">
+														<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+														  Right-aligned, left-aligned lg
+														</button>
+														<div class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_3">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropstart&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		dropleft
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btn-group dropstart&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;
+		Split dropleft
+	&lt;/button&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle dropdown-toggle-split&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		&lt;span class=&quot;sr-only&quot;&gt;Toggle Dropdown&lt;/span&gt;
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btn-group dropup&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Dropup
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btn-group dropup&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;
+		Split dropup
+	&lt;/button&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle dropdown-toggle-split&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		&lt;span class=&quot;sr-only&quot;&gt;Toggle Dropdown&lt;/span&gt;
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btn-group dropend&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		dropright
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btn-group dropend&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;
+		Split dropright
+	&lt;/button&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle dropdown-toggle-split&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		&lt;span class=&quot;sr-only&quot;&gt;Toggle Dropdown&lt;/span&gt;
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btn-group&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-expanded=&quot;false&quot;&gt;
+		Right-aligned menu
+	&lt;/button&gt;
+	&lt;ul class=&quot;dropdown-menu dropdown-menu-end&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btn-group&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; data-bs-display=&quot;static&quot; aria-expanded=&quot;false&quot;&gt;
+		Left-aligned, right-aligned lg
+	&lt;/button&gt;
+	&lt;ul class=&quot;dropdown-menu dropdown-menu-lg-end&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btn-group&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; data-bs-display=&quot;static&quot; aria-expanded=&quot;false&quot;&gt;
+		Right-aligned, left-aligned lg
+	&lt;/button&gt;
+	&lt;ul class=&quot;dropdown-menu dropdown-menu-end dropdown-menu-lg-start&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_5" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Dropdown animation</h5>
+									<p>Use data attribute <code>data-dropdown-animation</code> with <code>data-bs-toggle="dropdown"</code> to animate dropdown.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_4">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_4">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_4">
+												<div class="hstack flex-wrap gap-3 p-4">
+													<div class="btn-group">
+														<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-dropdown-animation aria-haspopup="true" aria-expanded="false">
+															dropdown
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#">Action</a>
+															<a class="dropdown-item" href="#">Another action</a>
+															<a class="dropdown-item" href="#">Something else here</a>
+															<div class="dropdown-divider"></div>
+															<a class="dropdown-item" href="#">Separated link</a>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_4">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; data-dropdown-animation aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		dropdown
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_6" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Menu content</h5>
+									<p>Create menu items with button or anchor tags. You can also add non-interactive dropdown items or add a header to label sections or separate groups with a divider.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_5">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_5">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_5">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu d-block position-static float-start me-5">
+																<h6 class="dropdown-header">Dropdown header</h6>
+																<a class="dropdown-item" href="#">Regular link</a>
+																<a class="dropdown-item active" href="#">Active link</a>
+																<a class="dropdown-item disabled" href="#">Disabled link</a>
+																<span class="dropdown-item-text">Dropdown item text</span>
+																<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="#">Separated link</a>
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu w-210p">
+																	<h6 class="dropdown-header">Dropdown header</h6>
+																	<a class="dropdown-item" href="#">Regular link</a>
+																	<a class="dropdown-item active" href="#">Active link</a>
+																	<a class="dropdown-item disabled" href="#">Disabled link</a>
+																	<span class="dropdown-item-text">Dropdown item text</span>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="#">Separated link</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_5">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu w-210p&quot;&gt;
+		&lt;h6 class=&quot;dropdown-header&quot;&gt;Dropdown header&lt;/h6&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Regular link&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item active&quot; href=&quot;#&quot;&gt;Active link&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item disabled&quot; href=&quot;#&quot;&gt;Disabled link&lt;/a&gt;
+		&lt;span class=&quot;dropdown-item-text&quot;&gt;Dropdown item text&lt;/span&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_7" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Header styles and icon</h5>
+									<p>Create menu items with button or anchor tags. You can also add non-interactive dropdown items or add a header to label sections or separate groups with a divider.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_6">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_6">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_6">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu d-block position-static float-start me-5">
+																<h6 class="dropdown-header">Dropdown header</h6>
+																<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="profile.html"><i class="dropdown-icon las la-user"></i><span>Profile</span></a>
+																<a class="dropdown-item" href="#"><i class="dropdown-icon las la-credit-card"></i><span>my balance</span></a>
+																<a class="dropdown-item" href="inbox.html"><i class="dropdown-icon las la-envelope"></i><span>Inbox</span></a>
+																<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="#">Follow</a>
+																<a class="dropdown-item" href="#">Unfollow</a>
+																<a class="dropdown-item" href="#">Add Tag</a>
+																<div class="dropdown-divider"></div>
+																<h6 class="dropdown-header dropdown-header-bold">Dropdown header</h6>
+																<a class="dropdown-item" href="#">Send Email</a>
+																<a class="dropdown-item" href="#">Export to pdf</a>
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu w-210p">
+																	<h6 class="dropdown-header">Dropdown header</h6>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="profile.html"><i class="dropdown-icon las la-user"></i><span>Profile</span></a>
+																	<a class="dropdown-item" href="#"><i class="dropdown-icon las la-credit-card"></i><span>my balance</span></a>
+																	<a class="dropdown-item" href="inbox.html"><i class="dropdown-icon las la-envelope"></i><span>Inbox</span></a>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="#">Follow</a>
+																	<a class="dropdown-item" href="#">Unfollow</a>
+																	<a class="dropdown-item" href="#">Add Tag</a>
+																	<div class="dropdown-divider"></div>
+																	<h6 class="dropdown-header dropdown-header-bold">Dropdown header</h6>
+																	<a class="dropdown-item" href="#">Send Email</a>
+																	<a class="dropdown-item" href="#">Export to pdf</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_6">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu w-210p&quot;&gt;
+		&lt;h6 class=&quot;dropdown-header&quot;&gt;Dropdown header&lt;/h6&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;profile.html&quot;&gt;&lt;i class=&quot;dropdown-icon las la-user&quot;&gt;&lt;/i&gt;&lt;span&gt;Profile&lt;/span&gt;&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;dropdown-icon las la-credit-card&quot;&gt;&lt;/i&gt;&lt;span&gt;my balance&lt;/span&gt;&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;inbox.html&quot;&gt;&lt;i class=&quot;dropdown-icon las la-envelope&quot;&gt;&lt;/i&gt;&lt;span&gt;Inbox&lt;/span&gt;&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Follow&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Unfollow&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Add Tag&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;h6 class=&quot;dropdown-header dropdown-header-bold&quot;&gt;Dropdown header&lt;/h6&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Send Email&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Export to pdf&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_8" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Header styles 2</h5>
+									<p>Add <code>.header-wth-bg</code> with <code>.dropdown-header</code> class.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_7">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_7">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_7">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu d-block position-static float-start me-5">
+																<h6 class="dropdown-header header-wth-bg">Dropdown header</h6>
+																<a class="dropdown-item" href="profile.html"><i class="dropdown-icon las la-user"></i><span>Profile</span></a>
+																<a class="dropdown-item" href="#"><i class="dropdown-icon las la-credit-card"></i><span>my balance</span></a>
+																<a class="dropdown-item" href="inbox.html"><i class="dropdown-icon las la-envelope"></i><span>Inbox</span></a>
+																<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="#">Follow</a>
+																<a class="dropdown-item" href="#">Unfollow</a>
+																<a class="dropdown-item" href="#">Add Tag</a>
+																<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="#">Send Email</a>
+																<a class="dropdown-item" href="#">Export to pdf</a>
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu w-210p">
+																	<h6 class="dropdown-header header-wth-bg">Dropdown header</h6>
+																	<a class="dropdown-item" href="profile.html"><i class="dropdown-icon las la-user"></i><span>Profile</span></a>
+																	<a class="dropdown-item" href="#"><i class="dropdown-icon las la-credit-card"></i><span>my balance</span></a>
+																	<a class="dropdown-item" href="inbox.html"><i class="dropdown-icon las la-envelope"></i><span>Inbox</span></a>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="#">Follow</a>
+																	<a class="dropdown-item" href="#">Unfollow</a>
+																	<a class="dropdown-item" href="#">Add Tag</a>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="#">Send Email</a>
+																	<a class="dropdown-item" href="#">Export to pdf</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_7">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu w-210p&quot;&gt;
+		&lt;h6 class=&quot;dropdown-header header-wth-bg&quot;&gt;Dropdown header&lt;/h6&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;profile.html&quot;&gt;&lt;i class=&quot;dropdown-icon las la-user&quot;&gt;&lt;/i&gt;&lt;span&gt;Profile&lt;/span&gt;&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;dropdown-icon las la-credit-card&quot;&gt;&lt;/i&gt;&lt;span&gt;my balance&lt;/span&gt;&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;inbox.html&quot;&gt;&lt;i class=&quot;dropdown-icon las la-envelope&quot;&gt;&lt;/i&gt;&lt;span&gt;Inbox&lt;/span&gt;&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Follow&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Unfollow&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Add Tag&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Send Email&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Export to pdf&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_9" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Center align text</h5>
+									<p>add class<code>.text-center</code> with dropdown-menu class</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_8">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_8">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_8">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu text-center d-block position-static me-5 float-start">
+																<a class="dropdown-item" href="#">Follow</a>
+																<a class="dropdown-item" href="#">Unfollow</a>
+																<a class="dropdown-item" href="#">Add Tag</a>
+																<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="#">Send Email</a>
+																<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="#">Export to pdf</a>
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu text-center w-210p">
+																	<a class="dropdown-item" href="#">Follow</a>
+																	<a class="dropdown-item" href="#">Unfollow</a>
+																	<a class="dropdown-item" href="#">Add Tag</a>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="#">Send Email</a>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="#">Export to pdf</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_8">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu w-210p&quot;&gt;
+		&lt;h6 class=&quot;dropdown-header&quot;&gt;Dropdown header&lt;/h6&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Follow&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Unfollow&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Add Tag&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Send Email&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Export to pdf&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_10" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>With button</h5>
+									<p>add class<code>.text-center</code> with dropdown-menu class</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_9">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_9">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_9">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu text-center d-block position-static me-5 float-start">
+																<div class="dropdown-item">
+																	<button class="btn btn-soft-primary btn-wth-icon btn-block"><span><span class="icon"><span class="feather-icon"><i data-feather="circle"></i></span></span><span class="btn-text">Icon Button</span></span></button>
+																</div>	
+																<div class="dropdown-item">
+																	<button class="btn btn-soft-primary btn-wth-icon btn-block"><span><span class="icon"><span class="feather-icon"><i data-feather="book"></i></span></span><span class="btn-text">Icon Button</span></span></button>
+																</div>	
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu w-210p">
+																	<div class="dropdown-item">
+																		<button class="btn btn-soft-primary btn-wth-icon btn-block"><span><span class="icon"><span class="feather-icon"><i data-feather="circle"></i></span></span><span class="btn-text">Icon Button</span></span></button>
+																	</div>	
+																	<div class="dropdown-item">
+																		<button class="btn btn-soft-primary btn-wth-icon btn-block"><span><span class="icon"><span class="feather-icon"><i data-feather="book"></i></span></span><span class="btn-text">Icon Button</span></span></button>
+																	</div>	
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_9">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu w-210p&quot;&gt;
+		&lt;div class=&quot;dropdown-item&quot;&gt;
+			&lt;button class=&quot;btn btn-soft-primary btn-wth-icon btn-block&quot;&gt;&lt;span&gt;&lt;span class=&quot;icon&quot;&gt;&lt;span class=&quot;feather-icon&quot;&gt;&lt;i data-feather=&quot;circle&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;btn-text&quot;&gt;Icon Button&lt;/span&gt;&lt;/span&gt;&lt;/button&gt;
+		&lt;/div&gt;	
+		&lt;div class=&quot;dropdown-item&quot;&gt;
+			&lt;button class=&quot;btn btn-soft-primary btn-wth-icon btn-block&quot;&gt;&lt;span&gt;&lt;span class=&quot;icon&quot;&gt;&lt;span class=&quot;feather-icon&quot;&gt;&lt;i data-feather=&quot;book&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;btn-text&quot;&gt;Icon Button&lt;/span&gt;&lt;/span&gt;&lt;/button&gt;
+		&lt;/div&gt;	
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_11" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Adding text</h5>
+									<p>Place any freeform text within a dropdown menu with text and use spacing utilities or simply use<code>.dropdown-item-text</code> class.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_10">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_10">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_10">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu d-block position-static p-4 w-250p float-start me-5">
+																<p>
+																	Some example text that's free-flowing within the dropdown menu.
+																</p>
+																<p>
+																	And this is more example text.
+																</p>
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu p-4 w-250p">
+																	<p>
+																		Some example text that's free-flowing within the dropdown menu.
+																	</p>
+																	<p>
+																		And this is more example text.
+																	</p>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_10">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu p-4 w-250p&quot;&gt;
+		&lt;p&gt;
+			Some example text that&#39;s free-flowing within the dropdown menu.
+		&lt;/p&gt;
+		&lt;p&gt;
+			And this is more example text.
+		&lt;/p&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_12" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>With avatar</h5>
+									<p>Place avatar in dropdown item.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_11">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_11">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_11">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu dropdown-menu-icon-text d-block position-static me-5 float-start">
+																<a class="dropdown-item" href="#">
+																	<div class="d-flex align-items-center">
+																		<div class="avatar avatar-icon avatar-sm avatar-soft-primary avatar-rounded me-3">
+																			<span class="initial-wrap">
+																				<i class="ri-image-fill"></i>
+																			</span>
+																		</div>
+																		<div>
+																			<span class="h6 mb-0">Photo or Video Library</span>
+																			<p class="dropdown-item-text">Dropdown item text paragraph</p>
+																		</div>
+																	</div>
+																</a>
+																<a class="dropdown-item" href="#">
+																	<div class="d-flex align-items-center">
+																		<div class="avatar avatar-icon avatar-sm avatar-soft-danger avatar-rounded me-3">
+																			<span class="initial-wrap">
+																				<i class="ri-checkbox-line"></i>
+																			</span>
+																		</div>
+																		<div>
+																			<span class="h6 mb-0">Documents</span>
+																			<p class="dropdown-item-text">Dropdown item text paragraph</p>
+																		</div>
+																	</div>
+																</a>
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu dropdown-menu-icon-text">
+																	<a class="dropdown-item" href="#">
+																		<div class="d-flex align-items-center">
+																			<div class="avatar avatar-icon avatar-sm avatar-soft-primary avatar-rounded me-3">
+																				<span class="initial-wrap">
+																					<i class="ri-image-fill"></i>
+																				</span>
+																			</div>
+																			<div>
+																				<span class="h6 mb-0">Photo or Video Library</span>
+																				<p class="dropdown-item-text">Dropdown item text paragraph</p>
+																			</div>
+																		</div>
+																	</a>
+																	<a class="dropdown-item" href="#">
+																		<div class="d-flex align-items-center">
+																			<div class="avatar avatar-icon avatar-sm avatar-soft-danger avatar-rounded me-3">
+																				<span class="initial-wrap">
+																					<i class="ri-checkbox-line"></i>
+																				</span>
+																			</div>
+																			<div>
+																				<span class="h6 mb-0">Documents</span>
+																				<p class="dropdown-item-text">Dropdown item text paragraph</p>
+																			</div>
+																		</div>
+																	</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_11">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu dropdown-menu-icon-text&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;
+			&lt;div class=&quot;d-flex align-items-center&quot;&gt;
+				&lt;div class=&quot;hk-icon hk-icon hk-icon-filled hk-icon-theme hk-icon-rounded me-10&quot;&gt;
+					&lt;i class=&quot;ri-image-fill&quot;&gt;&lt;/i&gt;
+				&lt;/div&gt;
+				&lt;div&gt;
+					&lt;span class=&quot;h6 mb-0&quot;&gt;Photo or Video Library&lt;/span&gt;
+					&lt;p class=&quot;dropdown-item-text&quot;&gt;Dropdown item text paragraph&lt;/p&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/a&gt;
+		
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;
+			&lt;div class=&quot;d-flex align-items-center&quot;&gt;
+				&lt;div class=&quot;hk-icon hk-icon hk-icon-filled hk-icon-primary hk-icon-rounded me-10&quot;&gt;
+					&lt;i class=&quot;ri-file-4-fill&quot;&gt;&lt;/i&gt;
+				&lt;/div&gt;
+				&lt;div&gt;
+					&lt;span class=&quot;h6 mb-0&quot;&gt;Documents&lt;/span&gt;
+					&lt;p class=&quot;dropdown-item-text&quot;&gt;Dropdown item text paragraph&lt;/p&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_13" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>With Images</h5>
+									<p>Place any icon or image inside<code>.dropdown-item-text</code> class.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_12">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_12">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_12">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu d-block position-static float-start me-5">
+																<a class="dropdown-item" href="#"><i class="dropdown-icon flag-icon flag-icon-in"></i><span>India</span></a>
+																<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="#"><i class="dropdown-icon  flag-icon flag-icon-tz"></i><span>Spain</span></a>
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu dropdown-menu-avatar">
+																	<a class="dropdown-item" href="#"><i class="dropdown-icon flag-icon flag-icon-in"></i><span>India</span></a>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="#"><i class="dropdown-icon  flag-icon flag-icon-tz"></i><span>Spain</span></a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_12">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu dropdown-menu-avatar&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;dropdown-icon flag-icon flag-icon-in&quot;&gt;&lt;/i&gt;&lt;span&gt;India&lt;/span&gt;&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;dropdown-icon  flag-icon flag-icon-tz&quot;&gt;&lt;/i&gt;&lt;span&gt;Spain&lt;/span&gt;&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_14" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Dropdown with icons and border + No shadow</h5>
+									<p>Add an icon using dropdown-menu <code>.dropdown-bordered</code></p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_13">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_13">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_13">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu d-block position-static float-start me-5 dropdown-bordered">
+																<a class="dropdown-item" href="profile.html"><i class="dropdown-icon las la-user"></i><span>Profile</span></a>
+																<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="#"><i class="dropdown-icon las la-credit-card"></i><span>my balance</span></a>
+																<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="inbox.html"><i class="dropdown-icon las la-envelope"></i><span>Inbox</span></a>
+																<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="#"><i class="dropdown-icon las la-cog"></i><span>Settings</span></a>
+																<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="#"><i class="dropdown-icon las la-sign-out-alt"></i><span>Log Out</span></a>
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu dropdown-bordered">
+																	<a class="dropdown-item" href="profile.html"><i class="dropdown-icon las la-user"></i><span>Profile</span></a>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="#"><i class="dropdown-icon las la-credit-card"></i><span>my balance</span></a>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="inbox.html"><i class="dropdown-icon las la-envelope"></i><span>Inbox</span></a>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="#"><i class="dropdown-icon las la-cog"></i><span>Settings</span></a>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="#"><i class="dropdown-icon las la-sign-out-alt"></i><span>Log Out</span></a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_13">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu dropdown-bordered&quot;&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;profile.html&quot;&gt;&lt;i class=&quot;dropdown-icon las la-user&quot;&gt;&lt;/i&gt;&lt;span&gt;Profile&lt;/span&gt;&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;dropdown-icon las la-credit-card&quot;&gt;&lt;/i&gt;&lt;span&gt;my balance&lt;/span&gt;&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;inbox.html&quot;&gt;&lt;i class=&quot;dropdown-icon las la-envelope&quot;&gt;&lt;/i&gt;&lt;span&gt;Inbox&lt;/span&gt;&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;dropdown-icon las la-cog&quot;&gt;&lt;/i&gt;&lt;span&gt;Settings&lt;/span&gt;&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;dropdown-icon las la-sign-out-alt&quot;&gt;&lt;/i&gt;&lt;span&gt;Log Out&lt;/span&gt;&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_15" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Menu forms</h5>
+									<p>Put a form within a dropdown menu, or make it into a dropdown menu, and use margin or padding utilities to give it the negative space you require.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_14">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_14">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_14">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu d-block position-static float-start me-5">
+																<form class="p-3">
+																	<div class="form-group">
+																		<label class="form-label" for="exampleDropdownFormEmail1">Email address</label>
+																		<input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+																	</div>
+																	<div class="form-group">
+																		<label class="form-label" for="exampleDropdownFormPassword1">Password</label>
+																		<input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+																	</div>
+																	<div class="form-group">
+																		<div class="form-check">
+																			<input class="form-check-input" type="checkbox" id="gridCheck1">
+																			<label class="form-check-label" for="gridCheck1">
+																				Remember me
+																			</label>
+																		</div>
+																	</div>
+																	<button type="submit" class="btn btn-primary">Sign in</button>
+																</form>
+																<div class="dropdown-divider"></div>
+																<div class="dropdown-item"> New around here? <a class="" href="#">Sign up</a></div>
+																<a class="dropdown-item" href="#">Forgot password?</a>
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu">
+																	<form class="p-3">
+																		<div class="form-group">
+																			<label class="form-label" for="exampleDropdownFormEmail2">Email address</label>
+																			<input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
+																		</div>
+																		<div class="form-group">
+																			<label class="form-label" for="exampleDropdownFormPassword2">Password</label>
+																			<input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
+																		</div>
+																		<div class="form-group">
+																			<div class="form-check">
+																				<input class="form-check-input" type="checkbox" id="gridCheck2">
+																				<label class="form-check-label" for="gridCheck2">
+																					Remember me
+																				</label>
+																			</div>
+																		</div>
+																		<button type="submit" class="btn btn-primary">Sign in</button>
+																	</form>
+																	<div class="dropdown-divider"></div>
+																	<div class="dropdown-item"> New around here? <a class="" href="#">Sign up</a></div>
+																	<a class="dropdown-item" href="#">Forgot password?</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_14">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;form class=&quot;p-3&quot;&gt;
+			&lt;div class=&quot;form-group&quot;&gt;
+				&lt;label class=&quot;form-label&quot; for=&quot;exampleDropdownFormEmail2&quot;&gt;Email address&lt;/label&gt;
+				&lt;input type=&quot;email&quot; class=&quot;form-control&quot; id=&quot;exampleDropdownFormEmail2&quot; placeholder=&quot;email@example.com&quot;&gt;
+			&lt;/div&gt;
+			&lt;div class=&quot;form-group&quot;&gt;
+				&lt;label class=&quot;form-label&quot; for=&quot;exampleDropdownFormPassword2&quot;&gt;Password&lt;/label&gt;
+				&lt;input type=&quot;password&quot; class=&quot;form-control&quot; id=&quot;exampleDropdownFormPassword2&quot; placeholder=&quot;Password&quot;&gt;
+			&lt;/div&gt;
+			&lt;div class=&quot;form-group&quot;&gt;
+				&lt;div class=&quot;form-check&quot;&gt;
+					&lt;input class=&quot;form-check-input&quot; type=&quot;checkbox&quot; id=&quot;gridCheck1&quot;&gt;
+					&lt;label class=&quot;form-check-label&quot; for=&quot;gridCheck1&quot;&gt;
+						Remember me
+					&lt;/label&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot;&gt;Sign in&lt;/button&gt;
+		&lt;/form&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;div class=&quot;dropdown-item&quot;&gt; New around here? &lt;a class=&quot;&quot; href=&quot;#&quot;&gt;Sign up&lt;/a&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Forgot password?&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_16" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Linked Field</h5>
+									<p>Put a form within a dropdown menu, or make it into a dropdown menu, and use margin or padding utilities to give it the negative space you require.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_15">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_15">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_15">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu d-block position-static float-start me-5">
+																<div class="dropdown-item"><i class="dropdown-icon las la-link"></i><a href="https://flagicons.lipis.dev/">https://flagicons.lipis.dev/</a></div>
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu">
+																	<div class="dropdown-item"><i class="dropdown-icon las la-link"></i><a href="https://flagicons.lipis.dev/">https://flagicons.lipis.dev/</a></div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_15">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu&quot;&gt;
+		&lt;div class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;dropdown-icon las la-link&quot;&gt;&lt;/i&gt;&lt;a href=&quot;https://flagicons.lipis.dev/&quot;&gt;https://flagicons.lipis.dev/&lt;/a&gt;&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_17" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Dropdown inverse</h5>
+									<p>Add <code>.dropdown-menu-dark</code> modifier class to change the dropdown look to a dark one.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_16">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_16">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_16">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu dropdown-menu-dark d-block position-static me-5 float-start">
+																<h6 class="dropdown-header">Dropdown header</h6>
+																<a class="dropdown-item" href="#">Regular link</a>
+																<a class="dropdown-item active" href="#">Active link</a>
+																<a class="dropdown-item disabled" href="#">Disabled link</a>
+																<span class="dropdown-item-text">Dropdown item text</span>
+																<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="#">Separated link</a>
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu dropdown-menu-dark">
+																	<h6 class="dropdown-header">Dropdown header</h6>
+																	<a class="dropdown-item" href="#">Regular link</a>
+																	<a class="dropdown-item active" href="#">Active link</a>
+																	<a class="dropdown-item" href="#">Disabled link</a>
+																	<span class="dropdown-item-text">Dropdown item text</span>
+																	<a class="dropdown-item" href="#">Something else here</a>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="#">Separated link</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_16">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu dropdown-menu-dark&quot;&gt;
+		&lt;h6 class=&quot;dropdown-header&quot;&gt;Dropdown header&lt;/h6&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Regular link&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item active&quot; href=&quot;#&quot;&gt;Active link&lt;/a&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Disabled link&lt;/a&gt;
+		&lt;span class=&quot;dropdown-item-text&quot;&gt;Dropdown item text&lt;/span&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_18" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Dropdown with checkbox</h5>
+									<p>Checkout the example of dropdown with checkbox.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_17">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_17">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_17">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu d-block position-static me-5  w-250p float-start">
+																<ul class="nav nav-line nav-tabs nav-light">
+																	<li class="nav-item">
+																		<a class="nav-link active" data-bs-toggle="tab" href="#tab_lead4">
+																			<span class="nav-link-text">Users</span>
+																		</a>
+																	</li>
+																	<li class="nav-item">
+																		<a class="nav-link disabled" data-bs-toggle="tab" href="#">
+																			<span class="nav-link-text">Metrics</span>
+																		</a>
+																	</li>
+																</ul>
+																<div class="tab-content">
+																	<div class="tab-pane fade show active" id="tab_lead4">
+																		<div>
+																			<form class="mb-3" role="search">
+																				<input type="text" class="form-control" placeholder="Search People">
+																			</form>
+																			<div class="h-250p">
+																				<div data-simplebar class="nicescroll-bar">
+																					<ul class="invite-user-list p-0">
+																						<li class="d-flex align-items-center justify-content-between mb-3">
+																							<div class="media d-flex align-items-center">
+																								<div class="avatar avatar-xs me-3">
+																									<img src="dist/img/avatar2.jpg" alt="user" class="avatar-img">
+																								</div>
+																								<div class="media-body">
+																									<div>
+																										<div class="user-name">Morgan Freeman</div>
+																									</div>	
+																								</div>  
+																							</div>
+																							<div class="form-check form-check-theme ms-3">
+																								<input type="checkbox" class="form-check-input" id="customCheck2">
+																								<label class="form-check-label" for="customCheck2"></label>
+																							</div>
+																						</li>
+																						<li class="d-flex align-items-center justify-content-between mb-3">
+																							<div class="media d-flex align-items-center">
+																								<div class="avatar avatar-xs me-3">
+																									<img src="dist/img/avatar7.jpg" alt="user" class="avatar-img">
+																								</div>
+																								<div class="media-body">
+																									<div>
+																										<div class="user-name">Huma Therman</div>
+																									</div>	
+																								</div>
+																							</div>
+																							<div class="form-check form-check-theme ms-3">
+																								<input type="checkbox" class="form-check-input" id="customCheck3">
+																								<label class="form-check-label" for="customCheck3"></label>
+																							</div>
+																						</li>
+																						<li class="d-flex align-items-center justify-content-between mb-3">
+																							<div class="media d-flex align-items-center">
+																								<div class="avatar avatar-xs me-3">
+																									<img src="dist/img/avatar3.jpg" alt="user" class="avatar-img">
+																								</div>
+																								<div class="media-body">
+																									<div>
+																										<div class="user-name">Charlie Chaplin</div>
+																									</div>	
+																								</div>
+																							</div>
+																							<div class="form-check form-check-theme ms-3">
+																								<input type="checkbox" class="form-check-input" id="customCheck4">
+																								<label class="form-check-label" for="customCheck4"></label>
+																							</div>
+																						</li>
+																						<li class="d-flex align-items-center justify-content-between mb-3">
+																							<div class="media d-flex align-items-center">
+																								<div class="avatar avatar-xs me-3">
+																									<img src="dist/img/avatar13.jpg" alt="user" class="avatar-img">
+																								</div>
+																								<div class="media-body">
+																									<div>
+																										<div class="user-name">Winston Churchil</div>
+																									</div>	
+																								</div>
+																							</div>
+																							<div class="form-check form-check-theme ms-3">
+																								<input type="checkbox" class="form-check-input" id="customCheck5">
+																								<label class="form-check-label" for="customCheck5"></label>
+																							</div>
+																						</li>
+																						<li class="d-flex align-items-center justify-content-between mb-3">
+																							<div class="media d-flex align-items-center">
+																								<div class="avatar avatar-xs me-3">
+																									<img src="dist/img/avatar1.jpg" alt="user" class="avatar-img">
+																								</div>
+																								<div class="media-body">
+																									<div>
+																										<div class="user-name">Office Board</div>
+																									</div>	
+																								</div>
+																							</div>
+																							<div class="form-check form-check-theme ms-3">
+																								<input type="checkbox" class="form-check-input" id="customCheck6">
+																								<label class="form-check-label" for="customCheck6"></label>
+																							</div>
+																						</li>
+																						<li class="d-flex align-items-center justify-content-between mb-3">
+																							<div class="media d-flex align-items-center">
+																								<div class="avatar avatar-xs me-3">
+																									<img src="dist/img/avatar6.jpg" alt="user" class="avatar-img">
+																								</div>
+																								<div class="media-body">
+																									<div>
+																										<div class="user-name">Boss Baby</div>
+																									</div>	
+																								</div>
+																							</div>
+																							<div class="form-check form-check-theme ms-3">
+																								<input type="checkbox" class="form-check-input" id="customCheck7">
+																								<label class="form-check-label" for="customCheck7"></label>
+																							</div>
+																						</li>
+																						<li class="d-flex align-items-center justify-content-between">
+																							<div class="media d-flex align-items-center">
+																								<div class="avatar avatar-xs me-3">
+																									<img src="dist/img/avatar5.jpg" alt="user" class="avatar-img">
+																								</div>
+																								<div class="media-body">
+																									<div>
+																										<div class="user-name">Jaquiline Joker</div>
+																									</div>	
+																								</div>
+																							</div>
+																							<div class="form-check form-check-theme ms-3">
+																								<input type="checkbox" class="form-check-input" id="customCheck8">
+																								<label class="form-check-label" for="customCheck8"></label>
+																							</div>
+																						</li>
+																					</ul>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu w-250p">
+																	<ul class="nav nav-line nav-tabs nav-light">
+																		<li class="nav-item">
+																			<a class="nav-link active" data-bs-toggle="tab" href="#tab_lead5">
+																				<span class="nav-link-text">Users</span>
+																			</a>
+																		</li>
+																		<li class="nav-item">
+																			<a class="nav-link disabled" data-bs-toggle="tab" href="#">
+																				<span class="nav-link-text">Metrics</span>
+																			</a>
+																		</li>
+																	</ul>
+																	<div class="tab-content">
+																		<div class="tab-pane fade show active" id="tab_lead5">
+																			<div>
+																				<form class="mb-3" role="search">
+																					<input type="text" class="form-control" placeholder="Search People">
+																				</form>
+																				<div class="h-250p">
+																					<div data-simplebar class="nicescroll-bar">
+																						<ul class="invite-user-list p-0">
+																							<li class="d-flex align-items-center justify-content-between mb-3">
+																								<div class="media d-flex align-items-center">
+																									<div class="avatar avatar-xs me-3">
+																										<img src="dist/img/avatar2.jpg" alt="user" class="avatar-img">
+																									</div>
+																									<div class="media-body">
+																										<div>
+																											<div class="user-name">Morgan Freeman</div>
+																										</div>	
+																									</div>  
+																								</div>
+																								<div class="form-check form-check-theme ms-3">
+																									<input type="checkbox" class="form-check-input" id="customCheck21">
+																									<label class="form-check-label" for="customCheck21"></label>
+																								</div>
+																							</li>
+																							<li class="d-flex align-items-center justify-content-between mb-3">
+																								<div class="media d-flex align-items-center">
+																									<div class="avatar avatar-xs me-3">
+																										<img src="dist/img/avatar7.jpg" alt="user" class="avatar-img">
+																									</div>
+																									<div class="media-body">
+																										<div>
+																											<div class="user-name">Huma Therman</div>
+																										</div>	
+																									</div>
+																								</div>
+																								<div class="form-check form-check-theme ms-3">
+																									<input type="checkbox" class="form-check-input" id="customCheck31">
+																									<label class="form-check-label" for="customCheck31"></label>
+																								</div>
+																							</li>
+																							<li class="d-flex align-items-center justify-content-between mb-3">
+																								<div class="media d-flex align-items-center">
+																									<div class="avatar avatar-xs me-3">
+																										<img src="dist/img/avatar3.jpg" alt="user" class="avatar-img">
+																									</div>
+																									<div class="media-body">
+																										<div>
+																											<div class="user-name">Charlie Chaplin</div>
+																										</div>	
+																									</div>
+																								</div>
+																								<div class="form-check form-check-theme ms-3">
+																									<input type="checkbox" class="form-check-input" id="customCheck41">
+																									<label class="form-check-label" for="customCheck41"></label>
+																								</div>
+																							</li>
+																							<li class="d-flex align-items-center justify-content-between mb-3">
+																								<div class="media d-flex align-items-center">
+																									<div class="avatar avatar-xs me-3">
+																										<img src="dist/img/avatar13.jpg" alt="user" class="avatar-img">
+																									</div>
+																									<div class="media-body">
+																										<div>
+																											<div class="user-name">Winston Churchil</div>
+																										</div>	
+																									</div>
+																								</div>
+																								<div class="form-check form-check-theme ms-3">
+																									<input type="checkbox" class="form-check-input" id="customCheck51">
+																									<label class="form-check-label" for="customCheck51"></label>
+																								</div>
+																							</li>
+																							<li class="d-flex align-items-center justify-content-between mb-3">
+																								<div class="media d-flex align-items-center">
+																									<div class="avatar avatar-xs me-3">
+																										<img src="dist/img/avatar1.jpg" alt="user" class="avatar-img">
+																									</div>
+																									<div class="media-body">
+																										<div>
+																											<div class="user-name">Office Board</div>
+																										</div>	
+																									</div>
+																								</div>
+																								<div class="form-check form-check-theme ms-3">
+																									<input type="checkbox" class="form-check-input" id="customCheck61">
+																									<label class="form-check-label" for="customCheck61"></label>
+																								</div>
+																							</li>
+																							<li class="d-flex align-items-center justify-content-between mb-3">
+																								<div class="media d-flex align-items-center">
+																									<div class="avatar avatar-xs me-3">
+																										<img src="dist/img/avatar6.jpg" alt="user" class="avatar-img">
+																									</div>
+																									<div class="media-body">
+																										<div>
+																											<div class="user-name">Boss Baby</div>
+																										</div>	
+																									</div>
+																								</div>
+																								<div class="form-check form-check-theme ms-3">
+																									<input type="checkbox" class="form-check-input" id="customCheck71">
+																									<label class="form-check-label" for="customCheck71"></label>
+																								</div>
+																							</li>
+																							<li class="d-flex align-items-center justify-content-between">
+																								<div class="media d-flex align-items-center">
+																									<div class="avatar avatar-xs me-3">
+																										<img src="dist/img/avatar5.jpg" alt="user" class="avatar-img">
+																									</div>
+																									<div class="media-body">
+																										<div>
+																											<div class="user-name">Jaquiline Joker</div>
+																										</div>	
+																									</div>
+																								</div>
+																								<div class="form-check form-check-theme ms-3">
+																									<input type="checkbox" class="form-check-input" id="customCheck81">
+																									<label class="form-check-label" for="customCheck81"></label>
+																								</div>
+																							</li>
+																						</ul>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_17">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu w-250p&quot;&gt;
+		&lt;ul class=&quot;nav nav-line nav-tabs nav-light&quot;&gt;
+			&lt;li class=&quot;nav-item&quot;&gt;
+				&lt;a class=&quot;nav-link active&quot; data-bs-toggle=&quot;tab&quot; href=&quot;#tab_lead4&quot;&gt;
+					&lt;span class=&quot;nav-link-text&quot;&gt;Users&lt;/span&gt;
+				&lt;/a&gt;
+			&lt;/li&gt;
+			&lt;li class=&quot;nav-item&quot;&gt;
+				&lt;a class=&quot;nav-link disabled&quot; data-bs-toggle=&quot;tab&quot; href=&quot;#&quot;&gt;
+					&lt;span class=&quot;nav-link-text&quot;&gt;Metrics&lt;/span&gt;
+				&lt;/a&gt;
+			&lt;/li&gt;
+		&lt;/ul&gt;
+		&lt;div class=&quot;tab-content&quot;&gt;
+			&lt;div class=&quot;tab-pane fade show active&quot; id=&quot;tab_lead4&quot;&gt;
+				&lt;div&gt;
+					&lt;form class=&quot;mb-3&quot; role=&quot;search&quot;&gt;
+						&lt;input type=&quot;text&quot; class=&quot;form-control&quot; placeholder=&quot;Search People&quot;&gt;
+					&lt;/form&gt;
+					&lt;div class=&quot;h-250p&quot;&gt;
+						&lt;div data-simplebar class=&quot;nicescroll-bar&quot;&gt;
+							&lt;ul class=&quot;invite-user-list p-0&quot;&gt;
+								&lt;li class=&quot;d-flex align-items-center justify-content-between mb-3&quot;&gt;
+									&lt;div class=&quot;media d-flex align-items-center&quot;&gt;
+										&lt;div class=&quot;avatar avatar-xs me-3&quot;&gt;
+											&lt;img src=&quot;dist/img/avatar2.jpg&quot; alt=&quot;user&quot; class=&quot;avatar-img&quot;&gt;
+										&lt;/div&gt;
+										&lt;div class=&quot;media-body&quot;&gt;
+											&lt;div&gt;
+												&lt;div class=&quot;user-name&quot;&gt;Morgan Freeman&lt;/div&gt;
+											&lt;/div&gt;	
+										&lt;/div&gt;  
+									&lt;/div&gt;
+									&lt;div class=&quot;form-check form-check-theme ms-3&quot;&gt;
+										&lt;input type=&quot;checkbox&quot; class=&quot;form-check-input&quot; id=&quot;customCheck2&quot;&gt;
+										&lt;label class=&quot;form-check-label&quot; for=&quot;customCheck2&quot;&gt;&lt;/label&gt;
+									&lt;/div&gt;
+								&lt;/li&gt;
+								&lt;li class=&quot;d-flex align-items-center justify-content-between mb-3&quot;&gt;
+									&lt;div class=&quot;media d-flex align-items-center&quot;&gt;
+										&lt;div class=&quot;avatar avatar-xs me-3&quot;&gt;
+											&lt;img src=&quot;dist/img/avatar7.jpg&quot; alt=&quot;user&quot; class=&quot;avatar-img&quot;&gt;
+										&lt;/div&gt;
+										&lt;div class=&quot;media-body&quot;&gt;
+											&lt;div&gt;
+												&lt;div class=&quot;user-name&quot;&gt;Huma Therman&lt;/div&gt;
+											&lt;/div&gt;	
+										&lt;/div&gt;
+									&lt;/div&gt;
+									&lt;div class=&quot;form-check form-check-theme ms-3&quot;&gt;
+										&lt;input type=&quot;checkbox&quot; class=&quot;form-check-input&quot; id=&quot;customCheck3&quot;&gt;
+										&lt;label class=&quot;form-check-label&quot; for=&quot;customCheck3&quot;&gt;&lt;/label&gt;
+									&lt;/div&gt;
+								&lt;/li&gt;
+								&lt;li class=&quot;d-flex align-items-center justify-content-between mb-3&quot;&gt;
+									&lt;div class=&quot;media d-flex align-items-center&quot;&gt;
+										&lt;div class=&quot;avatar avatar-xs me-3&quot;&gt;
+											&lt;img src=&quot;dist/img/avatar3.jpg&quot; alt=&quot;user&quot; class=&quot;avatar-img&quot;&gt;
+										&lt;/div&gt;
+										&lt;div class=&quot;media-body&quot;&gt;
+											&lt;div&gt;
+												&lt;div class=&quot;user-name&quot;&gt;Charlie Chaplin&lt;/div&gt;
+											&lt;/div&gt;	
+										&lt;/div&gt;
+									&lt;/div&gt;
+									&lt;div class=&quot;form-check form-check-theme ms-3&quot;&gt;
+										&lt;input type=&quot;checkbox&quot; class=&quot;form-check-input&quot; id=&quot;customCheck4&quot;&gt;
+										&lt;label class=&quot;form-check-label&quot; for=&quot;customCheck4&quot;&gt;&lt;/label&gt;
+									&lt;/div&gt;
+								&lt;/li&gt;
+								&lt;li class=&quot;d-flex align-items-center justify-content-between mb-3&quot;&gt;
+									&lt;div class=&quot;media d-flex align-items-center&quot;&gt;
+										&lt;div class=&quot;avatar avatar-xs me-3&quot;&gt;
+											&lt;img src=&quot;dist/img/avatar13.jpg&quot; alt=&quot;user&quot; class=&quot;avatar-img&quot;&gt;
+										&lt;/div&gt;
+										&lt;div class=&quot;media-body&quot;&gt;
+											&lt;div&gt;
+												&lt;div class=&quot;user-name&quot;&gt;Winston Churchil&lt;/div&gt;
+											&lt;/div&gt;	
+										&lt;/div&gt;
+									&lt;/div&gt;
+									&lt;div class=&quot;form-check form-check-theme ms-3&quot;&gt;
+										&lt;input type=&quot;checkbox&quot; class=&quot;form-check-input&quot; id=&quot;customCheck5&quot;&gt;
+										&lt;label class=&quot;form-check-label&quot; for=&quot;customCheck5&quot;&gt;&lt;/label&gt;
+									&lt;/div&gt;
+								&lt;/li&gt;
+								&lt;li class=&quot;d-flex align-items-center justify-content-between mb-3&quot;&gt;
+									&lt;div class=&quot;media d-flex align-items-center&quot;&gt;
+										&lt;div class=&quot;avatar avatar-xs me-3&quot;&gt;
+											&lt;img src=&quot;dist/img/avatar1.jpg&quot; alt=&quot;user&quot; class=&quot;avatar-img&quot;&gt;
+										&lt;/div&gt;
+										&lt;div class=&quot;media-body&quot;&gt;
+											&lt;div&gt;
+												&lt;div class=&quot;user-name&quot;&gt;Office Board&lt;/div&gt;
+											&lt;/div&gt;	
+										&lt;/div&gt;
+									&lt;/div&gt;
+									&lt;div class=&quot;form-check form-check-theme ms-3&quot;&gt;
+										&lt;input type=&quot;checkbox&quot; class=&quot;form-check-input&quot; id=&quot;customCheck6&quot;&gt;
+										&lt;label class=&quot;form-check-label&quot; for=&quot;customCheck6&quot;&gt;&lt;/label&gt;
+									&lt;/div&gt;
+								&lt;/li&gt;
+								&lt;li class=&quot;d-flex align-items-center justify-content-between mb-3&quot;&gt;
+									&lt;div class=&quot;media d-flex align-items-center&quot;&gt;
+										&lt;div class=&quot;avatar avatar-xs me-3&quot;&gt;
+											&lt;img src=&quot;dist/img/avatar6.jpg&quot; alt=&quot;user&quot; class=&quot;avatar-img&quot;&gt;
+										&lt;/div&gt;
+										&lt;div class=&quot;media-body&quot;&gt;
+											&lt;div&gt;
+												&lt;div class=&quot;user-name&quot;&gt;Boss Baby&lt;/div&gt;
+											&lt;/div&gt;	
+										&lt;/div&gt;
+									&lt;/div&gt;
+									&lt;div class=&quot;form-check form-check-theme ms-3&quot;&gt;
+										&lt;input type=&quot;checkbox&quot; class=&quot;form-check-input&quot; id=&quot;customCheck7&quot;&gt;
+										&lt;label class=&quot;form-check-label&quot; for=&quot;customCheck7&quot;&gt;&lt;/label&gt;
+									&lt;/div&gt;
+								&lt;/li&gt;
+								&lt;li class=&quot;d-flex align-items-center justify-content-between&quot;&gt;
+									&lt;div class=&quot;media d-flex align-items-center&quot;&gt;
+										&lt;div class=&quot;avatar avatar-xs me-3&quot;&gt;
+											&lt;img src=&quot;dist/img/avatar5.jpg&quot; alt=&quot;user&quot; class=&quot;avatar-img&quot;&gt;
+										&lt;/div&gt;
+										&lt;div class=&quot;media-body&quot;&gt;
+											&lt;div&gt;
+												&lt;div class=&quot;user-name&quot;&gt;Jaquiline Joker&lt;/div&gt;
+											&lt;/div&gt;	
+										&lt;/div&gt;
+									&lt;/div&gt;
+									&lt;div class=&quot;form-check form-check-theme ms-3&quot;&gt;
+										&lt;input type=&quot;checkbox&quot; class=&quot;form-check-input&quot; id=&quot;customCheck8&quot;&gt;
+										&lt;label class=&quot;form-check-label&quot; for=&quot;customCheck8&quot;&gt;&lt;/label&gt;
+									&lt;/div&gt;
+								&lt;/li&gt;
+							&lt;/ul&gt;
+						&lt;/div&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<section id="sec_19" class="hk-section">
+								<div class="hk-sec-title">
+									<h5>Dropdown with radio</h5>
+									<p>Checkout the example of dropdown with radio.</p>
+								</div>
+								<div class="hk-example card card-border card-wth-tabs">
+									<div class="card-header">
+										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#prev_tab_18">
+													<span class="nav-link-text">Preview</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-bs-toggle="tab" href="#html_tab_18">
+													<span class="nav-link-text">HTML</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="card-body p-0">
+										<div class="tab-content m-0">
+											<div class="tab-pane fade show active" id="prev_tab_18">
+												<div class="container py-3">
+													<div class="row">
+														<div class="col">
+															<div class="dropdown-menu d-block position-static me-5 float-start w-200p">
+																<div class="dropdown-item">
+																	<div class="form-check form-check-theme">
+																		<input type="radio" class="form-check-input" id="customR1" name="customRadio1">
+																		<label class="form-check-label" for="customR1">Last Day</label>
+																	</div>
+																</div>
+																<div class="dropdown-item">
+																	<div class="form-check form-check-theme">
+																		<input type="radio" class="form-check-input" id="customR2" name="customRadio1" checked>
+																		<label class="form-check-label" for="customR2">Last 15 Days</label>
+																	</div>
+																</div>
+																<div class="dropdown-item">
+																	<div class="form-check form-check-theme">
+																		<input type="radio" class="form-check-input" id="customR3" name="customRadio1">
+																		<label class="form-check-label" for="customR3">Last 30 Days</label>
+																	</div>
+																</div>
+																<div class="dropdown-item">
+																	<div class="form-check form-check-theme">
+																		<input type="radio" class="form-check-input" id="customR4" name="customRadio1">
+																		<label class="form-check-label" for="customR4">Last quater</label>
+																	</div>
+																</div>
+																<div class="dropdown-item">
+																	<div class="form-check form-check-theme">
+																		<input type="radio" class="form-check-input" id="customR5" name="customRadio1">
+																		<label class="form-check-label" for="customR5">Last Year</label>
+																	</div>
+																</div>
+																<div class="dropdown-divider"></div>
+																<div class="dropdown-item">
+																	<i class="dropdown-icon las la-plus"></i> <span>Custom Date</span>
+																</div>
+															</div>
+															<div class="btn-group dropdown">
+																<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Demo
+																</button>
+																<div class="dropdown-menu w-200p">
+																	<div class="dropdown-item">
+																		<div class="form-check form-check-theme">
+																			<input type="radio" class="form-check-input" id="customR6" name="customRadio">
+																			<label class="form-check-label" for="customR6">Last Day</label>
+																		</div>
+																	</div>
+																	<div class="dropdown-item">
+																		<div class="form-check form-check-theme">
+																			<input type="radio" class="form-check-input" id="customR7" name="customRadio" checked>
+																			<label class="form-check-label" for="customR7">Last 15 Days</label>
+																		</div>
+																	</div>
+																	<div class="dropdown-item">
+																		<div class="form-check form-check-theme">
+																			<input type="radio" class="form-check-input" id="customR8" name="customRadio">
+																			<label class="form-check-label" for="customR8">Last 30 Days</label>
+																		</div>
+																	</div>
+																	<div class="dropdown-item">
+																		<div class="form-check form-check-theme">
+																			<input type="radio" class="form-check-input" id="customR9" name="customRadio">
+																			<label class="form-check-label" for="customR9">Last quater</label>
+																		</div>
+																	</div>
+																	<div class="dropdown-item">
+																		<div class="form-check form-check-theme">
+																			<input type="radio" class="form-check-input" id="customR10" name="customRadio">
+																			<label class="form-check-label" for="customR10">Last Year</label>
+																		</div>
+																	</div>
+																	<div class="dropdown-divider"></div>
+																	<div class="dropdown-item">
+																		<i class="dropdown-icon las la-plus"></i> <span>Custom Date</span>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="html_tab_18">
+												<div class="hk-code-block">
+													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
+													<pre class="language-markup">
+														<code class="language-markup">
+&lt;div class=&quot;btn-group dropdown&quot;&gt;
+	&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; data-bs-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+		Demo
+	&lt;/button&gt;
+	&lt;div class=&quot;dropdown-menu w-200p&quot;&gt;
+		&lt;div class=&quot;dropdown-item&quot;&gt;
+			&lt;div class=&quot;form-check form-check-theme&quot;&gt;
+				&lt;input type=&quot;radio&quot; class=&quot;form-check-input&quot; id=&quot;customR6&quot; name=&quot;customRadio&quot;&gt;
+				&lt;label class=&quot;form-check-label&quot; for=&quot;customR6&quot;&gt;Last Day&lt;/label&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class=&quot;dropdown-item&quot;&gt;
+			&lt;div class=&quot;form-check form-check-theme&quot;&gt;
+				&lt;input type=&quot;radio&quot; class=&quot;form-check-input&quot; id=&quot;customR7&quot; name=&quot;customRadio&quot; checked&gt;
+				&lt;label class=&quot;form-check-label&quot; for=&quot;customR7&quot;&gt;Last 15 Days&lt;/label&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class=&quot;dropdown-item&quot;&gt;
+			&lt;div class=&quot;form-check form-check-theme&quot;&gt;
+				&lt;input type=&quot;radio&quot; class=&quot;form-check-input&quot; id=&quot;customR8&quot; name=&quot;customRadio&quot;&gt;
+				&lt;label class=&quot;form-check-label&quot; for=&quot;customR8&quot;&gt;Last 30 Days&lt;/label&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class=&quot;dropdown-item&quot;&gt;
+			&lt;div class=&quot;form-check form-check-theme&quot;&gt;
+				&lt;input type=&quot;radio&quot; class=&quot;form-check-input&quot; id=&quot;customR9&quot; name=&quot;customRadio&quot;&gt;
+				&lt;label class=&quot;form-check-label&quot; for=&quot;customR9&quot;&gt;Last quater&lt;/label&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class=&quot;dropdown-item&quot;&gt;
+			&lt;div class=&quot;form-check form-check-theme&quot;&gt;
+				&lt;input type=&quot;radio&quot; class=&quot;form-check-input&quot; id=&quot;customR10&quot; name=&quot;customRadio&quot;&gt;
+				&lt;label class=&quot;form-check-label&quot; for=&quot;customR10&quot;&gt;Last Year&lt;/label&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+		&lt;div class=&quot;dropdown-item&quot;&gt;
+			&lt;i class=&quot;dropdown-icon las la-plus&quot;&gt;&lt;/i&gt; &lt;span&gt;Custom Date&lt;/span&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code>
+													</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+						</div>
+						<!-- /Page Body -->
+					</div>
+					<!-- Doc Links Nav -->
+					<div class="col-xxl-2 d-xxl-block d-none hk-aside">
+						<div data-simplebar class="nicescroll-bar">
+							<div class="nav-toc nav-doc">
+								<div class="nav-header">
+									<span>Jump to</span>
+								</div>
+								<ul id="vertical_nav" class="nav nav-light nav-vertical">
+									<li class="nav-item">
+										<a data-scroll href="#sec_1" class="nav-link active">
+											<span class="nav-link-text">Basic example</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_2" class="nav-link">
+											<span class="nav-link-text">Split button</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_3" class="nav-link">
+											<span class="nav-link-text">Sizing</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_4" class="nav-link">
+											<span class="nav-link-text">Dropdown directions</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_5" class="nav-link">
+											<span class="nav-link-text">Dropdown animation</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_6" class="nav-link">
+											<span class="nav-link-text">Menu content</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_7" class="nav-link">
+											<span class="nav-link-text">Header styles and icon</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_8" class="nav-link">
+											<span class="nav-link-text">Header styles 2</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_9" class="nav-link">
+											<span class="nav-link-text">Center align text</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_10" class="nav-link">
+											<span class="nav-link-text">With button</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_11" class="nav-link">
+											<span class="nav-link-text">Adding text</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_12" class="nav-link">
+											<span class="nav-link-text">With avatar</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_13" class="nav-link">
+											<span class="nav-link-text">With Images</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_14" class="nav-link">
+											<span class="nav-link-text">Dropdown with icons and border + No shadow</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_15" class="nav-link">
+											<span class="nav-link-text">Menu forms</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_16" class="nav-link">
+											<span class="nav-link-text">Linked Field</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_17" class="nav-link">
+											<span class="nav-link-text">Dropdown inverse</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_18" class="nav-link">
+											<span class="nav-link-text">Dropdown with checkbox</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a data-scroll href="#sec_19" class="nav-link">
+											<span class="nav-link-text">Dropdown with radio</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /Doc Links Nav -->	
+				</div>
+				<!-- /Row -->
+			</div>
+			<!-- /Container -->
+			
+			<!-- Page Footer -->
+			<div class="hk-footer border-0">
+				<footer class="container-xxl footer">
+					<div class="row">
+						<div class="col-xl-12">
+							<p class="footer-text"><span class="copy-text"><a href="#" >Hencework</a> © <span id="copyright_year"></span> All rights reserved.</span></p>
+						</div>
+					</div>
+				</footer>
+            </div>
+            <!-- / Page Footer -->
+		</div>
+		<!-- /Main Content -->
+	</div>
+    <!-- /Wrapper -->
+
+	<!-- jQuery -->
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+   	<script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- FeatherIcons JS -->
+    <script src="dist/js/feather.min.js"></script>
+
+    <!-- Fancy Dropdown JS -->
+    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+
+	<!-- Smooth Scroll JS -->
+    <script src="dist/js/smooth-scroll.js"></script>
+	
+	<!-- Simplebar JS -->
+	<script src="vendors/simplebar/dist/simplebar.min.js"></script>
+	
+	<!-- Prism JS -->
+	<script src="dist/js/prism.js"></script>
+	
+	<!-- Clipboard JS -->
+    <script src="vendors/clipboard/dist/clipboard.min.js"></script>
+	<script src="dist/js/clipboard-init.js"></script>
+	
+	<!-- List JS -->
+	<script src="vendors/list.js/dist/list.min.js"></script>
+	
+	<!-- Highlight JS -->
+	<script src="dist/js/jquery.highlight-4.js"></script>
+	
+	<!-- Init JS -->
+	<script src="dist/js/doc-init.js"></script>
+    <script src="dist/js/init.js"></script>
+</body>
+</html>

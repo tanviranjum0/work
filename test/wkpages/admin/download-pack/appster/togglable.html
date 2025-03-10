@@ -1,0 +1,2869 @@
+<!DOCTYPE html>
+<!-- 
+Template Name: Jampack - Responsive Bootstrap 4 Admin Dashboard Template
+Author: Hencework
+Contact: https://hencework.ticksy.com/
+License: You must have a valid license purchased only from themeforest to legally use the template for your project.
+-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Jampack I Contact</title>
+    <meta name="description" content="A responsive bootstrap 4 admin dashboard template by hencework" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Toggles CSS -->
+    <link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+    <link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+	
+	<!-- Data Table CSS -->
+    <link href="vendors/datatables.net-dt/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="vendors/datatables.net-responsive-dt/css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />
+	
+	<!-- select2 CSS -->
+    <link href="vendors/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
+	
+	<!-- Bootstrap Dropify CSS -->
+	<link href="vendors/dropify/dist/css/dropify.min.css" rel="stylesheet" type="text/css"/>
+	
+    <!-- Custom CSS -->
+    <link href="dist/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <!-- Preloader 
+    <div class="preloader-it">
+        <div class="loader-pendulums"></div>
+    </div>-->
+    <!-- /Preloader -->
+
+   <!-- HK Wrapper -->
+	<div class="hk-wrapper hk-classic-menu-active  hk-menu-active-1 hk-offcanvas-menu-active hk-footer-type-1-active">
+
+        <!-- Top Navbar -->
+        <nav class="navbar navbar-expand-xl navbar-light fixed-top hk-navbar navbar-type-1">
+			<div class="hk-navbar-togglable"></div>
+			<div class="d-flex">
+				<a id="navbar_toggle_btn" class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover navbar-toggler-menu" href="#"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="align-left"></i></span></span></a>
+				<a id="tour_step_5" class="navbar-brand" href="dashboard1.html">
+					<img class="brand-img d-inline-block" src="dist/img/logo-light.png" alt="brand" />
+				</a>
+			</div>
+			<form class="form-inline order-xl-1 ms-auto">
+				<button id="tour_step_1" class="btn btn-theme btn-wth-icon icon-left btn-rounded-8"><span><span class="icon-label"><span class="feather-icon"><i data-feather="package"></i></span></span><span class="btn-text">Theme Builder</span></span></button>
+			</form>
+			<div class="d-flex align-items-center order-xl-2">
+				<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover navbar-toggler navbar-toggle-btn" type="button" data-toggle="collapse" data-target="#navbarIcons" aria-controls="navbarIcons" aria-expanded="false" aria-label="Toggle navigation" href="javascript:void(0);">
+					<span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="grid"></i></span></span>
+				</a>
+				<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover mobile-only-view dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="search"></i></span></span>
+				</a>
+				<div class="dropdown-menu dropdown-bordered dropdown-menu-right py-0" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+					<div class="input-group search-type-1">
+						<input type="text" class="form-control" placeholder="Search Jampack" aria-label="Search..." aria-describedby="basic-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-theme" type="button"><span class="feather-icon"><i data-feather="search"></i></span></button>
+						</div>
+					</div> 
+				</div>
+			
+				<div class="nav-link profile-type-1 profile-sm dropdown">
+					<a class="dropdown-toggle no-caret" href="#" role="button" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<div class="media">
+							<div class="media-head">
+								<div class="avatar">
+									<img src="dist/img/avatar12.jpg" alt="user" class="avatar-img rounded-circle">
+								</div>
+							</div>
+						</div>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
+						<a class="dropdown-item" href="profile.html"><span>Profile</span></a>
+						<a class="dropdown-item" href="#"><span class="me-10">Settings</span><span class="badge badge-soft-pink">5</span></a><div class="dropdown-divider"></div>
+						<h6 class="dropdown-header">Manage Account</h6><a class="dropdown-item" href="#"><i class="dropdown-icon las la-wallet"></i><span>Wallet</span></a>
+						<a class="dropdown-item" href="#"><i class="dropdown-icon las la-credit-card"></i><span>Subscriptions</span></a>
+						<a class="dropdown-item" href="#"><i class="dropdown-icon las la-gift"></i><span>Offers</span></a>
+						<div class="sub-dropdown-menu show-on-hover">
+							<a href="#" class="dropdown-toggle dropdown-item no-caret"><i class="dropdown-icon las la-question-circle"></i>Help</a>
+							<div class="dropdown-menu open-left-side">
+							<a class="dropdown-item" href="#">Knowledge Base</a>
+							<a class="dropdown-item" href="#">Support</a>
+							</div>
+						</div>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-power"></i><span>Sign Out</span></a>
+					</div>
+				</div>
+			</div>
+			<form class="form-inline flex-grow-1 web-only-search">
+				<div class="input-group  search-type-3 flex-grow-0 w-60">
+					<div class="input-group-prepend">
+						<button class="btn btn-outline-light border-0" type="button"><span class="feather-icon"><i data-feather="search"></i></span></button>
+					</div>
+					<input type="text" class="form-control" placeholder="Search Jampack" aria-label="Search..." aria-describedby="basic-addon2">
+				</div>
+			</form>
+			<div class="collapse navbar-collapse navbar-right-wrap flex-grow-0 order-xl-1" id="navbarIcons">
+				<div class="d-flex">
+					<div class="hk-vertical-separator"></div>
+					<ul class="navbar-nav flex-row">
+						<li class="nav-item nav-link nav-link-x-0 dropdown dropdown-language">
+							<a href="#" class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover btn-uppercase  dropdown-toggle no-caret" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="btn-icon-wrap"><i class="flag-icon flag-icon-gb"></i></span></a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="#"><i class="dropdown-icon flag-icon flag-icon-gb"></i><span>English</span></a>
+								<a class="dropdown-item" href="#"><i class="dropdown-icon  flag-icon flag-icon-in"></i><span>Hindi</span></a>
+								<a class="dropdown-item" href="#"><i class="dropdown-icon  flag-icon flag-icon-jp"></i><span>Japanese</span></a>
+								<a class="dropdown-item" href="#"><i class="dropdown-icon  flag-icon flag-icon-es"></i><span>Spanish</span></a>
+								<a class="dropdown-item" href="#"><i class="dropdown-icon  flag-icon flag-icon-it"></i><span>Italian</span></a>
+								<a class="dropdown-item" href="#"><i class="dropdown-icon  flag-icon flag-icon-de"></i><span>German</span></a>
+							</div>
+						</li>
+						<li class="nav-item nav-link nav-link-x-0">
+							<a id="tour_step_2" class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover style-switch" href="#" data-style="dist/css/style.css"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="moon"></i></span><span class="feather-icon d-none"><i data-feather="sun"></i></span></span></a>
+						</li>
+						<li class="nav-item nav-link dropdown dropdown-notifications nav-link-x-0">
+							<a class="btn btn-icon btn-flush-dark btn-rounded badge-on-btn flush-soft-hover badge-top-right dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="bell"></i></span><span class="badge badge-success badge-indicator"></span></span></a>
+							<div class="dropdown-menu dropdown-menu-right" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+								<h6 class="dropdown-header dropdown-header-bold">Notifications</h6>
+								<div class="notifications-nicescroll-bar">
+									<a href="javascript:void(0);" class="dropdown-item">
+										<div class="media">
+											<div class="media-head">
+												<div class="avatar avatar-sm">
+													<img src="dist/img/avatar1.jpg" alt="user" class="avatar-img rounded-circle">
+												</div>
+											</div>
+											<div class="media-body">
+												<div>
+													<div class="notifications-icon"><i class="ri-user-line"></i> connections</div>
+													<div class="notifications-text"><span class="text-dark text-capitalize">Evie Ono</span> accepted your invitation to join the team</div>
+													<div class="notifications-time">Today 10.00 pm</div>
+												</div>
+											</div>
+										</div>
+									</a>
+									<div class="hk-separator-full hk-secondary-separator hk-separator-sm"></div>
+									<a href="javascript:void(0);" class="dropdown-item">
+										<div class="media">
+											<div class="media-head">
+												<div class="avatar avatar-sm">
+													<span class="avatar-text avatar-text-light rounded-circle">
+														<span class="initial-wrap"><span><span class="feather-icon"><i data-feather="file-text"></i></span></span></span>
+													</span>
+												</div>
+											</div>
+											<div class="media-body">
+												<div>
+													<div class="notifications-icon"><i class="ri-user-line"></i> connections</div>
+													<div class="notifications-text">New message received from <span class="text-dark text-capitalize">Misuko Heid</span></div>
+													<div class="notifications-time">Today 10.00 pm</div>
+												</div>
+											</div>
+										</div>
+									</a>
+									<div class="hk-separator-full hk-secondary-separator hk-separator-sm"></div>
+									<a href="javascript:void(0);" class="dropdown-item">
+										<div class="media">
+											<div class="media-head">
+												<div class="avatar avatar-sm">
+													<span class="avatar-text avatar-text-primary rounded-circle">
+														<span class="initial-wrap"><span><span class="feather-icon"><i data-feather="file-text"></i></span></span></span>
+													</span>
+												</div>
+											</div>
+											<div class="media-body">
+												<div>
+													<div class="notifications-icon"><i class="ri-user-line"></i> connections</div>
+													<div class="notifications-text">You have a follow up with<span class="text-dark text-capitalize"> Jampack head</span> on <span class="text-dark text-capitalize">friday, dec 19</span> at <span class="text-dark">10.00 am</span></div>
+													<div class="notifications-time">2d</div>
+												</div>
+											</div>
+										</div>
+									</a>
+									<div class="hk-separator-full hk-secondary-separator hk-separator-sm"></div>
+									<a href="javascript:void(0);" class="dropdown-item">
+										<div class="media">
+											<div class="media-head">
+												<div class="avatar avatar-sm">
+													<span class="avatar-text avatar-text-inv-theme rounded-circle">
+															<span class="initial-wrap"><span>JM</span></span>
+													</span>
+												</div>
+											</div>
+											<div class="media-body">
+												<div>
+													<div class="notifications-icon"><i class="ri-user-line"></i> connections</div>
+													<div class="notifications-text">Application of <span class="text-dark text-capitalize">Sarah Williams</span> is waiting for your approval</div>
+													<div class="notifications-time">1w</div>
+												</div>
+											</div>
+										</div>
+									</a>
+									<div class="hk-separator-full hk-secondary-separator hk-separator-sm"></div>
+									<a href="javascript:void(0);" class="dropdown-item">
+										<div class="media">
+											<div class="media-head">
+												<div class="avatar avatar-sm">
+													<span class="avatar-text avatar-text-warning rounded-circle">
+														<span class="initial-wrap"><span><span class="feather-icon"><i data-feather="file-text"></i></span></span></span>
+													</span>
+												</div>
+											</div>
+											<div class="media-body">
+												<div>	
+													<div class="notifications-icon"><i class="ri-user-line"></i> connections</div>
+													<div class="notifications-text">Last 2 days left for the project</div>
+													<div class="notifications-time">15d</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="dropdown-footer">View all Notifications</div>
+							</div>
+						</li>
+						<li class="nav-item nav-link nav-link-x-0">
+							<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover drawer-toggle-link" data-target="#drawer_2"  href="#"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="settings"></i></span></span></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<!-- /Top Navbar -->
+
+        <!-- Vertical Nav -->
+        <nav class="hk-menu hk-classic-menu hk-nav-light hk-sidebar-fixednav-active">
+            <a href="javascript:void(0);" id="hk_menu_close" class="hk-menu-close"><span class="feather-icon"><i data-feather="x"></i></span></a>
+			<div class="nicescroll-bar">
+                <div class="menu-content-wrap">
+					<div class="hk-user-block">
+						<div class="media">
+							<div class="media-head">
+								<div class="avatar avatar-sm">
+									<span class="avatar-text avatar-text-inv-theme rounded-circle"><span class="initial-wrap"><span>Hk</span></span>
+									</span>
+								</div>
+							</div>
+							<div class="media-body dropdown">
+								<a href="#" class="auth-user dropdown-toggle link-dark" data-toggle="dropdown">Hencework</a>
+								<span class="auth-email">contact@hencework.com</span>
+								<a href="#" class="auth-action-btn link-secondary"><u>Sign Out</u></a>
+								<div class="dropdown-menu dropdown-menu-right w-230p">
+									<div class="pa-15">
+										<div class="media align-items-center active-user mb-20">
+											<div class="media-head">
+												<div class="avatar avatar-xs">
+													<span class="avatar-text avatar-text-inv-theme rounded-circle"><span class="initial-wrap"><span>Hk</span></span>
+													</span>
+												</div>
+											</div>
+											<div class="media-body">
+												<a href="#" class="d-flex align-items-center link-dark">Hencework <i class="ri-checkbox-circle-fill font-14 text-primary ms-5"></i></a>
+												<a href="#" class="d-block font-12 link-secondary"><u>Manage your account</u></a>
+											</div>
+										</div>
+										<div class="media align-items-center mb-20">
+											<div class="media-head">
+												<div class="avatar avatar-xs">
+													<img src="dist/img/avatar12.jpg" alt="user" class="avatar-img rounded-circle">
+												</div>
+											</div>
+											<div class="media-body">
+												<a href="#" class="d-block link-dark">Jampack Team</a>
+												<a href="#" class="d-block font-12 link-secondary">contact@hencework.com</a>
+											</div>
+										</div>
+										<button class="btn btn-outline-light btn-sm btn-block btn-wth-icon icon-left">
+											<span><span class="icon-label"><span class="feather-icon"><i data-feather="plus"></i></span></span>
+											<span class="btn-text">Add Account</span></span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="hk-separator hk-secondary-separator"></div>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link link-badge-right" href="index.html">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="flag"></i></span></span>
+								<span class="nav-link-text">Overview</span>
+								<span class="badge badge-soft-pink">Trend</span>
+							</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item  active">
+							<a class="nav-link"  href="javascript:void(0);" data-toggle="collapse" data-target="#apps_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="grid"></i></span></span>
+								<span class="nav-link-text badge-on-text">Apps
+									<span class="badge badge-primary badge-indicator"></span>
+								</span>
+							</a>
+							<ul id="apps_pages" class="nav flex-column collapse  secondary-nav collapse-level-1 hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="chats.html">
+												Chat
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="chatbot.html">
+												Chatbot
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#dash_drp13">
+												Calendar
+											</a>
+											<ul id="dash_drp13" class="nav flex-column collapse  collapse-level-2 secondary-nav">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="calendar.html">Calendar</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="leave-management.html">Leave Management</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="meal-plan.html">Meal Plan</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="gantt.html">Projects Calendar</a>
+														</li>
+													</ul>	
+												</li>	
+											</ul>	
+										</li>	
+										<li class="nav-item">
+											<a class="nav-link" href="email.html">
+												Mail
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="file-manager.html">
+												File Manager
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#dash_drp15">
+												Contacts
+											</a>
+											<ul id="dash_drp15" class="nav flex-column collapse  collapse-level-2 secondary-nav">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="contact.html">Contact List</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="contact-cards.html">Contact Cards</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="edit-contact.html">Edit Contact</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="add-contact.html">Add Contact</a>
+														</li>
+													</ul>	
+												</li>	
+											</ul>	
+										
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#dash_drp16">
+												Scrum Board
+											</a>
+											<ul id="dash_drp16" class="nav flex-column collapse  collapse-level-2 secondary-nav">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="kanban-board.html">Kanban Board</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="projects-board.html">Projects</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="pipeline.html">Pipeline</a>
+														</li>
+													</ul>	
+												</li>	
+											</ul>	
+										
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="gallery.html">
+												Gallery
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="todo-list.html">
+												To Do List
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="flowchart.html">
+												Flowchart
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#blog_drp">
+												Blog
+											</a>
+											<ul id="blog_drp" class="nav flex-column collapse  collapse-level-2 secondary-nav ">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="posts.html">Posts</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="post-detail.html">Post Detail</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="create-post.html">Create Post</a>
+														</li>
+													</ul>	
+												</li>	
+											</ul>	
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#dash_drp17">
+												Invoices
+											</a>
+											<ul id="dash_drp17" class="nav flex-column collapse  collapse-level-2 secondary-nav">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="invoice-list.html">Invoices List</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="invoice-template.html">Invoice Template</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="create-invoice.html">Create Invoice</a>
+														</li>
+													</ul>	
+												</li>	
+											</ul>	
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="reports.html">
+												Reports
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="integrations.html">
+												Integrations
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="forms.html">
+												Forms
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+							<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#vt_page">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="layers"></i></span></span>
+								<span class="nav-link-text">Dashboards</span>
+							</a>
+							<ul id="vt_page" class="nav flex-column collapse  secondary-nav  collapse-level-1 hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="campaign-dashboard.html">Campaign Manager</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="hrm-dashboard.html">HRM</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="projects-dashboard.html">Project Manager</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="ecommerce-dashboard.html">Ecommerce</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="lead-dashboard.html">Lead Management</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="vms-dashboard.html">VMS</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="sales-dashboard.html">Sales Manager</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="hotel-dashboard.html">Hotel Manager</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="crypto-dashboard.html">Cryptocurrency</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="stocks-dashboard.html">Stock Market</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="patient-dashboard.html">Patient Portal</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="banking-dashboard.html">Banking</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="crowdfunding-dashboard.html">Crowdfunding</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="iot-dashboard.html">IoT Dashboard</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="fitness-dashboard.html">Fitness</a>
+										</li>
+									</ul>
+								</li>	
+							</ul>	
+						</li>	
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#ld_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="trello"></i></span></span>
+								<span class="nav-link-text">Landings</span>
+							</a>
+							<ul id="ld_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="support-ticketing-landing.html">Support</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="helpdesk-landing.html">Helpdesk</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="forum-landing.html">Forum</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="job-portal-landing.html">Job Portal</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="courses-landing.html">Courses</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="casting-portal-landing.html">Casting Portal</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="event-portal-landing.html">Events</a>
+										</li>
+									</ul>
+								</li>	
+							</ul>	
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#dt_pages">
+								<span class="nav-icon-wrap">
+									<span class="feather-icon badge-top-right"><i data-feather="zoom-in"></i><span class="badge badge-sm badge-primary badge-sm badge-pill">16</span></span>
+								</span>
+								<span class="nav-link-text">Details</span>
+							</a>
+							<ul id="dt_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="ticket-detail.html">Ticket Detail</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="brand-detail.html">Brand Detail</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="article-detail.html">Article Detail</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="course-detail.html">Course Details</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="company-detail.html">Company Detail</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="job-post-detail.html">Job Post Detail</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="event-detail.html">Event Detail</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="question-detail.html">Question Detail</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="leader-detail.html">Leader Detail</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="campaign-detail.html">Campaign Detail</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="product-detail.html">Product Detail</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="order-detail.html">Order Detail</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="actor-detail.html">Actor Detail </a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="supporter-detail.html">Supporter Detail</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="employee-detail.html">Employee Detail</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="lead-detail.html">Lead Detail</a>
+										</li>
+									</ul>
+								</li>	
+							</ul>	
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+					</ul>	
+					<div class="nav-header">
+                        <span>Usability</span>
+                    </div>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#ath_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="unlock"></i></span></span>
+								<span class="nav-link-text">Authentication</span>
+							</a>
+							<ul id="ath_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#sn_pages">
+												Sign Up
+											</a>
+											<ul id="sn_pages" class="nav flex-column collapse  collapse-level-2 secondary-nav hk-vertical-line">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="signup.html">Signup Cover</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="signup-simple.html">Signup Classic</a>
+														</li>
+													</ul>	
+												</li>	
+											</ul>	
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#lg_pages">
+												Log In 
+											</a>
+											<ul id="lg_pages" class="nav flex-column collapse  collapse-level-2 secondary-nav hk-vertical-line">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="login.html">Login Cover</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="login-simple.html">Login Classic</a>
+														</li>
+													</ul>	
+												</li>	
+											</ul>	
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="forgot-password.html">Forgot Password</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="lock-screen.html">Lockscreen</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="switch-accounts.html">Switch Accounts</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#err_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="cpu"></i></span></span>
+								<span class="nav-link-text">Error Pages</span>
+							</a>
+							<ul id="err_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="404.html">
+												404
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="503.html">
+												503
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="maintenance.html">
+												Maintenance
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#usr_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="users"></i></span></span>
+								<span class="nav-link-text badge-on-text-right">Profile<span class="badge badge-soft-success">10</span></span>
+								
+							</a>
+							<ul id="usr_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="profile-dashboard.html">
+												Profile Dashboard
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="profile-vertical-nav.html">
+												Profile 2
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="profile-horizontal-nav.html">
+												Profile 3
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="profile-wizard.html">
+												Complete Profile
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="edit-profile.html">
+												Edit Profile
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#usracc_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="user-check"></i></span></span>
+								<span class="nav-link-text">Account</span>
+							</a>
+							<ul id="usracc_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="subscriptions.html">
+												Subscriptions
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="wallet.html">
+												Wallet
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="saved-cards.html">
+												Saved Cards
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="linked-accounts.html">
+												Linked Accounts
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="billing-info.html">
+												Billing Info
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="addresses.html">
+												Addresses
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="transaction-history.html">
+												Transaction History
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="offers.html">
+												Offers
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="login-activity.html">
+												Login Activity
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="current-sessions.html">
+												Current Sessions
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="settings.html">
+												Settings
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#act_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="tool"></i></span></span>
+								<span class="nav-link-text">Action Pages</span>
+							</a>
+							<ul id="act_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#cr_pages">
+												Create
+											</a>
+											<ul id="cr_pages" class="nav flex-column collapse  collapse-level-2 secondary-nav hk-vertical-line">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="create-campaign.html">Create Campaign</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="create-event.html">Create Event</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="create-appointment.html">Create Appointment</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="create-reservation.html">New Reservation</a>
+														</li>
+													</ul>	
+												</li>	
+											</ul>	
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#add_pages">
+												Add
+											</a>
+											<ul id="add_pages" class="nav flex-column collapse  collapse-level-2 secondary-nav hk-vertical-line">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="add-subscriber.html">Add subscriber</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="add-tag.html">Add Tags</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="add-product.html">Add Product</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="add-employee.html">Add Employee</a>
+														</li>
+													</ul>	
+												</li>	
+											</ul>	
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#pglayout_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="layout"></i></span></span>
+								<span class="nav-link-text">Page Layout</span>
+							</a>
+							<ul id="pglayout_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="page-without-sidebar.html">
+												No Sidebar
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="page-with-sidebar.html">
+												Sidebar
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="page-with-left-sidebar.html">
+												Left Sidebar
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="page-with-both-sidebar.html">
+												Both Sidebar
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="page-with-nav-sidebar.html">
+												Nav Sidebar
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="page-with-horizontal-nav.html">
+												Horizontal Nav
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="page-with-filter-sidebar.html">
+												Filter Sidebar
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="page-with-tab-header.html">
+												Tab Header
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="page-with-tab-header-fullwidth.html">
+												Tab Header Full Width
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="empty-page.html">
+												Empty State
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<div class="nav-header">
+                        <span>Collections</span>
+                    </div>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#card_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="copy"></i></span></span>
+								<span class="nav-link-text">Card Pages</span>
+							</a>
+							<ul id="card_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="templates.html">
+												Templates
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="tags.html">
+												Tags
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="actors.html">
+												Actors
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="products.html">
+												Products
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="events.html">
+												Events
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="campaigns.html">
+												Campaigns
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="employee.html">
+												Employee
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="top-profiles.html">
+												Top Profiles
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="courses.html">
+												Courses
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="faculty.html">
+												Faculty
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="visitor-pass.html">
+												Visitor Pass
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#table_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="server"></i></span></span>
+								<span class="nav-link-text">Table Pages</span>
+							</a>
+							<ul id="table_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="campaign-list.html">
+												Campaign List
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="subscriber-list.html">
+												Subscribers List
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="product-list.html">
+												Product List	
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="cart.html">
+												Cart
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="attendees-list.html">
+												Attendees List
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="employee-list.html">
+												Employee	
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="leads-list.html">
+												Leads List
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="account-summary.html">
+												Account Summery
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="stock-listing.html">
+												Screener 
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="visitor-list.html">
+												Visitor List
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="orders-list.html">
+												Product Orders
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="customers-list.html">
+												Customers
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#list_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="list"></i></span></span>
+								<span class="nav-link-text">List Pages</span>
+							</a>
+							<ul id="list_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="leaderboard.html">
+												Leaderboard
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="actors-list.html">
+												Actors List
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="reviews.html">
+												Reviews	
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="supporters.html">
+												Supporters
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="job-opening.html">
+												Job Opening
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="faq.html">
+												Faq	
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#timeline_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="clock"></i></span></span>
+								<span class="nav-link-text">Timeline Pages</span>
+							</a>
+							<ul id="timeline_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="activity.html">
+												Activity
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="purchase-history.html">
+												Purchase History
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="changelog.html">
+												Changelog
+											</a>
+										</li>
+										
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#form_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="clipboard"></i></span></span>
+								<span class="nav-link-text">Form Pages</span>
+							</a>
+							<ul id="form_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="report-bug.html">
+												Report Bug
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="post-job.html">
+												Post Job
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="download-statement.html">
+												Download Statement
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="submit-ticket.html">
+												Submit Ticket
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="book-appointment.html">
+												Book Appointment
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#wzard_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="more-horizontal"></i></span></span>
+								<span class="nav-link-text">Wizard Pages</span>
+							</a>
+							<ul id="wzard_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="checkout.html">
+												Checkout
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="progress-tracking.html">
+												Progress Tracking
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="shipment-tracking.html">
+												Shipment Tracking
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="order-tracking.html">
+												Order Tracking
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="project-wizard.html">
+												Create Project
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#tr_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon badge-top-right"><i data-feather="credit-card"></i><span class="badge  badge-primary badge-indicator"></span></span></span>
+								<span class="nav-link-text">Transaction Pages</span>
+							</a>
+							<ul id="tr_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="book-event.html">
+												Book Event
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="buy-crypto.html">
+												Buy Crypto
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="donate.html">
+												Donate
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="fund-transfer.html">
+												Fund Transfer 
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="buy-stocks.html">
+												Buy Stocks
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#ext_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="archive"></i></span></span>
+								<span class="nav-link-text">Extra Pages</span>
+							</a>
+							<ul id="ext_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="spot-trading.html">
+												Spot Trading
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="markets.html">
+												Markets
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="attendee-badge.html">
+												Attendee Badge
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="workout-plan.html">
+												Workout Plan
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="inventory.html">
+												Inventory
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="bookings.html">
+												Bookings
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="manage-devices.html">
+												Manage Devices
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="database.html">
+												Database
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="servers.html">
+												Servers
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="lead-score.html">
+												Lead Score
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="certifications.html">
+												Certifications
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="search-doctors.html">
+												Search Doctors
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<div id="tour_step_3" class="nav-header">
+                        <span>Components</span>
+                    </div>
+                    <ul class="navbar-nav flex-column">
+					
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#ui_pages">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="bold"></i></span></span>
+								<span class="nav-link-text">Bootstrap UI</span>
+							</a>
+							<ul id="ui_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="avatar.html">Avatar</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="alerts.html">Alerts</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="badge.html">Badges</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="breadcrumb.html">Breadcrumbs</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="buttons.html">Buttons</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="tooltip.html">Tooltip</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="popovers.html">Popovers</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="dropdowns.html">Dropdowns</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="modal.html">Modal</a>
+										</li>
+										
+										<li class="nav-item">
+											<a class="nav-link" href="cards.html">Cards</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="nav.html">Nav</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="nav-tabs.html">Tabs</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="scrollspy.html">Scroll Spy</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="navbar.html">Navbar</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="pagination.html">Pagination</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="progress.html">Progress</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="carousel.html">Carousel</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="collapse.html">Collapse</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="list-group.html">List Group</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="spinner.html">Spinners</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="ratings.html">Rating</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="clipboard.html">Clipboard</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="scrollable-content.html">Scrollable Content</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#thr_pages">
+								
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="git-pull-request"></i></span></span>
+								<span class="nav-link-text">Third Party</span>
+							</a>
+							<ul id="thr_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="sweet-alert.html">Sweet Alert</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="notification.html">Notifications</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="toast.html">Toastr</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="tour.html">Tour</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="timeout.html">Timeout</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="treeview.html">Tree View</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="draggable.html">Draggable</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="lightbox.html">Lightbox</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="nestable.html">Nestable</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="custom-scroll.html">Custom Scroll</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="ace-editor.html">Ace Editor</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="news-slider.html">News Slider</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link link-badge-right" href="javascript:void(0);" data-toggle="collapse" data-target="#adui_pages">
+								
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="briefcase"></i></span></span>
+								<span class="nav-link-text">Advanced UI</span>
+								<span class="badge badge-soft-violet">Hot</span>
+							</a>
+							<ul id="adui_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="callout.html">Callout</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="page-header.html">Page Headers</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="jumbotron.html">Jumbotron</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="page-search.html">Page Search</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="advance-search.html">Advance Search</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="sticky-element.html">Sticky Elements</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="pricing.html">Pricing tables</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="drawer.html">Drawers</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="floating-buttons.html">Floating Buttons</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="loadmore.html">Load More</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="advance-badges.html">Advance Badges</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="ribbons.html">Ribbons</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="empty-states.html">Empty States</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="chips.html">Chips</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="advance-list.html">Advance Lists</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="content-sidebar.html">Content Sidebar</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="modal-collection.html">Modal</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="toolbar.html">Toolbar</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="footers.html">Fixed Footer</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="page-footers.html">Page Footers</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="togglable.html">Togglables</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#ut_pages">
+								
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="pocket"></i></span></span>
+								<span class="nav-link-text">Utilities</span>
+							</a>
+							<ul id="ut_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="typography.html">Typography</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="background.html">Background</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="border.html">Border</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="colors.html">Color</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="shadow.html">Shadow</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="sizing.html">Sizing</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="shapes.html">Shapes</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="separators.html">Separators</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="media-object.html">Media Objects</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="embeds.html">Embeds</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="images.html">Images</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="icon-fonts.html">Icon Fonts</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="icons.html">Icons</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#wd_pages">
+								
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="shopping-bag"></i></span></span>
+								<span class="nav-link-text">Widgets</span>
+							</a>
+							<ul id="wd_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="user-widget.html">User Widget</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="project-widget.html">Project Widget</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="statistics-widget.html">Statistics Widget</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="list-widget.html">List Widget</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="form-widget.html">Form Widget</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="features-widget.html">Features Widget</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="simple-widget.html">Simple Widget</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="carousel-widget.html">Carousel Widget</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="miscellaneous.html">Miscellaneous</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#mn_pages">
+								
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="menu"></i></span></span>
+								<span class="nav-link-text">Menus</span>
+							</a>
+							<ul id="mn_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#clmenu_pages">
+												Classic Menu
+											</a>
+											<ul id="clmenu_pages" class="nav flex-column collapse  collapse-level-2 secondary-nav hk-vertical-line">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="classic-menu-active-type-1.html">Classic Menu 1</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="classic-menu-active-type-2.html">Classic Menu 2</a>
+														</li>
+													</ul>	
+												</li>	
+											</ul>	
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#hrmenu_pages">
+												Horizontal Menu
+											</a>
+											<ul id="hrmenu_pages" class="nav flex-column collapse  collapse-level-2 secondary-nav hk-vertical-line">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-ileft-menu-active-1.html">Horizontal Menu 1</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-ileft-menu-active-2.html">Horizontal Menu 2</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-ileft-menu-active-3.html">Horizontal Menu 3</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-ileft-menu-active-4.html">Horizontal Menu 4</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-ileft-menu-active-5.html">Horizontal Menu 5</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-ileft-menu-active-6.html">Horizontal Menu 6</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-ileft-menu-active-7.html">Horizontal Menu 7</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-ileft-menu-active-8.html">Horizontal Menu 8</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-ileft-menu-active-9.html">Horizontal Menu 9</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-itop-menu-active-1.html">Horizontal Menu 10</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-itop-menu-active-2.html">Horizontal Menu 11</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-itop-menu-active-3.html">Horizontal Menu 12</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-itop-menu-active-4.html">Horizontal Menu 13</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-para-menu-active-1.html">Horizontal Menu 14</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-para-menu-active-2.html">Horizontal Menu 15</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-simple-menu-active-1.html">Horizontal Menu 16</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-simple-menu-active-2.html">Horizontal Menu 17</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="horizontal-simple-menu-active-3.html">Horizontal Menu 18</a>
+														</li>
+													</ul>	
+												</li>	
+											</ul>	
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#icmenu_pages">
+												Icon Menu
+											</a>
+											<ul id="icmenu_pages" class="nav flex-column collapse  collapse-level-2 secondary-nav hk-vertical-line">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-1-active-type-1.html">Icon Menu 1</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-1-active-type-2.html">Icon Menu 2</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-1-active-type-3.html">Icon Menu 3</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-1-active-type-4.html">Icon Menu 4</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-1-active-type-5.html">Icon Menu 5</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-1-active-type-6.html">Icon Menu 6</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-1-active-type-7.html">Icon Menu 7</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-2-active-type-1.html">Icon Menu 8</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-2-active-type-2.html">Icon Menu 9</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-2-active-type-3.html">Icon Menu 10</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-2-active-type-4.html">Icon Menu 11</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-2-active-type-5.html">Icon Menu 12</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-2-active-type-6.html">Icon Menu 13</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-2-active-type-7.html">Icon Menu 14</a>
+														</li>
+													</ul>	
+												</li>	
+											</ul>	
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#nbmenu_pages">
+												Navbar Menu
+											</a>
+											<ul id="nbmenu_pages" class="nav flex-column collapse  collapse-level-2 secondary-nav hk-vertical-line">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="navbar-menu.html">Navbar Menu 1</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="icon-menu-1-active-type-2.html">Navbar Menu 2</a>
+														</li>
+													</ul>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<div class="nav-header">
+                        <span>Elements</span>
+                    </div>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#el_pages">
+								
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="edit-3"></i></span></span>
+								<span class="nav-link-text">Forms</span>
+							</a>
+							<ul id="el_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="form-element.html">Form Elements</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="input-groups.html">Input Groups</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="form-layout.html">Form Layout</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="form-mask.html">Form Masks</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="form-validation.html">Form Validation</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="advance-forms.html">Advance Forms</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#thd_pages">
+												Third Party
+											</a>
+											<ul id="thd_pages" class="nav flex-column collapse  collapse-level-2 secondary-nav hk-vertical-line">
+												<li class="nav-item">
+													<ul class="nav flex-column">
+														<li class="nav-item">
+															<a class="nav-link" href="cropperjs.html">Cropperjs</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="dropify.html">Dropify</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="dropzone.html">Dropzone</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="date-picker.html">Date Picker</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="color-picker.html">Color Picker</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="select2.html">Select2</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="toggle.html">Toggle</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="range-slider.html">Range slider</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="input-spinner.html">Input Spinner</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="form-wizard.html">Form Wizard</a>
+														</li>
+														<li class="nav-item">
+															<a class="nav-link" href="tinymce.html">Tinymce</a>
+														</li>
+													</ul>
+												</li>
+											</ul>
+										</li>
+										
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#tbl_pages">
+								
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="type"></i></span></span>
+								<span class="nav-link-text">Table</span>
+							</a>
+							<ul id="tbl_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="basic-table.html">Basic Tables</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="editable-table.html">Editable Tables</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="data-table.html">Data Tables</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="responsive-table.html">Responsive Tables</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#chrt_pages">
+								
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="zap"></i></span></span>
+								<span class="nav-link-text">Charts</span>
+							</a>
+							<ul id="chrt_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="am-charts.html">AM Charts</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="google-chart.html">Google Charts</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="apex-charts.html">Apex Charts</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="echarts.html">E-Charts</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="morris-chart.html">Morris Chart</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="flot-chart.html">flot Chart</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="sparkline-chart.html">Sparkline Chart</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="easy-pie-chart.html">Easy Pie Chart</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="peity-chart.html">Peity Chart</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#map_pages">
+								
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="map"></i></span></span>
+								<span class="nav-link-text">Maps</span>
+							</a>
+							<ul id="map_pages" class="nav flex-column collapse  collapse-level-1 secondary-nav hk-vertical-line">
+								<li class="nav-item">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="google-map.html">Google Maps</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="vector-map.html">Vector Maps</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="animated-map.html">Animated Maps</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<div class="nav-header">
+                        <span>Support</span>
+                    </div>
+					<ul class="navbar-nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="installation.html">
+								<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="file-text"></i></span></span>
+								<span class="nav-link-text">Installation</span>
+							</a>
+						</li>
+					</ul>
+					<div class="hk-callout card card-flush bg-theme-light-4 text-center mt-30">
+						<div class="card-body">
+							<h5 class="h5">Try drag & drop layout builder</h5>
+							<p class="p-sm card-text">With supporting text below as a natural lead-in to additional content.</p>
+							<a href="#" class="btn btn-theme btn-block">Add event</a>
+						</div>
+					</div>
+				</div>
+            </div>
+			<!--Sidebar Fixnav-->
+			<div class="hk-sidebar-fixednav">
+				<div class="hk-toobar toolbar-type-2">
+					<ul class="nav nav-light">
+						<li id="tour_step_4"  class="nav-item nav-link">
+							<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-toggle="tooltip" data-placement="top" title="" data-original-title="RTL" href="#"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="repeat"></i></span></span></a>
+						</li>
+						<li class="nav-item nav-link nav-link-x-0">
+							<a class="btn btn-icon btn-flush-dark btn-rounded badge-on-btn badge-top-right flush-soft-hover" data-toggle="tooltip" data-placement="top" title="" data-original-title="Email" href="email.html"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="inbox"></i></span><span class="badge badge-sm badge-soft-primary badge-sm badge-pill">4</span></span></a>
+						</li>
+					</ul>
+				
+					<ul class="nav nav-light h-100 align-items-center">
+						<li class="nav-item nav-link">
+							<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-toggle="tooltip" data-placement="top" title="" data-original-title="Logout" href="#"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="log-out"></i></span></span></a>
+						</li>
+					</ul>
+				</div>
+			
+			</div>
+			<!--/ Sidebar Fixnav-->
+		</nav>
+        <div id="hk_nav_backdrop" class="hk-menu-backdrop"></div>
+        <!-- /Vertical Nav -->
+
+        <!-- Main Content -->
+        <div class="hk-pg-wrapper pb-0">
+            <!-- Container -->
+            <div class="container-fluid px-0">
+                <!-- Row -->
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="contactapp-wrap">
+                            <div class="contactapp-sidebar hk-nav-light">
+								<div class="hk-sidebar-togglable"></div>
+								<div class="nicescroll-bar">
+                                    <div class="contactapp-nav-wrap">
+                                        <a id="close_contactapp_sidebar" href="javascript:void(0)" class="close-contactapp-sidebar">
+                                            <span class="feather-icon"><i data-feather="chevron-left"></i></span>
+                                        </a>
+										<button type="button" class="btn btn-theme btn-rounded btn-block mb-20" data-toggle="modal" data-target="#addNewContact">
+                                            Add New Contact
+                                        </button>
+										<ul class="navbar-nav flex-column">
+											<li class="nav-item active">
+												<a class="nav-link" href="javascript:void(0);">
+													<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="mail"></i></span></span>
+													<span class="nav-link-text">All Contacts</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="javascript:void(0);">
+													<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="star"></i></span></span>
+													<span class="nav-link-text">Stared Contacts</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="javascript:void(0);">
+													<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="archive"></i></span></span>
+													<span class="nav-link-text">Archived Contacts</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="javascript:void(0);">
+													<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="edit"></i></span></span>
+													<span class="nav-link-text">Draft</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="javascript:void(0);">
+													<span class="nav-icon-wrap"><span class="feather-icon"><i data-feather="trash"></i></span></span>
+													<span class="nav-link-text">Deleted Contact</span>
+												</a>
+											</li>
+										</ul>
+                                       <div class="hk-section-title hk-section-title-1 mt-40 mb-5">Department</div>
+										<ul class="navbar-nav secondary-nav flex-column">
+											<li class="nav-item">
+												<a class="nav-link" href="javascript:void(0);">
+													<span class="nav-link-text">Design</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="javascript:void(0);">
+													<span class="nav-link-text">Development</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="javascript:void(0);">
+													<span class="nav-link-text">Inventory</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="javascript:void(0);">
+													<span class="nav-link-text">Human Resource</span>
+												</a>
+											</li>
+										</ul>
+										<!--Sidebar Fixnav-->
+										<div class="contactapp-fixednav">
+											<ul class="nav nav-light h-100 align-items-center">
+												<li class="nav-item">
+													<a href="#" class="nav-link active" data-toggle="tooltip" data-placement="top" title="Help">
+														<span class="feather-icon"><i data-feather="settings"></i></span>
+													</a>
+												</li>
+												<li class="nav-item dropdown">
+													<a href="#" class="nav-link dropdown-toggle no-caret" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+														<span class="feather-icon"><i data-feather="moon"></i></span>
+													</a>
+													<div class="dropdown-menu">
+														<a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-edit"></i><span>Add New Event</span></a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-card"></i><span>Add New Task</span></a>
+													</div>
+												</li>
+												<li class="nav-item"data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+													<a href="#" class="nav-link"><span class="feather-icon"><i data-feather="info"></i></span></a>
+												</li>
+												<li class="nav-item dropdown">
+													<a href="#" class="nav-link dropdown-toggle no-caret" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+														<span class="feather-icon"><i data-feather="power"></i></span>
+													</a>
+													<div class="dropdown-menu">
+														<a class="dropdown-item" href="#"><span>Archived Selected</span></a>
+														<a class="dropdown-item" href="#"><span>Send to folder Selected</span></a>
+														<a class="dropdown-item" href="#"><span>Delete Selected</span></a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><span>Follow</span></a>
+														<a class="dropdown-item" href="#"><span>Unfollow</span></a>
+														<a class="dropdown-item" href="#"><span>Add Tag</span></a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><span>Send Email</span></a>
+														<a class="dropdown-item" href="#"><span>Export to PDF</span></a>
+													</div>
+												</li>
+											</ul>
+										</div>
+										<!--/ Sidebar Fixnav-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contact-box">
+                                <header>
+									<div>
+										<a id="contactapp_sidebar_move" href="javascript:void(0)" class="contactapp-sidebar-move">
+											<span class="feather-icon"><i data-feather="arrow-left"></i></span>
+										</a>
+										<div class="dropdown">
+											<a href="#" aria-expanded="false" data-toggle="dropdown" class="btn bg-transparent border-0 dropdown-toggle font-25 no-caret px-0 me-15">All Contacts
+											<span class="feather-icon custom-caret"><i data-feather="chevron-down"></i></span>
+											</a>
+											<div role="menu" class="dropdown-menu">
+												<a class="dropdown-item" href="#">Action</a>
+												<a class="dropdown-item" href="#">Another action</a>
+												<a class="dropdown-item" href="#">Something else here</a>
+												<div class="dropdown-divider"></div>
+												<a class="dropdown-item" href="#">Separated link</a>
+											</div>
+										</div>
+										<a href="javascript:void(0)" class="text-smoke me-15"><span class="feather-icon"><i data-feather="refresh-cw"></i></span></a>
+										<button class="btn btn-primary me-15"  data-toggle="modal" data-target="#addNewContact">Add Contacts</button>
+										<button aria-expanded="false" data-toggle="dropdown" class="btn btn-outline-light btn-wth-icon icon-wthot-bg  icon-right"><span class="icon-label"><span class="feather-icon"><i data-feather="chevron-down"></i> </span></span><span class="btn-text">Manage Contacts</span>
+										</button>
+										<div class="dropdown-menu bullet dropdown-menu-right" role="menu">
+											<a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-reply" aria-hidden="true"></i>Reply</a>
+											<a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-share" aria-hidden="true"></i>Forward</a>
+											<a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-trash" aria-hidden="true"></i>Delete</a>
+										</div>
+									</div>
+									<div>
+										<form role="search" class="contact-search">
+											<div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Search Contacts" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-light" type="button">Search</button>
+                                                </div>
+                                            </div>
+										</form>
+										<a href="javascript:void(0)" class=""><span class="feather-icon"><i data-feather="list"></i></span></a>
+										<a href="javascript:void(0)" class="text-smoke"><span class="feather-icon"><i data-feather="calendar"></i></span></a>
+										<a href="javascript:void(0)" class="text-smoke"><span class="feather-icon"><i data-feather="settings"></i></span></a>
+									</div>
+								</header>
+								<div class="contact-body">
+									<div class="nicescroll-bar">
+										<div class="d-flex justify-content-between mt-25 mb-15 contact-contrl-head">
+											<div class="d-flex flex-wrap">
+												<select class="form-control custom-select custom-select-sm me-15">
+													<option selected>Bulk actions</option>
+													<option value="1">One</option>
+													<option value="2">Two</option>
+													<option value="3">Three</option>
+												</select>
+												<button class="btn btn-sm btn-light me-15">Apply
+												</button>
+												<select class="form-control custom-select custom-select-sm me-15">
+													<option selected>All dates</option>
+													<option value="1">One</option>
+													<option value="2">Two</option>
+													<option value="3">Three</option>
+												</select>
+												<select class="form-control custom-select custom-select-sm me-15">
+													<option selected>All departments</option>
+													<option value="1">One</option>
+													<option value="2">Two</option>
+													<option value="3">Three</option>
+												</select>
+												<select class="form-control custom-select custom-select-sm me-15">
+													<option selected>Sort by tags</option>
+													<option value="1">One</option>
+													<option value="2">Two</option>
+													<option value="3">Three</option>
+												</select>
+												<button data-toggle="collapse" role="button" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" class="btn btn-sm btn-light me-15">Quick Add
+												</button>
+											</div>
+											<div class="d-flex align-items-center contact-pagination">
+												<div class="dropdown">
+													<a href="#" aria-expanded="false" data-toggle="dropdown" class="btn btn-sm btn-light me-15">Export contacts
+													<span class="feather-icon custom-caret"><i data-feather="chevron-down"></i></span>
+													</a>
+													<div role="menu" class="dropdown-menu">
+														<a class="dropdown-item" href="#">Action</a>
+														<a class="dropdown-item" href="#">Another action</a>
+														<a class="dropdown-item" href="#">Something else here</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#">Separated link</a>
+													</div>
+												</div>
+												<a href="javascript:void(0)" class="text-smoke me-15 font-14">Show 20 per page</a>
+												<a href="javascript:void(0)" class="text-smoke me-15">1-10</a>
+												<div class="btn-group">
+													<button type="button" class="btn btn-outline-light btn-sm" aria-label="prev"><span class="fa fa-chevron-left"></span></button>
+													<button type="button" class="btn btn-outline-light btn-sm" aria-label="next"><span class="fa fa-chevron-right"></span></button>
+												</div>
+											</div>
+										</div>
+										<div class="collapse" id="collapseExample">
+											<div class="quick-access-form-wrap">
+											<form class="pa-30 pb-15 bg-charcoal-light-5 border rounded-15 quick-access-form">
+												<div class="row">
+													<div class="col-md-10">
+														<div class="row">
+															<div class="custom-dropify-1 px-15">
+																<div class="form-group">
+																	<input type="file" id="input-file-now" class="dropify" />
+																</div>
+															</div>
+															<div class="col-md-12">
+																<div class="row">
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<input class="form-control" id="firstName" placeholder="First name*" value="" type="text">
+																		</div>
+																		<div class="form-group">
+																			<input class="form-control" id="lastName" placeholder="Last name*" value="" type="text">
+																		</div>
+																	</div>
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<input class="form-control" id="emailid" placeholder="Email Id*" value="" type="text">
+																		</div>
+																		<div class="form-group">
+																			<input class="form-control" id="phone" placeholder="Phone" value="" type="text">
+																		</div>
+																	</div>
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<input class="form-control" id="firstName" placeholder="Department" value="" type="text">
+																		</div>
+																		<div class="form-group">
+																			<select id="input_tags" class="form-control" multiple="multiple">
+																				<option selected="selected">orange</option>
+																				<option>white</option>
+																				<option selected="selected">purple</option>
+																			</select>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-2">
+														<div class="form-group">
+															<button data-toggle="collapse" role="button" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" class="btn btn-block btn-theme ">Create New Contact
+															</button>
+														</div>
+														<div class="form-group">
+															<button data-toggle="collapse" disabled role="button" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" class="btn btn-block btn-secondary">Discard
+															</button>
+														</div>
+													</div>
+												</div>
+											</form>
+											</div>
+										</div>
+										<div class="list-view-wrap">
+											<div class="">
+												<table id="datable_1" class="table table-hover w-100 border mb-30">
+													<thead class="thead-light">
+														<tr>
+															<th><span class="custom-control custom-checkbox checkbox-theme">
+																<input type="checkbox" class="custom-control-input" id="customCheck1">
+																<label class="custom-control-label" for="customCheck1"></label>
+															</span></th>
+															<th>Name</th>
+															<th>Email address</th>
+															<th>Phone</th>
+															<th>Tags</th>
+															<th>Department</th>
+															<th>Date Created</th>
+															<th>Modified</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>
+															<span class="d-flex align-items-center">
+																<span class="custom-control custom-checkbox checkbox-theme">
+																<input type="checkbox" class="custom-control-input" id="customCheck2c">
+																<label class="custom-control-label" for="customCheck2c"></label>
+															</span>
+															<span class="feather-icon fe-x"><i data-feather="star"></i></span>
+															</span></td>
+															<td class="w-15">
+																<span class="d-flex align-items-center">
+																	<span class="avatar avatar-sm flex-shrink-0  me-15">
+																	<img src="dist/img/avatar12.jpg" alt="user" class="d-inline-block avatar-img">
+																	</span>Aiger Nixon
+																</span>
+															</td>
+															<td>contact@hecework.com</td>
+															<td>+91-24-3432-1567</td>
+															<td class="w-30"><span class="badge badge-lg badge-light my-5  me-10">Collaboration</span><span class="badge badge-lg badge-light  my-5  me-10">React Developer</span><span class="badge badge-lg badge-light  my-5 me-10">Angular Developer</span></td>
+															<td>Design</td>
+															<td>13 Jan,2019</td>
+															<td>13 Jan,2019</td>
+														</tr>
+														<tr>
+															<td>
+															<span class="d-flex align-items-center">
+																<span class="custom-control custom-checkbox checkbox-theme">
+																<input type="checkbox" class="custom-control-input" id="customCheck2c">
+																<label class="custom-control-label" for="customCheck2c"></label>
+															</span>
+															<span class="feather-icon fe-x"><i data-feather="star"></i></span>
+															</span></td>
+															<td class="w-15">
+																<span class="d-flex align-items-center">
+																	<span class="avatar avatar-sm flex-shrink-0  me-15">
+																	<img src="dist/img/avatar12.jpg" alt="user" class="d-inline-block avatar-img">
+																	</span>Tiger Nixon
+																</span>
+															</td>
+															<td>contact@hecework.com</td>
+															<td>+91-24-3432-1567</td>
+															<td class="w-30"><span class="badge badge-lg badge-light my-5  me-10">Collaboration</span><span class="badge badge-lg badge-light  my-5  me-10">React Developer</span><span class="badge badge-lg badge-light  my-5 me-10">Angular Developer</span></td>
+															<td>Design</td>
+															<td>13 Jan,2019</td>
+															<td>13 Jan,2019</td>
+														</tr>
+															<tr>
+															<td>
+															<span class="d-flex align-items-center">
+																<span class="custom-control custom-checkbox checkbox-theme">
+																<input type="checkbox" class="custom-control-input" id="customCheck2c">
+																<label class="custom-control-label" for="customCheck2c"></label>
+															</span>
+															<span class="feather-icon fe-x"><i data-feather="star"></i></span>
+															</span></td>
+															<td class="w-15">
+																<span class="d-flex align-items-center">
+																	<span class="avatar avatar-sm flex-shrink-0  me-15">
+																	<img src="dist/img/avatar12.jpg" alt="user" class="d-inline-block avatar-img">
+																	</span>Tiger Nixon
+																</span>
+															</td>
+															<td>contact@hecework.com</td>
+															<td>+91-24-3432-1567</td>
+															<td class="w-30"><span class="badge badge-lg badge-light my-5  me-10">Collaboration</span><span class="badge badge-lg badge-light  my-5  me-10">React Developer</span><span class="badge badge-lg badge-light  my-5 me-10">Angular Developer</span></td>
+															<td>Design</td>
+															<td>13 Jan,2019</td>
+															<td>13 Jan,2019</td>
+														</tr>
+													
+															<tr>
+															<td>
+															<span class="d-flex align-items-center">
+																<span class="custom-control custom-checkbox checkbox-theme">
+																<input type="checkbox" class="custom-control-input" id="customCheck2c">
+																<label class="custom-control-label" for="customCheck2c"></label>
+															</span>
+															<span class="feather-icon fe-x"><i data-feather="star"></i></span>
+															</span></td>
+															<td class="w-15">
+																<span class="d-flex align-items-center">
+																	<span class="avatar avatar-sm flex-shrink-0  me-15">
+																	<img src="dist/img/avatar12.jpg" alt="user" class="d-inline-block avatar-img">
+																	</span>Tiger Nixon
+																</span>
+															</td>
+															<td>contact@hecework.com</td>
+															<td>+91-24-3432-1567</td>
+															<td class="w-30"><span class="badge badge-lg badge-light my-5  me-10">Collaboration</span><span class="badge badge-lg badge-light  my-5  me-10">React Developer</span><span class="badge badge-lg badge-light  my-5 me-10">Angular Developer</span></td>
+															<td>Design</td>
+															<td>13 Jan,2019</td>
+															<td>13 Jan,2019</td>
+														</tr>
+													
+															<tr>
+															<td>
+															<span class="d-flex align-items-center">
+																<span class="custom-control custom-checkbox checkbox-theme">
+																<input type="checkbox" class="custom-control-input" id="customCheck2c">
+																<label class="custom-control-label" for="customCheck2c"></label>
+															</span>
+															<span class="feather-icon fe-x"><i data-feather="star"></i></span>
+															</span></td>
+															<td class="w-15">
+																<span class="d-flex align-items-center">
+																	<span class="avatar avatar-sm flex-shrink-0  me-15">
+																	<img src="dist/img/avatar12.jpg" alt="user" class="d-inline-block avatar-img">
+																	</span>Tiger Nixon
+																</span>
+															</td>
+															<td>contact@hecework.com</td>
+															<td>+91-24-3432-1567</td>
+															<td class="w-30"><span class="badge badge-lg badge-light my-5  me-10">Collaboration</span><span class="badge badge-lg badge-light  my-5  me-10">React Developer</span><span class="badge badge-lg badge-light  my-5 me-10">Angular Developer</span></td>
+															<td>Design</td>
+															<td>13 Jan,2019</td>
+															<td>13 Jan,2019</td>
+														</tr>
+													
+															<tr>
+															<td>
+															<span class="d-flex align-items-center">
+																<span class="custom-control custom-checkbox checkbox-theme">
+																<input type="checkbox" class="custom-control-input" id="customCheck2c">
+																<label class="custom-control-label" for="customCheck2c"></label>
+															</span>
+															<span class="feather-icon fe-x"><i data-feather="star"></i></span>
+															</span></td>
+															<td class="w-15">
+																<span class="d-flex align-items-center">
+																	<span class="avatar avatar-sm flex-shrink-0  me-15">
+																	<img src="dist/img/avatar12.jpg" alt="user" class="d-inline-block avatar-img">
+																	</span>Tiger Nixon
+																</span>
+															</td>
+															<td>contact@hecework.com</td>
+															<td>+91-24-3432-1567</td>
+															<td class="w-30"><span class="badge badge-lg badge-light my-5  me-10">Collaboration</span><span class="badge badge-lg badge-light  my-5  me-10">React Developer</span><span class="badge badge-lg badge-light  my-5 me-10">Angular Developer</span></td>
+															<td>Design</td>
+															<td>13 Jan,2019</td>
+															<td>13 Jan,2019</td>
+														</tr>
+													
+															<tr>
+															<td>
+															<span class="d-flex align-items-center">
+																<span class="custom-control custom-checkbox checkbox-theme">
+																<input type="checkbox" class="custom-control-input" id="customCheck2c">
+																<label class="custom-control-label" for="customCheck2c"></label>
+															</span>
+															<span class="feather-icon fe-x"><i data-feather="star"></i></span>
+															</span></td>
+															<td class="w-15">
+																<span class="d-flex align-items-center">
+																	<span class="avatar avatar-sm flex-shrink-0  me-15">
+																	<img src="dist/img/avatar12.jpg" alt="user" class="d-inline-block avatar-img">
+																	</span>Tiger Nixon
+																</span>
+															</td>
+															<td>contact@hecework.com</td>
+															<td>+91-24-3432-1567</td>
+															<td class="w-30"><span class="badge badge-lg badge-light my-5  me-10">Collaboration</span><span class="badge badge-lg badge-light  my-5  me-10">React Developer</span><span class="badge badge-lg badge-light  my-5 me-10">Angular Developer</span></td>
+															<td>Design</td>
+															<td>13 Jan,2019</td>
+															<td>13 Jan,2019</td>
+														</tr>
+													
+															<tr>
+															<td>
+															<span class="d-flex align-items-center">
+																<span class="custom-control custom-checkbox checkbox-theme">
+																<input type="checkbox" class="custom-control-input" id="customCheck2c">
+																<label class="custom-control-label" for="customCheck2c"></label>
+															</span>
+															<span class="feather-icon fe-x"><i data-feather="star"></i></span>
+															</span></td>
+															<td class="w-15">
+																<span class="d-flex align-items-center">
+																	<span class="avatar avatar-sm flex-shrink-0  me-15">
+																	<img src="dist/img/avatar12.jpg" alt="user" class="d-inline-block avatar-img">
+																	</span>Tiger Nixon
+																</span>
+															</td>
+															<td>contact@hecework.com</td>
+															<td>+91-24-3432-1567</td>
+															<td class="w-30"><span class="badge badge-lg badge-light my-5  me-10">Collaboration</span><span class="badge badge-lg badge-light  my-5  me-10">React Developer</span><span class="badge badge-lg badge-light  my-5 me-10">Angular Developer</span></td>
+															<td>Design</td>
+															<td>13 Jan,2019</td>
+															<td>13 Jan,2019</td>
+														</tr>
+													
+															<tr>
+															<td>
+															<span class="d-flex align-items-center">
+																<span class="custom-control custom-checkbox checkbox-theme">
+																<input type="checkbox" class="custom-control-input" id="customCheck2c">
+																<label class="custom-control-label" for="customCheck2c"></label>
+															</span>
+															<span class="feather-icon fe-x"><i data-feather="star"></i></span>
+															</span></td>
+															<td class="w-15">
+																<span class="d-flex align-items-center">
+																	<span class="avatar avatar-sm flex-shrink-0  me-15">
+																	<img src="dist/img/avatar12.jpg" alt="user" class="d-inline-block avatar-img">
+																	</span>Tiger Nixon
+																</span>
+															</td>
+															<td>contact@hecework.com</td>
+															<td>+91-24-3432-1567</td>
+															<td class="w-30"><span class="badge badge-lg badge-light my-5  me-10">Collaboration</span><span class="badge badge-lg badge-light  my-5  me-10">React Developer</span><span class="badge badge-lg badge-light  my-5 me-10">Angular Developer</span></td>
+															<td>Design</td>
+															<td>13 Jan,2019</td>
+															<td>13 Jan,2019</td>
+														</tr>
+													
+															<tr>
+															<td>
+															<span class="d-flex align-items-center">
+																<span class="custom-control custom-checkbox checkbox-theme">
+																<input type="checkbox" class="custom-control-input" id="customCheck2c">
+																<label class="custom-control-label" for="customCheck2c"></label>
+															</span>
+															<span class="feather-icon fe-x"><i data-feather="star"></i></span>
+															</span></td>
+															<td class="w-15">
+																<span class="d-flex align-items-center">
+																	<span class="avatar avatar-sm flex-shrink-0  me-15">
+																	<img src="dist/img/avatar12.jpg" alt="user" class="d-inline-block avatar-img">
+																	</span>Tiger Nixon
+																</span>
+															</td>
+															<td>contact@hecework.com</td>
+															<td>+91-24-3432-1567</td>
+															<td class="w-30"><span class="badge badge-lg badge-light my-5  me-10">Collaboration</span><span class="badge badge-lg badge-light  my-5  me-10">React Developer</span><span class="badge badge-lg badge-light  my-5 me-10">Angular Developer</span></td>
+															<td>Design</td>
+															<td>13 Jan,2019</td>
+															<td>13 Jan,2019</td>
+														</tr>
+													
+													
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+                            </div>
+                        </div>
+						
+						<!-- Add New Contact -->
+						<div class="modal fade" id="addNewContact" tabindex="-1" role="dialog" aria-labelledby="addNewContact" aria-hidden="true">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h6 class="modal-title" id="exampleModalPopoversLabel">Add new Contact</h6>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">×</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form>
+											<div class="row row-sm">
+												<div class="col-sm-12">
+													<div class="form-group">
+														<div class="row">
+															<div class="custom-dropify-2 position-absolute upload-img-type-2 px-15">
+																<div class="form-group">
+																	<input type="file" id="input-file-now" class="dropify" />
+																</div>
+															</div>
+															<div class="col-sm-12 ps-160">
+																<textarea class="form-control filled-input rounded-10" rows="4" placeholder="Add Bio"></textarea>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="hk-text-separator hk-text-separator-1 text-theme">Basic Info</div>
+											<div class="row row-sm">
+												<div class="col-sm-4">
+													<div class="form-group">
+														<label>First Name</label>
+														<input class="form-control" type="text" value="Mandaline" placeholder="First Name" name="name" />
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="form-group">
+														<label>Middle Name</label>
+														<input class="form-control" type="text" value="Joberane" placeholder="Middle Name" name="middlename" />
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="form-group">
+														<label>Last Name</label>
+														<input class="form-control" type="text" value="Shane" placeholder="Last Name" name="lastname" />
+													</div>
+												</div>
+											</div>
+											<div class="row row-sm">
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Email ID</label>
+														<input class="form-control" type="email" value="contct@hencework.com" placeholder="Email Id" name="emailid" />
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Phone</label>
+														<input class="form-control" type="text" value="+91-25-4125-2365" placeholder="Phone No" name="phone" />
+													</div>
+												</div>
+											</div>
+											<div class="row row-sm">
+												<div class="col-sm-12">
+													<label>Address</label>
+													<div class="form-group">
+														<input class="form-control" type="text" value="" placeholder="Line 1" name="add1" />
+													</div>	
+													<div class="form-group">
+														<input class="form-control" type="text" value="+91-25-4125-2365" placeholder="Line 2" name="add2" />
+													</div>
+												</div>
+											</div>
+											<div class="row row-sm">
+												<div class="col-sm-4">
+													<div class="form-group">
+														<label>City</label>
+														<select class="form-control custom-select">
+															<option>City</option>
+															<option selected value="1">Pune</option>
+															<option value="2">Bangalore</option>
+															<option value="3">Mumbai</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="form-group">
+														<label>State</label>
+														<select class="form-control custom-select">
+															<option>State</option>
+															<option selected value="1">Pune</option>
+															<option value="2">Bangalore</option>
+															<option value="3">Mumbai</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="form-group">
+														<label>Country</label>
+														<select class="form-control custom-select">
+															<option>Country</option>
+															<option selected value="1">Pune</option>
+															<option value="2">Bangalore</option>
+															<option value="3">Mumbai</option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="hk-text-separator hk-text-separator-1 text-theme">Company Info</div>
+											<div class="row row-sm">
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Company Name</label>
+														<input class="form-control" type="text" value="Hencework" placeholder="Companey Name" name="Companey" />
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Designation</label>
+														<input class="form-control" type="text" value="Co-Founder" placeholder="Designation" name="designation" />
+													</div>
+												</div>
+											</div>
+											<div class="row row-sm">
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Website</label>
+														<input class="form-control" type="text" value="https://hencework.com" placeholder="Companey Website" name="Website" />
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Work Phone</label>
+														<input class="form-control" type="text" value="" placeholder="----------" name="Wphone" />
+													</div>
+												</div>
+											</div>
+											<div class="hk-text-separator hk-text-separator-1 text-theme">Additional Info</div>
+											<div class="row row-sm">
+												<div class="col-sm-12">
+													<div class="form-group">
+														<label>Tags</label>
+														<select id="input_tags_1" class="form-control" multiple="multiple">
+															<option selected="selected">collaborator</option>
+															<option>react developer</option>
+															<option selected="selected">angular developer</option>
+														</select>
+														<small class="form-text text-muted">You can add upto 4 tags</small>
+													</div>
+												</div>
+											</div>
+											<div class="row row-sm">
+												<div class="col-sm-12">
+													<div class="d-flex justify-content-between align-items-center mb-10">
+														<label class="mb-0">Social</label>
+														<a href="#" class="btn btn-icon btn-icon-only text-smoke" data-toggle="tooltip" data-placement="top" title="Add new Category">
+															<span class="feather-icon"><i data-feather="plus-circle"></i></span>
+														</a>
+													</div>
+													<div class="row row-sm">
+														<div class="col-sm-6">
+															<div class="form-group">
+																<input class="form-control" type="text" value="" placeholder="Facebook" name="Facebook" />
+															</div>
+														</div>
+														<div class="col-sm-6">
+															<div class="form-group">
+																<input class="form-control" type="text" value="" placeholder="Twitter" name="Twitter" />
+															</div>
+														</div>
+														<div class="col-sm-6">
+															<div class="form-group">
+																<input class="form-control" type="text" value="" placeholder="LinkedIn" name="LinkedIn" />
+															</div>
+														</div>
+														<div class="col-sm-6">
+															<div class="form-group">
+																<input class="form-control" type="text" value="" placeholder="Gmail" name="Gmail" />
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row row-sm mt-30">
+												<div class="col-sm-12">
+													<div class="form-group">
+														<div class="d-flex">
+														<button id="add_event" class="btn btn-theme w-100 me-10" type="submit">Create New Contact</button>
+														<button class="btn btn-light text-danger w-100 me-10" type="submit">Discard</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /Add New Contact -->
+                    </div>
+                </div>
+                <!-- /Row -->
+
+            </div>
+            <!-- /Container -->
+        </div>
+        <!-- /Main Content -->
+
+    </div>
+    <!-- /HK Wrapper -->
+
+    <!-- jQuery -->
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Jasny-bootstrap  JavaScript -->
+    <script src="vendors/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
+
+    <!-- Slimscroll JavaScript -->
+    <script src="dist/js/jquery.slimscroll.js"></script>
+
+    <!-- Fancy Dropdown JS -->
+    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+
+    <!-- Tinymce JavaScript -->
+    <script src="vendors/tinymce/tinymce.min.js"></script>
+
+    <!-- Tinymce Wysuhtml5 Init JavaScript -->
+    <script src="dist/js/tinymce-data.js"></script>
+
+    <!-- FeatherIcons JavaScript -->
+    <script src="dist/js/feather.min.js"></script>
+
+    <!-- Toggles JavaScript -->
+    <script src="vendors/jquery-toggles/toggles.min.js"></script>
+    <script src="dist/js/toggle-data.js"></script>
+	
+	<!-- Data Table JavaScript -->
+    <script src="vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="vendors/datatables.net-dt/js/dataTables.dataTables.min.js"></script>
+    <script src="vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="vendors/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="vendors/jszip/dist/jszip.min.js"></script>
+    <script src="vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="dist/js/contact-data.js"></script>
+	
+	<!-- Select2 JavaScript -->
+    <script src="vendors/select2/dist/js/select2.full.min.js"></script>
+    <script src="dist/js/select2-data.js"></script>
+	<script>
+		$("#input_tags_1").select2({
+			tags: true,
+			tokenSeparators: [',', ' ']
+		});
+	</script>
+	
+	<!-- Dropify JavaScript -->
+	<script src="vendors/dropify/dist/js/dropify.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			/* Basic Init*/
+			$('.dropify').dropify({
+				messages: {
+				'default': 'Upload a Photo',
+				}
+			});
+		});
+	</script>
+	
+    <!-- Init JavaScript -->
+    <script src="dist/js/init.js"></script>
+
+</body>
+
+</html>
