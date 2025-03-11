@@ -362,13 +362,13 @@
           <header class="post-header pt-20">
             <div
               class="container-xl bg-img mt-80"
-              data-background="assets/imgs/blogs/post/1.jpg"
+              data-background="https://res.cloudinary.com/tanviranjum/image/upload/v1741648444/h7inqzeuap1adxbpflbu.png"
               data-overlay-dark="4"
             >
               <div class="row">
                 <div class="col-lg-10">
                   <div class="caption">
-                    <div class="tags fz-14">
+                    <div id="category-container" class="tags fz-14">
                       <a href="#0">Design</a>
                       <a href="#0">Development</a>
                     </div>
@@ -437,16 +437,18 @@
                           </p>
                         </div>
                         <div class="text">
-                          <p>
+                          <p id="blog-content-container">
                             However, Apple might not include it in the Air
-                            series when it launches it. As for the notebook’s
-                            release date, the 15-inch MacBook isn’t coming soon.
-                            It’ll get a late 2023 release at best, according to
-                            the new claims.
+                            series when it launches it. As for the
+                            notebook&apos;s release date, the 15-inch MacBook
+                            isn&apos;t coming soon. It&apos;ll get a late 2023
+                            release at best, according to the new claims.
                           </p>
                         </div>
                         <div class="title mt-30">
-                          <h4>What sizes do MacBook Airs come in?</h4>
+                          <h4 id="blog-title">
+                            What sizes do MacBook Airs come in?
+                          </h4>
                         </div>
                         <div class="text mt-20">
                           <p>
@@ -533,10 +535,10 @@
                       <div class="text">
                         <p>
                           However, Apple might not include it in the Air series
-                          when it launches it. As for the notebook’s release
-                          date, the 15-inch MacBook isn’t coming soon. It’ll get
-                          a late 2023 release at best, according to the new
-                          claims.
+                          when it launches it. As for the notebook&apos;s
+                          release date, the 15-inch MacBook isn&apos;t coming
+                          soon. It&apos;ll get a late 2023 release at best,
+                          according to the new claims.
                         </p>
                       </div>
                     </div>
@@ -606,7 +608,7 @@
                         <div class="col-lg-6">
                           <div class="form-group mb-30">
                             <input
-                              id="form_name"
+                              id="fullname-comment"
                               type="text"
                               name="name"
                               placeholder="Name"
@@ -618,7 +620,7 @@
                         <div class="col-lg-6">
                           <div class="form-group mb-30">
                             <input
-                              id="form_email"
+                              id="email-comment"
                               type="email"
                               name="email"
                               placeholder="Email"
@@ -630,7 +632,7 @@
                         <div class="col-12">
                           <div class="form-group">
                             <textarea
-                              id="form_message"
+                              id="message-comment"
                               name="message"
                               placeholder="Message"
                               rows="4"
@@ -639,9 +641,12 @@
                           </div>
                           <div class="text-center">
                             <div class="mt-30">
-                              <button type="submit">
+                              <div
+                                onclick="handleAddComment(event)"
+                                type="submit"
+                              >
                                 <span class="text">Post Comment</span>
-                              </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -765,7 +770,7 @@
                     </div>
                     <div class="widget tags">
                       <h6 class="title-widget">Tags</h6>
-                      <div>
+                      <div id="tags-container">
                         <a href="blog-list.html">Creative</a>
                         <a href="blog-list.html">Design</a>
                         <a href="blog-list.html">Dark & Light</a>
@@ -834,7 +839,9 @@
                     </div>
                     <div class="cont mt-30">
                       <h6>
-                        <a href="#0">We’re winner SOTY at CSS Award 2023</a>
+                        <a href="#0"
+                          >We&apos;re winner SOTY at CSS Award 2023</a
+                        >
                       </h6>
                     </div>
                   </div>
@@ -1032,5 +1039,6 @@
 
     <!-- custom scripts -->
     <script src="assets/js/inner_pages.js"></script>
+    <script src="../inner_js/blog-details.js"></script>
   </body>
 </html>

@@ -9,8 +9,9 @@ const blogSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    isPrivate: {
-      type: Boolean,
+    visibility: {
+      type: String,
+      enum: ["public", "private"],
       default: false,
     },
     admin_id: {
@@ -24,6 +25,7 @@ const blogSchema = mongoose.Schema(
     },
     category: {
       type: String,
+      required: true,
       enum: [
         "Design",
         "Development",
@@ -36,6 +38,7 @@ const blogSchema = mongoose.Schema(
     },
     status: {
       type: String,
+      required: true,
       enum: ["Published", "Archived", "Draft", "Deleted"],
       default: "Published",
     },

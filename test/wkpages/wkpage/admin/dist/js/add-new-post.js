@@ -1,29 +1,27 @@
 const handleCreatePost = async (event) => {
   event.preventDefault();
-  const loader = await document.getElementById("loader-add-post");
-  const loaderButton = await document.getElementById("add-post-publish-button");
+  const loader = document.getElementById("loader-add-post");
+  const loaderButton = document.getElementById("add-post-publish-button");
   loader.classList.remove("visually-hidden");
   loaderButton.classList.add("visually-hidden");
-  const messageBox = await document.getElementById("error-box-add-post");
+  const messageBox = document.getElementById("error-box-add-post");
   messageBox.textContent = "";
   const title = await document.getElementById("add-post-title").value;
   const visibility = await document.getElementById("add-post-visibility").value;
   const image = await document.getElementById("add-post-image-input").files[0];
   const category = await document.getElementById("add-post-category").value;
-  const content = await document.getElementsByClassName("add-post-content")
-    .value;
-  console.log({ title });
-  console.log({ content });
-  console.log({ category });
-  console.log({ visibility });
-  console.log({ image });
+  const content = await window.parent.tinymce
+    .get("classic")
+    .getContent()
+    .replace(/<\/?[^>]+(>|$)/g, "");
+
   if (title.length < 1) {
     messageBox.textContent = "Title is required";
     loader.classList.add("visually-hidden");
     loaderButton.classList.remove("visually-hidden");
     return;
   }
-  if (content == undefined) {
+  if (content < 1) {
     messageBox.textContent = "Content text is required";
     loader.classList.add("visually-hidden");
     loaderButton.classList.remove("visually-hidden");
@@ -42,4 +40,75 @@ const handleCreatePost = async (event) => {
     loaderButton.classList.remove("visually-hidden");
     return;
   }
+
+  let form = new FormData();
+  form.append("file", image);
+  form.append("upload_preset", "xubbr2hv");
+  form.append("cloud_name", "tanviranjum");
+  const imageUpload = await fetch(
+    `https://api.cloudinary.com/v1_1/tanviranjum/image/upload`,
+    {
+      method: "post",
+      body: form,
+    }
+  );
+  const imageUploadData = await imageUpload.json();
+  console.log(imageUploadData);
+  if (imageUploadData) {
+    const res = await fetch("http://localhost:3000/api/blog/create", {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        title,
+        visibility,
+        poster: imageUploadData.secure_url,
+        category,
+        content,
+      }),
+      method: "post",
+    });
+    const data = await res.json();
+    console.log(data);
+    if (data.message == "Successful") {
+      loader.classList.add("visually-hidden");
+      loaderButton.classList.remove("visually-hidden");
+    } else {
+      messageBox.textContent = data.message;
+      loader.classList.add("visually-hidden");
+      loaderButton.classList.remove("visually-hidden");
+    }
+    return;
+  }
+};
+
+const handleGetOneBlog = async () => {
+  const blog = await fetch(`http://localhost:3000/api/blog/${blogId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `${localStorage.getItem("token")}`,
+    },
+    method: "get",
+  });
+};
+
+const handleUpdateOneBlog = async () => {
+  const blog = await fetch(`http://localhost:3000/api/blog/${blogId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify({ title: "new title" }),
+    method: "put",
+  });
+};
+const handleDeleteOneBlog = async () => {
+  const blog = await fetch(`http://localhost:3000/api/blog/${blogId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `${localStorage.getItem("token")}`,
+    },
+    method: "delete",
+  });
 };

@@ -1210,7 +1210,7 @@ Contact: contact@hencework.com
                       <ul class="nav flex-column">
                         <li class="nav-item">
                           <a class="nav-link" href="posts.html"
-                            ><span class="nav-link-text">Posts</span></a
+                            ><span class="nav-link-text">Posts </span></a
                           >
                         </li>
                         <li class="nav-item active">
@@ -2509,22 +2509,13 @@ Contact: contact@hencework.com
               <div data-simplebar class="nicescroll-bar">
                 <div class="menu-content-wrap">
                   <a
-                    href="add-new-post.html"
+                    onclick="handleCreatePost(event)"
                     class="btn btn-primary btn-rounded btn-block mb-4"
                   >
                     Create Post
                   </a>
                   <div class="menu-group">
                     <ul class="nav nav-light navbar-nav flex-column">
-                      <li class="nav-item active">
-                        <a class="nav-link" href="javascript:void(0);">
-                          <span class="nav-icon-wrap"
-                            ><span class="feather-icon"
-                              ><i data-feather="users"></i></span
-                          ></span>
-                          <span class="nav-link-text">Posts</span>
-                        </a>
-                      </li>
                       <li class="nav-item active">
                         <a class="nav-link" href="javascript:void(0);">
                           <span class="nav-icon-wrap"
@@ -2865,16 +2856,23 @@ Contact: contact@hencework.com
                             <div class="card card-border rounded-top-start-0">
                               <div class="card-body">
                                 <div class="tab-content mt-0">
-                                  <div
-                                    class="tab-pane fade show active"
-                                    id="tab_classic"
-                                  >
-                                    <div class="tinymce-wrap">
-                                      <textarea
-                                        class="add-post-content"
-                                        id="classic"
-                                      ></textarea>
+                                  <div class="tab-content mt-0">
+                                    <div
+                                      class="tab-pane fade show active"
+                                      id="tab_classic"
+                                    >
+                                      <div class="tinymce-wrap">
+                                        <textarea id="classic"></textarea>
+                                      </div>
+                                      <!-- <textarea
+                                        name="content"
+                                        id="add-post-content"
+                                      ></textarea> -->
                                     </div>
+                                    <div
+                                      class="tab-pane fade"
+                                      id="tab_code"
+                                    ></div>
                                   </div>
                                   <div
                                     class="tab-pane fade"

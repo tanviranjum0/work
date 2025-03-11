@@ -1,5 +1,5 @@
 const express = require("express");
-// const checkLogin = require("../middlewares/checkLogin");
+const checkLogin = require("../middlewares/checkLogin");
 const {
   getBlog,
   deleteBlog,
@@ -14,9 +14,9 @@ router.get("/", (req, res) => {
   res.send("hello");
 });
 
-router.post("/create", createBlog);
-router.get("/all", getBlogs);
-router.put("/:id", updateBlog);
-router.get("/:id", getBlog);
-router.delete("/:id", deleteBlog);
+router.post("/create", checkLogin, createBlog);
+router.get("/all", checkLogin, getBlogs);
+router.put("/:id", checkLogin, updateBlog);
+router.get("/:id", checkLogin, getBlog);
+router.delete("/:id", checkLogin, deleteBlog);
 module.exports = router;

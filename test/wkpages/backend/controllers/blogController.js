@@ -1,32 +1,47 @@
 const Blog = require("../models/blogModel.js");
 const createBlog = async (req, res) => {
-  const { title, content, poster, admin_id, category, status } = await req.body;
+  const { title, content, poster, visibility, category, status } =
+    await req.body;
+  console.log(req.body);
   try {
-    if (title && content && poster && admin_id && category && status) {
-      const blog = await Blog.create(req.body);
-      res.status(201).json(blog);
+    if (title && content && visibility && poster && category) {
+      const blog = await Blog.create({
+        title,
+        visibility,
+        content,
+        poster,
+        admin_id: req.user.id,
+        category,
+        status,
+      });
+      console.log(blog);
+      res.status(201).json({ message: "Successful", blog });
     }
   } catch (error) {
-    res.status(400).json("Something went wrong");
+    res.status(200).json({ message: "Something went wrong" });
   }
 };
 
 const deleteBlog = async (req, res) => {
-  const Blog = await Blog.findById(req.params.id);
-
-  if (!Blog) {
-    res.status(400).send("Blog not found!");
+  const blog = await Blog.findById(req.params.id);
+  console.log(blog);
+  if (!blog) {
+    return res.status(200).json({ message: "Blog not found!" });
   }
 
-  if (req.user.id !== Blog.userRef) {
-    res.status(400).send("You can only delete your own Blogs!");
+  if (req.user.id !== blog.admin_id.toString()) {
+    return res
+      .status(200)
+      .json({ message: "You can only delete your own Blogs!" });
   }
 
   try {
     await Blog.findByIdAndDelete(req.params.id);
-    res.status(200).json("Blog has been deleted!");
+    res.status(200).json({ message: "Successful" });
   } catch (error) {
-    res.status(400).send("There is a problem in Blog manupulating");
+    res
+      .status(200)
+      .json({ message: "There is a problem in Blog manupulating" });
   }
 };
 
@@ -34,19 +49,19 @@ const updateBlog = async (req, res) => {
   const blog = await Blog.findById(req.params.id);
 
   if (!blog) {
-    res.status(400).send("Blog not found!");
+    res.status(200).json({ message: "Blog not found!" });
   }
-  //   if (req.user.id !== blog._id) {
-  //     res.status(400).send("You can only update your own Blogs!");
-  //   }
+  if (req.user.id !== blog.admin_id.toString()) {
+    res.status(200).json({ message: "You can only update your own Blogs!" });
+  }
 
   try {
-    const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.status(200).json(updatedBlog);
+    const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json({ message: "Successful", updatedBlog });
   } catch (error) {
-    res.status(400).send("There is a problem in Blog manupulating");
+    res
+      .status(200)
+      .json({ message: "There is a problem in Blog manupulating" });
   }
 };
 
@@ -56,16 +71,22 @@ const getBlog = async (req, res) => {
     const blog = await Blog.findById(req.params.id);
 
     if (!blog) {
-      res.status(200).send("Blog not found!");
+      res.status(200).json({ message: "Blog not found!" });
+    } else if (req.user.id !== blog.admin_id.toString()) {
+      res
+        .status(200)
+        .json({ message: "You are not authorized to view this blog!" });
     } else {
-      res.status(200).json(blog);
+      res.status(200).json({ message: "Successful", blog });
     }
   } catch (error) {
-    res.status(400).send("There is a problem in Blog manupulating");
+    res
+      .status(200)
+      .json({ message: "There is a problem in Blog manupulating" });
   }
 };
 
-const getBlogs = async (req, res, next) => {
+const getBlogs = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 9;
     const startIndex = parseInt(req.query.startIndex) || 0;
@@ -112,7 +133,7 @@ const getBlogs = async (req, res, next) => {
 
     return res.status(200).json(Blogs);
   } catch (error) {
-    res.status(400).send("There is a problem in Blog Search");
+    res.status(200).json({ message: "There is a problem in Blog Search" });
   }
 };
 
