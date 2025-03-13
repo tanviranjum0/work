@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const blogSchema = mongoose.Schema(
   {
     title: {
@@ -12,9 +13,9 @@ const blogSchema = mongoose.Schema(
     visibility: {
       type: String,
       enum: ["public", "private"],
-      default: false,
+      default: "public",
     },
-    admin_id: {
+    owner_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
@@ -24,17 +25,12 @@ const blogSchema = mongoose.Schema(
       required: true,
     },
     category: {
-      type: String,
+      type: Array,
       required: true,
-      enum: [
-        "Design",
-        "Development",
-        "Education",
-        "Technology",
-        "Business",
-        "Social Media",
-        "Writing",
-      ],
+    },
+    tags: {
+      type: Array,
+      required: true,
     },
     status: {
       type: String,

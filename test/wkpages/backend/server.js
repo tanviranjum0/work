@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const userRoute = require("./routes/userRoutes.js");
 const blogRoute = require("./routes/blogRoutes.js");
+const commentRoute = require("./routes/blogCommentRoutes.js");
 const dotenv = require("dotenv");
 const connectToDB = require("./utils/db.js");
 
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/user", userRoute);
 app.use("/api/blog", blogRoute);
+app.use("/api/comment", commentRoute);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

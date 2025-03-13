@@ -10,13 +10,9 @@ const {
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("hello");
-});
-
 router.post("/create", checkLogin, createBlog);
-router.get("/all", checkLogin, getBlogs);
+router.get("/all", getBlogs);
 router.put("/:id", checkLogin, updateBlog);
-router.get("/:id", checkLogin, getBlog);
+router.get("/:id", getBlog);
 router.delete("/:id", checkLogin, deleteBlog);
 module.exports = router;

@@ -8,9 +8,6 @@ const {
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("hello");
-});
 router.post("/create", handleCreateUser);
 router.post("/login", handleLoginUser);
 router.post("/get-one", getUser);

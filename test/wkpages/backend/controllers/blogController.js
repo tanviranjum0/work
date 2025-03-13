@@ -4,19 +4,17 @@ const createBlog = async (req, res) => {
     await req.body;
   console.log(req.body);
   try {
-    if (title && content && visibility && poster && category) {
-      const blog = await Blog.create({
-        title,
-        visibility,
-        content,
-        poster,
-        admin_id: req.user.id,
-        category,
-        status,
-      });
-      console.log(blog);
-      res.status(201).json({ message: "Successful", blog });
-    }
+    const blog = await Blog.create({
+      title,
+      visibility,
+      content,
+      poster,
+      owner_id: req.user.id,
+      category,
+      status,
+    });
+    console.log(blog);
+    res.status(201).json({ message: "Successful", blog });
   } catch (error) {
     res.status(200).json({ message: "Something went wrong" });
   }
@@ -29,7 +27,7 @@ const deleteBlog = async (req, res) => {
     return res.status(200).json({ message: "Blog not found!" });
   }
 
-  if (req.user.id !== blog.admin_id.toString()) {
+  if (req.user.id !== blog.owner_id.toString()) {
     return res
       .status(200)
       .json({ message: "You can only delete your own Blogs!" });
@@ -51,7 +49,7 @@ const updateBlog = async (req, res) => {
   if (!blog) {
     res.status(200).json({ message: "Blog not found!" });
   }
-  if (req.user.id !== blog.admin_id.toString()) {
+  if (req.user.id !== blog.owner_id.toString()) {
     res.status(200).json({ message: "You can only update your own Blogs!" });
   }
 
@@ -66,13 +64,13 @@ const updateBlog = async (req, res) => {
 };
 
 const getBlog = async (req, res) => {
-  console.log(req.params);
+  console.log(req.body);
   try {
     const blog = await Blog.findById(req.params.id);
 
     if (!blog) {
       res.status(200).json({ message: "Blog not found!" });
-    } else if (req.user.id !== blog.admin_id.toString()) {
+    } else if (req.user.id !== blog.owner_id.toString()) {
       res
         .status(200)
         .json({ message: "You are not authorized to view this blog!" });
@@ -88,50 +86,24 @@ const getBlog = async (req, res) => {
 
 const getBlogs = async (req, res) => {
   try {
-    const limit = parseInt(req.query.limit) || 9;
-    const startIndex = parseInt(req.query.startIndex) || 0;
-    let offer = req.query.offer;
+    const { category } = req.body;
+    console.log(category);
+    // const limit = parseInt(req.query.limit) || 6;
+    // const startIndex = parseInt(req.query.startIndex) || 0;
 
-    if (offer === undefined || offer === "false") {
-      offer = { $in: [false, true] };
-    }
+    // let type = req.query.type;
 
-    let furnished = req.query.furnished;
+    // if (type === undefined || type === "all") {
+    //   type = { $in: ["sale", "rent"] };
+    // }
+    const blogs = await Blog.find({
+      category: { $in: ["Design"] },
+    });
+    // .sort({ createdAt: "desc" })
+    // .limit(limit)
+    // .skip(startIndex);
 
-    if (furnished === undefined || furnished === "false") {
-      furnished = { $in: [false, true] };
-    }
-
-    let parking = req.query.parking;
-
-    if (parking === undefined || parking === "false") {
-      parking = { $in: [false, true] };
-    }
-
-    let type = req.query.type;
-
-    if (type === undefined || type === "all") {
-      type = { $in: ["sale", "rent"] };
-    }
-
-    const searchTerm = req.query.searchTerm || "";
-
-    const sort = req.query.sort || "createdAt";
-
-    const order = req.query.order || "desc";
-
-    const Blogs = await Blog.find({
-      name: { $regex: searchTerm, $options: "i" },
-      offer,
-      furnished,
-      parking,
-      type,
-    })
-      .sort({ [sort]: order })
-      .limit(limit)
-      .skip(startIndex);
-
-    return res.status(200).json(Blogs);
+    return res.status(200).json(blogs);
   } catch (error) {
     res.status(200).json({ message: "There is a problem in Blog Search" });
   }
