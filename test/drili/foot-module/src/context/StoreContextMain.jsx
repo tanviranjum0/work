@@ -29,9 +29,6 @@ const StoreContextMain = ({ children }) => {
     id25: 0,
   });
 
-  // else if (!zone[itemId]) {
-  //   setZone((prev) => ({ ...prev, [itemId]: 1 }));
-  // }
   const increasePain = (itemId) => {
     if (zone[itemId] == 3) {
       setZone((prev) => ({ ...prev, [itemId]: 0 }));

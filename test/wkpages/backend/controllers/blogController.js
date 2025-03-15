@@ -1,20 +1,21 @@
 const Blog = require("../models/blogModel.js");
 const createBlog = async (req, res) => {
-  const { title, content, poster, visibility, category, status } =
+  const { title, content, poster, visibility, tags, category, status } =
     await req.body;
-  console.log(req.body);
   try {
     const blog = await Blog.create({
       title,
       visibility,
       content,
+      tags,
       poster,
       owner_id: req.user.id,
       category,
       status,
     });
-    console.log(blog);
-    res.status(201).json({ message: "Successful", blog });
+    const blogDetails = await Blog.find(blog._id).populate("owner_id").exec();
+    console.log(blogDetails);
+    res.status(201).json({ message: "Successful", blogDetail: blogDetails[0] });
   } catch (error) {
     res.status(200).json({ message: "Something went wrong" });
   }
@@ -22,7 +23,7 @@ const createBlog = async (req, res) => {
 
 const deleteBlog = async (req, res) => {
   const blog = await Blog.findById(req.params.id);
-  console.log(blog);
+
   if (!blog) {
     return res.status(200).json({ message: "Blog not found!" });
   }
@@ -64,16 +65,11 @@ const updateBlog = async (req, res) => {
 };
 
 const getBlog = async (req, res) => {
-  console.log(req.body);
   try {
     const blog = await Blog.findById(req.params.id);
 
     if (!blog) {
       res.status(200).json({ message: "Blog not found!" });
-    } else if (req.user.id !== blog.owner_id.toString()) {
-      res
-        .status(200)
-        .json({ message: "You are not authorized to view this blog!" });
     } else {
       res.status(200).json({ message: "Successful", blog });
     }
@@ -86,33 +82,59 @@ const getBlog = async (req, res) => {
 
 const getBlogs = async (req, res) => {
   try {
-    const { category } = req.body;
-    console.log(category);
-    // const limit = parseInt(req.query.limit) || 6;
-    // const startIndex = parseInt(req.query.startIndex) || 0;
+    const limit = parseInt(req.query.limit) || 6;
+    const startIndex = parseInt(req.query.startIndex) || 0;
 
-    // let type = req.query.type;
-
-    // if (type === undefined || type === "all") {
-    //   type = { $in: ["sale", "rent"] };
-    // }
-    const blogs = await Blog.find({
-      category: { $in: ["Design"] },
-    });
-    // .sort({ createdAt: "desc" })
-    // .limit(limit)
-    // .skip(startIndex);
-
+    const blogs = await Blog.find()
+      .populate("owner_id")
+      .sort({ createdAt: "desc" })
+      .limit(limit)
+      .skip(startIndex);
     return res.status(200).json(blogs);
   } catch (error) {
     res.status(200).json({ message: "There is a problem in Blog Search" });
   }
 };
 
+const getBlogsByCategory = async (req, res) => {
+  console.log(req.body);
+  const blogs = await Blog.find({
+    category: {
+      $in: [req.body.payload],
+    },
+  })
+    .populate("owner_id")
+    .limit(6)
+    .exec();
+  if (blogs.length == 0) {
+    res.json({ message: "No blogs found" });
+  } else {
+    res.json({ message: "Successful", blogs });
+  }
+};
+const getBlogsByTag = async (req, res) => {
+  console.log(req.body);
+  const blogs = await Blog.find({
+    tags: {
+      $in: [req.body.payload],
+    },
+  })
+    .populate("owner_id")
+    .limit(6)
+    .exec();
+  if (blogs.length == 0) {
+    res.json({ message: "No blogs found" });
+  } else {
+    res.json({ message: "Successful", blogs });
+  }
+};
+
 module.exports = {
   getBlog,
   deleteBlog,
+  getBlogsByCategory,
   updateBlog,
+  getBlogsByTag,
   createBlog,
   getBlogs,
 };

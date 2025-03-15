@@ -9,7 +9,7 @@ const {
 const router = express.Router();
 
 router.post("/add/:blogId", addComment);
-router.get("/all/:blogId", getComments);
-router.delete("/delete/:blogId", checkLogin, deleteComment);
+router.get("/all", getComments);
+router.delete("/delete", checkLogin, deleteComment);
 
 module.exports = router;

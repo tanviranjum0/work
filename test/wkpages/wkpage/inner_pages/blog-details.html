@@ -361,6 +361,7 @@
 
           <header class="post-header pt-20">
             <div
+              id="blog-details-bg-image"
               class="container-xl bg-img mt-80"
               data-background="https://res.cloudinary.com/tanviranjum/image/upload/v1741648444/h7inqzeuap1adxbpflbu.png"
               data-overlay-dark="4"
@@ -381,21 +382,25 @@
                           <div class="d-flex align-items-center">
                             <a href="#0" class="circle-60">
                               <img
-                                src="assets/imgs/blogs/post/a1.jpg"
+                                id="blog-details-author-image"
                                 alt=""
                                 class="circle-img"
                               />
                             </a>
                             <a href="#0" class="ml-20">
                               <span class="opacity-7 mb-5">Author</span>
-                              <h6 class="fz-16">Ui-ThemeZ</h6>
+                              <h6 id="blog-details-author-name" class="fz-16">
+                                Ui-ThemeZ
+                              </h6>
                             </a>
                           </div>
                         </div>
                         <div class="date ml-50">
                           <a href="#0">
                             <span class="opacity-7 mb-5">Published</span>
-                            <h6 class="fz-16">August 6, 2021</h6>
+                            <h6 id="blog-details-createdAt" class="fz-16">
+                              August 6, 2021
+                            </h6>
                           </a>
                         </div>
                       </div>
@@ -420,21 +425,21 @@
             <div class="container">
               <div class="row xlg-marg">
                 <div class="col-lg-8">
-                  <div class="main-post">
-                    <div class="item pb-60">
+                  <div id="blog-content-container" class="main-post">
+                    <!-- <div class="item pb-60">
                       <article>
                         <div class="text">
                           <p>
-                            <!-- <span class="spec-letter">Q</span> new report said
+                         <span class="spec-letter">Q</span> new report said
                             earlier this week that Apple is working on a brand
                             new laptop. Apple plans to release a 15-inch MacBook
                             Air in 2023, a first for the Air series. A trusted
                             Apple insider with a proven track record confirmed
-                            that Apple is working on the larger MacBook Air. -->
+                            that Apple is working on the larger MacBook Air.
                           </p>
                         </div>
                         <div class="text">
-                          <p id="blog-content-container"></p>
+                          <p></p>
                         </div>
                         <div class="title mt-30">
                           <h4 id="blog-title">
@@ -532,7 +537,7 @@
                           according to the new claims.
                         </p>
                       </div>
-                    </div>
+                    </div> -->
                     <div class="info-area flex pt-50 bord-thin-top">
                       <div>
                         <div class="tags flex">
@@ -594,7 +599,10 @@
                     </div>
                     <form id="contact-form" method="post" action="contact.php">
                       <div class="messages"></div>
-
+                      <div
+                        class="text-center text-danger"
+                        id="blog-details-comment-error"
+                      ></div>
                       <div class="controls row">
                         <div class="col-lg-6">
                           <div class="form-group mb-30">
@@ -632,10 +640,7 @@
                           </div>
                           <div class="text-center">
                             <div class="mt-30">
-                              <div
-                                onclick="handleAddComment(event)"
-                                type="submit"
-                              >
+                              <div onclick="handleAddComment(event)">
                                 <span class="text">Post Comment</span>
                               </div>
                             </div>
@@ -657,26 +662,73 @@
                     </div>
                     <div class="widget catogry">
                       <h6 class="title-widget">Categories</h6>
+                      <div
+                        id="blog-details-category-error"
+                        class="text-center text-danger my-2"
+                      ></div>
                       <ul class="rest">
                         <li>
-                          <span><a href="blog-list.html">Business</a></span>
-                          <span class="ml-auto">33</span>
+                          <span
+                            id="Business-category"
+                            onclick="handleCategoryButton(event)"
+                            >Business</span
+                          >
                         </li>
                         <li>
-                          <span><a href="blog-list.html">Lifestyle</a></span>
-                          <span class="ml-auto">05</span>
+                          <span
+                            id="Lifestyle-category"
+                            onclick="handleCategoryButton(event)"
+                            >Lifestyle</span
+                          >
                         </li>
                         <li>
-                          <span><a href="blog-list.html">Creative</a></span>
-                          <span class="ml-auto">28</span>
+                          <span
+                            id="Creative-category"
+                            onclick="handleCategoryButton(event)"
+                            >Creative</span
+                          >
                         </li>
                         <li>
-                          <span><a href="blog-list.html">WordPress</a></span>
-                          <span class="ml-auto">17</span>
+                          <span
+                            id="Wordpress-category"
+                            onclick="handleCategoryButton(event)"
+                            >WordPress</span
+                          >
                         </li>
                         <li>
-                          <span><a href="blog-list.html">Design</a></span>
-                          <span class="ml-auto">45</span>
+                          <span
+                            id="Design-category"
+                            onclick="handleCategoryButton(event)"
+                            >Design</span
+                          >
+                        </li>
+                        <li>
+                          <span
+                            id="Development-category"
+                            onclick="handleCategoryButton(event)"
+                            >Development</span
+                          >
+                        </li>
+                        <li>
+                          <span
+                            id="Education-category"
+                            onclick="handleCategoryButton(event)"
+                            >Education</span
+                          >
+                        </li>
+                        <li>
+                          <span
+                            id="Technology-category"
+                            onclick="handleCategoryButton(event)"
+                            >Technology</span
+                          >
+                        </li>
+                        <li>
+                          <span
+                            id="Writing-category"
+                            onclick="handleCategoryButton(event)"
+                            >Writing</span
+                          >
                         </li>
                       </ul>
                     </div>
@@ -762,11 +814,10 @@
                     <div class="widget tags">
                       <h6 class="title-widget">Tags</h6>
                       <div id="tags-container">
-                        <a href="blog-list.html">Creative</a>
-                        <a href="blog-list.html">Design</a>
-                        <a href="blog-list.html">Dark & Light</a>
-                        <a href="blog-list.html">Minimal</a>
-                        <a href="blog-list.html">Infolio</a>
+                        <div
+                          class="text-center text-danger my-2"
+                          id="blog-details-tag-error"
+                        ></div>
                       </div>
                     </div>
                   </div>
@@ -792,7 +843,10 @@
                         href="#0"
                         class="butn butn-md butn-bord butn-rounded ml-auto"
                       >
-                        <div class="d-flex align-items-center">
+                        <div
+                          onclick="handleNavigatetoGrid()"
+                          class="d-flex align-items-center"
+                        >
                           <span>All Articles</span>
                           <span class="icon ml-20">
                             <i class="fa-solid fa-chevron-right"></i>
@@ -803,8 +857,8 @@
                   </div>
                 </div>
               </div>
-              <div class="row xlg-marg">
-                <div class="col-lg-4 bord">
+              <div id="blog-details-blog-grid" class="row xlg-marg">
+                <!-- <div class="col-lg-4 bord">
                   <div class="item">
                     <div class="info d-flex align-items-center">
                       <div class="d-flex align-items-center">
@@ -901,7 +955,7 @@
                       </h6>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
