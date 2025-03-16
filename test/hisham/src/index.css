@@ -1,1 +1,8 @@
 @import "tailwindcss";
+.feet {
+  z-index: 1;
+  background-image: url("./assets/feet/clean-feet.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}

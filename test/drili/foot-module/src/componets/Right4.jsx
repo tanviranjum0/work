@@ -32,6 +32,7 @@ const Right4 = () => {
     };
     iterator();
   }, [zone]);
+
   const handleMouseEnter = (e) => {
     e.target.classList.add("opacity-20");
     e.target.setAttribute("stroke", "black");
@@ -56,8 +57,8 @@ const Right4 = () => {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                className="opacity-0"
                 id="id1"
+                className="opacity-0"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 onClick={handleClick}

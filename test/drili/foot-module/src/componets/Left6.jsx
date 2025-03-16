@@ -44,7 +44,7 @@ const Left6 = () => {
     increasePain(e.target.getAttribute("id"));
   };
   return (
-    <div className="flex justify-center -items-center ">
+    <div className="flex justify-center items-center ">
       <div className="relative border mt-10 left6bg bg-gray-400 h-[589px] w-[390px] p-5">
         <div id="1" className="1  absolute top-[78%] left-[49%]">
           <svg

@@ -1,3 +1,18 @@
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 let initialBlogs;
 async function fetch() {
   initialBlogs = await JSON.parse(localStorage.getItem("specificTagBlogs"));
@@ -10,27 +25,33 @@ async function fetch() {
             <div class="d-flex align-items-center">
               <div>
                 <div class="author-img fit-img">
-                  <img src="assets/imgs/blogs/blog1/a2.jpg" alt="" />
+                  <img src="${blog.owner_id.avatar}" alt="" />
                 </div>
               </div>
               <div class="author-info ml-10">
-                <span>M Moussa</span>
+                <span>${blog.owner_id.fullname}</span>
                 <span class="sub-color">editor</span>
               </div>
             </div>
             <div class="date ml-auto">
               <span class="sub-color">
                 <i class="fa-regular fa-clock mr-15 opacity-7"></i>
-                12 hours ago
+                ${months[new Date(blog.createdAt).getMonth()]} ${new Date(
+      blog.createdAt
+    ).getDate()}, ${new Date(blog.createdAt).getFullYear()}
               </span>
             </div>
           </div>
           <div class="img fit-img mt-30">
-            <img id="${blog._id}" onclick="handleGetBlogDetails(event)" role="button" src="${blog.poster}" alt="" />
+            <img id="${
+              blog._id
+            }" onclick="handleGetBlogDetails(event)" role="button" src="${
+      blog.poster
+    }" alt="" />
           </div>
           <div class="cont mt-30">
             <h6>
-              <a href="#0">Visual Website Tips #5</a>
+              <a href="#0">${blog.title}</a>
             </h6>
           </div>
         </div>
