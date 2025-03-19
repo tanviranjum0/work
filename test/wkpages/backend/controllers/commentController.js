@@ -3,8 +3,6 @@ const Blog = require("../models/blogModel.js");
 const User = require("../models/userModel.js");
 const addComment = async (req, res) => {
   const { email, message, name } = req.body;
-  console.log(req.body);
-  console.log({ email, message, name, Id: req.params.blogId });
   const blog = await Blog.findById(req.params.blogId);
   if (!blog) {
     res.status(404).json({ message: "Blog not found" });

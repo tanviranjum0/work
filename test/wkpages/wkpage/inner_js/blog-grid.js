@@ -14,17 +14,12 @@ const months = [
   "December",
 ];
 
-async function fetch() {
-  let isBlogAlreadyLoaded = localStorage.getItem("blogs");
-  if (isBlogAlreadyLoaded) {
-    initialBlogs = JSON.parse(isBlogAlreadyLoaded);
-  } else {
-    const res = await fetch("http://localhost:3000/api/blog/all");
-    initialBlogs = await res.json();
-    localStorage.setItem("blogs", JSON.stringify(initialBlogs));
-  }
+async function blogGridInitialLoad() {
+  const res = await fetch("http://localhost:3000/api/blog/all");
+  initialBlogs = await res.json();
+  localStorage.setItem("blogs", JSON.stringify(initialBlogs));
 
-  initialBlogs.map((blog) => {
+  initialBlogs.reverse().map((blog) => {
     const container = document.getElementById("blog-container-blog-grid");
     const node = `<div class="col-lg-4">
         <div class="item">
@@ -66,18 +61,16 @@ async function fetch() {
     container.insertAdjacentHTML("afterbegin", node);
   });
 }
-fetch();
+blogGridInitialLoad();
 
 const handleGetBlogDetails = async (event) => {
   initialBlogs.map((b) => {
-    console.log(b._id, event.target.id);
     if (b._id == event.target.id) {
       localStorage.setItem("blog-details", JSON.stringify(b));
     }
-    if (
-      JSON.parse(localStorage.getItem("blog-details"))._id == event.target.id
-    ) {
-      return (window.location.href = "blog-details.html");
+    const bl = localStorage.getItem("blog-details");
+    if (JSON.parse(bl)._id == event.target.id) {
+      window.location.href = "blog-details.html";
     }
   });
 };

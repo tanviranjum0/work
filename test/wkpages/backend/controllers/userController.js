@@ -1,6 +1,7 @@
 const User = require("../models/userModel.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+var ObjectId = require("mongodb").ObjectID;
 
 const handleCreateUser = async (req, res) => {
   const { username, password, email, avatar, fullname } = await req.body;
@@ -69,4 +70,8 @@ const getUser = async (req, res) => {
     res.status(200).json(null);
   }
 };
-module.exports = { handleCreateUser, handleLoginUser, getUser };
+const getUserById = async (user) => {
+  const validUser = await User.findOne({ _id: user.id });
+  return validUser;
+};
+module.exports = { getUserById, handleCreateUser, handleLoginUser, getUser };

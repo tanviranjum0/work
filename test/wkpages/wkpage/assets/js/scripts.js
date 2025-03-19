@@ -88,8 +88,11 @@ async function initialLoad() {
   ];
 
   const container = document.getElementById("main-index-blog-section");
-  initialBlogs.slice(0, 3).map((blog) => {
-    const node = `<div class="col-lg-4">
+  initialBlogs
+    .reverse()
+    .slice(3, 6)
+    .map((blog) => {
+      const node = `<div class="col-lg-4">
                   <div class="item pt-30 bord-thin-top-light md-mb50">
                     <div class="info d-flex align-items-center mb-20">
                       <a href="#0" class="tag">
@@ -100,8 +103,8 @@ async function initialLoad() {
                         <span>${
                           months[new Date(blog.createdAt).getMonth()]
                         } ${new Date(blog.createdAt).getDate()}, ${new Date(
-      blog.createdAt
-    ).getFullYear()}</span>
+        blog.createdAt
+      ).getFullYear()}</span>
                       </a>
                     </div>
                     <div class="text mb-50">
@@ -129,12 +132,11 @@ async function initialLoad() {
                     </div>
                   </div>
                 </div>`;
-    container.insertAdjacentHTML("afterbegin", node);
-  });
+      container.insertAdjacentHTML("afterbegin", node);
+    });
 }
 const handleGetBlogDetails = async (event) => {
   initialBlogs.map((b) => {
-    console.log(b._id, event.target.id);
     if (b._id == event.target.id) {
       localStorage.setItem("blog-details", JSON.stringify(b));
     }

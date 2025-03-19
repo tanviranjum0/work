@@ -10,13 +10,14 @@ const {
   getBlogs,
 } = require("../controllers/blogController.js");
 
+const { authorization } = require("../middlewares/authorize.js");
 const router = express.Router();
 
-router.post("/create", checkLogin, createBlog);
+router.post("/create", checkLogin, authorization(["admin"]), createBlog);
 router.get("/all", getBlogs);
 router.post("/all/bycategory", getBlogsByCategory);
 router.post("/all/bytag", getBlogsByTag);
-router.put("/:id", checkLogin, updateBlog);
+router.put("/update/:id", checkLogin, authorization(["admin"]), updateBlog);
 router.get("/:id", getBlog);
-router.delete("/:id", checkLogin, deleteBlog);
+router.delete("/:id", checkLogin, authorization(["admin"]), deleteBlog);
 module.exports = router;

@@ -14,10 +14,9 @@ const months = [
 ];
 
 let initialBlogs;
-async function fetch() {
+async function handleTagsBlogGridInitialLoad() {
   initialBlogs = await JSON.parse(localStorage.getItem("specificTagBlogs"));
-  console.log(initialBlogs);
-  initialBlogs.map((blog) => {
+  initialBlogs.reverse().map((blog) => {
     const container = document.getElementById("blog-container-tag-blog-grid");
     const node = `<div class="col-lg-4">
         <div class="item">
@@ -59,17 +58,17 @@ async function fetch() {
     container.insertAdjacentHTML("afterbegin", node);
   });
 }
-fetch();
+handleTagsBlogGridInitialLoad();
+
 const handleGetBlogDetails = async (event) => {
   initialBlogs.map((b) => {
-    console.log(b._id, event.target.id);
     if (b._id == event.target.id) {
       localStorage.setItem("blog-details", JSON.stringify(b));
     }
-    if (
-      JSON.parse(localStorage.getItem("blog-details"))._id == event.target.id
-    ) {
-      return (window.location.href = "blog-details.html");
+    const bl = localStorage.getItem("blog-details");
+
+    if (JSON.parse(bl)._id == event.target.id) {
+      window.location.href = "blog-details.html";
     }
   });
 };

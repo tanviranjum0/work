@@ -363,17 +363,13 @@
             <div
               id="blog-details-bg-image"
               class="container-xl bg-img mt-80"
-              data-background="https://res.cloudinary.com/tanviranjum/image/upload/v1741648444/h7inqzeuap1adxbpflbu.png"
               data-overlay-dark="4"
             >
               <div class="row">
                 <div class="col-lg-10">
                   <div class="caption">
                     <div id="category-container" class="tags fz-14"></div>
-                    <h1 id="blog-details-main-title" class="fz-55 mt-30">
-                      Network of wormholes colonies extraordinary claims
-                      require.
-                    </h1>
+                    <h1 id="blog-details-main-title" class="fz-55 mt-30"></h1>
                   </div>
                   <div class="info d-flex mt-40 align-items-center">
                     <div class="left-info sm-mb30">
@@ -389,18 +385,17 @@
                             </a>
                             <a href="#0" class="ml-20">
                               <span class="opacity-7 mb-5">Author</span>
-                              <h6 id="blog-details-author-name" class="fz-16">
-                                Ui-ThemeZ
-                              </h6>
+                              <h6
+                                id="blog-details-author-name"
+                                class="fz-16"
+                              ></h6>
                             </a>
                           </div>
                         </div>
                         <div class="date ml-50">
                           <a href="#0">
                             <span class="opacity-7 mb-5">Published</span>
-                            <h6 id="blog-details-createdAt" class="fz-16">
-                              August 6, 2021
-                            </h6>
+                            <h6 id="blog-details-createdAt" class="fz-16"></h6>
                           </a>
                         </div>
                       </div>
@@ -408,7 +403,7 @@
                     <div class="right-info ml-auto">
                       <div>
                         <span class="pe-7s-comment fz-18 mr-10"></span>
-                        <span class="opacity-7">02 Comments</span>
+                        <!-- <span class="opacity-7">02 Comments</span> -->
                       </div>
                     </div>
                   </div>
@@ -428,17 +423,11 @@
                   <div id="blog-content-container" class="main-post"></div>
                   <div class="info-area flex pt-50 bord-thin-top">
                     <div>
-                      <div class="widget tags">
-                        <h6 class="">Tags :</h6>
-                        <div
-                          class="flex align-items-center justify-content-center"
-                          id="tags-container"
-                        >
-                          <div
-                            class="text-center text-danger my-2"
-                            id="blog-details-tag-error"
-                          ></div>
+                      <div class="tags flex">
+                        <div class="valign">
+                          <span>Tags :</span>
                         </div>
+                        <div id="tags-container"></div>
                       </div>
                     </div>
                     <div class="ml-auto">
@@ -467,39 +456,8 @@
                     </div>
                     <div
                       id="comment-container"
-                      class="author-area mt-50 bord-thin-bottom"
-                    >
-                      <div
-                        style="background-color: #141413"
-                        class="flex p-3 border-dark border-bottom"
-                      >
-                        <div class="cont valign">
-                          <div class="full-width">
-                            <h6 class="fw-600 mb-10">Chris Smith</h6>
-                            <p>
-                              Nulla eleifend, lectus eu gravida facilisis, ipsum
-                              metus faucibus eros, vitae vulputate nibh libero
-                              ac metus.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        style="background-color: #141413"
-                        class="flex p-3 border-dark border-bottom"
-                      >
-                        <div class="cont valign">
-                          <div class="full-width">
-                            <h6 class="fw-600 mb-10">Chris Smith</h6>
-                            <p>
-                              Nulla eleifend, lectus eu gravida facilisis, ipsum
-                              metus faucibus eros, vitae vulputate nibh libero
-                              ac metus.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                      class="author-area pb-10 mt-50 bord-thin-bottom"
+                    ></div>
                     <form id="contact-form" method="post" action="contact.php">
                       <div class="messages"></div>
                       <div
@@ -543,9 +501,9 @@
                           </div>
                           <div class="text-center">
                             <div class="mt-30">
-                              <div onclick="handleAddComment(event)">
+                              <button onclick="handleAddComment(event)">
                                 <span class="text">Post Comment</span>
-                              </div>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -573,6 +531,7 @@
                         <li>
                           <span
                             id="Business-category"
+                            role="button"
                             onclick="handleCategoryButton(event)"
                             >Business</span
                           >
@@ -580,6 +539,7 @@
                         <li>
                           <span
                             id="Lifestyle-category"
+                            role="button"
                             onclick="handleCategoryButton(event)"
                             >Lifestyle</span
                           >
@@ -587,6 +547,7 @@
                         <li>
                           <span
                             id="Creative-category"
+                            role="button"
                             onclick="handleCategoryButton(event)"
                             >Creative</span
                           >
@@ -594,6 +555,7 @@
                         <li>
                           <span
                             id="Wordpress-category"
+                            role="button"
                             onclick="handleCategoryButton(event)"
                             >WordPress</span
                           >
@@ -601,6 +563,7 @@
                         <li>
                           <span
                             id="Design-category"
+                            role="button"
                             onclick="handleCategoryButton(event)"
                             >Design</span
                           >
@@ -608,6 +571,7 @@
                         <li>
                           <span
                             id="Development-category"
+                            role="button"
                             onclick="handleCategoryButton(event)"
                             >Development</span
                           >
@@ -615,6 +579,7 @@
                         <li>
                           <span
                             id="Education-category"
+                            role="button"
                             onclick="handleCategoryButton(event)"
                             >Education</span
                           >
@@ -622,6 +587,7 @@
                         <li>
                           <span
                             id="Technology-category"
+                            role="button"
                             onclick="handleCategoryButton(event)"
                             >Technology</span
                           >
@@ -629,6 +595,7 @@
                         <li>
                           <span
                             id="Writing-category"
+                            role="button"
                             onclick="handleCategoryButton(event)"
                             >Writing</span
                           >
@@ -637,12 +604,10 @@
                     </div>
                     <div class="widget tags">
                       <h6 class="title-widget">Tags</h6>
-                      <div id="tags-container">
-                        <div
-                          class="text-center text-danger my-2"
-                          id="blog-details-tag-error"
-                        ></div>
-                      </div>
+                      <div
+                        class="small-font-size"
+                        id="tags-container-second"
+                      ></div>
                     </div>
                   </div>
                 </div>

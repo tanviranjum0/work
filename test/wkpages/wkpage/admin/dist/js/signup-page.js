@@ -63,10 +63,10 @@ async function handleFormSubmit(event) {
 
   let form = new FormData();
   form.append("file", image);
-  form.append("upload_preset", "xubbr2hv");
-  form.append("cloud_name", "tanviranjum");
+  form.append("upload_preset", "wkpageImages");
+  form.append("cloud_name", "wkpages");
   const imageUpload = await fetch(
-    `https://api.cloudinary.com/v1_1/tanviranjum/image/upload`,
+    `https://api.cloudinary.com/v1_1/wkpages/image/upload`,
     {
       method: "post",
       body: form,

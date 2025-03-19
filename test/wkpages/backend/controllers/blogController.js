@@ -1,4 +1,5 @@
 const Blog = require("../models/blogModel.js");
+const Comment = require("../models/blogCommentModel.js");
 const createBlog = async (req, res) => {
   const { title, content, poster, visibility, tags, category, status } =
     await req.body;
@@ -14,7 +15,6 @@ const createBlog = async (req, res) => {
       status,
     });
     const blogDetails = await Blog.find(blog._id).populate("owner_id").exec();
-    console.log(blogDetails);
     res.status(201).json({ message: "Successful", blogDetail: blogDetails[0] });
   } catch (error) {
     res.status(200).json({ message: "Something went wrong" });
@@ -55,7 +55,10 @@ const updateBlog = async (req, res) => {
   }
 
   try {
-    const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, req.body);
+    const updatedBlog = await Blog.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    ).populate("owner_id");
     res.status(200).json({ message: "Successful", updatedBlog });
   } catch (error) {
     res
@@ -82,7 +85,7 @@ const getBlog = async (req, res) => {
 
 const getBlogs = async (req, res) => {
   try {
-    const limit = parseInt(req.query.limit) || 6;
+    const limit = parseInt(req.query.limit) || 12;
     const startIndex = parseInt(req.query.startIndex) || 0;
 
     const blogs = await Blog.find()
@@ -90,21 +93,21 @@ const getBlogs = async (req, res) => {
       .sort({ createdAt: "desc" })
       .limit(limit)
       .skip(startIndex);
+
     return res.status(200).json(blogs);
   } catch (error) {
-    res.status(200).json({ message: "There is a problem in Blog Search" });
+    res.status(200).json({ message: "There is a problem in Blogs Search" });
   }
 };
 
 const getBlogsByCategory = async (req, res) => {
-  console.log(req.body);
   const blogs = await Blog.find({
     category: {
       $in: [req.body.payload],
     },
   })
     .populate("owner_id")
-    .limit(6)
+    .limit(12)
     .exec();
   if (blogs.length == 0) {
     res.json({ message: "No blogs found" });
@@ -113,14 +116,13 @@ const getBlogsByCategory = async (req, res) => {
   }
 };
 const getBlogsByTag = async (req, res) => {
-  console.log(req.body);
   const blogs = await Blog.find({
     tags: {
       $in: [req.body.payload],
     },
   })
     .populate("owner_id")
-    .limit(6)
+    .limit(12)
     .exec();
   if (blogs.length == 0) {
     res.json({ message: "No blogs found" });

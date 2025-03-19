@@ -19,7 +19,6 @@ const handleCreatePost = async (event) => {
   const image = await document.getElementById("add-post-image-input").files[0];
   const category = await document.getElementById("add-post-category").value;
   const content = await window.parent.tinymce.get("classic").getContent();
-  // console.log(content);
   if (title.length < 1) {
     messageBox.textContent = "Title is required";
     loader.classList.add("visually-hidden");
@@ -60,17 +59,16 @@ const handleCreatePost = async (event) => {
 
   let form = new FormData();
   form.append("file", image);
-  form.append("upload_preset", "xubbr2hv");
-  form.append("cloud_name", "tanviranjum");
+  form.append("upload_preset", "wkpageImages");
+  form.append("cloud_name", "wkpages");
   const imageUpload = await fetch(
-    `https://api.cloudinary.com/v1_1/tanviranjum/image/upload`,
+    `https://api.cloudinary.com/v1_1/wkpages/image/upload`,
     {
       method: "post",
       body: form,
     }
   );
   const imageUploadData = await imageUpload.json();
-  console.log(imageUploadData);
   if (imageUploadData) {
     const res = await fetch("http://localhost:3000/api/blog/create", {
       headers: {
@@ -88,11 +86,8 @@ const handleCreatePost = async (event) => {
       method: "post",
     });
     const data = await res.json();
-    console.log(data);
-    // data.blog.owner_id = data.owner;
     if (data.message == "Successful") {
       localStorage.setItem("blog-details", JSON.stringify(data.blogDetail));
-      console.log(JSON.parse(localStorage.getItem("blog-details")));
       loader.classList.add("visually-hidden");
       loaderButton.classList.remove("visually-hidden");
       window.location.href = "./../inner_pages/blog-details.html";
@@ -133,20 +128,4 @@ const handleDeleteOneBlog = async () => {
     },
     method: "delete",
   });
-};
-
-const test = () => {
-  // const content = await window.parent.tinymce.get("classic").getContent();
-  // console.log(window.location.hostname);
-  // window.location.href = "./../inner_pages/blog-details.html";
-
-  const content = document.getElementById("input_tags");
-  var selected = Array.from(content.options)
-    .filter(function (option) {
-      return option.selected;
-    })
-    .map(function (option) {
-      return option.value;
-    });
-  console.log(selected.length);
 };

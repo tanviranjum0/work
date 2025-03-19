@@ -11,6 +11,7 @@ const app = express();
 
 dotenv.config();
 connectToDB(process.env.MONGO_URL);
+app.use(express.json());
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: false }));
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(
@@ -58,4 +59,4 @@ app.use((req, res, next) => {
   next();
 });
 
-app.listen(3000, () => console.log("server running on port 3000"));
+app.listen(3000, () => console.log("Server running on port 3000"));
