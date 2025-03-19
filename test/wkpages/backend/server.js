@@ -38,15 +38,6 @@ app.use((err, req, res, next) => {
     message,
   });
 });
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   res.header("Access-Control-Allow-Credentials", true);
-//   next();
-// });
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*"); // Or '*' for all origins (not recommended for production)
@@ -59,4 +50,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+app.listen(process.env.PORT || 3000, () =>
+  console.log("Server running on port 3000")
+);

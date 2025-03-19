@@ -28,12 +28,6 @@ const deleteBlog = async (req, res) => {
     return res.status(200).json({ message: "Blog not found!" });
   }
 
-  if (req.user.id !== blog.owner_id.toString()) {
-    return res
-      .status(200)
-      .json({ message: "You can only delete your own Blogs!" });
-  }
-
   try {
     await Blog.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "Successful" });
@@ -83,11 +77,27 @@ const getBlog = async (req, res) => {
   }
 };
 
+const getSpecificBlogs = async (req, res) => {
+  console.log(req.query.searchTerm);
+  try {
+    const searchTerm = req.query.searchTerm || "";
+    const limit = parseInt(req.query.limit) || 12;
+    const startIndex = parseInt(req.query.startIndex) || 0;
+    const blogs = await Blog.find({
+      title: { $regex: searchTerm, $options: "i" },
+    })
+      .limit(limit)
+      .skip(startIndex);
+    return res.status(200).json({ message: "Successful", blogs });
+  } catch {
+    res.json({ message: "There was an error processing" });
+  }
+};
+
 const getBlogs = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 12;
     const startIndex = parseInt(req.query.startIndex) || 0;
-
     const blogs = await Blog.find()
       .populate("owner_id")
       .sort({ createdAt: "desc" })
@@ -137,6 +147,7 @@ module.exports = {
   getBlogsByCategory,
   updateBlog,
   getBlogsByTag,
+  getSpecificBlogs,
   createBlog,
   getBlogs,
 };
