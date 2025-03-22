@@ -17,9 +17,12 @@ const months = [
 async function blogGridInitialLoad() {
   const res = await fetch("http://localhost:3000/api/blog/all");
   initialBlogs = await res.json();
+  console.log(initialBlogs);
   localStorage.setItem("blogs", JSON.stringify(initialBlogs));
 
   initialBlogs.reverse().map((blog) => {
+    console.log(blog);
+    if (blog.status != "Published") return;
     const container = document.getElementById("blog-container-blog-grid");
     const node = `<div class="col-lg-4">
         <div class="item">

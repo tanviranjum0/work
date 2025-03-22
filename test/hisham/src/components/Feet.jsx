@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
-import { StoreContext } from "../context/FeetContext.jsx";
+import { StoreContext } from "../context/StoreContext.jsx";
 const Feet = () => {
-  const { feetZone, increasePain } = useContext(StoreContext);
+  const { feetZone, increaseFeetPain } = useContext(StoreContext);
   useEffect(() => {
     const iterator = async () => {
       for (const id in feetZone) {
@@ -34,7 +34,7 @@ const Feet = () => {
   }, [feetZone]);
 
   const handleClick = async (e) => {
-    increasePain(e.target.getAttribute("id"));
+    increaseFeetPain(e.target.getAttribute("id"));
   };
   const handleMouseEnter = (e) => {
     e.target.classList.add("opacity-20");

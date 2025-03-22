@@ -19,7 +19,7 @@ const App = () => {
   return (
     <>
       <div className="flex flex-col">
-        <div className="text-4xl text-center">Left Foot </div>
+        <div className="text-4xl text-center">Left Foot</div>
         <div className="grid">
           <Left1 />
           <Left2 />

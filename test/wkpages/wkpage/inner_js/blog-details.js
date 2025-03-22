@@ -1,4 +1,5 @@
 let blog;
+let initialBlogs;
 const handleNavigatetoGrid = () => {
   window.location.href = "blog-grid.html";
 };
@@ -17,6 +18,7 @@ const months = [
   "November",
   "December",
 ];
+
 const getReadyBlogPage = async () => {
   blog = JSON.parse(localStorage.getItem("blog-details"));
   if (!blog) handleNavigatetoGrid();
@@ -122,6 +124,10 @@ const getReadyBlogPage = async () => {
       if (count == 3) return;
       count++;
       const container = document.getElementById("blog-details-blog-grid");
+      const container2 = document.getElementById(
+        "latest-post-show-blog-details"
+      );
+
       const node = `<div class="col-lg-4">
         <div class="item">
           <div class="info d-flex align-items-center">
@@ -159,7 +165,37 @@ const getReadyBlogPage = async () => {
           </div>
         </div>
       </div>`;
+
+      const node2 = `<div  id="${
+        bl._id
+      }" onclick="handleGetSpecificBlogDetails(event)" class="item d-flex align-items-center">
+    <div>
+      <div class="img">
+        <a>
+          <img src="${bl.poster}" alt="" />
+          <span class="date">
+            <span>
+            ${months[new Date(bl.createdAt).getMonth()]} ${new Date(
+        bl.createdAt
+      ).getDate()}, ${new Date(bl.createdAt).getFullYear()}
+            </span>
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="cont">
+      <span class="tag">
+        <a>${bl.category}</a>
+      </span>
+      <h6>
+        <a>
+    ${bl.title}
+        </a>
+      </h6>
+    </div>
+  </div>`;
       container.insertAdjacentHTML("afterbegin", node);
+      container2.insertAdjacentHTML("afterbegin", node2);
     });
 };
 
@@ -260,4 +296,78 @@ const handleAddComment = () => {
         console.log(data);
       }
     });
+};
+
+document
+  .getElementById("specific-blogs-search-blog-details")
+  .addEventListener("change", async () => {
+    console.log("triggerd");
+    const searchTerm = document.getElementById(
+      "specific-blogs-search-blog-details"
+    ).value;
+    console.log(searchTerm);
+    const res = await fetch(
+      `http://localhost:3000/api/blog/allspecific?searchTerm=${searchTerm}`
+    );
+    const data = await res.json();
+    console.log(data.blogs[0]);
+    if (data.message == "Successful") {
+      let count = 0;
+      const container2 = document.getElementById(
+        "latest-post-show-blog-details"
+      );
+      container2.innerHTML = null;
+      data.blogs.reverse().map((bl) => {
+        if (bl._id == blog._id) {
+          return;
+        }
+        if (count == 3) return;
+        count++;
+
+        const node2 = `<div id="${
+          bl._id
+        }" onclick="handleGetSpecificBlogDetails(event)" class="item d-flex align-items-center">
+    <div>
+      <div class="img">
+        <a>
+          <img src="${bl.poster}" alt="" />
+          <span class="date">
+            <span>
+            ${months[new Date(bl.createdAt).getMonth()]} ${new Date(
+          bl.createdAt
+        ).getDate()}, ${new Date(bl.createdAt).getFullYear()}
+            </span>
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="cont">
+      <span class="tag">
+        <a>${bl.category}</a>
+      </span>
+      <h6>
+        <a>
+    ${bl.title}
+        </a>
+      </h6>
+    </div>
+  </div>`;
+        container2.insertAdjacentHTML("afterbegin", node2);
+      });
+    }
+  });
+
+const handleGetSpecificBlogDetails = async (event) => {
+  initialBlogs.map((b) => {
+    // console.log(b);
+    if (b._id == event.target.id) {
+      localStorage.setItem("blog-details", JSON.stringify(b));
+    }
+    const bl = localStorage.getItem("blog-details");
+    if (JSON.parse(bl)._id == event.target.id) {
+      // console.log("overall");
+      // return getReadyBlogPage();
+      location.refresh();
+    }
+  });
 };

@@ -284,8 +284,6 @@ const Left1 = () => {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
               onClick={handleClick}
-
-              // stroke=""
             />
           </svg>
         </div>

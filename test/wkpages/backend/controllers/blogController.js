@@ -78,7 +78,6 @@ const getBlog = async (req, res) => {
 };
 
 const getSpecificBlogs = async (req, res) => {
-  console.log(req.query.searchTerm);
   try {
     const searchTerm = req.query.searchTerm || "";
     const limit = parseInt(req.query.limit) || 12;

@@ -101,18 +101,10 @@ async function AdminBlogInitailFetch(status) {
                                         role="menu"
                                         class="dropdown-menu dropdown-menu-end"
                                       >
-                                        <a class="dropdown-item" href="#"
-                                          >Action</a
-                                        >
-                                        <a class="dropdown-item" href="#"
-                                          >Another action</a
-                                        >
-                                        <a class="dropdown-item" href="#"
-                                          >Something else here</a
-                                        >
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"
-                                          >Separated link</a
+                                         <a class="dropdown-item" id="${
+                                           blog._id
+                                         }" onclick="handleDeletePost(event)"
+                                          >Delete</a
                                         >
                                       </div>
                                     </div>
@@ -190,18 +182,10 @@ async function AdminBlogInitailFetch(status) {
                                         role="menu"
                                         class="dropdown-menu dropdown-menu-end"
                                       >
-                                        <a class="dropdown-item" href="#"
-                                          >Action</a
-                                        >
-                                        <a class="dropdown-item" href="#"
-                                          >Another action</a
-                                        >
-                                        <a class="dropdown-item" href="#"
-                                          >Something else here</a
-                                        >
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"
-                                          >Separated link</a
+                                        <a class="dropdown-item" id="${
+                                          blog._id
+                                        }" onclick="handleDeletePost(event)"
+                                          >Delete</a
                                         >
                                       </div>
                                     </div>
@@ -218,7 +202,27 @@ const ChangeStatus = (e) => {
   Status = e.target.id;
   AdminBlogInitailFetch();
 };
+const handleDeletePost = async (event) => {
+  event.preventDefault();
+  const res = await fetch(
+    `http://localhost:3000/api/blog/delete/${event.target.id}`,
 
+    {
+      headers: {
+        authorization: `${localStorage.getItem("token")}`,
+      },
+      method: "delete",
+    }
+  );
+  const data = await res.json();
+  if (data.message == "Successful") {
+    localStorage.removeItem("blogs");
+    AdminBlogInitailFetch();
+  } else if (data.message == "error logging in") {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+  }
+};
 const handleClickOnIndividualPost = (event) => {
   initialBlogs.map(async (b) => {
     if (b._id == event.target.id) {
