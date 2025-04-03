@@ -14,7 +14,7 @@ const months = [
 ];
 
 let initialBlogs;
-async function handleCategoruBlogGridInitialLoad() {
+async function handleCategoryBlogGridInitialLoad() {
   initialBlogs = await JSON.parse(
     localStorage.getItem("specificCategoryBlogs")
   );
@@ -62,7 +62,7 @@ async function handleCategoruBlogGridInitialLoad() {
     container.insertAdjacentHTML("afterbegin", node);
   });
 }
-handleCategoruBlogGridInitialLoad();
+handleCategoryBlogGridInitialLoad();
 
 const handleGetBlogDetails = async (event) => {
   initialBlogs.map((b) => {

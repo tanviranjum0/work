@@ -114,6 +114,8 @@ async function initialLoad() {
                     </div>
                     <div class="img">
                       <img
+                          id="${blog._id}"  
+                        onclick="handleGetBlogDetails(event)"
                         src="${blog.poster}"
                         alt="wk.pages - Blog: Work Culture in Modern Offices"
                         loading="lazy"
@@ -135,6 +137,7 @@ async function initialLoad() {
       container.insertAdjacentHTML("afterbegin", node);
     });
 }
+
 const handleGetBlogDetails = async (event) => {
   initialBlogs.map((b) => {
     if (b._id == event.target.id) {

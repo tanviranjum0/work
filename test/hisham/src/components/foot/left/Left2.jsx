@@ -8,15 +8,20 @@ const Left2 = () => {
         if (footZone[id] == 1) {
           let point = document.querySelectorAll(`#${id}`);
           point.forEach((newPoint) => {
-            newPoint.classList.add("opacity-35");
-            newPoint.setAttribute("fill", "yellow");
+            newPoint.classList.add("opacity-60");
+            newPoint.setAttribute("fill", "#119920");
           });
         } else if (footZone[id] == 2) {
           let point = document.querySelectorAll(`#${id}`);
           point.forEach((newPoint) => {
-            newPoint.setAttribute("fill", "#DC4D01");
+            newPoint.setAttribute("fill", "yellow");
           });
         } else if (footZone[id] == 3) {
+          let point = document.querySelectorAll(`#${id}`);
+          point.forEach((newPoint) => {
+            newPoint.setAttribute("fill", "orange");
+          });
+        } else if (footZone[id] == 4) {
           let point = document.querySelectorAll(`#${id}`);
           point.forEach((newPoint) => {
             newPoint.setAttribute("fill", "red");
@@ -25,7 +30,7 @@ const Left2 = () => {
           let point = document.querySelectorAll(`#${id}`);
           point.forEach((newPoint) => {
             newPoint.setAttribute("fill", "white");
-            newPoint.classList.remove("opacity-35");
+            newPoint.classList.remove("opacity-60");
           });
         }
       }
@@ -207,9 +212,9 @@ const Left2 = () => {
             />
           </svg>
         </div>
-        <div id="11" className="absolute top-[71.5%] left-[25%]">
+        <div id="11" className="absolute top-[72.5%] left-[25%]">
           <svg
-            width="75"
+            width="68"
             height="72"
             viewBox="0 0 77 72"
             fill="none"
@@ -243,7 +248,7 @@ const Left2 = () => {
               className="opacity-0"
               id="footpath7e"
               d="M2 28.5L1 1H29V28.5C29 29.7 11 29 2 28.5Z"
-              fill-opacity="0.92549"
+              fillOpacity="0.92549"
               stroke="black"
             />
           </svg>

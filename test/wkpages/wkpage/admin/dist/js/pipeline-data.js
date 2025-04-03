@@ -1,43 +1,52 @@
 /*Pipeline Init*/
 /* Custom Dragula JS */
-dragula([document.getElementById("i1"), document.getElementById("i2"), document.getElementById("i3"), document.getElementById("i4"), document.getElementById("i5"), document.getElementById("i6")]);
+dragula([
+  document.getElementById("i1"),
+  document.getElementById("i2"),
+  document.getElementById("i3"),
+  document.getElementById("i4"),
+  document.getElementById("i5"),
+  document.getElementById("i6"),
+]);
 dragula([document.getElementById("tasklist_wrap")], {
-	moves: function (el, container, handle) {
-		return handle.classList.contains('spipeline-handle');
-	}
+  moves: function (el, container, handle) {
+    return handle.classList.contains("spipeline-handle");
+  },
 });
 /* Single Date*/
 $('input[name="single-date-pick"]').daterangepicker({
-	singleDatePicker: true,
-	startDate: moment().startOf('hour'),
-	showDropdowns: true,
-	minYear: 1901,
-	"cancelClass": "btn-secondary",
-	locale: {
-	  format: 'YYYY-MM-DD'
-	}
+  singleDatePicker: true,
+  startDate: moment().startOf("hour"),
+  showDropdowns: true,
+  minYear: 1901,
+  cancelClass: "btn-secondary",
+  locale: {
+    format: "YYYY-MM-DD",
+  },
 });
 /*Individual Add Task*/
 var $closestTarget;
 $(document).on("click", ".btn-add-newtask", function (e) {
-	$closestTarget = $(this).closest('.spipeline-list').find(".tasklist-cards-wrap");
-	$('.add-new-task input.form-control.task-name').val("");
-	$('.add-new-task input.form-control.est-cost').val("");
+  $closestTarget = $(this)
+    .closest(".spipeline-list")
+    .find(".tasklist-cards-wrap");
+  $(".add-new-task input.form-control.task-name").val("");
+  $(".add-new-task input.form-control.est-cost").val("");
 });
 $(document).on("click", ".btn-add-task", function (e) {
-	e.preventDefault();
-	var taskName, htmlBlock, estcost;
-	if ($('.add-new-task input.form-control.task-name').val()) {
-		taskName = $('.add-new-task input.task-name').val();
-	} else {
-		taskName = "Dummy Task";
-	}
-	if ($('.add-new-task input.form-control.est-cost').val()) {
-		estcost = $('.add-new-task input.est-cost').val();
-	} else {
-		estcost = "1234";
-	}
-	htmlBlock = `<div class="card card-border spipeline-card">
+  e.preventDefault();
+  var taskName, htmlBlock, estcost;
+  if ($(".add-new-task input.form-control.task-name").val()) {
+    taskName = $(".add-new-task input.task-name").val();
+  } else {
+    taskName = "Dummy Task";
+  }
+  if ($(".add-new-task input.form-control.est-cost").val()) {
+    estcost = $(".add-new-task input.est-cost").val();
+  } else {
+    estcost = "1234";
+  }
+  htmlBlock = `<div class="card card-border spipeline-card">
 					<div class="card-body">
 						<div class="card-action-wrap">
 							<a class="btn btn-xs btn-icon btn-rounded btn-primary dropdown-toggle no-caret" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="icon"><span class="feather-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></span></span></a>
@@ -120,47 +129,51 @@ $(document).on("click", ".btn-add-task", function (e) {
 						</div>
 					</div>
 				</div>`;
-	$(htmlBlock).appendTo($closestTarget);
-	$(this).parents().find('.modal').modal("hide");
+  $(htmlBlock).appendTo($closestTarget);
+  $(this).parents().find(".modal").modal("hide");
 });
 
 /*Edit List*/
 var $tasklistHead;
 $(document).on("click", ".edit-tasklist", function (e) {
-	e.preventDefault();
-	$('.edit-tasklist-modal  input').val($(this).closest('.spipeline-handle').find('h6').text());
-	$tasklistHead = $(this).parent().parent().parent().find('h6');
+  e.preventDefault();
+  $(".edit-tasklist-modal  input").val(
+    $(this).closest(".spipeline-handle").find("h6").text()
+  );
+  $tasklistHead = $(this).parent().parent().parent().find("h6");
 });
 $(document).on("click", ".btn-edit-tasklist", function (e) {
-	e.preventDefault();
-	$tasklistHead.text($('.edit-tasklist-modal input').val());
-	$(this).parents().find('.modal').modal("hide");
+  e.preventDefault();
+  $tasklistHead.text($(".edit-tasklist-modal input").val());
+  $(this).parents().find(".modal").modal("hide");
 });
 
 /*Delete List*/
 $(document).on("click", ".delete-tasklist", function (e) {
-	e.preventDefault();
-	$(this).closest('.spipeline-list').remove();
+  e.preventDefault();
+  $(this).closest(".spipeline-list").remove();
 });
 
 /*Clear List*/
 $(document).on("click", ".clear-tasklist", function (e) {
-	e.preventDefault();
-	$(this).closest('.spipeline-list').find('.spipeline-card').remove();
+  e.preventDefault();
+  $(this).closest(".spipeline-list").find(".spipeline-card").remove();
 });
 
 /*Individual List*/
 $(document).on("click", ".btn-add-newlist", function (e) {
-	$('.add-tasklist-modal input.form-control').val("");
+  $(".add-tasklist-modal input.form-control").val("");
 });
 $(document).on("click", ".btn-add-tasklist", function (e) {
-	e.preventDefault();
-	var taskListName, htmlBlock;
-	if ($('.add-tasklist-modal input.form-control').val())
-		taskListName = $('.add-tasklist-modal input.form-control').val();
-	else
-		taskListName = "All Modules";
-	htmlBlock = '<div class="card card-simple card-flush spipeline-list"><div class="card-header card-header-action"><div class="spipeline-handle"><h6 class="hd-uppercase mb-0">' + taskListName + '</h6><div class="card-action-wrap"><a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover dropdown-toggle no-caret" href="#" data-bs-toggle="dropdown"><span class="icon"><span class="feather-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></span></span></a><div role="menu" class="dropdown-menu dropdown-menu-end"><a class="dropdown-item edit-tasklist" href="#" data-bs-toggle="modal" data-bs-target="#edit_task_list">Edit</a><a class="dropdown-item delete-tasklist" href="#">Delete</a><a class="dropdown-item clear-tasklist" href="#">Clear All</a></div></div></div><div><span><span class="overall-estimation">$5,268</span><span class="spipeline-dot-sep">●</span><span class="lead-count">7 Leads</span></span></div><button class="btn btn-light btn-block btn-wth-icon text-primary btn-add-newtask" data-bs-toggle="modal" data-bs-target="#add_new_deal"><span><span class="icon"><span class="feather-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span></span><span class="btn-text">Add Card</span></span></button></div><div class="card-body"><div id="i4" class="tasklist-cards-wrap"></div></div></div>';
-	$(htmlBlock).insertBefore($('.create-new-list'));
-	$(this).parents().find('.modal').modal("hide");
+  e.preventDefault();
+  var taskListName, htmlBlock;
+  if ($(".add-tasklist-modal input.form-control").val())
+    taskListName = $(".add-tasklist-modal input.form-control").val();
+  else taskListName = "All Modules";
+  htmlBlock =
+    '<div class="card card-simple card-flush spipeline-list"><div class="card-header card-header-action"><div class="spipeline-handle"><h6 class="hd-uppercase mb-0">' +
+    taskListName +
+    '</h6><div class="card-action-wrap"><a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover dropdown-toggle no-caret" href="#" data-bs-toggle="dropdown"><span class="icon"><span class="feather-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></span></span></a><div role="menu" class="dropdown-menu dropdown-menu-end"><a class="dropdown-item edit-tasklist" href="#" data-bs-toggle="modal" data-bs-target="#edit_task_list">Edit</a><a class="dropdown-item delete-tasklist" href="#">Delete</a><a class="dropdown-item clear-tasklist" href="#">Clear All</a></div></div></div><div><span><span class="overall-estimation">$5,268</span><span class="spipeline-dot-sep">●</span><span class="lead-count">7 Leads</span></span></div><button class="btn btn-light btn-block btn-wth-icon text-primary btn-add-newtask" data-bs-toggle="modal" data-bs-target="#add_new_deal"><span><span class="icon"><span class="feather-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span></span><span class="btn-text">Add Card</span></span></button></div><div class="card-body"><div id="i4" class="tasklist-cards-wrap"></div></div></div>';
+  $(htmlBlock).insertBefore($(".create-new-list"));
+  $(this).parents().find(".modal").modal("hide");
 });

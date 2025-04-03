@@ -1,4 +1,5 @@
-<div class="dropdown ps-2">
+{
+  /* <div class="dropdown ps-2">
   <a
     class="dropdown-toggle no-caret"
     href="#"
@@ -10,7 +11,7 @@
     aria-expanded="false"
   >
     <div class="avatar avatar-rounded avatar-xs">
-      <img src="dist/img/avatar12.jpg" alt="user" class="avatar-img" />
+      <img src="dist/img/avatar12.jpg" id="user-avatar-profile" alt="user" class="avatar-img" />
     </div>
   </a>
   <div class="dropdown-menu dropdown-menu-end">
@@ -54,7 +55,7 @@
                   <div class="media-head me-2">
                     <div class="avatar avatar-xs avatar-rounded">
                       <img
-                        src="dist/img/avatar12.jpg"
+                        src="dist/img/avatar12.jpg" id="user-avatar-profile"
                         alt="user"
                         class="avatar-img"
                       />
@@ -132,4 +133,20 @@
       Help & Support
     </a>
   </div>
-</div>;
+</div>; */
+}
+
+const getReadyMainProfilePage = async () => {
+  const user = await JSON.parse(localStorage.getItem("user"));
+  const avatar = document.getElementById("profilepagemainavatar");
+  const avatar2 = document.getElementById("profilepagemainavatar2");
+  const name = document.getElementById("profilepagename");
+  const name2 = document.getElementById("profilepagename2");
+  if (!user) window.location.href = "login.html";
+  avatar.setAttribute("src", user.avatar);
+  avatar2.setAttribute("src", user.avatar);
+  name.innerHTML = user.fullname;
+  name2.innerHTML = user.fullname;
+};
+
+getReadyMainProfilePage();

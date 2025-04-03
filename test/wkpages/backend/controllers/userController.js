@@ -1,7 +1,6 @@
 const User = require("../models/userModel.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-var ObjectId = require("mongodb").ObjectID;
 
 const handleCreateUser = async (req, res) => {
   const { username, password, email, avatar, fullname } = await req.body;
@@ -23,7 +22,9 @@ const handleCreateUser = async (req, res) => {
       expiresIn: "30d",
     });
 
-    res.status(201).json({ token, message: "User created successfully!" });
+    res
+      .status(201)
+      .json({ user, token, message: "User created successfully!" });
   } catch {
     res.status(200).json({ message: "User Creating Problem" });
   }
@@ -50,7 +51,7 @@ const handleLoginUser = async (req, res) => {
     const token = jwt.sign(userObject, process.env.JWT_SECRET, {
       expiresIn: "30d",
     });
-    res.status(201).json({ token, message: "Login successfully!" });
+    res.status(201).json({ validUser, token, message: "Login successfully!" });
   } catch {
     res.status(200).json({ message: "Login Problem" });
   }

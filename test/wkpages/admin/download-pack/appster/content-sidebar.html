@@ -5,1383 +5,2566 @@ Author: Hencework
 Contact: support@hencework.com
 -->
 <html lang="en">
-<head>
+  <head>
     <!-- Meta Tags -->
-	<meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Appster - Admin CRM Dashboard Template</title>
-    <meta name="description" content="A modern CRM Dashboard Template with reusable and flexible components for your SaaS web applications by hencework. Based on Bootstrap."/>
-    
-	<!-- Favicon -->
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-	
-	<!-- CSS -->
-    <link href="dist/css/style.css" rel="stylesheet" type="text/css">
-</head>
-<body data-bs-spy="scroll" data-bs-target="#vertical_nav" data-bs-offset="190">
-   	<!-- Wrapper -->
-	<div class="hk-wrapper" data-layout="vertical" data-layout-style="default" data-menu="dark" data-footer="simple" data-aside="sticky" data-content-sidebar="active">
-		<!-- Top Navbar -->
-		<nav class="hk-navbar navbar navbar-expand-xl navbar-light fixed-top">
-			<div class="container-fluid px-5">
-			<!-- Start Nav -->
-			<div class="nav-start-wrap">
-				<button class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover navbar-toggle d-xl-none"><span class="icon"><span class="feather-icon"><i data-feather="align-left"></i></span></span></button>
-					
-				<!-- Search -->
-				<form class="dropdown navbar-search">
-					<div class="dropdown-toggle no-caret" data-bs-toggle="dropdown" data-dropdown-animation data-bs-auto-close="outside">
-						<a href="#" class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover  d-xl-none"><span class="icon"><span class="feather-icon"><i data-feather="search"></i></span></span></a>
-						<div class="input-group d-xl-flex d-none">
-							<span class="input-affix-wrapper input-search affix-border">
-								<input type="text" class="form-control  bg-transparent"  data-navbar-search-close="false" placeholder="Search..." aria-label="Search">
-								<span class="input-suffix"><span>/</span>
-									<span class="btn-input-clear"><i class="bi bi-x-circle-fill"></i></span>
-									<span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
-										<span class="sr-only">Loading...</span>
-									</span>
-								</span>
-							</span>
-						</div>
-					</div>
-					<div  class="dropdown-menu p-0">
-						<!-- Mobile Search -->
-						<div class="dropdown-item d-xl-none bg-transparent">
-							<div class="input-group mobile-search">
-								<span class="input-affix-wrapper input-search">
-									<input type="text" class="form-control" placeholder="Search..." aria-label="Search">
-									<span class="input-suffix">
-										<span class="btn-input-clear"><i class="bi bi-x-circle-fill"></i></span>
-										<span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
-											<span class="sr-only">Loading...</span>
-										</span>
-									</span>
-								</span>
-							</div>
-						</div>
-						<!--/ Mobile Search -->
-						<div data-simplebar class="dropdown-body p-2">
-							<h6 class="dropdown-header">Recent Search
-							</h6>
-							<div class="dropdown-item bg-transparent">
-								<a href="#" class="badge badge-pill badge-soft-secondary">Grunt</a>
-								<a href="#" class="badge badge-pill badge-soft-secondary">Node JS</a>
-								<a href="#" class="badge badge-pill badge-soft-secondary">SCSS</a>
-							</div>
-							<div class="dropdown-divider"></div>
-							<h6 class="dropdown-header">Help
-							</h6>
-							<a href="javascript:void(0);" class="dropdown-item">
-								<div class="media align-items-center">
-									<div class="media-head me-2">
-										<div class="avatar avatar-icon avatar-xs avatar-soft-light avatar-rounded">
-											<span class="initial-wrap">
-												<span class="svg-icon">
-													<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-corner-down-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-														<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-														<path d="M6 6v6a3 3 0 0 0 3 3h10l-4 -4m0 8l4 -4"></path>
-													 </svg>
-												</span>
-											</span>
-										</div>
-									</div>
-									<div class="media-body">
-										How to setup theme?
-									</div>
-								</div>
-							</a>
-							<a href="javascript:void(0);" class="dropdown-item">
-								<div class="media align-items-center">
-									<div class="media-head me-2">
-										<div class="avatar avatar-icon avatar-xs avatar-soft-light avatar-rounded">
-											<span class="initial-wrap">
-												<span class="svg-icon">
-													<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-corner-down-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-														<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-														<path d="M6 6v6a3 3 0 0 0 3 3h10l-4 -4m0 8l4 -4"></path>
-													 </svg>
-												</span>
-											</span>
-										</div>
-									</div>
-									<div class="media-body">
-										View detail documentation
-									</div>
-								</div>
-							</a>
-							<div class="dropdown-divider"></div>
-							<h6 class="dropdown-header">Users
-							</h6>
-							<a href="javascript:void(0);" class="dropdown-item">
-								<div class="media align-items-center">
-									<div class="media-head me-2">
-										<div class="avatar avatar-xs avatar-rounded">
-											<img src="dist/img/avatar3.jpg" alt="user" class="avatar-img">
-										</div>
-									</div>
-									<div class="media-body">
-										Sarah Jone
-									</div>
-								</div>
-							</a>
-							<a href="javascript:void(0);" class="dropdown-item">
-								<div class="media align-items-center">
-									<div class="media-head me-2">
-										<div class="avatar avatar-xs avatar-soft-primary avatar-rounded">
-											<span class="initial-wrap">J</span>
-										</div>
-									</div>
-									<div class="media-body">
-										Joe Jackson
-									</div>
-								</div>
-							</a>
-							<a href="javascript:void(0);" class="dropdown-item">
-								<div class="media align-items-center">
-									<div class="media-head me-2">
-										<div class="avatar avatar-xs avatar-rounded">
-											<img src="dist/img/avatar4.jpg" alt="user" class="avatar-img">
-										</div>
-									</div>
-									<div class="media-body">
-										Maria Richard
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="dropdown-footer d-xl-flex d-none"><a href="#"><u>Search all</u></a></div>
-					</div>
-				</form>
-				<!-- /Search -->
-			</div>
-			<!-- /Start Nav -->
-			
-			<!-- End Nav -->
-			<div class="nav-end-wrap">
-				<ul class="navbar-nav flex-row">
-					<li class="nav-item">
-						<a href="email.html" class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover"><span class="icon"><span class=" position-relative"><span class="feather-icon"><i data-feather="inbox"></i></span><span class="badge badge-sm badge-soft-primary badge-sm badge-pill position-top-end-overflow-1">4</span></span></span></a>
-					</li>
-					<li class="nav-item">
-						<div class="dropdown dropdown-notifications">
-							<a href="#" class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover dropdown-toggle no-caret" data-bs-toggle="dropdown" data-dropdown-animation role="button" aria-haspopup="true" aria-expanded="false"><span class="icon"><span class="position-relative"><span class="feather-icon"><i data-feather="bell"></i></span><span class="badge badge-success badge-indicator position-top-end-overflow-1"></span></span></span></a>
-							<div class="dropdown-menu dropdown-menu-end p-0">
-								<h6 class="dropdown-header px-4 fs-6">Notifications<a href="#" class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover"><span class="icon"><span class="feather-icon"><i data-feather="settings"></i></span></span></a>
-								</h6>
-								<div data-simplebar class="dropdown-body  p-2">
-									<a href="javascript:void(0);" class="dropdown-item">
-										<div class="media">
-											<div class="media-head">
-												<div class="avatar avatar-rounded avatar-sm">
-													<img src="dist/img/avatar2.jpg" alt="user" class="avatar-img">
-												</div>
-											</div>
-											<div class="media-body">
-												<div>
-													<div class="notifications-text">Morgan Freeman accepted your invitation to join the team</div>
-													<div class="notifications-info">
-														<span class="badge badge-soft-success">Collaboration</span>
-														<div class="notifications-time">Today, 10:14 PM</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</a>
-									<a href="javascript:void(0);" class="dropdown-item">
-										<div class="media">
-											<div class="media-head">
-												<div class="avatar  avatar-icon avatar-sm avatar-success avatar-rounded">
-													<span class="initial-wrap">
-														<span class="feather-icon"><i data-feather="inbox"></i></span>
-													</span>
-												</div>
-											</div>
-											<div class="media-body">
-												<div>
-													<div class="notifications-text">New message received from Alan Rickman</div>
-													<div class="notifications-info">
-														<div class="notifications-time">Today, 7:51 AM</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</a>
-									<a href="javascript:void(0);" class="dropdown-item">
-										<div class="media">
-											<div class="media-head">
-												<div class="avatar  avatar-icon avatar-sm avatar-pink avatar-rounded">
-													<span class="initial-wrap">
-														<span class="feather-icon"><i data-feather="clock"></i></span>
-													</span>
-												</div>
-											</div>
-											<div class="media-body">
-												<div>
-													<div class="notifications-text">You have a follow up with Appster Head on Friday, Dec 19 at 9:30 am</div>
-													<div class="notifications-info">
-														<div class="notifications-time">Yesterday, 9:25 PM</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</a>
-									<a href="javascript:void(0);" class="dropdown-item">
-										<div class="media">
-											<div class="media-head">
-												<div class="avatar avatar-sm avatar-rounded">
-													<img src="dist/img/avatar3.jpg" alt="user" class="avatar-img">
-												</div>
-											</div>
-											<div class="media-body">
-												<div>
-													<div class="notifications-text">Application of Sarah Williams is waiting for your approval</div>
-													<div class="notifications-info">
-														<div class="notifications-time">Today 10:14 PM</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</a>
-									<a href="javascript:void(0);" class="dropdown-item">
-										<div class="media">
-											<div class="media-head">
-												<div class="avatar avatar-sm avatar-rounded">
-													<img src="dist/img/avatar10.jpg" alt="user" class="avatar-img">
-												</div>
-											</div>
-											<div class="media-body">
-												<div>	
-													<div class="notifications-text">Winston Churchil shared a document with you</div>
-													<div class="notifications-info">
-														<span class="badge badge-soft-violet">File Manager</span>
-														<div class="notifications-time">2 Oct, 2021</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</a>
-									<a href="javascript:void(0);" class="dropdown-item">
-										<div class="media">
-											<div class="media-head">
-												<div class="avatar  avatar-icon avatar-sm avatar-danger avatar-rounded">
-													<span class="initial-wrap">
-														<span class="feather-icon"><i data-feather="calendar"></i></span>
-													</span>
-												</div>
-											</div>
-											<div class="media-body">
-												<div>	
-													<div class="notifications-text">Last 2 days left for the project to be completed</div>
-													<div class="notifications-info">
-														<span class="badge badge-soft-orange">Updates</span>
-														<div class="notifications-time">14 Sep, 2021</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</a>
-								</div>
-								<div class="dropdown-footer"><a href="#"><u>View all notifications</u></a></div>
-							</div>
-						</div>
-					</li>
-					<li class="nav-item">
-						<div class="dropdown ps-2">
-							<a class=" dropdown-toggle no-caret" href="#" role="button" data-bs-display="static" data-bs-toggle="dropdown" data-dropdown-animation data-bs-auto-close="outside" aria-expanded="false">
-								<div class="avatar avatar-rounded avatar-xs">
-									<img src="dist/img/avatar12.jpg" alt="user" class="avatar-img">
-								</div>
-							</a>
-							<div class="dropdown-menu dropdown-menu-end">
-								<div class="p-2">
-									<div class="media">
-										<div class="media-head me-2">
-											<div class="avatar avatar-primary avatar-sm avatar-rounded">
-												<span class="initial-wrap">Hk</span>
-											</div>
-										</div>
-										<div class="media-body">
-											<div class="dropdown">
-												<a href="#" class="d-block dropdown-toggle link-dark fw-medium"  data-bs-toggle="dropdown" data-dropdown-animation data-bs-auto-close="inside">Hencework</a>
-												<div class="dropdown-menu dropdown-menu-end">
-													<div class="p-2">
-														<div class="media align-items-center active-user mb-3">
-															<div class="media-head me-2">
-																<div class="avatar avatar-primary avatar-xs avatar-rounded">
-																	<span class="initial-wrap">Hk</span>
-																</div>
-															</div>
-															<div class="media-body">
-																<a href="#" class="d-flex align-items-center link-dark">Hencework <i class="ri-checkbox-circle-fill fs-7 text-primary ms-1"></i></a>
-																<a href="#" class="d-block fs-8 link-secondary"><u>Manage your account</u></a>
-															</div>
-														</div>
-														<div class="media align-items-center mb-3">
-															<div class="media-head me-2">
-																<div class="avatar avatar-xs avatar-rounded">
-																	<img src="dist/img/avatar12.jpg" alt="user" class="avatar-img">
-																</div>
-															</div>
-															<div class="media-body">
-																<a href="#" class="d-block link-dark">Appster Team</a>
-																<a href="#" class="d-block fs-8 link-secondary">contact@hencework.com</a>
-															</div>
-														</div>
-														<button class="btn btn-block btn-outline-light btn-sm">
-															<span><span class="icon"><span class="feather-icon"><i data-feather="plus"></i></span></span>
-															<span>Add Account</span></span>
-														</button>
-													</div>
-												</div>
-											</div>
-											<div class="fs-7">contact@hencework.com</div>
-											<a href="#" class="d-block fs-8 link-secondary"><u>Sign Out</u></a>
-										</div>
-									</div>
-								</div>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="profile.html">Profile</a>
-								<a class="dropdown-item" href="#"><span class="me-2">Offers</span><span class="badge badge-sm badge-soft-pink">2</span></a><div class="dropdown-divider"></div>
-								<h6 class="dropdown-header">Manage Account</h6>
-								<a class="dropdown-item" href="#"><span class="dropdown-icon feather-icon"><i data-feather="credit-card"></i></span><span>Payment methods</span></a>
-								<a class="dropdown-item" href="#"><span class="dropdown-icon feather-icon"><i data-feather="check-square"></i></span><span>Subscriptions</span></a>
-								<a class="dropdown-item" href="#"><span class="dropdown-icon feather-icon"><i data-feather="settings"></i></span><span>Settings</span></a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#"><span class="dropdown-icon feather-icon"><i data-feather="tag"></i></span><span>Raise a ticket</span></a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Terms & Conditions</a>
-								<a class="dropdown-item" href="#">Help & Support</a>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
-			<!-- /End Nav -->
-			</div>									
-		</nav>
-		<!-- /Top Navbar -->
+    <meta
+      name="description"
+      content="A modern CRM Dashboard Template with reusable and flexible components for your SaaS web applications by hencework. Based on Bootstrap."
+    />
 
-        <!-- Vertical Nav -->
-        <div class="hk-menu">
-			<!-- Brand -->
-			<div class="menu-header">
-				<span>
-					<a class="navbar-brand" href="index.html">
-						<img class="brand-img img-fluid" src="dist/img/brand-sm.svg" alt="brand" />
-						<img class="brand-img img-fluid" src="dist/img/Appster.svg" alt="brand" />
-					</a>
-					<button class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover navbar-toggle">
-						<span class="icon">
-							<span class="svg-icon fs-5">
-								<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-bar-to-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-									<line x1="10" y1="12" x2="20" y2="12"></line>
-									<line x1="10" y1="12" x2="14" y2="16"></line>
-									<line x1="10" y1="12" x2="14" y2="8"></line>
-									<line x1="4" y1="4" x2="4" y2="20"></line>
-								</svg>
-							</span>
-						</span>
-					</button>
-				</span>
-			</div>
-			<!-- /Brand -->
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
-			<!-- Main Menu -->
-			<div data-simplebar class="nicescroll-bar">
-				<div class="menu-content-wrap">
-					<div class="menu-group">
-						<ul class="navbar-nav flex-column">
-							<li class="nav-item">
-								<a class="nav-link" href="index.html">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-template" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<rect x="4" y="4" width="16" height="4" rx="1" />
-												<rect x="4" y="12" width="6" height="8" rx="1" />
-												<line x1="14" y1="12" x2="20" y2="12" />
-												<line x1="14" y1="16" x2="20" y2="16" />
-												<line x1="14" y1="20" x2="20" y2="20" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Dashboard</span>
-									<span class="badge badge-sm badge-pink ms-auto">Hot</span>
-								</a>
-							</li>
-						</ul>	
-					</div>
-					<div class="menu-gap"></div>
-					<div class="menu-group">
-						<div class="nav-header">
-							<span>Apps</span>
-						</div>
-						<ul class="navbar-nav flex-column">
-							<li class="nav-item">
-								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_chat">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-dots" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<path d="M4 21v-13a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-9l-4 4" />
-												<line x1="12" y1="11" x2="12" y2="11.01" />
-												<line x1="8" y1="11" x2="8" y2="11.01" />
-												<line x1="16" y1="11" x2="16" y2="11.01" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Chat</span>
-								</a>
-								<ul id="dash_chat" class="nav flex-column collapse  nav-children">
-									<li class="nav-item">
-										<ul class="nav flex-column">
-											<li class="nav-item">
-												<a class="nav-link" href="chats.html"><span class="nav-link-text">Chats</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="chats-group.html"><span class="nav-link-text">Groups</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="chats-contact.html"><span class="nav-link-text">Contacts</span></a>
-											</li>
-										</ul>	
-									</li>	
-								</ul>	
-							</li>	
-							<li class="nav-item">
-								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_chatpop">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-circle-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<path d="M3 20l1.3 -3.9a9 8 0 1 1 3.4 2.9l-4.7 1" />
-												<line x1="12" y1="12" x2="12" y2="12.01" />
-												<line x1="8" y1="12" x2="8" y2="12.01" />
-												<line x1="16" y1="12" x2="16" y2="12.01" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Chat Popup</span>
-									
-								</a>
-								<ul id="dash_chatpop" class="nav flex-column collapse  nav-children">
-									<li class="nav-item">
-										<ul class="nav flex-column">
-											<li class="nav-item">
-												<a class="nav-link" href="chatpopup.html"><span class="nav-link-text">Direct Message</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="chatbot.html"><span class="nav-link-text">Chatbot</span></a>
-											</li>
-										</ul>	
-									</li>	
-								</ul>	
-							</li>	
-							<li class="nav-item">
-								<a class="nav-link" href="calendar.html">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-												<circle cx="18" cy="18" r="4" />
-												<path d="M15 3v4" />
-												<path d="M7 3v4" />
-												<path d="M3 11h16" />
-												<path d="M18 16.496v1.504l1 1" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Calendar</span>
-								</a>
-							</li>	
-							<li class="nav-item">
-								<a class="nav-link" href="email.html">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-inbox" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<rect x="4" y="4" width="16" height="16" rx="2" />
-												<path d="M4 13h3l3 3h4l3 -3h3" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Email</span>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_scrumboard">
-									<span class="nav-icon-wrap position-relative">
-										<span class="badge badge-sm badge-primary badge-sm badge-pill position-top-end-overflow">3</span>
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layout-kanban" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<line x1="4" y1="4" x2="10" y2="4" />
-												<line x1="14" y1="4" x2="20" y2="4" />
-												<rect x="4" y="8" width="6" height="12" rx="2" />
-												<rect x="14" y="8" width="6" height="6" rx="2" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Scrumboard</span>
-								</a>
-								<ul id="dash_scrumboard" class="nav flex-column collapse  nav-children">
-									<li class="nav-item">
-										<ul class="nav flex-column">
-											<li class="nav-item">
-												<a class="nav-link" href="projects-board.html"><span class="nav-link-text">All Boards</span></a>
-											</li>
-											
-											<li class="nav-item">
-												<a class="nav-link" href="kanban-board.html"><span class="nav-link-text">Project Kanban</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="pipeline.html"><span class="nav-link-text">Pipeline Kanban</span></a>
-											</li>
-										</ul>	
-									</li>	
-								</ul>	
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_contact">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-notebook" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18" />
-												<line x1="13" y1="8" x2="15" y2="8" />
-												<line x1="13" y1="12" x2="15" y2="12" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Contact</span>
-								</a>
-								<ul id="dash_contact" class="nav flex-column collapse  nav-children">
-									<li class="nav-item">
-										<ul class="nav flex-column">
-											<li class="nav-item">
-												<a class="nav-link" href="contact.html"><span class="nav-link-text">Contact List</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="contact-cards.html"><span class="nav-link-text">Contact Cards</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="edit-contact.html"><span class="nav-link-text">Edit Contact</span></a>
-											</li>
-										</ul>	
-									</li>	
-								</ul>	
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_file">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<path d="M14 3v4a1 1 0 0 0 1 1h4" />
-												<path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-												<path d="M9 15l2 2l4 -4" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">File Manager</span>
-								</a>
-								<ul id="dash_file" class="nav flex-column collapse  nav-children">
-									<li class="nav-item">
-										<ul class="nav flex-column">
-											<li class="nav-item">
-												<a class="nav-link" href="file-manager-list.html"><span class="nav-link-text">List View</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="file-manager-grid.html"><span class="nav-link-text">Grid View</span></a>
-											</li>
-										</ul>	
-									</li>	
-								</ul>	
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="gallery.html">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<line x1="15" y1="8" x2="15.01" y2="8" />
-												<rect x="4" y="4" width="16" height="16" rx="3" />
-												<path d="M4 15l4 -4a3 5 0 0 1 3 0l5 5" />
-												<path d="M14 14l1 -1a3 5 0 0 1 3 0l2 2" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Gallery</span>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_task">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-details" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<path d="M13 5h8" />
-												<path d="M13 9h5" />
-												<path d="M13 15h8" />
-												<path d="M13 19h5" />
-												<rect x="3" y="4" width="6" height="6" rx="1" />
-												<rect x="3" y="14" width="6" height="6" rx="1" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Todo</span>
-									<span class="badge badge-success ms-2">2</span>
-								</a>
-								<ul id="dash_task" class="nav flex-column collapse  nav-children">
-									<li class="nav-item">
-										<ul class="nav flex-column">
-											<li class="nav-item">
-												<a class="nav-link" href="tasklist.html"><span class="nav-link-text">Tasklist</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="gantt.html"><span class="nav-link-text">Gantt</span></a>
-											</li>
-										</ul>	
-									</li>	
-								</ul>	
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_blog">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-browser" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<rect x="4" y="4" width="16" height="16" rx="1" />
-												<line x1="4" y1="8" x2="20" y2="8" />
-												<line x1="8" y1="4" x2="8" y2="8" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Blog</span>
-								</a>
-								<ul id="dash_blog" class="nav flex-column collapse  nav-children">
-									<li class="nav-item">
-										<ul class="nav flex-column">
-											<li class="nav-item">
-												<a class="nav-link" href="posts.html"><span class="nav-link-text">Posts</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="add-new-post.html"><span class="nav-link-text">Add New Post</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="post-detail.html"><span class="nav-link-text">Post Detail</span></a>
-											</li>
-										</ul>	
-									</li>	
-								</ul>	
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_invoice">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-digit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<path d="M14 3v4a1 1 0 0 0 1 1h4" />
-												<rect x="9" y="12" width="3" height="5" rx="1" />
-												<path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-												<path d="M15 12v5" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Invoices</span>
-								</a>
-								<ul id="dash_invoice" class="nav flex-column collapse  nav-children">
-									<li class="nav-item">
-										<ul class="nav flex-column">
-											<li class="nav-item">
-												<a class="nav-link" href="invoice-list.html"><span class="nav-link-text">Invoice List</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="invoice-templates.html"><span class="nav-link-text">Invoice Templates</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="create-invoice.html"><span class="nav-link-text">Create Invoice</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="invoice-preview.html"><span class="nav-link-text">Invoice Preview</span></a>
-											</li>
-										</ul>	
-									</li>	
-								</ul>	
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_integ">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-code" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<polyline points="7 8 3 12 7 16" />
-												<polyline points="17 8 21 12 17 16" />
-												<line x1="14" y1="4" x2="10" y2="20" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Integrations</span>
-								</a>
-								<ul id="dash_integ" class="nav flex-column collapse  nav-children">
-									<li class="nav-item">
-										<ul class="nav flex-column">
-											<li class="nav-item">
-												<a class="nav-link" href="all-apps.html"><span class="nav-link-text">All Apps</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="integrations-detail.html"><span class="nav-link-text">App Detail</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="integrations.html"><span class="nav-link-text">Integrations</span></a>
-											</li>
-										</ul>	
-									</li>	
-								</ul>	
-							</li>
-						</ul>
-					</div>
-					<div class="menu-gap"></div>
-					<div class="menu-group">
-						<div class="nav-header">
-							<span>Pages</span>
-						</div>
-						<ul class="navbar-nav flex-column">
-							<li class="nav-item">
-								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_pages">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<circle cx="9" cy="7" r="4" />
-												<path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-												<path d="M16 11h6m-3 -3v6" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Authentication</span>
-								</a>
-								<ul id="dash_pages" class="nav flex-column collapse  nav-children">
-									<li class="nav-item">
-										<ul class="nav flex-column">
-											<li class="nav-item">
-												<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_log">
-													<span class="nav-link-text">Log In</span> 
-												</a>
-												<ul id="dash_log" class="nav flex-column collapse  nav-children">
-													<li class="nav-item">
-														<ul class="nav flex-column">
-															<li class="nav-item">
-																<a class="nav-link" href="login.html"><span class="nav-link-text">Login</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="login-simple.html"><span class="nav-link-text">Login Simple</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="login-classic.html"><span class="nav-link-text">Login Classic</span></a>
-															</li>
-														</ul>	
-													</li>	
-												</ul>	
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_sign">
-													<span class="nav-link-text">Sign Up</span>
-												</a>
-												<ul id="dash_sign" class="nav flex-column collapse  nav-children">
-													<li class="nav-item">
-														<ul class="nav flex-column">
-															<li class="nav-item">
-																<a class="nav-link" href="signup.html"><span class="nav-link-text">Signup</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="signup-simple.html"><span class="nav-link-text">Signup Simple</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="signup-classic.html"><span class="nav-link-text">Signup Classic</span></a>
-															</li>
-														</ul>		
-													</li>	
-												</ul>	
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="lock-screen.html"><span class="nav-link-text">Lock Screen</span></a>
-											</li>
-											
-											<li class="nav-item">
-												<a class="nav-link" href="reset-password.html"><span class="nav-link-text">Reset Password</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="404.html"><span class="nav-link-text">Error 404</span></a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="503.html"><span class="nav-link-text">Error 503</span></a>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_profile">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<circle cx="12" cy="7" r="4" />
-												<path d="M6 21v-2a4 4 0 0 1 4 -4h1" />
-												<circle cx="16.5" cy="17.5" r="2.5" />
-												<path d="M18.5 19.5l2.5 2.5" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text position-relative">Profile
-										<span class="badge badge-danger badge-indicator position-absolute top-0 start-100"></span>
-									</span>
-								</a>
-								<ul id="dash_profile" class="nav flex-column collapse  nav-children">
-									<li class="nav-item">
-										<ul class="nav flex-column">
-											<li class="nav-item">
-												<a class="nav-link" href="profile.html">
-													<span class="nav-link-text">Profile</span>
-												</a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="edit-profile.html">
-													<span class="nav-link-text">Edit Profile</span>
-												</a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="account.html">
-													<span class="nav-link-text">Account</span>
-												</a>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-					<div class="menu-gap"></div>
-					<div class="menu-group">
-						<div class="nav-header">
-							<span>Documentation</span>
-						</div>
-						<ul class="navbar-nav flex-column">
-							<li class="nav-item">
-								<a class="nav-link" href="installation.html">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-code-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<path d="M10 12h-1v5h1" />
-												<path d="M14 12h1v5h-1" />
-												<path d="M14 3v4a1 1 0 0 0 1 1h4" />
-												<path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Installation</span>
-								</a>
-							</li>
-							<li class="nav-item active">
-								<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_component">
-									<span class="nav-icon-wrap">
-										<span class="svg-icon">
-											<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layout" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<rect x="4" y="4" width="6" height="5" rx="2" />
-												<rect x="4" y="13" width="6" height="7" rx="2" />
-												<rect x="14" y="4" width="6" height="16" rx="2" />
-											</svg>
-										</span>
-									</span>
-									<span class="nav-link-text">Components</span>
-								</a>
-								<ul id="dash_component" class="nav flex-column collapse  nav-children">
-									<li class="nav-item">
-										<ul class="nav flex-column">
-											<li class="nav-item">
-												<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_util">
-													<span class="nav-link-text">Utilities</span> 
-												</a>
-												<ul id="dash_util" class="nav flex-column collapse  nav-children">
-													<li class="nav-item">
-														<ul class="nav flex-column">
-															<li class="nav-item">
-																<a class="nav-link" href="grid-system.html"><span class="nav-link-text">Grid</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="typography.html"><span class="nav-link-text">Typography</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="background.html"><span class="nav-link-text">Background</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="border.html"><span class="nav-link-text">Border</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="colors.html"><span class="nav-link-text">Color</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="shadow.html"><span class="nav-link-text">Shadow</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="sizing.html"><span class="nav-link-text">Sizing</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="spacing.html"><span class="nav-link-text">Spacing</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="shapes.html"><span class="nav-link-text">Shapes</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="separators.html"><span class="nav-link-text">Separators</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="media-object.html"><span class="nav-link-text">Media Objects</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="embeds.html"><span class="nav-link-text">Embeds</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="images.html"><span class="nav-link-text">Images</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="icon-fonts.html"><span class="nav-link-text">Icon Fonts</span></a>
-															</li>
-														</ul>	
-													</li>	
-												</ul>	
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_data">
-													<span class="nav-link-text">Data Display</span> 
-												</a>
-												<ul id="dash_data" class="nav flex-column collapse  nav-children">
-													<li class="nav-item">
-														<ul class="nav flex-column">
-															<li class="nav-item">
-																<a class="nav-link" href="avatar.html"><span class="nav-link-text">Avatar</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="accordion.html"><span class="nav-link-text">Accordion</span></a>
-															</li>
-															
-															<li class="nav-item">
-																<a class="nav-link" href="badge.html"><span class="nav-link-text">Badges</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="advance-badges.html"><span class="nav-link-text">Advanced Badges</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="tooltip.html"><span class="nav-link-text">Tooltip</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="popovers.html"><span class="nav-link-text">Popovers</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="modal.html"><span class="nav-link-text">Modal</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="cards.html"><span class="nav-link-text">Cards</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="carousel.html"><span class="nav-link-text">Carousel</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="collapse.html"><span class="nav-link-text">Collapse</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="list-group.html"><span class="nav-link-text">List Group</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="ribbons.html"><span class="nav-link-text">Ribbons</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="drawer.html"><span class="nav-link-text">Drawers</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="offcanvas.html"><span class="nav-link-text">Offcanvas</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="empty-states.html"><span class="nav-link-text">Empty States</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="callout.html"><span class="nav-link-text">Callout</span></a>
-															</li>
-														</ul>	
-													</li>	
-												</ul>	
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_entry">
-													<span class="nav-link-text">Data Entry</span> 
-												</a>
-												<ul id="dash_entry" class="nav flex-column collapse  nav-children">
-													<li class="nav-item">
-														<ul class="nav flex-column">
-															<li class="nav-item">
-																<a class="nav-link" href="buttons.html"><span class="nav-link-text">Buttons</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="form-element.html"><span class="nav-link-text">Form Elements</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="input-groups.html"><span class="nav-link-text">Input Groups</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="form-layout.html"><span class="nav-link-text">Form Layout</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="form-mask.html"><span class="nav-link-text">Form Masks</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="form-validation.html"><span class="nav-link-text">Form Validation</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="advance-form-ui.html"><span class="nav-link-text">Advance Form UI</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="cropperjs.html"><span class="nav-link-text">Cropperjs</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="dropify.html"><span class="nav-link-text">Dropify</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="dropzone.html"><span class="nav-link-text">Dropzone</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="date-picker.html"><span class="nav-link-text">Date Picker</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="color-picker.html"><span class="nav-link-text">Color Picker</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="select2.html"><span class="nav-link-text">Select2</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="range-slider.html"><span class="nav-link-text">Range slider</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="input-spinner.html"><span class="nav-link-text">Input Spinner</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="form-wizard.html"><span class="nav-link-text">Form Wizard</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="tinymce.html"><span class="nav-link-text">Tinymce</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="chips.html"><span class="nav-link-text">Chips</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="ratings.html"><span class="nav-link-text">Rating</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="page-search.html"><span class="nav-link-text">Page Search</span></a>
-															</li>
-														</ul>	
-													</li>	
-												</ul>	
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_feed">
-													<span class="nav-link-text">Feedback</span> 
-												</a>
-												<ul id="dash_feed" class="nav flex-column collapse  nav-children">
-													<li class="nav-item">
-														<ul class="nav flex-column">
-															<li class="nav-item">
-																<a class="nav-link" href="sweet-alert.html"><span class="nav-link-text">Sweet Alert</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="notification.html"><span class="nav-link-text">Notifications</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="toast.html"><span class="nav-link-text">Toastr</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="tour.html"><span class="nav-link-text">Tour</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="timeout.html"><span class="nav-link-text">Timeout</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="alerts.html"><span class="nav-link-text">Alerts</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="placeholders.html"><span class="nav-link-text">Placeholders</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="spinner.html"><span class="nav-link-text">Spinners</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="progress.html"><span class="nav-link-text">Progress</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="toasts.html"><span class="nav-link-text">Bootstrap Toasts</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="clipboard.html"><span class="nav-link-text">Clipboard</span></a>
-															</li>
-														</ul>	
-													</li>	
-												</ul>	
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_table">
-													<span class="nav-link-text">Tables</span> 
-												</a>
-												<ul id="dash_table" class="nav flex-column collapse  nav-children">
-													<li class="nav-item">
-														<ul class="nav flex-column">
-															<li class="nav-item">
-																<a class="nav-link" href="basic-table.html"><span class="nav-link-text">Basic Tables</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="data-table.html"><span class="nav-link-text">Data Tables</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="advance-table-ui.html"><span class="nav-link-text">Advance Table UI</span></a>
-															</li>
-														</ul>	
-													</li>	
-												</ul>	
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="charts.html">
-													<span class="nav-link-text">Charts</span>
-												</a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_map">
-													<span class="nav-link-text">Maps</span> 
-												</a>
-												<ul id="dash_map" class="nav flex-column collapse  nav-children">
-													<li class="nav-item">
-														<ul class="nav flex-column">
-															<li class="nav-item">
-																<a class="nav-link" href="google-map.html"><span class="nav-link-text">Google Maps</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="vector-map.html"><span class="nav-link-text">Vector Maps</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="animated-map.html"><span class="nav-link-text">Animated Maps</span></a>
-															</li>
-														</ul>	
-													</li>	
-												</ul>	
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_nav">
-													<span class="nav-link-text">Navigation</span> 
-												</a>
-												<ul id="dash_nav" class="nav flex-column collapse  nav-children">
-													<li class="nav-item">
-														<ul class="nav flex-column">
-															<li class="nav-item">
-																<a class="nav-link" href="breadcrumb.html"><span class="nav-link-text">Breadcrumbs</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="dropdowns.html"><span class="nav-link-text">Dropdowns</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="nav.html"><span class="nav-link-text">Nav</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="nav-tabs.html"><span class="nav-link-text">Tabs</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_wizard">
-																	<span class="nav-link-text">Wizard</span>
-																</a>
-																<ul id="dash_wizard" class="nav flex-column collapse   nav-children">
-																	<li class="nav-item">
-																		<ul class="nav flex-column">
-																			<li class="nav-item">
-																				<a class="nav-link" href="vertical-wizard.html">
-																					<span class="nav-link-text">Vertical Wizard</span>
-																				</a>
-																			</li>
-																			<li class="nav-item">
-																				<a class="nav-link" href="horizontal-wizard.html">
-																					<span class="nav-link-text">Horizontal Wizard</span>
-																				</a>
-																			</li>
-																		</ul>
-																	</li>
-																</ul>
-															</li>
-															
-															<li class="nav-item">
-																<a class="nav-link" href="pagination.html"><span class="nav-link-text">Pagination</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="toolbar.html"><span class="nav-link-text">Toolbar</span></a>
-															</li>
-														</ul>	
-													</li>	
-												</ul>	
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_beh">
-													<span class="nav-link-text">Behavioral</span> 
-												</a>
-												<ul id="dash_beh" class="nav flex-column collapse  nav-children">
-													<li class="nav-item">
-														<ul class="nav flex-column">
-															<li class="nav-item">
-																<a class="nav-link" href="scrollspy.html"><span class="nav-link-text">Scroll Spy</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="sticky-element.html"><span class="nav-link-text">Sticky Elements</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="draggable.html"><span class="nav-link-text">Draggable</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="scrollable-content.html"><span class="nav-link-text">Scrollable Content</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="footers.html"><span class="nav-link-text">Fixed Footer</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="loadmore.html"><span class="nav-link-text">Load More</span></a>
-															</li>
-														</ul>	
-													</li>	
-												</ul>	
-											</li>
-											<li class="nav-item active">
-												<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_lay">
-													<span class="nav-link-text">Layout</span> 
-												</a>
-												<ul id="dash_lay" class="nav flex-column collapse  nav-children">
-													<li class="nav-item">
-														<ul class="nav flex-column">
-															<li class="nav-item">
-																<a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#dash_menu">
-																	<span class="nav-link-text">Menus</span>
-																</a>
-																<ul id="dash_menu" class="nav flex-column collapse   nav-children">
-																	<li class="nav-item">
-																		<ul class="nav flex-column">
-																			<li class="nav-item">
-																				<a class="nav-link" href="classic-menu.html">
-																					<span class="nav-link-text">Classic Menu</span>
-																				</a>
-																			</li>
-																			<li class="nav-item">
-																				<a class="nav-link" href="horizontal-menu.html">
-																					<span class="nav-link-text">Horizontal Menu</span>
-																				</a>
-																			</li>
-																			<li class="nav-item">
-																				<a class="nav-link" href="navbar-menu.html">
-																					<span class="nav-link-text">Navbar Menu</span>
-																				</a>
-																			</li>
-																		</ul>
-																	</li>
-																</ul>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="navbar.html"><span class="nav-link-text">Navbar</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="page-header.html"><span class="nav-link-text">Page Headers</span></a>
-															</li>
-															<li class="nav-item active">
-																<a class="nav-link" href="content-sidebar.html"><span class="nav-link-text">Content Sidebar</span></a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link" href="page-footers.html"><span class="nav-link-text">Page Footers</span></a>
-															</li>
-														</ul>	
-													</li>	
-												</ul>	
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-					<div class="callout card card-flush bg-smoke-dark-5 text-center mt-5 w-220p mx-auto">
-						<div class="card-body">
-							<h5 class="h5 text-white">Quickly Build Applications</h5>
-							<p class="p-sm card-text text-white text-opacity-75">Exclusively for webapps Based on Bootstrap</p>
-							<a href="installation.html"  class="btn btn-primary btn-block">Go Appster</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /Main Menu -->
-		</div>
-        <div id="hk_menu_backdrop" class="hk-menu-backdrop"></div>
-        <!-- /Vertical Nav -->
+    <!-- CSS -->
+    <link href="dist/css/style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body
+    data-bs-spy="scroll"
+    data-bs-target="#vertical_nav"
+    data-bs-offset="190"
+  >
+    <!-- Wrapper -->
+    <div
+      class="hk-wrapper"
+      data-layout="vertical"
+      data-layout-style="default"
+      data-menu="dark"
+      data-footer="simple"
+      data-aside="sticky"
+      data-content-sidebar="active"
+    >
+      <!-- Top Navbar -->
+      <nav class="hk-navbar navbar navbar-expand-xl navbar-light fixed-top">
+        <div class="container-fluid px-5">
+          <!-- Start Nav -->
+          <div class="nav-start-wrap">
+            <button
+              class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover navbar-toggle d-xl-none"
+            >
+              <span class="icon"
+                ><span class="feather-icon"
+                  ><i data-feather="align-left"></i></span
+              ></span>
+            </button>
 
-		<!-- Content Sidebar -->
-		<div class="hk-content-sidebar border-0">
-			<div data-simplebar class="nicescroll-bar">
-				<div class="sidebar-content-wrap">
-					<h5>Content Sidebar</h5>
-					<p class="mb-5">Lorem ipsum dolor sit amet. Aut nemo nobis sed sunt labore et optio minus et magni ipsum vel quia temporibus. Est possimus suscipit ea exercitationem dolore quo inventore magnam est dolor officiis quo unde dolorem. Ut quia adipisci eos nostrum quia aut voluptatem reiciendis. </p>
-					<p class="mb-5">Vel neque iure sed officiis corporis vel perferendis asperiores! Rem illum possimus sit ipsum voluptas non necessitatibus ratione in iusto quidem aut dolorem consequatur. </p>
-					<p class="mb-5">Qui culpa rerum nam tempore sint qui delectus quos ea numquam illo ea accusamus quidem  excepturi nihil</p> 
-					<p class="mb-5">Qui dolorem laborum sed omnis quia quo rerum aspernatur et totam fugiat et consequuntur porro et exercitationem vero sit nostrum itaque.</p>
-					<p>Eos delectus obcaecati qui perspiciatis quas sed nihil velit ab expedita nisi. Ut quis excepturi sit beatae sequi et culpa nihil qui mollitia eveniet eum voluptatem nulla qui laudantium dolore. </p>
-				</div>
-			
-			</div>
-		</div>
-		<!-- /Content Sidebar -->
+            <!-- Search -->
+            <form class="dropdown navbar-search">
+              <div
+                class="dropdown-toggle no-caret"
+                data-bs-toggle="dropdown"
+                data-dropdown-animation
+                data-bs-auto-close="outside"
+              >
+                <a
+                  href="#"
+                  class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover d-xl-none"
+                  ><span class="icon"
+                    ><span class="feather-icon"
+                      ><i data-feather="search"></i></span></span
+                ></a>
+                <div class="input-group d-xl-flex d-none">
+                  <span class="input-affix-wrapper input-search affix-border">
+                    <input
+                      type="text"
+                      class="form-control bg-transparent"
+                      data-navbar-search-close="false"
+                      placeholder="Search..."
+                      aria-label="Search"
+                    />
+                    <span class="input-suffix"
+                      ><span>/</span>
+                      <span class="btn-input-clear"
+                        ><i class="bi bi-x-circle-fill"></i
+                      ></span>
+                      <span
+                        class="spinner-border spinner-border-sm input-loader text-primary"
+                        role="status"
+                      >
+                        <span class="sr-only">Loading...</span>
+                      </span>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div class="dropdown-menu p-0">
+                <!-- Mobile Search -->
+                <div class="dropdown-item d-xl-none bg-transparent">
+                  <div class="input-group mobile-search">
+                    <span class="input-affix-wrapper input-search">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Search..."
+                        aria-label="Search"
+                      />
+                      <span class="input-suffix">
+                        <span class="btn-input-clear"
+                          ><i class="bi bi-x-circle-fill"></i
+                        ></span>
+                        <span
+                          class="spinner-border spinner-border-sm input-loader text-primary"
+                          role="status"
+                        >
+                          <span class="sr-only">Loading...</span>
+                        </span>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <!--/ Mobile Search -->
+                <div data-simplebar class="dropdown-body p-2">
+                  <h6 class="dropdown-header">Recent Search</h6>
+                  <div class="dropdown-item bg-transparent">
+                    <a href="#" class="badge badge-pill badge-soft-secondary"
+                      >Grunt</a
+                    >
+                    <a href="#" class="badge badge-pill badge-soft-secondary"
+                      >Node JS</a
+                    >
+                    <a href="#" class="badge badge-pill badge-soft-secondary"
+                      >SCSS</a
+                    >
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <h6 class="dropdown-header">Help</h6>
+                  <a href="javascript:void(0);" class="dropdown-item">
+                    <div class="media align-items-center">
+                      <div class="media-head me-2">
+                        <div
+                          class="avatar avatar-icon avatar-xs avatar-soft-light avatar-rounded"
+                        >
+                          <span class="initial-wrap">
+                            <span class="svg-icon">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-corner-down-right"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                                stroke="currentColor"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              >
+                                <path
+                                  stroke="none"
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                ></path>
+                                <path
+                                  d="M6 6v6a3 3 0 0 0 3 3h10l-4 -4m0 8l4 -4"
+                                ></path>
+                              </svg>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="media-body">How to setup theme?</div>
+                    </div>
+                  </a>
+                  <a href="javascript:void(0);" class="dropdown-item">
+                    <div class="media align-items-center">
+                      <div class="media-head me-2">
+                        <div
+                          class="avatar avatar-icon avatar-xs avatar-soft-light avatar-rounded"
+                        >
+                          <span class="initial-wrap">
+                            <span class="svg-icon">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-corner-down-right"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                                stroke="currentColor"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              >
+                                <path
+                                  stroke="none"
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                ></path>
+                                <path
+                                  d="M6 6v6a3 3 0 0 0 3 3h10l-4 -4m0 8l4 -4"
+                                ></path>
+                              </svg>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="media-body">View detail documentation</div>
+                    </div>
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <h6 class="dropdown-header">Users</h6>
+                  <a href="javascript:void(0);" class="dropdown-item">
+                    <div class="media align-items-center">
+                      <div class="media-head me-2">
+                        <div class="avatar avatar-xs avatar-rounded">
+                          <img
+                            src="dist/img/avatar3.jpg"
+                            alt="user"
+                            class="avatar-img"
+                          />
+                        </div>
+                      </div>
+                      <div class="media-body">Sarah Jone</div>
+                    </div>
+                  </a>
+                  <a href="javascript:void(0);" class="dropdown-item">
+                    <div class="media align-items-center">
+                      <div class="media-head me-2">
+                        <div
+                          class="avatar avatar-xs avatar-soft-primary avatar-rounded"
+                        >
+                          <span class="initial-wrap">J</span>
+                        </div>
+                      </div>
+                      <div class="media-body">Joe Jackson</div>
+                    </div>
+                  </a>
+                  <a href="javascript:void(0);" class="dropdown-item">
+                    <div class="media align-items-center">
+                      <div class="media-head me-2">
+                        <div class="avatar avatar-xs avatar-rounded">
+                          <img
+                            src="dist/img/avatar4.jpg"
+                            alt="user"
+                            class="avatar-img"
+                          />
+                        </div>
+                      </div>
+                      <div class="media-body">Maria Richard</div>
+                    </div>
+                  </a>
+                </div>
+                <div class="dropdown-footer d-xl-flex d-none">
+                  <a href="#"><u>Search all</u></a>
+                </div>
+              </div>
+            </form>
+            <!-- /Search -->
+          </div>
+          <!-- /Start Nav -->
 
-		
+          <!-- End Nav -->
+          <div class="nav-end-wrap">
+            <ul class="navbar-nav flex-row">
+              <li class="nav-item">
+                <a
+                  href="email.html"
+                  class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover"
+                  ><span class="icon"
+                    ><span class="position-relative"
+                      ><span class="feather-icon"
+                        ><i data-feather="inbox"></i></span
+                      ><span
+                        class="badge badge-sm badge-soft-primary badge-sm badge-pill position-top-end-overflow-1"
+                        >4</span
+                      ></span
+                    ></span
+                  ></a
+                >
+              </li>
+              <li class="nav-item">
+                <div class="dropdown dropdown-notifications">
+                  <a
+                    href="#"
+                    class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover dropdown-toggle no-caret"
+                    data-bs-toggle="dropdown"
+                    data-dropdown-animation
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    ><span class="icon"
+                      ><span class="position-relative"
+                        ><span class="feather-icon"
+                          ><i data-feather="bell"></i></span
+                        ><span
+                          class="badge badge-success badge-indicator position-top-end-overflow-1"
+                        ></span></span></span
+                  ></a>
+                  <div class="dropdown-menu dropdown-menu-end p-0">
+                    <h6 class="dropdown-header px-4 fs-6">
+                      Notifications<a
+                        href="#"
+                        class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover"
+                        ><span class="icon"
+                          ><span class="feather-icon"
+                            ><i data-feather="settings"></i></span></span
+                      ></a>
+                    </h6>
+                    <div data-simplebar class="dropdown-body p-2">
+                      <a href="javascript:void(0);" class="dropdown-item">
+                        <div class="media">
+                          <div class="media-head">
+                            <div class="avatar avatar-rounded avatar-sm">
+                              <img
+                                src="dist/img/avatar2.jpg"
+                                alt="user"
+                                class="avatar-img"
+                              />
+                            </div>
+                          </div>
+                          <div class="media-body">
+                            <div>
+                              <div class="notifications-text">
+                                Morgan Freeman accepted your invitation to join
+                                the team
+                              </div>
+                              <div class="notifications-info">
+                                <span class="badge badge-soft-success"
+                                  >Collaboration</span
+                                >
+                                <div class="notifications-time">
+                                  Today, 10:14 PM
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                      <a href="javascript:void(0);" class="dropdown-item">
+                        <div class="media">
+                          <div class="media-head">
+                            <div
+                              class="avatar avatar-icon avatar-sm avatar-success avatar-rounded"
+                            >
+                              <span class="initial-wrap">
+                                <span class="feather-icon"
+                                  ><i data-feather="inbox"></i
+                                ></span>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="media-body">
+                            <div>
+                              <div class="notifications-text">
+                                New message received from Alan Rickman
+                              </div>
+                              <div class="notifications-info">
+                                <div class="notifications-time">
+                                  Today, 7:51 AM
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                      <a href="javascript:void(0);" class="dropdown-item">
+                        <div class="media">
+                          <div class="media-head">
+                            <div
+                              class="avatar avatar-icon avatar-sm avatar-pink avatar-rounded"
+                            >
+                              <span class="initial-wrap">
+                                <span class="feather-icon"
+                                  ><i data-feather="clock"></i
+                                ></span>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="media-body">
+                            <div>
+                              <div class="notifications-text">
+                                You have a follow up with Appster Head on
+                                Friday, Dec 19 at 9:30 am
+                              </div>
+                              <div class="notifications-info">
+                                <div class="notifications-time">
+                                  Yesterday, 9:25 PM
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                      <a href="javascript:void(0);" class="dropdown-item">
+                        <div class="media">
+                          <div class="media-head">
+                            <div class="avatar avatar-sm avatar-rounded">
+                              <img
+                                src="dist/img/avatar3.jpg"
+                                alt="user"
+                                class="avatar-img"
+                              />
+                            </div>
+                          </div>
+                          <div class="media-body">
+                            <div>
+                              <div class="notifications-text">
+                                Application of Sarah Williams is waiting for
+                                your approval
+                              </div>
+                              <div class="notifications-info">
+                                <div class="notifications-time">
+                                  Today 10:14 PM
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                      <a href="javascript:void(0);" class="dropdown-item">
+                        <div class="media">
+                          <div class="media-head">
+                            <div class="avatar avatar-sm avatar-rounded">
+                              <img
+                                src="dist/img/avatar10.jpg"
+                                alt="user"
+                                class="avatar-img"
+                              />
+                            </div>
+                          </div>
+                          <div class="media-body">
+                            <div>
+                              <div class="notifications-text">
+                                Winston Churchil shared a document with you
+                              </div>
+                              <div class="notifications-info">
+                                <span class="badge badge-soft-violet"
+                                  >File Manager</span
+                                >
+                                <div class="notifications-time">
+                                  2 Oct, 2021
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                      <a href="javascript:void(0);" class="dropdown-item">
+                        <div class="media">
+                          <div class="media-head">
+                            <div
+                              class="avatar avatar-icon avatar-sm avatar-danger avatar-rounded"
+                            >
+                              <span class="initial-wrap">
+                                <span class="feather-icon"
+                                  ><i data-feather="calendar"></i
+                                ></span>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="media-body">
+                            <div>
+                              <div class="notifications-text">
+                                Last 2 days left for the project to be completed
+                              </div>
+                              <div class="notifications-info">
+                                <span class="badge badge-soft-orange"
+                                  >Updates</span
+                                >
+                                <div class="notifications-time">
+                                  14 Sep, 2021
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="dropdown-footer">
+                      <a href="#"><u>View all notifications</u></a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item">
+                <div class="dropdown ps-2">
+                  <a
+                    class="dropdown-toggle no-caret"
+                    href="#"
+                    role="button"
+                    data-bs-display="static"
+                    data-bs-toggle="dropdown"
+                    data-dropdown-animation
+                    data-bs-auto-close="outside"
+                    aria-expanded="false"
+                  >
+                    <div class="avatar avatar-rounded avatar-xs">
+                      <img
+                        src="dist/img/avatar12.jpg"
+                        id="user-avatar-profile"
+                        alt="user"
+                        class="avatar-img"
+                      />
+                    </div>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-end">
+                    <div class="p-2">
+                      <div class="media">
+                        <div class="media-head me-2">
+                          <div
+                            class="avatar avatar-primary avatar-sm avatar-rounded"
+                          >
+                            <span class="initial-wrap">Hk</span>
+                          </div>
+                        </div>
+                        <div class="media-body">
+                          <div class="dropdown">
+                            <a
+                              href="#"
+                              class="d-block dropdown-toggle link-dark fw-medium"
+                              data-bs-toggle="dropdown"
+                              data-dropdown-animation
+                              data-bs-auto-close="inside"
+                              >Hencework</a
+                            >
+                            <div class="dropdown-menu dropdown-menu-end">
+                              <div class="p-2">
+                                <div
+                                  class="media align-items-center active-user mb-3"
+                                >
+                                  <div class="media-head me-2">
+                                    <div
+                                      class="avatar avatar-primary avatar-xs avatar-rounded"
+                                    >
+                                      <span class="initial-wrap">Hk</span>
+                                    </div>
+                                  </div>
+                                  <div class="media-body">
+                                    <a
+                                      href="#"
+                                      class="d-flex align-items-center link-dark"
+                                      >Hencework
+                                      <i
+                                        class="ri-checkbox-circle-fill fs-7 text-primary ms-1"
+                                      ></i
+                                    ></a>
+                                    <a
+                                      href="#"
+                                      class="d-block fs-8 link-secondary"
+                                      ><u>Manage your account</u></a
+                                    >
+                                  </div>
+                                </div>
+                                <div class="media align-items-center mb-3">
+                                  <div class="media-head me-2">
+                                    <div
+                                      class="avatar avatar-xs avatar-rounded"
+                                    >
+                                      <img
+                                        src="dist/img/avatar12.jpg"
+                                        id="user-avatar-profile"
+                                        alt="user"
+                                        class="avatar-img"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="media-body">
+                                    <a href="#" class="d-block link-dark"
+                                      >Appster Team</a
+                                    >
+                                    <a
+                                      href="#"
+                                      class="d-block fs-8 link-secondary"
+                                      >contact@hencework.com</a
+                                    >
+                                  </div>
+                                </div>
+                                <button
+                                  class="btn btn-block btn-outline-light btn-sm"
+                                >
+                                  <span
+                                    ><span class="icon"
+                                      ><span class="feather-icon"
+                                        ><i data-feather="plus"></i></span
+                                    ></span>
+                                    <span>Add Account</span></span
+                                  >
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="fs-7">contact@hencework.com</div>
+                          <a href="#" class="d-block fs-8 link-secondary"
+                            ><u>Sign Out</u></a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="profile.html">Profile</a>
+                    <a class="dropdown-item" href="#"
+                      ><span class="me-2">Offers</span
+                      ><span class="badge badge-sm badge-soft-pink">2</span></a
+                    >
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">Manage Account</h6>
+                    <a class="dropdown-item" href="#"
+                      ><span class="dropdown-icon feather-icon"
+                        ><i data-feather="credit-card"></i></span
+                      ><span>Payment methods</span></a
+                    >
+                    <a class="dropdown-item" href="#"
+                      ><span class="dropdown-icon feather-icon"
+                        ><i data-feather="check-square"></i></span
+                      ><span>Subscriptions</span></a
+                    >
+                    <a class="dropdown-item" href="#"
+                      ><span class="dropdown-icon feather-icon"
+                        ><i data-feather="settings"></i></span
+                      ><span>Settings</span></a
+                    >
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#"
+                      ><span class="dropdown-icon feather-icon"
+                        ><i data-feather="tag"></i></span
+                      ><span>Raise a ticket</span></a
+                    >
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Terms & Conditions</a>
+                    <a class="dropdown-item" href="#">Help & Support</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!-- /End Nav -->
+        </div>
+      </nav>
+      <!-- /Top Navbar -->
 
-		<!-- Main Content -->
-		<div class="hk-pg-wrapper">
-			<!-- Container -->
-			<div class="container-fluid p-5 pb-0">
-				<!-- Row -->
-				<div class="row">
-					<div class="col-xxl-12">
-						<!-- Page Header -->
-						<div class="hk-pg-header">
-							<h1 class="pg-title">Content Sidebar</h1>
-							<p>Explore the type of content sidebar in Nubra UI.</p>
-						</div>
-						<!-- /Page Header -->
+      <!-- Vertical Nav -->
+      <div class="hk-menu">
+        <!-- Brand -->
+        <div class="menu-header">
+          <span>
+            <a class="navbar-brand" href="index.html">
+              <img
+                class="brand-img img-fluid"
+                src="dist/img/brand-sm.svg"
+                alt="brand"
+              />
+              <img
+                class="brand-img img-fluid"
+                src="dist/img/Appster.svg"
+                alt="brand"
+              />
+            </a>
+            <button
+              class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover navbar-toggle"
+            >
+              <span class="icon">
+                <span class="svg-icon fs-5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-arrow-bar-to-left"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <line x1="10" y1="12" x2="20" y2="12"></line>
+                    <line x1="10" y1="12" x2="14" y2="16"></line>
+                    <line x1="10" y1="12" x2="14" y2="8"></line>
+                    <line x1="4" y1="4" x2="4" y2="20"></line>
+                  </svg>
+                </span>
+              </span>
+            </button>
+          </span>
+        </div>
+        <!-- /Brand -->
 
-						<!-- Page Body -->
-						<div class="hk-pg-body">
-							<section id="sec_1" class="hk-section">
-								<div class="hk-sec-title">
-									<h5>Example</h5>
-									<p>Add <code>data-content-sidebar="active"</code> in wrapper and use below snippet for content sidebar.</p>
-								</div>
-								<div class="hk-example card card-shadow card-wth-tabs">
-									<div class="card-header">
-										<ul class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs">
-											<li class="nav-item active">
-												<a class="nav-link" data-bs-toggle="tab" href="#html_tab">
-													<span class="nav-link-text">HTML</span>
-												</a>
-											</li>
-										</ul>
-									</div>
-									<div class="card-body p-0">
-										<div class="tab-content m-0">
-											<div class="tab-pane fade show active" id="html_tab">
-												<div class="hk-code-block">
-													<button class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover" data-clipboard-snippet><span class="icon"><span class="feather-icon"><i data-feather="copy"></i></span></span></button>
-													<pre class="language-markup">
+        <!-- Main Menu -->
+        <div data-simplebar class="nicescroll-bar">
+          <div class="menu-content-wrap">
+            <div class="menu-group">
+              <ul class="navbar-nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html">
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-template"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <rect x="4" y="4" width="16" height="4" rx="1" />
+                          <rect x="4" y="12" width="6" height="8" rx="1" />
+                          <line x1="14" y1="12" x2="20" y2="12" />
+                          <line x1="14" y1="16" x2="20" y2="16" />
+                          <line x1="14" y1="20" x2="20" y2="20" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Dashboard</span>
+                    <span class="badge badge-sm badge-pink ms-auto">Hot</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="menu-gap"></div>
+            <div class="menu-group">
+              <div class="nav-header">
+                <span>Apps</span>
+              </div>
+              <ul class="navbar-nav flex-column">
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="javascript:void(0);"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#dash_chat"
+                  >
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-message-dots"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path
+                            d="M4 21v-13a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-9l-4 4"
+                          />
+                          <line x1="12" y1="11" x2="12" y2="11.01" />
+                          <line x1="8" y1="11" x2="8" y2="11.01" />
+                          <line x1="16" y1="11" x2="16" y2="11.01" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Chat</span>
+                  </a>
+                  <ul
+                    id="dash_chat"
+                    class="nav flex-column collapse nav-children"
+                  >
+                    <li class="nav-item">
+                      <ul class="nav flex-column">
+                        <li class="nav-item">
+                          <a class="nav-link" href="chats.html"
+                            ><span class="nav-link-text">Chats</span></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="chats-group.html"
+                            ><span class="nav-link-text">Groups</span></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="chats-contact.html"
+                            ><span class="nav-link-text">Contacts</span></a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="javascript:void(0);"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#dash_chatpop"
+                  >
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-message-circle-2"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M3 20l1.3 -3.9a9 8 0 1 1 3.4 2.9l-4.7 1" />
+                          <line x1="12" y1="12" x2="12" y2="12.01" />
+                          <line x1="8" y1="12" x2="8" y2="12.01" />
+                          <line x1="16" y1="12" x2="16" y2="12.01" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Chat Popup</span>
+                  </a>
+                  <ul
+                    id="dash_chatpop"
+                    class="nav flex-column collapse nav-children"
+                  >
+                    <li class="nav-item">
+                      <ul class="nav flex-column">
+                        <li class="nav-item">
+                          <a class="nav-link" href="chatpopup.html"
+                            ><span class="nav-link-text"
+                              >Direct Message</span
+                            ></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="chatbot.html"
+                            ><span class="nav-link-text">Chatbot</span></a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="calendar.html">
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-calendar-time"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path
+                            d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4"
+                          />
+                          <circle cx="18" cy="18" r="4" />
+                          <path d="M15 3v4" />
+                          <path d="M7 3v4" />
+                          <path d="M3 11h16" />
+                          <path d="M18 16.496v1.504l1 1" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Calendar</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="email.html">
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-inbox"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <rect x="4" y="4" width="16" height="16" rx="2" />
+                          <path d="M4 13h3l3 3h4l3 -3h3" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Email</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="javascript:void(0);"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#dash_scrumboard"
+                  >
+                    <span class="nav-icon-wrap position-relative">
+                      <span
+                        class="badge badge-sm badge-primary badge-sm badge-pill position-top-end-overflow"
+                        >3</span
+                      >
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-layout-kanban"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <line x1="4" y1="4" x2="10" y2="4" />
+                          <line x1="14" y1="4" x2="20" y2="4" />
+                          <rect x="4" y="8" width="6" height="12" rx="2" />
+                          <rect x="14" y="8" width="6" height="6" rx="2" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Scrumboard</span>
+                  </a>
+                  <ul
+                    id="dash_scrumboard"
+                    class="nav flex-column collapse nav-children"
+                  >
+                    <li class="nav-item">
+                      <ul class="nav flex-column">
+                        <li class="nav-item">
+                          <a class="nav-link" href="projects-board.html"
+                            ><span class="nav-link-text">All Boards</span></a
+                          >
+                        </li>
+
+                        <li class="nav-item">
+                          <a class="nav-link" href="kanban-board.html"
+                            ><span class="nav-link-text"
+                              >Project Kanban</span
+                            ></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="pipeline.html"
+                            ><span class="nav-link-text"
+                              >Pipeline Kanban</span
+                            ></a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="javascript:void(0);"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#dash_contact"
+                  >
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-notebook"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path
+                            d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18"
+                          />
+                          <line x1="13" y1="8" x2="15" y2="8" />
+                          <line x1="13" y1="12" x2="15" y2="12" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Contact</span>
+                  </a>
+                  <ul
+                    id="dash_contact"
+                    class="nav flex-column collapse nav-children"
+                  >
+                    <li class="nav-item">
+                      <ul class="nav flex-column">
+                        <li class="nav-item">
+                          <a class="nav-link" href="contact.html"
+                            ><span class="nav-link-text">Contact List</span></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="contact-cards.html"
+                            ><span class="nav-link-text">Contact Cards</span></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="edit-contact.html"
+                            ><span class="nav-link-text">Edit Contact</span></a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="javascript:void(0);"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#dash_file"
+                  >
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-file-check"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                          <path
+                            d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"
+                          />
+                          <path d="M9 15l2 2l4 -4" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">File Manager</span>
+                  </a>
+                  <ul
+                    id="dash_file"
+                    class="nav flex-column collapse nav-children"
+                  >
+                    <li class="nav-item">
+                      <ul class="nav flex-column">
+                        <li class="nav-item">
+                          <a class="nav-link" href="file-manager-list.html"
+                            ><span class="nav-link-text">List View</span></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="file-manager-grid.html"
+                            ><span class="nav-link-text">Grid View</span></a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="gallery.html">
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-photo"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <line x1="15" y1="8" x2="15.01" y2="8" />
+                          <rect x="4" y="4" width="16" height="16" rx="3" />
+                          <path d="M4 15l4 -4a3 5 0 0 1 3 0l5 5" />
+                          <path d="M14 14l1 -1a3 5 0 0 1 3 0l2 2" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Gallery</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="javascript:void(0);"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#dash_task"
+                  >
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-list-details"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M13 5h8" />
+                          <path d="M13 9h5" />
+                          <path d="M13 15h8" />
+                          <path d="M13 19h5" />
+                          <rect x="3" y="4" width="6" height="6" rx="1" />
+                          <rect x="3" y="14" width="6" height="6" rx="1" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Todo</span>
+                    <span class="badge badge-success ms-2">2</span>
+                  </a>
+                  <ul
+                    id="dash_task"
+                    class="nav flex-column collapse nav-children"
+                  >
+                    <li class="nav-item">
+                      <ul class="nav flex-column">
+                        <li class="nav-item">
+                          <a class="nav-link" href="tasklist.html"
+                            ><span class="nav-link-text">Tasklist</span></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="gantt.html"
+                            ><span class="nav-link-text">Gantt</span></a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="javascript:void(0);"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#dash_blog"
+                  >
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-browser"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <rect x="4" y="4" width="16" height="16" rx="1" />
+                          <line x1="4" y1="8" x2="20" y2="8" />
+                          <line x1="8" y1="4" x2="8" y2="8" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Blog</span>
+                  </a>
+                  <ul
+                    id="dash_blog"
+                    class="nav flex-column collapse nav-children"
+                  >
+                    <li class="nav-item">
+                      <ul class="nav flex-column">
+                        <li class="nav-item">
+                          <a class="nav-link" href="posts.html"
+                            ><span class="nav-link-text">Posts</span></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="add-new-post.html"
+                            ><span class="nav-link-text">Add New Post</span></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="post-detail.html"
+                            ><span class="nav-link-text">Post Detail</span></a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="javascript:void(0);"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#dash_invoice"
+                  >
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-file-digit"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                          <rect x="9" y="12" width="3" height="5" rx="1" />
+                          <path
+                            d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"
+                          />
+                          <path d="M15 12v5" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Invoices</span>
+                  </a>
+                  <ul
+                    id="dash_invoice"
+                    class="nav flex-column collapse nav-children"
+                  >
+                    <li class="nav-item">
+                      <ul class="nav flex-column">
+                        <li class="nav-item">
+                          <a class="nav-link" href="invoice-list.html"
+                            ><span class="nav-link-text">Invoice List</span></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="invoice-templates.html"
+                            ><span class="nav-link-text"
+                              >Invoice Templates</span
+                            ></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="create-invoice.html"
+                            ><span class="nav-link-text"
+                              >Create Invoice</span
+                            ></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="invoice-preview.html"
+                            ><span class="nav-link-text"
+                              >Invoice Preview</span
+                            ></a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="javascript:void(0);"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#dash_integ"
+                  >
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-code"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <polyline points="7 8 3 12 7 16" />
+                          <polyline points="17 8 21 12 17 16" />
+                          <line x1="14" y1="4" x2="10" y2="20" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Integrations</span>
+                  </a>
+                  <ul
+                    id="dash_integ"
+                    class="nav flex-column collapse nav-children"
+                  >
+                    <li class="nav-item">
+                      <ul class="nav flex-column">
+                        <li class="nav-item">
+                          <a class="nav-link" href="all-apps.html"
+                            ><span class="nav-link-text">All Apps</span></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="integrations-detail.html"
+                            ><span class="nav-link-text">App Detail</span></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="integrations.html"
+                            ><span class="nav-link-text">Integrations</span></a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="menu-gap"></div>
+            <div class="menu-group">
+              <div class="nav-header">
+                <span>Pages</span>
+              </div>
+              <ul class="navbar-nav flex-column">
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="javascript:void(0);"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#dash_pages"
+                  >
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-user-plus"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <circle cx="9" cy="7" r="4" />
+                          <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                          <path d="M16 11h6m-3 -3v6" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Authentication</span>
+                  </a>
+                  <ul
+                    id="dash_pages"
+                    class="nav flex-column collapse nav-children"
+                  >
+                    <li class="nav-item">
+                      <ul class="nav flex-column">
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="javascript:void(0);"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#dash_log"
+                          >
+                            <span class="nav-link-text">Log In</span>
+                          </a>
+                          <ul
+                            id="dash_log"
+                            class="nav flex-column collapse nav-children"
+                          >
+                            <li class="nav-item">
+                              <ul class="nav flex-column">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="login.html"
+                                    ><span class="nav-link-text">Login</span></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="login-simple.html"
+                                    ><span class="nav-link-text"
+                                      >Login Simple</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="login-classic.html"
+                                    ><span class="nav-link-text"
+                                      >Login Classic</span
+                                    ></a
+                                  >
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="javascript:void(0);"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#dash_sign"
+                          >
+                            <span class="nav-link-text">Sign Up</span>
+                          </a>
+                          <ul
+                            id="dash_sign"
+                            class="nav flex-column collapse nav-children"
+                          >
+                            <li class="nav-item">
+                              <ul class="nav flex-column">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="signup.html"
+                                    ><span class="nav-link-text"
+                                      >Signup</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="signup-simple.html"
+                                    ><span class="nav-link-text"
+                                      >Signup Simple</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="signup-classic.html"
+                                    ><span class="nav-link-text"
+                                      >Signup Classic</span
+                                    ></a
+                                  >
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="lock-screen.html"
+                            ><span class="nav-link-text">Lock Screen</span></a
+                          >
+                        </li>
+
+                        <li class="nav-item">
+                          <a class="nav-link" href="reset-password.html"
+                            ><span class="nav-link-text"
+                              >Reset Password</span
+                            ></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="404.html"
+                            ><span class="nav-link-text">Error 404</span></a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="503.html"
+                            ><span class="nav-link-text">Error 503</span></a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="javascript:void(0);"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#dash_profile"
+                  >
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-user-search"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <circle cx="12" cy="7" r="4" />
+                          <path d="M6 21v-2a4 4 0 0 1 4 -4h1" />
+                          <circle cx="16.5" cy="17.5" r="2.5" />
+                          <path d="M18.5 19.5l2.5 2.5" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text position-relative"
+                      >Profile
+                      <span
+                        class="badge badge-danger badge-indicator position-absolute top-0 start-100"
+                      ></span>
+                    </span>
+                  </a>
+                  <ul
+                    id="dash_profile"
+                    class="nav flex-column collapse nav-children"
+                  >
+                    <li class="nav-item">
+                      <ul class="nav flex-column">
+                        <li class="nav-item">
+                          <a class="nav-link" href="profile.html">
+                            <span class="nav-link-text">Profile</span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="edit-profile.html">
+                            <span class="nav-link-text">Edit Profile</span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="account.html">
+                            <span class="nav-link-text">Account</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="menu-gap"></div>
+            <div class="menu-group">
+              <div class="nav-header">
+                <span>Documentation</span>
+              </div>
+              <ul class="navbar-nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link" href="installation.html">
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-file-code-2"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M10 12h-1v5h1" />
+                          <path d="M14 12h1v5h-1" />
+                          <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                          <path
+                            d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Installation</span>
+                  </a>
+                </li>
+                <li class="nav-item active">
+                  <a
+                    class="nav-link"
+                    href="javascript:void(0);"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#dash_component"
+                  >
+                    <span class="nav-icon-wrap">
+                      <span class="svg-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-layout"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <rect x="4" y="4" width="6" height="5" rx="2" />
+                          <rect x="4" y="13" width="6" height="7" rx="2" />
+                          <rect x="14" y="4" width="6" height="16" rx="2" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="nav-link-text">Components</span>
+                  </a>
+                  <ul
+                    id="dash_component"
+                    class="nav flex-column collapse nav-children"
+                  >
+                    <li class="nav-item">
+                      <ul class="nav flex-column">
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="javascript:void(0);"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#dash_util"
+                          >
+                            <span class="nav-link-text">Utilities</span>
+                          </a>
+                          <ul
+                            id="dash_util"
+                            class="nav flex-column collapse nav-children"
+                          >
+                            <li class="nav-item">
+                              <ul class="nav flex-column">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="grid-system.html"
+                                    ><span class="nav-link-text">Grid</span></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="typography.html"
+                                    ><span class="nav-link-text"
+                                      >Typography</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="background.html"
+                                    ><span class="nav-link-text"
+                                      >Background</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="border.html"
+                                    ><span class="nav-link-text"
+                                      >Border</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="colors.html"
+                                    ><span class="nav-link-text">Color</span></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="shadow.html"
+                                    ><span class="nav-link-text"
+                                      >Shadow</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="sizing.html"
+                                    ><span class="nav-link-text"
+                                      >Sizing</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="spacing.html"
+                                    ><span class="nav-link-text"
+                                      >Spacing</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="shapes.html"
+                                    ><span class="nav-link-text"
+                                      >Shapes</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="separators.html"
+                                    ><span class="nav-link-text"
+                                      >Separators</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="media-object.html"
+                                    ><span class="nav-link-text"
+                                      >Media Objects</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="embeds.html"
+                                    ><span class="nav-link-text"
+                                      >Embeds</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="images.html"
+                                    ><span class="nav-link-text"
+                                      >Images</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="icon-fonts.html"
+                                    ><span class="nav-link-text"
+                                      >Icon Fonts</span
+                                    ></a
+                                  >
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="javascript:void(0);"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#dash_data"
+                          >
+                            <span class="nav-link-text">Data Display</span>
+                          </a>
+                          <ul
+                            id="dash_data"
+                            class="nav flex-column collapse nav-children"
+                          >
+                            <li class="nav-item">
+                              <ul class="nav flex-column">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="avatar.html"
+                                    ><span class="nav-link-text"
+                                      >Avatar</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="accordion.html"
+                                    ><span class="nav-link-text"
+                                      >Accordion</span
+                                    ></a
+                                  >
+                                </li>
+
+                                <li class="nav-item">
+                                  <a class="nav-link" href="badge.html"
+                                    ><span class="nav-link-text"
+                                      >Badges</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="advance-badges.html"
+                                    ><span class="nav-link-text"
+                                      >Advanced Badges</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="tooltip.html"
+                                    ><span class="nav-link-text"
+                                      >Tooltip</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="popovers.html"
+                                    ><span class="nav-link-text"
+                                      >Popovers</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="modal.html"
+                                    ><span class="nav-link-text">Modal</span></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="cards.html"
+                                    ><span class="nav-link-text">Cards</span></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="carousel.html"
+                                    ><span class="nav-link-text"
+                                      >Carousel</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="collapse.html"
+                                    ><span class="nav-link-text"
+                                      >Collapse</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="list-group.html"
+                                    ><span class="nav-link-text"
+                                      >List Group</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="ribbons.html"
+                                    ><span class="nav-link-text"
+                                      >Ribbons</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="drawer.html"
+                                    ><span class="nav-link-text"
+                                      >Drawers</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="offcanvas.html"
+                                    ><span class="nav-link-text"
+                                      >Offcanvas</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="empty-states.html"
+                                    ><span class="nav-link-text"
+                                      >Empty States</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="callout.html"
+                                    ><span class="nav-link-text"
+                                      >Callout</span
+                                    ></a
+                                  >
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="javascript:void(0);"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#dash_entry"
+                          >
+                            <span class="nav-link-text">Data Entry</span>
+                          </a>
+                          <ul
+                            id="dash_entry"
+                            class="nav flex-column collapse nav-children"
+                          >
+                            <li class="nav-item">
+                              <ul class="nav flex-column">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="buttons.html"
+                                    ><span class="nav-link-text"
+                                      >Buttons</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="form-element.html"
+                                    ><span class="nav-link-text"
+                                      >Form Elements</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="input-groups.html"
+                                    ><span class="nav-link-text"
+                                      >Input Groups</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="form-layout.html"
+                                    ><span class="nav-link-text"
+                                      >Form Layout</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="form-mask.html"
+                                    ><span class="nav-link-text"
+                                      >Form Masks</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a
+                                    class="nav-link"
+                                    href="form-validation.html"
+                                    ><span class="nav-link-text"
+                                      >Form Validation</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a
+                                    class="nav-link"
+                                    href="advance-form-ui.html"
+                                    ><span class="nav-link-text"
+                                      >Advance Form UI</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="cropperjs.html"
+                                    ><span class="nav-link-text"
+                                      >Cropperjs</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="dropify.html"
+                                    ><span class="nav-link-text"
+                                      >Dropify</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="dropzone.html"
+                                    ><span class="nav-link-text"
+                                      >Dropzone</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="date-picker.html"
+                                    ><span class="nav-link-text"
+                                      >Date Picker</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="color-picker.html"
+                                    ><span class="nav-link-text"
+                                      >Color Picker</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="select2.html"
+                                    ><span class="nav-link-text"
+                                      >Select2</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="range-slider.html"
+                                    ><span class="nav-link-text"
+                                      >Range slider</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="input-spinner.html"
+                                    ><span class="nav-link-text"
+                                      >Input Spinner</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="form-wizard.html"
+                                    ><span class="nav-link-text"
+                                      >Form Wizard</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="tinymce.html"
+                                    ><span class="nav-link-text"
+                                      >Tinymce</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="chips.html"
+                                    ><span class="nav-link-text">Chips</span></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="ratings.html"
+                                    ><span class="nav-link-text"
+                                      >Rating</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="page-search.html"
+                                    ><span class="nav-link-text"
+                                      >Page Search</span
+                                    ></a
+                                  >
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="javascript:void(0);"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#dash_feed"
+                          >
+                            <span class="nav-link-text">Feedback</span>
+                          </a>
+                          <ul
+                            id="dash_feed"
+                            class="nav flex-column collapse nav-children"
+                          >
+                            <li class="nav-item">
+                              <ul class="nav flex-column">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="sweet-alert.html"
+                                    ><span class="nav-link-text"
+                                      >Sweet Alert</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="notification.html"
+                                    ><span class="nav-link-text"
+                                      >Notifications</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="toast.html"
+                                    ><span class="nav-link-text"
+                                      >Toastr</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="tour.html"
+                                    ><span class="nav-link-text">Tour</span></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="timeout.html"
+                                    ><span class="nav-link-text"
+                                      >Timeout</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="alerts.html"
+                                    ><span class="nav-link-text"
+                                      >Alerts</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="placeholders.html"
+                                    ><span class="nav-link-text"
+                                      >Placeholders</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="spinner.html"
+                                    ><span class="nav-link-text"
+                                      >Spinners</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="progress.html"
+                                    ><span class="nav-link-text"
+                                      >Progress</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="toasts.html"
+                                    ><span class="nav-link-text"
+                                      >Bootstrap Toasts</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="clipboard.html"
+                                    ><span class="nav-link-text"
+                                      >Clipboard</span
+                                    ></a
+                                  >
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="javascript:void(0);"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#dash_table"
+                          >
+                            <span class="nav-link-text">Tables</span>
+                          </a>
+                          <ul
+                            id="dash_table"
+                            class="nav flex-column collapse nav-children"
+                          >
+                            <li class="nav-item">
+                              <ul class="nav flex-column">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="basic-table.html"
+                                    ><span class="nav-link-text"
+                                      >Basic Tables</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="data-table.html"
+                                    ><span class="nav-link-text"
+                                      >Data Tables</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a
+                                    class="nav-link"
+                                    href="advance-table-ui.html"
+                                    ><span class="nav-link-text"
+                                      >Advance Table UI</span
+                                    ></a
+                                  >
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="charts.html">
+                            <span class="nav-link-text">Charts</span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="javascript:void(0);"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#dash_map"
+                          >
+                            <span class="nav-link-text">Maps</span>
+                          </a>
+                          <ul
+                            id="dash_map"
+                            class="nav flex-column collapse nav-children"
+                          >
+                            <li class="nav-item">
+                              <ul class="nav flex-column">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="google-map.html"
+                                    ><span class="nav-link-text"
+                                      >Google Maps</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="vector-map.html"
+                                    ><span class="nav-link-text"
+                                      >Vector Maps</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="animated-map.html"
+                                    ><span class="nav-link-text"
+                                      >Animated Maps</span
+                                    ></a
+                                  >
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="javascript:void(0);"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#dash_nav"
+                          >
+                            <span class="nav-link-text">Navigation</span>
+                          </a>
+                          <ul
+                            id="dash_nav"
+                            class="nav flex-column collapse nav-children"
+                          >
+                            <li class="nav-item">
+                              <ul class="nav flex-column">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="breadcrumb.html"
+                                    ><span class="nav-link-text"
+                                      >Breadcrumbs</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="dropdowns.html"
+                                    ><span class="nav-link-text"
+                                      >Dropdowns</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="nav.html"
+                                    ><span class="nav-link-text">Nav</span></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="nav-tabs.html"
+                                    ><span class="nav-link-text">Tabs</span></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a
+                                    class="nav-link"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#dash_wizard"
+                                  >
+                                    <span class="nav-link-text">Wizard</span>
+                                  </a>
+                                  <ul
+                                    id="dash_wizard"
+                                    class="nav flex-column collapse nav-children"
+                                  >
+                                    <li class="nav-item">
+                                      <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                          <a
+                                            class="nav-link"
+                                            href="vertical-wizard.html"
+                                          >
+                                            <span class="nav-link-text"
+                                              >Vertical Wizard</span
+                                            >
+                                          </a>
+                                        </li>
+                                        <li class="nav-item">
+                                          <a
+                                            class="nav-link"
+                                            href="horizontal-wizard.html"
+                                          >
+                                            <span class="nav-link-text"
+                                              >Horizontal Wizard</span
+                                            >
+                                          </a>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                  </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                  <a class="nav-link" href="pagination.html"
+                                    ><span class="nav-link-text"
+                                      >Pagination</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="toolbar.html"
+                                    ><span class="nav-link-text"
+                                      >Toolbar</span
+                                    ></a
+                                  >
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="javascript:void(0);"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#dash_beh"
+                          >
+                            <span class="nav-link-text">Behavioral</span>
+                          </a>
+                          <ul
+                            id="dash_beh"
+                            class="nav flex-column collapse nav-children"
+                          >
+                            <li class="nav-item">
+                              <ul class="nav flex-column">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="scrollspy.html"
+                                    ><span class="nav-link-text"
+                                      >Scroll Spy</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="sticky-element.html"
+                                    ><span class="nav-link-text"
+                                      >Sticky Elements</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="draggable.html"
+                                    ><span class="nav-link-text"
+                                      >Draggable</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a
+                                    class="nav-link"
+                                    href="scrollable-content.html"
+                                    ><span class="nav-link-text"
+                                      >Scrollable Content</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="footers.html"
+                                    ><span class="nav-link-text"
+                                      >Fixed Footer</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="loadmore.html"
+                                    ><span class="nav-link-text"
+                                      >Load More</span
+                                    ></a
+                                  >
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li class="nav-item active">
+                          <a
+                            class="nav-link"
+                            href="javascript:void(0);"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#dash_lay"
+                          >
+                            <span class="nav-link-text">Layout</span>
+                          </a>
+                          <ul
+                            id="dash_lay"
+                            class="nav flex-column collapse nav-children"
+                          >
+                            <li class="nav-item">
+                              <ul class="nav flex-column">
+                                <li class="nav-item">
+                                  <a
+                                    class="nav-link"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#dash_menu"
+                                  >
+                                    <span class="nav-link-text">Menus</span>
+                                  </a>
+                                  <ul
+                                    id="dash_menu"
+                                    class="nav flex-column collapse nav-children"
+                                  >
+                                    <li class="nav-item">
+                                      <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                          <a
+                                            class="nav-link"
+                                            href="classic-menu.html"
+                                          >
+                                            <span class="nav-link-text"
+                                              >Classic Menu</span
+                                            >
+                                          </a>
+                                        </li>
+                                        <li class="nav-item">
+                                          <a
+                                            class="nav-link"
+                                            href="horizontal-menu.html"
+                                          >
+                                            <span class="nav-link-text"
+                                              >Horizontal Menu</span
+                                            >
+                                          </a>
+                                        </li>
+                                        <li class="nav-item">
+                                          <a
+                                            class="nav-link"
+                                            href="navbar-menu.html"
+                                          >
+                                            <span class="nav-link-text"
+                                              >Navbar Menu</span
+                                            >
+                                          </a>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                  </ul>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="navbar.html"
+                                    ><span class="nav-link-text"
+                                      >Navbar</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="page-header.html"
+                                    ><span class="nav-link-text"
+                                      >Page Headers</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item active">
+                                  <a
+                                    class="nav-link"
+                                    href="content-sidebar.html"
+                                    ><span class="nav-link-text"
+                                      >Content Sidebar</span
+                                    ></a
+                                  >
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="page-footers.html"
+                                    ><span class="nav-link-text"
+                                      >Page Footers</span
+                                    ></a
+                                  >
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="callout card card-flush bg-smoke-dark-5 text-center mt-5 w-220p mx-auto"
+            >
+              <div class="card-body">
+                <h5 class="h5 text-white">Quickly Build Applications</h5>
+                <p class="p-sm card-text text-white text-opacity-75">
+                  Exclusively for webapps Based on Bootstrap
+                </p>
+                <a href="installation.html" class="btn btn-primary btn-block"
+                  >Go Appster</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Main Menu -->
+      </div>
+      <div id="hk_menu_backdrop" class="hk-menu-backdrop"></div>
+      <!-- /Vertical Nav -->
+
+      <!-- Content Sidebar -->
+      <div class="hk-content-sidebar border-0">
+        <div data-simplebar class="nicescroll-bar">
+          <div class="sidebar-content-wrap">
+            <h5>Content Sidebar</h5>
+            <p class="mb-5">
+              Lorem ipsum dolor sit amet. Aut nemo nobis sed sunt labore et
+              optio minus et magni ipsum vel quia temporibus. Est possimus
+              suscipit ea exercitationem dolore quo inventore magnam est dolor
+              officiis quo unde dolorem. Ut quia adipisci eos nostrum quia aut
+              voluptatem reiciendis.
+            </p>
+            <p class="mb-5">
+              Vel neque iure sed officiis corporis vel perferendis asperiores!
+              Rem illum possimus sit ipsum voluptas non necessitatibus ratione
+              in iusto quidem aut dolorem consequatur.
+            </p>
+            <p class="mb-5">
+              Qui culpa rerum nam tempore sint qui delectus quos ea numquam illo
+              ea accusamus quidem excepturi nihil
+            </p>
+            <p class="mb-5">
+              Qui dolorem laborum sed omnis quia quo rerum aspernatur et totam
+              fugiat et consequuntur porro et exercitationem vero sit nostrum
+              itaque.
+            </p>
+            <p>
+              Eos delectus obcaecati qui perspiciatis quas sed nihil velit ab
+              expedita nisi. Ut quis excepturi sit beatae sequi et culpa nihil
+              qui mollitia eveniet eum voluptatem nulla qui laudantium dolore.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- /Content Sidebar -->
+
+      <!-- Main Content -->
+      <div class="hk-pg-wrapper">
+        <!-- Container -->
+        <div class="container-fluid p-5 pb-0">
+          <!-- Row -->
+          <div class="row">
+            <div class="col-xxl-12">
+              <!-- Page Header -->
+              <div class="hk-pg-header">
+                <h1 class="pg-title">Content Sidebar</h1>
+                <p>Explore the type of content sidebar in Nubra UI.</p>
+              </div>
+              <!-- /Page Header -->
+
+              <!-- Page Body -->
+              <div class="hk-pg-body">
+                <section id="sec_1" class="hk-section">
+                  <div class="hk-sec-title">
+                    <h5>Example</h5>
+                    <p>
+                      Add <code>data-content-sidebar="active"</code> in wrapper
+                      and use below snippet for content sidebar.
+                    </p>
+                  </div>
+                  <div class="hk-example card card-shadow card-wth-tabs">
+                    <div class="card-header">
+                      <ul
+                        class="nav nav-line nav-tabs nav-sm nav-light card-header-tabs"
+                      >
+                        <li class="nav-item active">
+                          <a
+                            class="nav-link"
+                            data-bs-toggle="tab"
+                            href="#html_tab"
+                          >
+                            <span class="nav-link-text">HTML</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="tab-content m-0">
+                        <div class="tab-pane fade show active" id="html_tab">
+                          <div class="hk-code-block">
+                            <button
+                              class="btn btn-icon btn-xs btn-flush-light btn-rounded flush-soft-hover"
+                              data-clipboard-snippet
+                            >
+                              <span class="icon"
+                                ><span class="feather-icon"
+                                  ><i data-feather="copy"></i></span
+                              ></span>
+                            </button>
+                            <pre class="language-markup">
 														<code class="language-markup">
 &lt;!-- Content Sidebar --&gt;
 	&lt;div class=&quot;hk-content-sidebar border-0&quot;&gt;
@@ -1394,41 +2577,46 @@ Contact: support@hencework.com
 	&lt;/div&gt;
 &lt;!-- /Content Sidebar --&gt;</code>
 													</pre>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</section>
-						</div>
-						<!-- /Page Body -->
-					</div>
-				</div>
-				<!-- /Row -->
-			</div>
-			<!-- /Container -->
-			
-			<!-- Page Footer -->
-			<div class="hk-footer border-0">
-				<footer class="container-xxl footer py-0">
-					<div class="row">
-						<div class="col-xl-12">
-							<p class="footer-text"><span class="copy-text"><a href="https://hencework.com" >Hencework</a> © <span id="copyright_year"></span> All rights reserved.</span></p>
-						</div>
-					</div>
-				</footer>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <!-- /Page Body -->
             </div>
-            <!-- / Page Footer -->
-		</div>
-		<!-- /Main Content -->
-	</div>
+          </div>
+          <!-- /Row -->
+        </div>
+        <!-- /Container -->
+
+        <!-- Page Footer -->
+        <div class="hk-footer border-0">
+          <footer class="container-xxl footer py-0">
+            <div class="row">
+              <div class="col-xl-12">
+                <p class="footer-text">
+                  <span class="copy-text"
+                    ><a href="https://hencework.com">Hencework</a> ©
+                    <span id="copyright_year"></span> All rights reserved.</span
+                  >
+                </p>
+              </div>
+            </div>
+          </footer>
+        </div>
+        <!-- / Page Footer -->
+      </div>
+      <!-- /Main Content -->
+    </div>
     <!-- /Wrapper -->
 
-	<!-- jQuery -->
+    <!-- jQuery -->
     <script src="vendors/jquery/dist/jquery.min.js"></script>
 
     <!-- Bootstrap Core JS -->
-   	<script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- FeatherIcons JS -->
     <script src="dist/js/feather.min.js"></script>
@@ -1436,27 +2624,27 @@ Contact: support@hencework.com
     <!-- Fancy Dropdown JS -->
     <script src="dist/js/dropdown-bootstrap-extended.js"></script>
 
-	<!-- Smooth Scroll JS -->
+    <!-- Smooth Scroll JS -->
     <script src="dist/js/smooth-scroll.js"></script>
-	
-	<!-- Simplebar JS -->
-	<script src="vendors/simplebar/dist/simplebar.min.js"></script>
-	
-	<!-- Prism JS -->
-	<script src="dist/js/prism.js"></script>
-	
-	<!-- Clipboard JS -->
+
+    <!-- Simplebar JS -->
+    <script src="vendors/simplebar/dist/simplebar.min.js"></script>
+
+    <!-- Prism JS -->
+    <script src="dist/js/prism.js"></script>
+
+    <!-- Clipboard JS -->
     <script src="vendors/clipboard/dist/clipboard.min.js"></script>
-	<script src="dist/js/clipboard-init.js"></script>
-	
-	<!-- List JS -->
-	<script src="vendors/list.js/dist/list.min.js"></script>
-	
-	<!-- Highlight JS -->
-	<script src="dist/js/jquery.highlight-4.js"></script>
-	
-	<!-- Init JS -->
-	<script src="dist/js/doc-init.js"></script>
+    <script src="dist/js/clipboard-init.js"></script>
+
+    <!-- List JS -->
+    <script src="vendors/list.js/dist/list.min.js"></script>
+
+    <!-- Highlight JS -->
+    <script src="dist/js/jquery.highlight-4.js"></script>
+
+    <!-- Init JS -->
+    <script src="dist/js/doc-init.js"></script>
     <script src="dist/js/init.js"></script>
-</body>
+  </body>
 </html>

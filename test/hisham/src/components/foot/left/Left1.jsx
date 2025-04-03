@@ -8,15 +8,20 @@ const Left1 = () => {
         if (footZone[id] == 1) {
           let point = document.querySelectorAll(`#${id}`);
           point.forEach((newPoint) => {
-            newPoint.classList.add("opacity-35");
-            newPoint.setAttribute("fill", "yellow");
+            newPoint.classList.add("opacity-60");
+            newPoint.setAttribute("fill", "#119920");
           });
         } else if (footZone[id] == 2) {
           let point = document.querySelectorAll(`#${id}`);
           point.forEach((newPoint) => {
-            newPoint.setAttribute("fill", "#DC4D01");
+            newPoint.setAttribute("fill", "yellow");
           });
         } else if (footZone[id] == 3) {
+          let point = document.querySelectorAll(`#${id}`);
+          point.forEach((newPoint) => {
+            newPoint.setAttribute("fill", "orange");
+          });
+        } else if (footZone[id] == 4) {
           let point = document.querySelectorAll(`#${id}`);
           point.forEach((newPoint) => {
             newPoint.setAttribute("fill", "red");
@@ -25,7 +30,7 @@ const Left1 = () => {
           let point = document.querySelectorAll(`#${id}`);
           point.forEach((newPoint) => {
             newPoint.setAttribute("fill", "white");
-            newPoint.classList.remove("opacity-35");
+            newPoint.classList.remove("opacity-60");
           });
         }
       }

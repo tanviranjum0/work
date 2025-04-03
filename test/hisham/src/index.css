@@ -55,21 +55,10 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
-
-/* .pentagon1 {
-  width: 130px;
-  height: 130px;
-  clip-path: polygon(50% 0%, 100% 38%, 100% 100%, 0 100%, 0% 38%);
-}
-.pentagon1::before {
-  content: "";
-  z-index: 50;
-  position: absolute;
-  width: 110px;
-  height: 110px;
-  background-color: white;
-  background-repeat: no-repeat;
+.nailShapes {
+  z-index: 1;
+  background-image: url("./assets/foot-nail/nail-shapes.png");
   background-position: center;
+  background-repeat: no-repeat;
   background-size: contain;
-  clip-path: polygon(50% 0%, 100% 38%, 100% 100%, 0 100%, 0% 38%);
-} */
+}

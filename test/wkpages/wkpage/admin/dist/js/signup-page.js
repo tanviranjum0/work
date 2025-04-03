@@ -87,6 +87,7 @@ async function handleFormSubmit(event) {
     if (data.token) {
       loader.classList.add("visually-hidden");
       loaderButton.classList.remove("visually-hidden");
+      localStorage.setItem("user", JSON.stringify(data.user));
       localStorage.setItem("token", data.token);
       window.location.href = "index.html";
     }
@@ -105,21 +106,3 @@ fileInput.addEventListener("change", (event) => {
     reader.readAsDataURL(file);
   }
 });
-
-async function test() {
-  const image = document.getElementById("avatar-signup").files[0];
-
-  let form = new FormData();
-  form.append("file", image);
-  form.append("folder", "images/test");
-  form.append("upload_preset", "xubbr2hv");
-  form.append("cloud_name", "tanviranjum");
-  const res = await fetch(
-    `https://api.cloudinary.com/v1_1/tanviranjum/image/upload`,
-    {
-      method: "POST",
-      body: form,
-    }
-  );
-  const data = await res.json();
-}

@@ -40,6 +40,7 @@ async function handleLogin(event) {
   if (data.token && data.message == "Login successfully!") {
     loader.classList.add("visually-hidden");
     loaderButton.classList.remove("visually-hidden");
+    localStorage.setItem("user", JSON.stringify(data.validUser));
     localStorage.setItem("token", data.token);
     messageBox.classList.remove("text-danger");
     messageBox.classList.add("text-success");

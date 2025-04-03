@@ -402,8 +402,15 @@
                     </div>
                     <div class="right-info ml-auto">
                       <div>
-                        <span class="pe-7s-comment fz-18 mr-10"></span>
-                        <!-- <span class="opacity-7">02 Comments</span> -->
+                        <span
+                          onclick="scrollToComments()"
+                          class="pe-7s-comment fz-18 mr-10"
+                        ></span>
+                        <span
+                          id="blog-details-comment-count-display"
+                          class="opacity-7"
+                          >02 Comments</span
+                        >
                       </div>
                     </div>
                   </div>
@@ -420,38 +427,39 @@
             <div class="container">
               <div class="row xlg-marg">
                 <div class="col-lg-8">
-                  <div id="blog-content-container" class="main-post"></div>
-                  <div class="info-area flex pt-50 bord-thin-top">
-                    <div>
-                      <div class="tags flex">
-                        <div class="valign">
-                          <span>Tags :</span>
+                  <div id="blog-content-container" class="main-post">
+                    <div class="info-area flex pt-50 bord-thin-top">
+                      <div>
+                        <div class="tags flex">
+                          <div class="valign">
+                            <span>Tags :</span>
+                          </div>
+                          <div id="tags-container"></div>
                         </div>
-                        <div id="tags-container"></div>
                       </div>
-                    </div>
-                    <div class="ml-auto">
-                      <div class="share-icon flex">
-                        <div class="valign">
-                          <span>Share :</span>
-                        </div>
-                        <div>
-                          <a href="https://www.facebook.com/"
-                            ><i class="fab fa-facebook-f"></i
-                          ></a>
-                          <a href="https://www.twitter.com/"
-                            ><i class="fab fa-twitter"></i
-                          ></a>
-                          <a href="https://www.youtube.com/"
-                            ><i class="fab fa-youtube"></i
-                          ></a>
+                      <div class="ml-auto">
+                        <div class="share-icon flex">
+                          <div class="valign">
+                            <span>Share :</span>
+                          </div>
+                          <div>
+                            <a href="https://www.facebook.com/"
+                              ><i class="fab fa-facebook-f"></i
+                            ></a>
+                            <a href="https://www.twitter.com/"
+                              ><i class="fab fa-twitter"></i
+                            ></a>
+                            <a href="https://www.youtube.com/"
+                              ><i class="fab fa-youtube"></i
+                            ></a>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   <div class="comments-from mt-80 md-mb80">
-                    <div class="mb-60">
+                    <div id="leaveacommentcontainer" class="mb-60">
                       <h3>Leave a comment</h3>
                     </div>
                     <div
