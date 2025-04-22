@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ImageBackground, Pressable } from "react-native";
 import React from "react";
-import demoBg from "../../assets/images/partial-react-logo.png";
+import demoBg from "../assets/images/partial-react-logo.png";
 import { Link } from "expo-router";
 const app = () => {
   return (
