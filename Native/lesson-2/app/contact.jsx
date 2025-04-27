@@ -7,9 +7,14 @@ const app = () => {
         <View style={styles.container}>
             <ImageBackground style={styles.image} source={demoBg}>
                 <Text style={styles.text}>Coffee Shop</Text>
-                <Link Pressabl asChild href="/contact" style={{ marginHorizontal: "auto" }}>
+                <Link Pressabl asChild href="/" style={{ marginHorizontal: "auto" }}>
                     <Pressable style={styles.button}>
-                        <Text style={styles.buttonText}>Contact us</Text>
+                        <Text style={styles.buttonText}>Home</Text>
+                    </Pressable>
+                </Link>
+                <Link Pressabl asChild href="/menu" style={{ marginHorizontal: "auto" }}>
+                    <Pressable style={styles.button}>
+                        <Text style={styles.buttonText}>Menu</Text>
                     </Pressable>
                 </Link>
             </ImageBackground>

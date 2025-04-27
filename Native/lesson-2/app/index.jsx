@@ -1,15 +1,20 @@
 import { View, Text, StyleSheet, ImageBackground, Pressable } from "react-native";
 import React from "react";
-import demoBg from "../assets/images/partial-react-logo.png";
+import demoBg from "../assets/images/coffee.jpeg";
 import { Link } from "expo-router";
 const app = () => {
   return (
     <View style={styles.container}>
       <ImageBackground style={styles.image} source={demoBg}>
-        <Text style={styles.text}>Coffee Shop</Text>
-        <Link Pressabl asChild href="/contact" style={{ marginHorizontal: "auto" }}>
+        <Text style={styles.text}>Home</Text>
+        <Link Pressable asChild href="/contact" style={{ marginHorizontal: "auto" }}>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Contact us</Text>
+          </Pressable>
+        </Link>
+        <Link Pressable asChild href="/menu" style={{ marginHorizontal: "auto" }}>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>Menu</Text>
           </Pressable>
         </Link>
       </ImageBackground>
@@ -51,11 +56,15 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 60,
+    marginBottom: 50,
     justifyContent: "center",
     color: "white",
-    borderRadius: 10,
-    backgroundColor: "rgba(0,0,0,0.75)",
-    padding: 6,
+    borderRadius: 20,
+    backgroundColor: "rgba(0,0,0,0.60)",
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   buttonText: {
     color: "white",

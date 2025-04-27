@@ -50,7 +50,7 @@ export default function RootLayout() {
         name="index"
         options={{
           title: "Home",
-          headerShown: false,
+          headerShown: true,
           headerTitle: "index",
         }}
       />
@@ -58,12 +58,17 @@ export default function RootLayout() {
         name="menu"
         options={{
           title: "Menu",
+          headerShown: true,
           headerTitle: "Coffee shop menu",
         }}
       />
       <Stack.Screen
         name="contact"
-        options={{ title: "Contact us", headerTitle: "Contact Us" }}
+        options={{
+          title: "Contact us",
+          headerShown: true,
+          headerTitle: "Contact Us",
+        }}
       />
       <Stack.Screen name="+not-found" options={{ headerShown: false }} />
     </Stack>
