@@ -8,7 +8,6 @@ import flatwhite from "@/assets/images/menu/flatwhite.png";
 import cortado from "@/assets/images/menu/cortado.png";
 import coldbrew from "@/assets/images/menu/coldbrew.png";
 import affogato from "@/assets/images/menu/affogato.png";
-
 export default [
   espresso,
   americano,

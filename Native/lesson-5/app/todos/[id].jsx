@@ -61,8 +61,8 @@ export default function EditScreen() {
             }
 
             router.push('/')
-        } catch (e) {
-            console.error(e)
+        } catch (error) {
+            console.error(error)
         }
     }
 
