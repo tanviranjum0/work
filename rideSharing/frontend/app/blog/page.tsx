@@ -5,8 +5,8 @@ import firstBlog from "../../images/blog/food-delivery.jpeg";
 const page = () => {
   return (
     <div>
-      <div className="w-[80vw] mx-auto">
-        <div className="my-10  border-b-2 justify-between flex">
+      <div className="w-[80vw] text-center mx-auto">
+        <div className="my-10 border-b-2 justify-between flex">
           <div className="p-4">
             <div className="text-3xl font-semibold">AutoLane Blog</div>
             <div className="text-xl text-gray-700">
