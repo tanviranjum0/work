@@ -15,6 +15,7 @@ const App = () => (
             defaultZoom={9}
             gestureHandling={'greedy'}
             fullscreenControl={false}>
+
             <Directions />
         </Map>
         {/* <ControlPanel /> */}
