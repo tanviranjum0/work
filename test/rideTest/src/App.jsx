@@ -4,8 +4,8 @@ import Demo from './components/Demo'
 const App = () => {
   return (
     <div>
-      {/* <Test /> */}
-      <Demo />
+      <Test />
+      {/* <Demo /> */}
     </div>
   )
 }
