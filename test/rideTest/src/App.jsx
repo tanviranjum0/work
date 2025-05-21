@@ -1,8 +1,7 @@
 import Test from './components/Test'
-// import Demo from './components/Demo'
+import Demo from './components/Demo'
 
 const App = () => {
-  const hello = "Hello"
   return (
     <div>
       <Test />

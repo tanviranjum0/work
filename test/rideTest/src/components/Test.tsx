@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+
 import {
   APIProvider,
   Map,
@@ -44,6 +45,7 @@ const Markers = ({ points }: Props) => {
   const clusterer = useRef<MarkerClusterer | null>(null);
   useEffect(() => {
     if (!map) return;
+
     if (!clusterer.current) {
       clusterer.current = new MarkerClusterer({ map });
     }
@@ -53,6 +55,7 @@ const Markers = ({ points }: Props) => {
     clusterer.current?.clearMarkers();
     clusterer.current?.addMarkers(Object.values(markers));
   }, [markers]);
+
   const setMarkerRef = (marker: Marker | null, key: string) => {
     if (marker && markers[key]) return;
     if (!marker && !markers[key]) return;
@@ -68,7 +71,7 @@ const Markers = ({ points }: Props) => {
     });
   };
 
-  console.log(markers);
+  // console.log(markers);
 
   return (
     <>

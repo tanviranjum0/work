@@ -8,7 +8,7 @@ const App = () => {
         <APIProvider apiKey={import.meta.env.VITE_MAP_API} >
             <div style={{ width: '100vw', height: '100vh' }}>
                 <Map
-                    mapId={import.meta.env.VITE_MAP_ID}
+                    // mapId={import.meta.env.VITE_MAP_ID}
                     zoom={8}
                     center={{ lat: 37.7749, lng: -122.4194 }} // San Francisco
                 ><AdvancedMarker onClick={() => setOpen(true)} position={{ lat: 37.7749, lng: -122.4194 }}><Pin background={"gray"} borderColor={"green"} glyphColor={"purple"} /></AdvancedMarker>
