@@ -5,7 +5,7 @@ const App = () => {
   return (
     <div>
       {/* <Test /> */}
-      {/* <Demo /> */}
+      <Demo />
     </div>
   )
 }
