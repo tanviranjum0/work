@@ -1,11 +1,8 @@
 import React, { useEffect, useRef } from "react";
-
 import {
   APIProvider,
   Map,
   AdvancedMarker,
-  Pin,
-  InfoWindow,
   useMap,
 } from "@vis.gl/react-google-maps";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
@@ -45,7 +42,6 @@ const Markers = ({ points }: Props) => {
   const clusterer = useRef<MarkerClusterer | null>(null);
   useEffect(() => {
     if (!map) return;
-
     if (!clusterer.current) {
       clusterer.current = new MarkerClusterer({ map });
     }
@@ -70,9 +66,6 @@ const Markers = ({ points }: Props) => {
       }
     });
   };
-
-  // console.log(markers);
-
   return (
     <>
       {points.map((point) => (
