@@ -70,13 +70,15 @@ const Directions = () => {
       });
   }, [directionsService, directionRenderer]);
 
-  console.log("Routes:", routes);
-  console.log("Selected Route:", selected);
+  // console.log("Routes:", routes);
+  // console.log("Selected Route:", selected);
+  console.log("directionRenderer:", directionRenderer);
+  console.log("directionsService:", directionsService);
 
   if (!leg) return <div className="directions">No way found</div>;
 
   return (
-    <div className="directions">
+    <div className="directions top-0 right-0 absolute p-4 bg-white">
       <h2>{selected.summary}</h2>
       <p>
         {leg.start_address.split(",")[0]} to {leg.end_address.split(",")[0]}
