@@ -15,6 +15,7 @@
     "@reach/combobox": "^0.18.0",
     "@react-google-maps/api": "^2.20.6",
     "@tailwindcss/vite": "^4.1.8",
+    "@ubilabs/google-maps-react-hooks": "^2.0.2",
     "@vis.gl/react-google-maps": "^1.5.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
