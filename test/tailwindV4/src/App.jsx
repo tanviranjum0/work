@@ -1,12 +1,17 @@
 import React from 'react'
+import FileUploadStyle from './components/FileUploadStyle'
+import ThemeTest from './components/ThemeTest'
+import GroupPeerFunction from './components/GroupPeerFunction'
+import BasicAnimation from './components/BasicAnimation'
 
 const App = () => {
   return (
-    <div>
-      {/* <div className="text-4xl mx-auto">Hello World</div> */}
-      <label htmlFor="" className='my-4 block'>
-        <input type="file" name="file" id="file" className='block w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100' />
-      </label>
+    <div className=''>
+      {/* <FileUploadStyle /> */}
+      {/* <ThemeTest /> */}
+      {/* <GroupPeerFunction /> */}
+      {/* <BasicAnimation /> */}
+      {/* <div className="bg-black w-20 m-16 p-16 h-10 rounded-lg shadow-[0_0_10px_purple]"></div> */}
     </div>
   )
 }
