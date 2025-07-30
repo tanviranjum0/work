@@ -1,4 +1,4 @@
-import { motion, LayoutGroup } from "framer-motion";
+import { motion } from "framer-motion";
 import "./LayoutAnim.css";
 import { useState } from "react";
 

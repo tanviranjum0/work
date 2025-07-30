@@ -10,9 +10,9 @@ const App = () => {
         <LayoutAnim />
       </LayoutGroup>
       <LayoutAnim /> */}
-      <LayoutAnim />
+      {/* <LayoutAnim /> */}
 
-      {/* <LayoutAnim2 /> */}
+      <LayoutAnim2 />
     </div>
   );
 };
