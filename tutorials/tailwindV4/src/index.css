@@ -1,4 +1,5 @@
 @import "tailwindcss";
+/* While using DarkMode Element you have to use the line below in css file */
 @custom-variant dark (&:where(.dark, .dark *));
 @theme {
   --color-primary: #4f46e5;
