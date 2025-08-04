@@ -1,10 +1,12 @@
-import Test from "@/components/todoApp/Test";
+import ReactResponsive from "@/components/todoApp/ReactResponsive";
+import TodoApp from "@/components/todoApp/TodoApp";
 import React from "react";
 
 const page = () => {
   return (
     <div>
-      <Test />
+      <TodoApp />
+      {/* <ReactResponsive /> */}
     </div>
   );
 };

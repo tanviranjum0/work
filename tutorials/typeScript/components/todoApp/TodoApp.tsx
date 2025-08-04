@@ -1,11 +1,20 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "./InputField";
 import TodoList from "./TodoList";
 import { Todo } from "@/models/model";
 
 const Test = () => {
-  const [todos, setTodos] = useState<Array<Todo>>([]);
+  var koo;
+  if (typeof window !== "undefined") {
+    koo = localStorage.getItem("TodoAppTodos");
+  }
+
+  const [todos, setTodos] = useState<Array<Todo>>(koo ? JSON.parse(koo!) : []);
+
+  useEffect(() => {
+    localStorage.setItem("TodoAppTodos", JSON.stringify(todos));
+  }, [todos]); //
 
   return (
     <div className="select-none">
@@ -14,7 +23,7 @@ const Test = () => {
       </div>
       <div className="h-screen w-full bg-conic from-pink-200 to-fuchsia-300">
         <div className=" mx-20 ">
-          <InputField setTodos={setTodos} />
+          <InputField todos={todos} setTodos={setTodos} />
           <TodoList setTodos={setTodos} todos={todos} />
         </div>
       </div>
