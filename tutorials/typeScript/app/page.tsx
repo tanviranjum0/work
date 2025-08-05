@@ -1,3 +1,4 @@
+"use client";
 import ReactResponsive from "@/components/todoApp/ReactResponsive";
 import TodoApp from "@/components/todoApp/TodoApp";
 import React from "react";

@@ -1,4 +1,3 @@
-"use client";
 import { motion, AnimatePresence } from "motion/react";
 import { MdEdit } from "react-icons/md";
 import { useRef, useState, useEffect, FormEvent } from "react";

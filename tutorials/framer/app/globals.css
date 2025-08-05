@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-body {
+/* body {
   --black: #000000;
   --ash-black: #222;
   --white: #fafafa;
@@ -254,4 +254,4 @@ input[type="number"]::-webkit-inner-spin-button {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+} */
