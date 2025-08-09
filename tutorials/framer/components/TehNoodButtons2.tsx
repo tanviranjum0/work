@@ -1,5 +1,4 @@
 import React from "react";
-// import "./StartCultButton.css";
 import "./Day 25/styles2.css";
 
 const StartCultButton = () => {

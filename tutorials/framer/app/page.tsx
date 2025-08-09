@@ -7,8 +7,8 @@ const page = () => {
   return (
     <div>
       {/* <Test /> */}
-      {/* <TehNoodButtons /> */}
-      <TehNoodButtons2 />
+      <TehNoodButtons />
+      {/* <TehNoodButtons2 /> */}
     </div>
   );
 };
