@@ -5,26 +5,33 @@ import { MdDone } from "react-icons/md";
 import { IoMdDoneAll } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import { SingleTodoProps } from "@/models/model";
-const SingleTodo = ({ todos, todo, setTodos }: SingleTodoProps) => {
+import { useTodoContext } from "./context/StoreContextMain";
+const SingleTodo = ({ todo }: SingleTodoProps) => {
+  const TodoContext = useTodoContext();
   const [edit, setEdit] = useState(false);
   const focus = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     focus.current?.focus();
   }, [edit]);
+
   const handleDelete = () => {
     setEdit(false);
-    setTodos((prev) => prev.filter((t) => t.id !== todo.id));
-    localStorage.setItem("TodoAppTodos", JSON.stringify(todos));
+    TodoContext.setTodos((prev) => prev.filter((t) => t.id !== todo.id));
+    localStorage.setItem("TodoAppTodos", JSON.stringify(TodoContext.todos));
   };
+
   const handleDone = () => {
-    setTodos((prev) =>
+    TodoContext.setTodos((prev) =>
       prev.map((t) => (t.id === todo.id ? { ...t, isDone: !t.isDone } : t))
     );
-    localStorage.setItem("TodoAppTodos", JSON.stringify(todos));
+    localStorage.setItem("TodoAppTodos", JSON.stringify(TodoContext.todos));
   };
+
   const handleToggleEdit = () => {
     setEdit((prev) => !prev);
   };
+
   const handleUpdateTodo = (e: FormEvent) => {
     e.preventDefault();
     const updatedTodo = document.getElementById(
@@ -33,13 +40,12 @@ const SingleTodo = ({ todos, todo, setTodos }: SingleTodoProps) => {
     if (!updatedTodo || updatedTodo.value.trim() === "") {
       return;
     }
-
-    setTodos((prev) =>
+    TodoContext.setTodos((prev) =>
       prev.map((t) =>
         t.id === todo.id ? { ...t, todo: `${updatedTodo.value}` } : t
       )
     );
-    localStorage.setItem("TodoAppTodos", JSON.stringify(todos));
+    localStorage.setItem("TodoAppTodos", JSON.stringify(TodoContext.todos));
     setEdit(false);
   };
   return (
@@ -64,19 +70,19 @@ const SingleTodo = ({ todos, todo, setTodos }: SingleTodoProps) => {
           className="flex gap-4 py-2 text-bold text-xl"
         >
           <button
-            onClick={handleToggleEdit}
+            onClick={() => handleToggleEdit()}
             className="cursor-pointer focus:scale-95 hover:scale-110 transition-all duration-200"
           >
             <MdEdit />
           </button>
           <button
-            onClick={handleDone}
+            onClick={() => handleDone()}
             className="cursor-pointer focus:scale-95 hover:scale-110 transition-all duration-200"
           >
             {todo.isDone ? <IoMdDoneAll /> : <MdDone />}
           </button>
           <button
-            onClick={handleDelete}
+            onClick={() => handleDelete()}
             className="cursor-pointer focus:scale-95 hover:scale-110 transition-all duration-200"
           >
             <MdDelete />
@@ -105,7 +111,7 @@ const SingleTodo = ({ todos, todo, setTodos }: SingleTodoProps) => {
             transition={{
               duration: 0.5,
             }}
-            onSubmit={handleUpdateTodo}
+            onSubmit={(e) => handleUpdateTodo(e)}
             key={todo.id + 123}
             className="flex px-2"
           >

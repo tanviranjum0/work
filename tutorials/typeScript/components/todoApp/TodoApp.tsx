@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import InputField from "./InputField";
 import TodoList from "./TodoList";
 import { Todo } from "@/models/model";
+import { useTodoContext } from "./context/StoreContextMain";
 
 const TodoApp = () => {
   var koo;
@@ -15,15 +16,18 @@ const TodoApp = () => {
     localStorage.setItem("TodoAppTodos", JSON.stringify(todos));
   }, [todos]); //
 
+  const TodoContext = useTodoContext();
+
   return (
     <div className="select-none">
+      <input type="text" />
       <div className="text-center text-2xl md:text-4xl py-10 bg-gradient-to-r from-pink-400 to-fuchsia-700">
         Taskify
       </div>
       <div className="h-screen w-full bg-conic from-pink-200 to-fuchsia-300">
         <div className="sm:mx-10  md:mx-20 mx-2">
-          <InputField todos={todos} setTodos={setTodos} />
-          <TodoList setTodos={setTodos} todos={todos} />
+          <InputField />
+          <TodoList />
         </div>
       </div>
     </div>

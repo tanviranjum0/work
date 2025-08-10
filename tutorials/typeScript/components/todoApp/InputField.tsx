@@ -1,24 +1,10 @@
-import React, { FormEvent } from "react";
-import { InputFieldProps } from "@/models/model";
-const InputField = ({ setTodos, todos }: InputFieldProps) => {
-  const handleNewTodoAdd = (e: FormEvent) => {
-    e.preventDefault();
-    const text = document.getElementById("text") as HTMLInputElement | null;
-    if (text && text instanceof HTMLInputElement) {
-      const todoText = text.value.trim();
-      if (todoText) {
-        setTodos((prevTodos) => [
-          ...prevTodos,
-          { id: Date.now(), todo: todoText, isDone: false },
-        ]);
-        text.value = ""; // Clear the input field after adding
-        localStorage.setItem("TodoAppTodos", JSON.stringify(todos));
-      }
-    }
-  };
+import { useTodoContext } from "./context/StoreContextMain";
+const InputField = () => {
+  const TodoContext = useTodoContext();
+
   return (
     <form
-      onSubmit={handleNewTodoAdd}
+      onSubmit={TodoContext.handleNewTodoAdd}
       className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 "
     >
       <input

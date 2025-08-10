@@ -5,9 +5,7 @@ export interface Todo {
 }
 
 export interface SingleTodoProps {
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
   todo: Todo;
-  todos: Todo[];
 }
 
 export interface TodoListProps {
