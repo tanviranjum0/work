@@ -1,4 +1,4 @@
-import "./Day 25/style.css";
+import "./day2.css";
 
 const TehNoodButtons = () => {
   return (

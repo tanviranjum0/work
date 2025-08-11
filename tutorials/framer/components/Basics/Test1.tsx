@@ -1,53 +1,40 @@
 "use client";
-
-import * as motion from "motion/react-client";
-import { useState } from "react";
-
-export default function LayoutAnimation() {
-  const [isOn, setIsOn] = useState(false);
-
-  const toggleSwitch = () => setIsOn(!isOn);
-
+import { motion } from "motion/react";
+import { useRef } from "react";
+const Test1 = () => {
+  const ref = useRef<HTMLDivElement>(null!);
   return (
-    <button
-      className="toggle-container"
-      style={{
-        ...container,
-        justifyContent: "flex-" + (isOn ? "start" : "end"),
-      }}
-      onClick={toggleSwitch}
-    >
+    <div className="flex justify-center items-center h-screen w-screen">
+      {/* <div ref={ref} className="h-96 w-96 rounded-xl bg-amber-200">
+        <motion.div
+          // dragMomentum={false}
+          drag
+          dragConstraints={ref}
+          dragElastic={0}
+          dragDirectionLock
+          // dragConstraints={{ top: -200, bottom: 300 }}
+          className="h-20 w-20 rounded-xl bg-amber-400 "
+        ></motion.div>
+      </div> */}
+      {/* <motion.div
+        className="h-20 w-20 rounded-xl bg-amber-400 "
+        whileTap={{ scale: 2 }}
+      >
+        <button
+          className="text-black bg-amber-200 "
+          // onPointerDownCapture={(e) => e.stopPropagation()}
+        >
+          Hello
+        </button>
+      </motion.div> */}
       <motion.div
-        className="toggle-handle"
-        style={handle}
-        layout
-        transition={{
-          type: "spring",
-          visualDuration: 0.2,
-          bounce: 0.2,
+        className="h-20 w-20 rounded-xl bg-amber-400 "
+        onPan={(e, pointInfo) => {
+          console.log("Hello", e);
         }}
       />
-    </button>
+    </div>
   );
-}
-
-/**
- * ==============   Styles   ================
- */
-
-const container = {
-  width: 100,
-  height: 50,
-  backgroundColor: "var(--hue-3-transparent)",
-  borderRadius: 50,
-  cursor: "pointer",
-  display: "flex",
-  padding: 10,
 };
 
-const handle = {
-  width: 50,
-  height: 50,
-  backgroundColor: "#9911ff",
-  borderRadius: "50%",
-};
+export default Test1;
