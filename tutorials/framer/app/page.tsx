@@ -9,10 +9,10 @@ const page = () => {
     <div className="">
       {/* <Day3 /> */}
       {/* <Day4 /> */}
-      {/* <Test1 /> */}
+      <Test1 />
       {/* <Day4 /> */}
       {/* <Test2 /> */}
-      <Day6 />
+      {/* <Day6 /> */}
     </div>
   );
 };
