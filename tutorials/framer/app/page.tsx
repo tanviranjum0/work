@@ -8,6 +8,7 @@ import Day7 from "@/components/buttons/Day7";
 import Day8 from "@/components/buttons/Day8";
 import Day9 from "@/components/buttons/Day9";
 import Day10 from "@/components/buttons/Day10";
+import Test3 from "@/components/Basics/Test3";
 const page = () => {
   return (
     <div className="">
@@ -20,7 +21,8 @@ const page = () => {
       {/* <Day7 /> */}
       {/* <Day8 /> */}
       {/* <Day9 /> */}
-      <Day10 />
+      {/* <Day10 /> */}
+      <Test3 />
     </div>
   );
 };
