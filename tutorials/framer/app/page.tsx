@@ -10,6 +10,8 @@ import Day9 from "@/components/buttons/Day9";
 import Day10 from "@/components/buttons/Day10";
 import Day11 from "@/components/buttons/Day11";
 import Test3 from "@/components/Basics/Test3";
+import UseInView from "@/components/Basics/UseInView";
+import UseAnimate from "@/components/Basics/UseAnimate";
 const page = () => {
   return (
     <div className="">
@@ -25,6 +27,8 @@ const page = () => {
       {/* <Day10 /> */}
       {/* <Test3 /> */}
       {/* <Day11 /> */}
+      {/* <UseInView /> */}
+      {/* <UseAnimate /> */}
     </div>
   );
 };
