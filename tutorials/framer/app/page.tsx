@@ -12,6 +12,7 @@ import Day11 from "@/components/buttons/Day11";
 import Test3 from "@/components/Basics/Test3";
 import UseInView from "@/components/Basics/UseInView";
 import UseAnimate from "@/components/Basics/UseAnimate";
+import UseAnimate2 from "@/components/Basics/UseAnimate2";
 const page = () => {
   return (
     <div className="">
@@ -29,6 +30,7 @@ const page = () => {
       {/* <Day11 /> */}
       {/* <UseInView /> */}
       {/* <UseAnimate /> */}
+      {/* <UseAnimate2 /> */}
     </div>
   );
 };
