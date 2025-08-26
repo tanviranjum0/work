@@ -20,7 +20,10 @@ const page = () => {
       {/* <Day4 /> */}
       {/* <Test1 /> */}
       {/* <Day4 /> */}
-      <Test2 />
+      <div className="flex w-[100vw] h-[100vh] justify-center items-center">
+        <Test2 />
+      </div>
+
       {/* <Day6 /> */}
       {/* <Day7 /> */}
       {/* <Day8 /> */}
