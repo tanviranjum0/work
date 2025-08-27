@@ -1,257 +1,230 @@
 "use client";
-import React from "react";
-import "./test2.css";
-import { motion, useAnimation } from "framer-motion";
-// import { wrap, swipePower } from "./utils";
-// import "./style.css";
-// import data from "./data";
-interface Data {
-  name: string;
-  vicinity: string;
-  address: string;
-  distance: string;
-  duration: string;
-}
+import React, { useRef } from "react";
+import {
+  motion,
+  MotionValue,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useMotionTemplate,
+  AnimatePresence,
+  useReducedMotion,
+} from "framer-motion";
 
-function curry(func: Function) {
-  return (min: number, max: number, v: number) =>
-    v !== undefined ? func(min, max, v) : (cv: number) => func(min, max, cv);
-}
-
-function wrapFn(min: number, max: number, v: number) {
-  const rangeSize = max - min;
-  return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min;
-}
-
-const wrap = curry(wrapFn);
-
-interface SwipePower {
-  offset: number;
-  absDistance: number;
-}
-function swipePower(offset: number, absDistance: number) {
-  return (offset / absDistance) * 100;
-}
-
-const data: Data[] = [
-  {
-    name: "Lorem ipsum",
-    vicinity: "Geöffnet",
-    address: "Straße 1, Stadt",
-    distance: "0.5 km",
-    duration: "10min.",
-  },
-  {
-    name: "Lorem ipsum amit impur",
-    vicinity: "Geöffnet",
-    address: "Straße 12, Stadt",
-    distance: "0.5 km",
-    duration: "10min.",
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    vicinity: "Geöffnet",
-    address: "Straße 13, Stadt",
-    distance: "0.5 km",
-    duration: "10min.",
-  },
-];
-const variants = {
-  toLeft: {
-    x: "-100%",
-    pointerEvents: "none",
-  },
-  toRight: {
-    x: "100%",
-    pointerEvents: "none",
-  },
-  center: {
-    x: 0,
-    pointerEvents: "initial",
-  },
+type HoloDepthButtonProps = {
+  label?: string;
+  onClick?: () => void;
+  width?: number; // px
+  height?: number; // px
+  accent?: string; // CSS color for edge glow
+  secondary?: string; // CSS color for inner glow
+  className?: string;
 };
 
-function Carousel() {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [rect, setRect] = React.useState<DOMRect | undefined>();
-  const [yOffset, setYOffset] = React.useState(0);
+/**
+ * HoloDepthButton
+ * - 3D parallax tilt based on cursor (rotateX / rotateY)
+ * - Specular highlight that tracks cursor
+ * - Animated neon edge ring using conic gradient + mask
+ * - Press depth: z "depression" and springy rebound
+ * - Reduced-motion safe
+ */
+const HoloDepthButton: React.FC<HoloDepthButtonProps> = ({
+  label = "LAUNCH",
+  onClick,
+  width = 260,
+  height = 96,
+  accent = "#00F5FF",
+  secondary = "#8A5CFF",
+  className = "",
+}) => {
+  const r = useRef<HTMLButtonElement | null>(null);
+  const prefersReduced = useReducedMotion();
 
-  React.useEffect(() => {
-    if (ref.current) {
-      const [itemLower] = ref.current.getElementsByClassName("item-lower");
-      setYOffset(itemLower.getBoundingClientRect().height);
-      setRect(ref.current.getBoundingClientRect());
-    }
-  }, []);
+  // Cursor position (relative to center)
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
 
-  const [page, setPage] = React.useState(0);
-  const prev = wrap(0, data.length, page - 1);
-  const cur = wrap(0, data.length, page);
-  const next = wrap(0, data.length, page + 1);
+  // Tilt angles derived from cursor
+  const tiltX = useSpring(useTransform(my, [-0.5, 0.5], [12, -12]), {
+    stiffness: 180,
+    damping: 16,
+    mass: 0.5,
+  });
+  const tiltY = useSpring(useTransform(mx, [-0.5, 0.5], [-18, 18]), {
+    stiffness: 180,
+    damping: 16,
+    mass: 0.5,
+  });
 
-  const animation = useAnimation();
-  const handleDragEnd = async (
-    evt: unknown,
-    { offset }: { offset: { x: number; y: number } }
-  ) => {
-    const power = swipePower(offset.x, rect?.width ?? 1);
-    if (power > 60) {
-      await animation.start("toRight");
-      paginate(-1);
-    } else if (power < -60) {
-      await animation.start("toLeft");
-      paginate(1);
-    }
+  // Depth (z) for press effect
+  const press: MotionValue<number> = useSpring(0, {
+    stiffness: 300,
+    damping: 22,
+  });
+
+  // “Parallax” for inner layers
+  const parallaxX = useTransform(mx, [-0.5, 0.5], [-8, 8]);
+  const parallaxY = useTransform(my, [-0.5, 0.5], [-6, 6]);
+
+  // Specular highlight follows cursor
+  const highlightX = useTransform(mx, [-0.5, 0.5], ["20%", "80%"]);
+  const highlightY = useTransform(my, [-0.5, 0.5], ["15%", "85%"]);
+  const shine = useMotionTemplate`radial-gradient(120px 120px at ${highlightX} ${highlightY}, rgba(255,255,255,0.22), rgba(255,255,255,0.06) 40%, transparent 60%)`;
+
+  // Animated edge gradient
+  const edge = useMotionTemplate`conic-gradient(from 0deg, ${accent}, ${secondary}, ${accent})`;
+
+  const handlePointerMove: React.PointerEventHandler = (e) => {
+    if (!r.current) return;
+    const rect = r.current.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width; // 0..1
+    const py = (e.clientY - rect.top) / rect.height; // 0..1
+    mx.set(px - 0.5);
+    my.set(py - 0.5);
   };
 
-  const paginate = (dir: number) => {
-    setPage(page + dir);
+  const handlePointerLeave: React.PointerEventHandler = () => {
+    mx.set(0);
+    my.set(0);
   };
+
+  const handlePointerDown: React.PointerEventHandler = () => {
+    press.set(1);
+  };
+  const handlePointerUp: React.PointerEventHandler = () => {
+    press.set(0);
+  };
+
+  // Reduced-motion fallback: gentle scale only
+  const pressScale = useTransform(press, [0, 1], [1, 0.98]);
+  const pressDepth = useTransform(press, [0, 1], [0, -6]);
+  const transformStyle = prefersReduced
+    ? useMotionTemplate`scale(${pressScale})`
+    : useMotionTemplate`
+        rotateX(${tiltX}deg)
+        rotateY(${tiltY}deg)
+        translateZ(${pressDepth}px)
+      `;
 
   return (
-    <div
-      className="carousel overflow-x-hidden w-full h-full "
-      style={{ transform: `translateY(${yOffset}px)` }}
+    <motion.button
+      ref={r}
+      aria-label={label}
+      onClick={onClick}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      className={`relative select-none will-change-transform rounded-2xl outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/40 ${className}`}
+      style={{
+        width,
+        height,
+        transformStyle: "preserve-3d",
+        perspective: 1000,
+        // Nice ambient background for demos; remove if you embed elsewhere
+        background:
+          "linear-gradient(135deg, rgba(10,11,20,0.9), rgba(10,11,20,0.9))",
+      }}
+      whileHover={{ scale: prefersReduced ? 1.02 : 1.01 }}
+      whileTap={{ scale: prefersReduced ? 0.98 : 0.999 }}
     >
+      {/* 3D container (tilt + press depth) */}
       <motion.div
-        key={page}
-        className="track"
-        drag="x"
-        dragDirectionLock
-        dragConstraints={{ left: 0, right: 0 }}
-        onDragEnd={handleDragEnd}
-        variants={variants}
-        animate={animation}
-        dragMomentum={false}
-        transition={{
-          x: { type: "spring", mass: 0.5, stiffness: 500, damping: 50 },
+        className="absolute inset-0 rounded-2xl overflow-hidden"
+        style={{
+          transform: transformStyle,
+          boxShadow:
+            "0 30px 80px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06)",
         }}
       >
-        <Item key={prev} data={data[prev]} />
-        <Item ref={ref} key={cur} data={data[cur]} yOffset={yOffset} />
-        <Item key={next} data={data[next]} />
+        {/* Edge ring with animated conic gradient + mask to show only border */}
+        <motion.div
+          aria-hidden
+          className="absolute inset-0 rounded-2xl"
+          style={{
+            background: edge,
+            mask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+            WebkitMask:
+              "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+            padding: "2px",
+            WebkitMaskComposite: "xor",
+            maskComposite: "exclude",
+            filter: "drop-shadow(0 0 12px rgba(0,245,255,0.35))",
+          }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+        />
+
+        {/* Base plate (subtle texture) */}
+        <motion.div
+          aria-hidden
+          className="absolute inset-0 rounded-2xl"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.25))",
+          }}
+        />
+
+        {/* Parallax inner glow */}
+        <motion.div
+          aria-hidden
+          className="absolute rounded-xl"
+          style={{
+            inset: 6,
+            translateX: parallaxX,
+            translateY: parallaxY,
+            borderRadius: 14,
+            background:
+              "radial-gradient(70% 120% at 50% 10%, rgba(0,245,255,0.25), rgba(138,92,255,0.18) 40%, rgba(0,0,0,0) 65%)",
+            boxShadow:
+              "inset 0 0 32px rgba(0,245,255,0.25), inset 0 0 16px rgba(138,92,255,0.25)",
+          }}
+        />
+
+        {/* Dynamic specular highlight that tracks cursor */}
+        <motion.div
+          aria-hidden
+          className="absolute inset-0 rounded-2xl pointer-events-none mix-blend-screen"
+          style={{ background: shine }}
+        />
+
+        {/* Label layer (slight parallax opposite to inner glow for depth) */}
+        <motion.span
+          className="absolute inset-0 grid place-items-center font-extrabold tracking-[0.18em] uppercase"
+          style={{
+            translateX: useTransform(parallaxX, (v) => v * -0.5),
+            translateY: useTransform(parallaxY, (v) => v * -0.5),
+            background: "linear-gradient(90deg, #ffffff, #c8f7ff 60%, #e3d4ff)",
+            WebkitBackgroundClip: "text",
+            color: "transparent",
+            textShadow:
+              "0 1px 0 rgba(0,0,0,0.6), 0 0 18px rgba(0,245,255,0.35)",
+            fontSize: 18,
+            letterSpacing: "0.18em",
+          }}
+        >
+          {label}
+        </motion.span>
+
+        {/* Press “depth well” feedback */}
+        <AnimatePresence>
+          <motion.div
+            aria-hidden
+            className="absolute inset-0 rounded-2xl pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(60% 60% at 50% 50%, rgba(0,0,0,0.18), transparent 70%)",
+            }}
+            animate={{ opacity: press }}
+          />
+        </AnimatePresence>
       </motion.div>
-    </div>
+    </motion.button>
   );
-}
+};
 
-interface ItemProps {
-  data: Data;
-  yOffset?: number;
-}
+// Example usage:
+// <HoloDepthButton label="ENTER ARENA" onClick={() => console.log('clicked')} />
 
-const Item = React.forwardRef<HTMLDivElement, ItemProps>(function (
-  { data, yOffset = 0 },
-  ref
-) {
-  const variants = {
-    top: {
-      y: -yOffset,
-    },
-    bottom: {
-      y: 0,
-    },
-  };
-  const currentVariant = React.useRef("bottom");
-  const inMotion = React.useRef(false);
-  const animation = useAnimation();
-
-  /**
-   * handleDragStart handles a drag start event and sets the inMotion ref
-   * to true. We enable click events only if `inMotion != true`.
-   * @returns {void}
-   */
-  const handleDragStart = async () => {
-    inMotion.current = true;
-  };
-
-  /**
-   * handleDragEnd handles the drag end event and decides, if we need to
-   * transition into a new animation variant.
-   * @param {{}} info - Drag informations
-   * @returns {void}
-   */
-  const handleDragEnd = async (
-    _: unknown,
-    {
-      point,
-      offset,
-      velocity,
-    }: { point: { y: number }; offset: { y: number }; velocity: { y: number } }
-  ) => {
-    const pos = point.y * -1;
-    const dir = offset.y < 0 ? "up" : "down";
-
-    if (dir === "up") {
-      if (pos > yOffset / 4 || velocity.y < -20) {
-        currentVariant.current = "top";
-      } else {
-        currentVariant.current = "bottom";
-      }
-    } else if (dir === "down") {
-      if (pos < yOffset / 4 || velocity.y > 20) {
-        currentVariant.current = "bottom";
-      } else {
-        currentVariant.current = "top";
-      }
-    }
-
-    await animation.start(currentVariant.current);
-    inMotion.current = false;
-  };
-
-  const handleOnClick = async () => {
-    if (inMotion.current === false) {
-      currentVariant.current =
-        currentVariant.current === "top" ? "bottom" : "top";
-      await animation.start(currentVariant.current);
-    }
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      className="item"
-      drag={yOffset ? "y" : false}
-      dragDirectionLock
-      dragConstraints={{ bottom: 0, top: -yOffset }}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-      dragMomentum={false}
-      variants={variants}
-      animate={animation}
-      transition={{
-        y: { type: "spring", stiffness: 500, damping: 50 },
-      }}
-    >
-      <div className="item-upper" onClick={handleOnClick}>
-        <div className="item-col">
-          <p className="item-title">{data.name}</p>
-          <p>{data.vicinity}</p>
-          <p>{data.address}</p>
-        </div>
-        <div className="item-col">
-          <p>{data.distance}</p>
-          <p>{data.duration}</p>
-        </div>
-      </div>
-
-      <div className="item-lower">
-        <button className="button">
-          <span />
-          Description
-        </button>
-        <button className="button">
-          <span />
-          Description
-        </button>
-        <button className="button">
-          <span />
-          Description
-        </button>
-      </div>
-    </motion.div>
-  );
-});
-
-export default Carousel;
+export default HoloDepthButton;
