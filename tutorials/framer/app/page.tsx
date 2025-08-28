@@ -10,30 +10,15 @@ import Day9 from "@/components/buttons/Day9";
 import Day10 from "@/components/buttons/Day10";
 import Day11 from "@/components/buttons/Day11";
 import Test3 from "@/components/Basics/Test3";
-import UseInView from "@/components/Basics/UseInView";
-import UseAnimate from "@/components/Basics/UseAnimate";
-import UseAnimate2 from "@/components/Basics/UseAnimate2";
+import UseInView from "@/components/Basics/hooks/UseInView";
+import UseAnimate from "@/components/Basics/hooks/UseAnimate";
+import UseAnimate2 from "@/components/Basics/hooks/UseAnimate2";
 const page = () => {
   return (
     <div className="">
-      {/* <Day3 /> */}
-      {/* <Day4 /> */}
-      {/* <Test1 /> */}
-      {/* <Day4 /> */}
-      <div className="">
-        <Test2 />
-      </div>
-
-      {/* <Day6 /> */}
-      {/* <Day7 /> */}
-      {/* <Day8 /> */}
-      {/* <Day9 /> */}
-      {/* <Day10 /> */}
+      <Test1 />
+      {/* <Test2 /> */}
       {/* <Test3 /> */}
-      {/* <Day11 /> */}
-      {/* <UseInView /> */}
-      {/* <UseAnimate /> */}
-      {/* <UseAnimate2 /> */}
     </div>
   );
 };
