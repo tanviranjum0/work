@@ -282,8 +282,7 @@ const keyframes = `
 // Add styles to document
 if (typeof document === "undefined") {
   // during server evaluation
-
-  document.head.insertAdjacentHTML("beforeend", `<style>${keyframes}</style>`);
 }
+document.head.insertAdjacentHTML("beforeend", `<style>${keyframes}</style>`);
 
 export default GalaxyBackground;

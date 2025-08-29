@@ -6,6 +6,14 @@ import SwipeToDelete from "./BasicComp/SwipeToDelete";
 import CardsDeck from "./BasicComp/CardsDeck";
 import AnimatedSidebar from "./BasicComp/AnimatedSidebar";
 import FloatingNavDots from "./BasicComp/FloatingNavDots";
+import ShimmeringGemstoneButton from "./BasicComp/ShimmeringGemstoneButton";
+import ConfettiBrustButton from "./BasicComp/ConfettiBrustButton";
+import ThreeDParallaxCard from "./BasicComp/ThreeDParallaxCard";
+import InterActiveTimeline from "./BasicComp/InterActiveTimeline";
+import DynamicChartAnimation from "./BasicComp/DynamicChartAnimation";
+import AnimatedProfileShowcase from "./BasicComp/AnimatedProfileShowcase";
+import GameElement from "./BasicComp/GameElement";
+import AnimatedProductShowcase from "./BasicComp/AnimatedProductShowcase";
 
 const Test2 = () => {
   return (
@@ -15,7 +23,16 @@ const Test2 = () => {
       {/* <SwipeToDelete /> */}
       {/* <CardsDeck /> */}
       {/* <AnimatedSidebar /> */}
-      <FloatingNavDots />
+      {/* <FloatingNavDots /> */}
+      {/* <ShimmeringGemstoneButton /> */}
+      {/* <ConfettiBrustButton /> */}
+      {/* <ThreeDParallaxCard /> */}
+      {/* <InterActiveTimeline /> */}
+      {/* <DynamicChartAnimation /> */}
+      {/* <AnimatedProfileShowcase /> */}
+      {/* <GameElement /> */}
+      {/* <AnimatedProfileShowcase /> */}
+      <AnimatedProductShowcase />
     </div>
   );
 };
