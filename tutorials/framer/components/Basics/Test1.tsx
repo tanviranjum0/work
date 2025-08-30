@@ -21,8 +21,8 @@ import MorphingIconButton from "./BasicComp/MorphingIcons";
 const Test2 = () => {
   return (
     <div>
-      <ThreeDTiltButton />
-      {/* <Kanban /> */}
+      {/* <ThreeDTiltButton /> */}
+      <Kanban />
       {/* <SwipeToDelete /> */}
       {/* <CardsDeck /> */}
       {/* <AnimatedSidebar /> */}
