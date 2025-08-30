@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, MouseEvent } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 interface Ripple {
   id: number;

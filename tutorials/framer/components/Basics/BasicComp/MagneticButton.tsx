@@ -1,7 +1,7 @@
 "use client";
 "Button 2";
 import React, { useState, useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 
 const MagneticButton: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -25,13 +25,14 @@ const MagneticButton: React.FC = () => {
     if (!buttonRef.current) return;
 
     const rect = buttonRef.current.getBoundingClientRect();
+    console.log(rect);
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-
+    // console.log(centerX, centerY);
     // Calculate distance from center (normalized to -1 to 1 range)
     const distanceX = (e.clientX - centerX) / (rect.width / 2);
     const distanceY = (e.clientY - centerY) / (rect.height / 2);
-
+    // console.log(distanceX, distanceY);
     // Update motion values
     mouseX.set(distanceX);
     mouseY.set(distanceY);

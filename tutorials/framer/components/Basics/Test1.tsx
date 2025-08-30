@@ -14,11 +14,14 @@ import DynamicChartAnimation from "./BasicComp/DynamicChartAnimation";
 import AnimatedProfileShowcase from "./BasicComp/AnimatedProfileShowcase";
 import GameElement from "./BasicComp/GameElement";
 import AnimatedProductShowcase from "./BasicComp/AnimatedProductShowcase";
+import MagnaticButton from "./BasicComp/MagneticButton";
+import LiquidRippleButton from "./BasicComp/LiquidRippleButton";
+import MorphingIconButton from "./BasicComp/MorphingIcons";
 
 const Test2 = () => {
   return (
     <div>
-      {/* <ThreeDTiltButton /> */}
+      <ThreeDTiltButton />
       {/* <Kanban /> */}
       {/* <SwipeToDelete /> */}
       {/* <CardsDeck /> */}
@@ -32,7 +35,10 @@ const Test2 = () => {
       {/* <AnimatedProfileShowcase /> */}
       {/* <GameElement /> */}
       {/* <AnimatedProfileShowcase /> */}
-      <AnimatedProductShowcase />
+      {/* <AnimatedProductShowcase /> */}
+      {/* <MagnaticButton /> */}
+      {/* <LiquidRippleButton /> */}
+      {/* <MorphingIconButton /> */}
     </div>
   );
 };
