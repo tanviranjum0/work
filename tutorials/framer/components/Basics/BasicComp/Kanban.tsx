@@ -216,7 +216,13 @@ const Card = ({ title, id, column, handleDragStart }: CardType) => {
   );
 };
 
-const DropIndicator = ({ beforeId, column }) => {
+const DropIndicator = ({
+  beforeId,
+  column,
+}: {
+  beforeId: string | null;
+  column: string;
+}) => {
   return (
     <div
       data-before={beforeId || "-1"}
