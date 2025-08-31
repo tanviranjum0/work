@@ -120,10 +120,10 @@ const Column = ({
     setActive(true);
   };
 
-  const clearHighlights = (els) => {
+  const clearHighlights = (els: { els: unknown }) => {
     const indicators = els || getIndicators();
 
-    indicators.forEach((i) => {
+    indicators.forEach((i: { i: HTMLDivElement }) => {
       i.style.opacity = "0";
     });
   };
