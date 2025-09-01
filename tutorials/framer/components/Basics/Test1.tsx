@@ -17,15 +17,18 @@ import AnimatedProductShowcase from "./BasicComp/AnimatedProductShowcase";
 import MagnaticButton from "./BasicComp/MagneticButton";
 import LiquidRippleButton from "./BasicComp/LiquidRippleButton";
 import MorphingIconButton from "./BasicComp/MorphingIcons";
+import ExpandableCard from "./BasicComp/ExpandableCard";
+import PageTransition from "./BasicComp/PageTransition";
 
 const Test2 = () => {
   return (
     <div>
       {/* <ThreeDTiltButton /> */}
-      <Kanban />
+      {/* <Kanban /> */}
       {/* <SwipeToDelete /> */}
       {/* <CardsDeck /> */}
       {/* <AnimatedSidebar /> */}
+      {/* <ExpandableCard /> */}
       {/* <FloatingNavDots /> */}
       {/* <ShimmeringGemstoneButton /> */}
       {/* <ConfettiBrustButton /> */}
@@ -39,6 +42,8 @@ const Test2 = () => {
       {/* <MagnaticButton /> */}
       {/* <LiquidRippleButton /> */}
       {/* <MorphingIconButton /> */}
+      {/* <SwipeToDelete /> */}
+      <PageTransition />
     </div>
   );
 };

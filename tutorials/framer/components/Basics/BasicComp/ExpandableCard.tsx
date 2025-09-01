@@ -19,7 +19,7 @@ const demoProps: ExpandableCardProps = {
   className: "my-custom-card",
 };
 
-const ExpandableCard: React.FC<ExpandableCardProps> = () => {
+const ExpandableCard = () => {
   const { title, description, imageUrl, children, className } = demoProps;
   const [isExpanded, setIsExpanded] = useState(false);
 

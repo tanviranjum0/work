@@ -75,7 +75,7 @@ const SwipeableListItem: React.FC<SwipeableListItemProps> = ({
     event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
   ) => {
-    if (info.offset.x < -200) {
+    if (info.offset.x < -400) {
       // Swiped left beyond threshold - delete item
       onRemove(item.id);
     }
