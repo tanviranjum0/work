@@ -2,45 +2,81 @@
 import Marquee from "react-fast-marquee";
 import { motion } from "motion/react";
 const Test2 = () => {
-  const handleHoverStart = (event) => {
-    const target = document.getElementsByClassName(
-      "marquee"
-    ) as HTMLCollectionOf<Element>;
-    target[1].classList.add("italic", "text-4xl", "rotate-30");
-    target[0].classList.add("italic", "text-4xl");
-  };
-  const handleHoverEnd = (event) => {
-    const target = document.getElementsByClassName(
-      "marquee"
-    ) as HTMLCollectionOf<Element>;
-    target[1].classList.remove("italic", "text-4xl");
-    target[0].classList.remove("italic", "text-4xl");
-  };
+  // const handleHoverStart = (event) => {
+  //   const target = document.getElementsByClassName(
+  //     "marquee"
+  //   ) as HTMLCollectionOf<Element>;
+  //   target[1].classList.add("italic");
+  //   target[0].classList.add("italic");
+  // };
+  // const handleHoverEnd = (event) => {
+  //   const target = document.getElementsByClassName(
+  //     "marquee"
+  //   ) as HTMLCollectionOf<Element>;
+  //   target[1].classList.remove("italic");
+  //   target[0].classList.remove("italic");
+  // };
   const textsMain = ["React", "Node.js", "Framer Motion", "Tailwind"];
   return (
-    <motion.div onHoverStart={handleHoverStart} onHoverEnd={handleHoverEnd}>
+    <motion.div>
+      {/* <motion.div onHoverStart={handleHoverStart} onHoverEnd={handleHoverEnd}> */}
       <Marquee
         direction="right"
-        className="text-3xl marquee py-4 bg-sky-300"
+        className="marquee py-4 bg-sky-200"
         autoFill={true}
-        speed={50}
+        speed={20}
       >
         {textsMain.map((text, index) => {
           return (
-            <span key={index} className="mx-8 text-xl font-semibold">
+            <span
+              key={index}
+              className="mx-8 text-sky-400 text-9xl font-semibold"
+            >
               {text}
             </span>
           );
         })}
-      </Marquee>{" "}
+      </Marquee>
+      <Marquee className="marquee py-4 bg-amber-200" autoFill={true} speed={20}>
+        {textsMain.map((text, index) => {
+          return (
+            <span
+              key={index}
+              className="mx-8 text-amber-400 text-9xl font-semibold"
+            >
+              {text}
+            </span>
+          );
+        })}
+      </Marquee>
       <Marquee
-        className="text-3xl marquee py-4 bg-amber-200"
+        className="marquee py-4 bg-gray-200"
+        direction="right"
         autoFill={true}
-        speed={50}
+        speed={20}
       >
         {textsMain.map((text, index) => {
           return (
-            <span key={index} className="mx-8 text-xl font-semibold">
+            <span
+              key={index}
+              className="mx-8 text-gray-400 text-9xl font-semibold"
+            >
+              {text}
+            </span>
+          );
+        })}
+      </Marquee>
+      <Marquee
+        className="marquee py-4 bg-emerald-200"
+        autoFill={true}
+        speed={20}
+      >
+        {textsMain.map((text, index) => {
+          return (
+            <span
+              key={index}
+              className="mx-8 text-emerald-400 text-9xl font-semibold"
+            >
               {text}
             </span>
           );
