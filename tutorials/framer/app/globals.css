@@ -2,3 +2,23 @@
 
 /* From Uiverse.io by satyamchaudharydev */
 /* === removing default button style ===*/
+.scroll-container {
+  width: 100%;
+  overflow: hidden; /* Hides content outside the container */
+  white-space: nowrap; /* Prevents text from wrapping to the next line */
+  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+}
+
+.scroll-text {
+  display: inline-block; /* Allows transformation and animation */
+  animation: scroll-left 15s linear infinite; /* Applies the animation */
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%); /* Starts off-screen to the right */
+  }
+  100% {
+    transform: translateX(-100%); /* Moves off-screen to the left */
+  }
+}
