@@ -1,50 +1,33 @@
 "use client";
+import { motion } from "framer-motion";
 
-import { motion } from "motion/react";
-import React from "react";
-const texts = [
-  "Hello",
-  "Welcome",
-  "To",
-  "Framer",
-  "Tutorials",
-  "By",
-  "CodeWithKalyan",
-  "Enjoy",
-  "Learning",
-  "And",
-  "Building",
-  "Amazing",
-  "Projects",
-];
-const Test2 = () => {
+export default function MarqueeText() {
+  const texts = [
+    "Frontend",
+    "Backend",
+    "Fullstack",
+    "JavaScript",
+    "React",
+    "Node.js",
+  ];
+
   return (
-    <div>
-      <div className="w-[100vw] overflow-hidden flex justify-center items-center gap-4 h-20 bg-amber-200 text-xl">
-        {texts.map((text, index) => {
-          return (
-            <motion.div
-              initial={{
-                left: 0,
-              }}
-              animate={{
-                left: "100vw",
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                repeatType: "loop",
-                delay: index * 0.5,
-              }}
-              key={index}
-            >
-              {text}
-            </motion.div>
-          );
-        })}
-      </div>
+    <div className="relative overflow-hidden w-full h-20 bg-gray-700 flex items-center">
+      <motion.div
+        className="flex gap-20  text-3xl font-bold text-white whitespace-nowrap"
+        animate={{ x: ["100%", "-100%"] }}
+        transition={{
+          repeat: Infinity,
+          duration: 5,
+          repeatType: "loop",
+          ease: "linear",
+        }}
+      >
+        {/* Duplicate text sequence for seamless looping */}
+        {[...texts, ...texts].map((text, i) => (
+          <span key={i}>{text}</span>
+        ))}
+      </motion.div>
     </div>
   );
-};
-
-export default Test2;
+}
