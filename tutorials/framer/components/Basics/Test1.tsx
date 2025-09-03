@@ -19,6 +19,7 @@ import LiquidRippleButton from "./BasicComp/LiquidRippleButton";
 import MorphingIconButton from "./BasicComp/MorphingIcons";
 import ExpandableCard from "./BasicComp/ExpandableCard";
 import PageTransition from "./BasicComp/PageTransition";
+import Ticket from "./BasicComp/Ticket";
 
 const Test2 = () => {
   return (
@@ -43,7 +44,8 @@ const Test2 = () => {
       {/* <LiquidRippleButton /> */}
       {/* <MorphingIconButton /> */}
       {/* <SwipeToDelete /> */}
-      <PageTransition />
+      {/* <PageTransition /> */}
+      <Ticket />
     </div>
   );
 };

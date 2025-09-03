@@ -1,0 +1,41 @@
+.notch::before {
+  content: "";
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 44px;
+  background: #0f1220;
+  border-bottom-left-radius: 120px;
+  border-bottom-right-radius: 120px;
+  box-shadow: 0 18px 0 #0f1220;
+}
+.cut-indicator::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 26px;
+  border-top: 2px dashed #d1d5db;
+}
+.cut-indicator::after {
+  content: "✂";
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  color: #6b7280;
+  opacity: 0.9;
+  animation: float 2s ease-in-out infinite;
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -2px);
+  }
+}

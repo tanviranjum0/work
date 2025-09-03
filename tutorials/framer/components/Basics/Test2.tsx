@@ -1,88 +1,24 @@
 "use client";
-import Marquee from "react-fast-marquee";
-import { motion } from "motion/react";
+import React from "react";
+
 const Test2 = () => {
-  // const handleHoverStart = (event) => {
-  //   const target = document.getElementsByClassName(
-  //     "marquee"
-  //   ) as HTMLCollectionOf<Element>;
-  //   target[1].classList.add("italic");
-  //   target[0].classList.add("italic");
-  // };
-  // const handleHoverEnd = (event) => {
-  //   const target = document.getElementsByClassName(
-  //     "marquee"
-  //   ) as HTMLCollectionOf<Element>;
-  //   target[1].classList.remove("italic");
-  //   target[0].classList.remove("italic");
-  // };
-  const textsMain = ["React", "Node.js", "Framer Motion", "Tailwind"];
   return (
-    <motion.div>
-      {/* <motion.div onHoverStart={handleHoverStart} onHoverEnd={handleHoverEnd}> */}
-      <Marquee
-        direction="right"
-        className="marquee py-4 bg-sky-200"
-        autoFill={true}
-        speed={20}
-      >
-        {textsMain.map((text, index) => {
-          return (
-            <span
-              key={index}
-              className="mx-8 text-sky-400 text-9xl font-semibold"
-            >
-              {text}
-            </span>
-          );
-        })}
-      </Marquee>
-      <Marquee className="marquee py-4 bg-amber-200" autoFill={true} speed={20}>
-        {textsMain.map((text, index) => {
-          return (
-            <span
-              key={index}
-              className="mx-8 text-amber-400 text-9xl font-semibold"
-            >
-              {text}
-            </span>
-          );
-        })}
-      </Marquee>
-      <Marquee
-        className="marquee py-4 bg-gray-200"
-        direction="right"
-        autoFill={true}
-        speed={20}
-      >
-        {textsMain.map((text, index) => {
-          return (
-            <span
-              key={index}
-              className="mx-8 text-gray-400 text-9xl font-semibold"
-            >
-              {text}
-            </span>
-          );
-        })}
-      </Marquee>
-      <Marquee
-        className="marquee py-4 bg-emerald-200"
-        autoFill={true}
-        speed={20}
-      >
-        {textsMain.map((text, index) => {
-          return (
-            <span
-              key={index}
-              className="mx-8 text-emerald-400 text-9xl font-semibold"
-            >
-              {text}
-            </span>
-          );
-        })}
-      </Marquee>
-    </motion.div>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="rounded-xl flex items-center justify-center h-36 w-96 bg-[#e2edff]">
+        Hello
+      </div>
+      <div
+        className="h-2"
+        style={{
+          backgroundImage: `url(${"+data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='19' ry='19' stroke='%23333' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='13' stroke-linecap='round'/%3e%3c/svg%3e+"})`,
+          borderRadius: "19px",
+        }}
+      ></div>
+
+      <div className="rounded-xl flex items-center justify-center h-36 w-96 bg-[#e2edff]">
+        Hello2
+      </div>
+    </div>
   );
 };
 
