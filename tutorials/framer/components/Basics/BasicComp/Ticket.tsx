@@ -79,6 +79,8 @@ const Ticket = () => {
     <div className="bg-[#0f1220] min-h-screen flex items-center justify-center p-6">
       <article className="relative bg-white rounded-2xl shadow-xl w-full max-w-3xl">
         <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-gray-50 to-white rounded-t-2xl cut-indicator">
+          <div className="cutting-line top-[26px] relative"></div>
+          {/* https://kovart.github.io/dashed-border-generator/ */}
           <div className="absolute left-5 top-[23px] rounded-xl">
             <svg
               width="8px"
