@@ -81,7 +81,7 @@ const Ticket = () => {
         <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-gray-50 to-white rounded-t-2xl cut-indicator">
           <div className="cutting-line top-[26px] relative"></div>
           {/* https://kovart.github.io/dashed-border-generator/ */}
-          <div className="absolute left-5 top-[23px] rounded-xl">
+          {/* <div className="absolute left-5 top-[23px] rounded-xl">
             <svg
               width="8px"
               height="8px"
@@ -122,7 +122,7 @@ const Ticket = () => {
                 />
               </g>
             </svg>
-          </div>
+          </div> */}
           {/* <div className="absolute -right-3 top-[23px] w-6 h-6 bg-[#0f1220] rounded-full"></div> */}
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-6 p-6 pt-20">

@@ -43,9 +43,9 @@ const Test2 = () => {
       {/* <MagnaticButton /> */}
       {/* <LiquidRippleButton /> */}
       {/* <MorphingIconButton /> */}
-      <SwipeToDelete />
+      {/* <SwipeToDelete /> */}
       {/* <PageTransition /> */}
-      {/* <Ticket /> */}
+      <Ticket />
     </div>
   );
 };
