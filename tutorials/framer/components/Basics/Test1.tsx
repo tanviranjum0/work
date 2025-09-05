@@ -20,6 +20,7 @@ import MorphingIconButton from "./BasicComp/MorphingIcons";
 import ExpandableCard from "./BasicComp/ExpandableCard";
 import PageTransition from "./BasicComp/PageTransition";
 import Ticket from "./BasicComp/Ticket";
+import OldTVGlitch from "./BasicComp/OldTVGlitch";
 
 const Test2 = () => {
   return (
@@ -45,7 +46,8 @@ const Test2 = () => {
       {/* <MorphingIconButton /> */}
       {/* <SwipeToDelete /> */}
       {/* <PageTransition /> */}
-      <Ticket />
+      {/* <Ticket /> */}
+      <OldTVGlitch />
     </div>
   );
 };
