@@ -1,8 +1,11 @@
 import React from "react";
 
+const TestComponent = () => {
+  return <span>testComponent</span>;
+};
 const Test2 = () => {
   return (
-    <div className="flex justify-center items-center flex-col h-screen">
+    <div className="flex justify-center items-center flex-col overflow-x-hidden">
       <div className="rounded-xl flex items-center justify-center h-36 w-96 bg-[#e2edff]">
         Hello
       </div>
@@ -53,6 +56,12 @@ const Test2 = () => {
           className="test w-96 rounded-xl h-96"
         />
       </div>
+      <span className="w-screen bg-teal-200 grid-cols-12 overflow-hidden grid p-5 h-[100vh]">
+        {[...Array(1000)].map((_, i) => (
+          // <TestComponent key={i} />
+          <span>testComponent</span>
+        ))}
+      </span>
     </div>
   );
 };
