@@ -4,8 +4,8 @@ import Test3 from "@/components/Basics/Test3";
 const page = () => {
   return (
     <div className="">
-      <Test1 />
-      {/* <Test2 /> */}
+      {/* <Test1 /> */}
+      <Test2 />
       {/* <Test3 /> */}
     </div>
   );
