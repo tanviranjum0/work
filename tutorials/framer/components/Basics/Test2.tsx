@@ -1,5 +1,6 @@
-import React from "react";
+"use client";
 
+import AnimatedCursor from "react-animated-cursor";
 const TestComponent = () => {
   return <span>testComponent</span>;
 };
@@ -58,10 +59,22 @@ const Test2 = () => {
       </div>
       <span className="w-screen bg-teal-200 grid-cols-12 overflow-hidden grid p-5 h-[100vh]">
         {[...Array(1000)].map((_, i) => (
-          // <TestComponent key={i} />
-          <span>testComponent</span>
+          <TestComponent key={i} />
+          // <span>testComponent</span>
         ))}
       </span>
+      <div className="h-[100vh] w-screen bg-indigo-200">
+        <input type="text" name="" id="" className="z-10 w-full" />
+        <AnimatedCursor
+          showSystemCursor={true}
+          innerSize={0}
+          outerSize={15}
+          color="255, 255 ,255"
+          outerAlpha={0.4}
+          innerScale={0.7}
+          outerScale={5}
+        />
+      </div>
     </div>
   );
 };

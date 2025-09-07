@@ -35,7 +35,7 @@ const Test2 = () => {
       {/* <ShimmeringGemstoneButton /> */}
       {/* <ConfettiBrustButton /> */}
       {/* <ThreeDParallaxCard /> */}
-      {/* <InterActiveTimeline /> */}
+      <InterActiveTimeline />
       {/* <DynamicChartAnimation /> */}
       {/* <AnimatedProfileShowcase /> */}
       {/* <GameElement /> */}
@@ -47,7 +47,7 @@ const Test2 = () => {
       {/* <SwipeToDelete /> */}
       {/* <PageTransition /> */}
       {/* <Ticket /> */}
-      <OldTVGlitch />
+      {/* <OldTVGlitch /> */}
     </div>
   );
 };
