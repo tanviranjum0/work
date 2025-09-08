@@ -1,0 +1,39 @@
+:root {
+  --size: 60px;
+  --color: #ccc;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: conic-gradient(
+      from 0deg at 50% 50%,
+      var(--color) 90deg,
+      transparent 90deg
+    ),
+    conic-gradient(
+      from 180deg at 50% 50%,
+      var(--color) 90deg,
+      transparent 90deg
+    );
+  background-size: var(--size) var(--size);
+  -webkit-mask: linear-gradient(-20deg, transparent 50%, white);
+  mask: linear-gradient(-20deg, transparent 50%, white);
+  z-index: -1;
+  pointer-events: none;
+}

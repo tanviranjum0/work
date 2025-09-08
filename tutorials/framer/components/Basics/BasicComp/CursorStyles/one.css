@@ -1,0 +1,127 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: "Inter", "Arial", sans-serif;
+  cursor: none;
+}
+
+.content {
+  text-align: center;
+  z-index: 10;
+  max-width: 600px;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 2rem;
+}
+
+.cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 20px #fff, 0 0 40px #fff;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  mix-blend-mode: difference;
+  z-index: 1000;
+  transition: width 0.2s, height 0.2s;
+}
+
+.cursor.expand {
+  width: 40px;
+  height: 40px;
+}
+
+.trail {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  z-index: 999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease-out, opacity 0.3s ease-out;
+}
+
+.controls {
+  position: fixed;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 10;
+}
+
+button {
+  padding: 0.8rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.instruction {
+  position: fixed;
+  bottom: 5rem;
+  text-align: center;
+  width: 100%;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .cursor,
+  .trail {
+    display: none;
+  }
+
+  body {
+    cursor: auto;
+  }
+}

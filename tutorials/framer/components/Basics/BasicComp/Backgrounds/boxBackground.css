@@ -1,0 +1,51 @@
+.bgGridWrapper {
+  --blockSize: 40px;
+  --borderWidth: 1px;
+  /*light*/
+  --borderColor: hsl(0, 0%, 64%);
+  --bgColor: hsl(0, 0%, 96%);
+  /*light 2*/
+  --borderColor: hsla(234, 88%, 65%, 0.461);
+  --bgColor: hsla(240, 10%, 4%, 0.823);
+  /*dark*/
+  /*   --bgColor: hsl(229, 84%, 5%);
+  --borderColor: hsl(233, 60%, 25%); */
+  /*matrix*/
+  /*   --bgColor: black;
+  --borderColor: hsl(120 100% 20%); */
+
+  width: 100%;
+  height: 100%;
+  background-color: var(--bgColor);
+  background-image: linear-gradient(
+      transparent calc(var(--blockSize) - var(--borderWidth)),
+      var(--borderColor) calc(var(--blockSize) - var(--borderWidth))
+    ),
+    linear-gradient(
+      90deg,
+      transparent calc(var(--blockSize) - var(--borderWidth)),
+      var(--borderColor) calc(var(--blockSize) - var(--borderWidth))
+    );
+
+  background-size: var(--blockSize) var(--blockSize),
+    var(--blockSize) var(--blockSize);
+  background-repeat: round;
+  animation: gridBgMove 2s infinite linear;
+}
+
+@keyframes gridBgMove {
+  to {
+    background-position-y: var(--blockSize);
+  }
+}
+
+/* Template */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+  /*   outline: solid white;  */
+}

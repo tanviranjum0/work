@@ -71,14 +71,21 @@ const ExpandableCard = () => {
   };
 
   return (
-    <>
+    <div className="h-screen bg-sky-200">
       {/* Card */}
       <motion.div
         className={`bg-white rounded-xl shadow-md overflow-hidden cursor-pointer transition-all duration-200 ${className}`}
         variants={cardVariants}
         initial="initial"
-        whileHover="hover"
         whileTap="tap"
+        exit={{
+          opacity: 0,
+          scale: 0,
+        }}
+        transition={{
+          type: "spring",
+          duration: 1,
+        }}
         onClick={handleCardClick}
         layoutId={`card-${title}`}
       >
@@ -115,7 +122,7 @@ const ExpandableCard = () => {
       <AnimatePresence>
         {isExpanded && (
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center overflow-hidden justify-center p-4 z-50"
             variants={backdropVariants}
             initial="hidden"
             animate="visible"
@@ -184,7 +191,7 @@ const ExpandableCard = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 };
 

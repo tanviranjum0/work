@@ -21,6 +21,10 @@ import ExpandableCard from "./BasicComp/ExpandableCard";
 import PageTransition from "./BasicComp/PageTransition";
 import Ticket from "./BasicComp/Ticket";
 import OldTVGlitch from "./BasicComp/OldTVGlitch";
+import BoxBackground from "./BasicComp/Backgrounds/BoxBackground";
+import MovingStarts from "./BasicComp/Backgrounds/MovingStarts";
+import TransperantBackground from "./BasicComp/Backgrounds/TransperantBackground";
+import One from "./BasicComp/CursorStyles/One";
 
 const Test2 = () => {
   return (
@@ -35,7 +39,7 @@ const Test2 = () => {
       {/* <ShimmeringGemstoneButton /> */}
       {/* <ConfettiBrustButton /> */}
       {/* <ThreeDParallaxCard /> */}
-      <InterActiveTimeline />
+      {/* <InterActiveTimeline /> */}
       {/* <DynamicChartAnimation /> */}
       {/* <AnimatedProfileShowcase /> */}
       {/* <GameElement /> */}
@@ -48,6 +52,10 @@ const Test2 = () => {
       {/* <PageTransition /> */}
       {/* <Ticket /> */}
       {/* <OldTVGlitch /> */}
+      {/* <TransperantBackground /> */}
+      {/* <BoxBackground /> */}
+      {/* <MovingStarts /> */}
+      <One />
     </div>
   );
 };
