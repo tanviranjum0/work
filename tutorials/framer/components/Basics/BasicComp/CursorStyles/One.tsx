@@ -165,7 +165,7 @@ const One = () => {
         <h1>Mouse Trail</h1>
       </div>
       <div className="cursor"></div>
-      <div className="controls">
+      <div className="controls hidden opacity-0">
         <button id="toggle-effect">Toggle Effect</button>
         <button id="change-color">Change Color</button>
         <button id="clear-trails">Clear Trails</button>
