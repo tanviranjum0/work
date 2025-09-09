@@ -58,7 +58,7 @@ const Test2 = () => {
       {/* <BoxBackground /> */}
       {/* <MovingStarts /> */}
       {/* <One /> */}
-      <div className="bg-[#178733cc] h-screen w-screen"></div>
+      {/* <div className="bg-[#003631] h-screen w-screen"></div> */}
     </div>
   );
 };
