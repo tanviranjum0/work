@@ -9,6 +9,7 @@ import FloatingNavDots from "./BasicComp/FloatingNavDots";
 import ShimmeringGemstoneButton from "./BasicComp/ShimmeringGemstoneButton";
 import ConfettiBrustButton from "./BasicComp/ConfettiBrustButton";
 import ThreeDParallaxCard from "./BasicComp/ThreeDParallaxCard";
+import Marque from "./BasicComp/Marque";
 import InterActiveTimeline from "./BasicComp/InterActiveTimeline";
 import DynamicChartAnimation from "./BasicComp/DynamicChartAnimation";
 import AnimatedProfileShowcase from "./BasicComp/AnimatedProfileShowcase";
@@ -48,6 +49,7 @@ const Test2 = () => {
       {/* <MagnaticButton /> */}
       {/* <LiquidRippleButton /> */}
       {/* <MorphingIconButton /> */}
+      {/* <Marque /> */}
       {/* <SwipeToDelete /> */}
       {/* <PageTransition /> */}
       {/* <Ticket /> */}
@@ -55,7 +57,8 @@ const Test2 = () => {
       {/* <TransperantBackground /> */}
       {/* <BoxBackground /> */}
       {/* <MovingStarts /> */}
-      <One />
+      {/* <One /> */}
+      <div className="bg-[#178733cc] h-screen w-screen"></div>
     </div>
   );
 };

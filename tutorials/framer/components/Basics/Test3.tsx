@@ -3,7 +3,7 @@ import "./test3.css";
 import React from "react";
 
 const Test3 = () => {
-  return <div></div>;
+  return <div className=""></div>;
 };
 
 export default Test3;
