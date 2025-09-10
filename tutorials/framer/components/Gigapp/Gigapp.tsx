@@ -4,10 +4,14 @@ import "./Gigapp.css";
 const Gigapp = () => {
   return (
     <div className="bg-[#003631] h-screen w-screen  text-white">
-      <nav className="flex justify-around items-center">
-        <a href="#" id="btn-1" className="btn bg-blue-600 relative">
+      <nav className="flex justify-around pt-10 items-center">
+        {/* <a href="#" id="btn-1" className="btn bg-blue-600 relative">
           <span className="z-20">Home</span>
-        </a>
+        </a> */}
+        <div className="btn2">Hello</div>
+        <div className="btn2">Hello</div>
+        <div className="btn2">Hello</div>
+        <div className="btn2">Hello</div>
       </nav>
     </div>
   );

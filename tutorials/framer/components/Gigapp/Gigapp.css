@@ -26,8 +26,7 @@
   &:before {
     content: "";
     padding: 100%;
-    background: url("https://images.unsplash.com/photo-1458682625221-3a45f8a844c7?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ&s=71fe1cccc16ab8dbd431de076c68802b")
-      no-repeat;
+    background: url("../../public/test1.jpeg") no-repeat;
     /* background: #003631; */
     background-size: cover;
     background-attachment: fixed;
@@ -53,4 +52,44 @@
       filter: blur(var(--blur));
     }
   }
+}
+
+/* From Uiverse.io by lenfear23 */
+.btn2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  background-image: linear-gradient(
+    to top,
+    #014d45 0%,
+    #014d45 80%,
+    #014d45 100%
+  );
+  border-radius: 30px;
+  border: 1px solid #8f9291;
+  transition: all 0.2s ease;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #606060;
+  /* text-shadow: 0 1px #fff; */
+}
+
+.btn2:hover {
+  box-shadow: 0 4px 3px 1px #002e2a, 0 6px 8px #002e2a, 0 -4px 4px #002e2a,
+    0 -6px 4px #002e2a, inset 0 0 3px 3px #002e2a;
+}
+
+.btn2:active {
+  box-shadow: 0 4px 3px 1px #002e2a, 0 6px 8px #002e2a, 0 -4px 4px #002e2a,
+    0 -6px 4px #002e2a, inset 0 0 5px 3px #002e2a, inset 0 0 30px #013732;
+}
+
+.btn2:focus {
+  box-shadow: 0 4px 3px 1px #014d45, 0 6px 8px #014d45, 0 -4px 4px #014d45,
+    0 -6px 4px #014d45, inset 0 0 5px 3px #014d45, inset 0 0 30px #024740;
 }
