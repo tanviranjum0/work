@@ -61,8 +61,8 @@
   justify-content: center;
   outline: none;
   cursor: pointer;
-  width: 150px;
-  height: 50px;
+  /* width: 100px;
+  height: 30px; */
   background-image: linear-gradient(
     to top,
     #014d45 0%,
@@ -70,12 +70,13 @@
     #014d45 100%
   );
   border-radius: 30px;
-  border: 1px solid #8f9291;
+  border: 0.5px solid #8f9291;
   transition: all 0.2s ease;
   font-family: "Source Sans Pro", sans-serif;
   font-size: 14px;
   font-weight: 600;
-  color: #606060;
+  color: #8b8686;
+  /* color: #606060; */
   /* text-shadow: 0 1px #fff; */
 }
 
