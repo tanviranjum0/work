@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import logo from "../../../public/logo3.png";
@@ -20,9 +19,9 @@ const Navbar = () => {
     showTime();
   }, []);
   return (
-    <div>
-      <div className="flex justify-between">
-        <div className="flex justify-center items-center">
+    <div className="shadow-md">
+      <div className="flex py-8 justify-between mx-10">
+        <div className="flex justify-center gap-10  items-center">
           <Image
             alt="logo"
             className="rounded-full"
@@ -37,7 +36,7 @@ const Navbar = () => {
                 <i className="fa fa-circle blink" aria-hidden="true"></i>Live
               </span>
             </div> */}
-            <div>Availability</div>
+            <div className="text-sm text-gray-300">Availability</div>
             <div className="flex justify-center items-center gap-2">
               <motion.div
                 key={"New"}
@@ -47,8 +46,8 @@ const Navbar = () => {
                   opacity: 0,
                 }}
                 animate={{
-                  scale: [0, 1, 0],
-                  opacity: [0, 1, 0],
+                  scale: [0, 1, 0.5],
+                  opacity: [0, 1, 0.5],
                 }}
                 transition={{
                   duration: 2,
@@ -60,15 +59,19 @@ const Navbar = () => {
           </div>
 
           <div className="">
-            <div className="">Local Time</div>
+            <div className="text-sm text-gray-300">Local Time</div>
             <div className="display-time"></div>
           </div>
+          <div className="">
+            <div className="text-sm text-gray-300">City</div>
+            <div className="">Chattogram, Bangladesh</div>
+          </div>
         </div>
-        <div className="flex justify-around items-center">
-          <div className="btn2 px-3/2 w-20 py-1">Facebook</div>
-          <div className="btn2 px-3/2 w-20 py-1">Linkedin</div>
-          <div className="btn2 px-3/2 w-20 py-1">Fiverr</div>
-          <div className="btn2 px-3/2 w-20 py-1">Github</div>
+        <div className="flex justify-around gap-2 items-center">
+          <div className="btn2 px-3/2 w-24 py-1">Facebook</div>
+          <div className="btn2 px-3/2 w-24 py-1">Linkedin</div>
+          <div className="btn2 px-3/2 w-24 py-1">Fiverr</div>
+          <div className="btn2 px-3/2 w-24 py-1">Github</div>
         </div>
       </div>
     </div>
