@@ -39,7 +39,6 @@ const Navbar = () => {
             </div> */}
             <div>Availability</div>
             <div className="flex justify-center items-center gap-2">
-              {" "}
               <motion.div
                 key={"New"}
                 className="bg-red-500 rounded-full w-3 h-3"
