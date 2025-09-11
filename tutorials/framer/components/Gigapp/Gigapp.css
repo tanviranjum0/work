@@ -1,3 +1,4 @@
+/* Navbar */
 :root {
   --blur: 20px;
   --max: 870px;
@@ -70,7 +71,7 @@
     #014d45 100%
   );
   border-radius: 30px;
-  border: 0.5px solid #8f9291;
+  border: 0.5px solid black;
   transition: all 0.2s ease;
   font-family: "Source Sans Pro", sans-serif;
   font-size: 14px;
@@ -93,4 +94,36 @@
 .btn2:focus {
   box-shadow: 0 4px 3px 1px #014d45, 0 6px 8px #014d45, 0 -4px 4px #014d45,
     0 -6px 4px #014d45, inset 0 0 5px 3px #014d45, inset 0 0 30px #024740;
+}
+
+/* Live INdicator */
+.live-indicator-block {
+  transform: translate(-50%, -50%);
+}
+.live-indicator-block .live-indicator {
+  background: red;
+  color: white;
+  padding: 6px 7px;
+  line-height: 1;
+  border-radius: 6px;
+  text-transform: uppercase;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 12px;
+  font-weight: bold;
+  width: auto;
+}
+.live-indicator-block .live-indicator .blink {
+  animation: blinker 1s cubic-bezier(0.5, 0, 1, 1) infinite alternate;
+  font-size: 10px;
+  margin-right: 5px;
+  vertical-align: baseline;
+}
+@keyframes blinker {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
