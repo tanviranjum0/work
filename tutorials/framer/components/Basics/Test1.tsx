@@ -49,7 +49,7 @@ const Test2 = () => {
       {/* <MagnaticButton /> */}
       {/* <LiquidRippleButton /> */}
       {/* <MorphingIconButton /> */}
-      {/* <Marque /> */}
+      <Marque />
       {/* <SwipeToDelete /> */}
       {/* <PageTransition /> */}
       {/* <Ticket /> */}

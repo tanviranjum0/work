@@ -18,8 +18,7 @@ const Test2 = () => {
   // };
   const textsMain = ["React", "Node.js", "Framer Motion", "Tailwind"];
   return (
-    <motion.div>
-      {/* <motion.div onHoverStart={handleHoverStart} onHoverEnd={handleHoverEnd}> */}
+    <>
       <Marquee
         direction="right"
         className="marquee overflow-hidden py-4 bg-sky-200"
@@ -86,7 +85,7 @@ const Test2 = () => {
           );
         })}
       </Marquee>
-    </motion.div>
+    </>
   );
 };
 

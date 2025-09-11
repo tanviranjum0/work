@@ -3,6 +3,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import logo from "../../../public/logo3.png";
 import { useEffect } from "react";
+import Link from "next/link";
 
 const Navbar = () => {
   useEffect(() => {
@@ -20,16 +21,18 @@ const Navbar = () => {
   }, []);
   return (
     <div className="shadow-md">
-      <div className="flex py-8 justify-between mx-10">
+      <div className="flex py-5  justify-between mx-10">
         <div className="flex justify-center gap-10  items-center">
-          <Image
-            alt="logo"
-            className="rounded-full"
-            src={logo}
-            width={50}
-            height={50}
-          />
-          <div className="">
+          <Link href={"/"}>
+            <Image
+              alt="logo"
+              className="rounded-full cursor-pointer"
+              src={logo}
+              width={50}
+              height={50}
+            />
+          </Link>
+          <div className="hidden md:block">
             {/* <div className="">Availability</div>
             <div className="live-indicator-block">
               <span className="live-indicator">
@@ -62,12 +65,12 @@ const Navbar = () => {
             <div className="text-sm text-gray-300">Local Time</div>
             <div className="display-time"></div>
           </div>
-          <div className="">
+          <div className="hidden md:block">
             <div className="text-sm text-gray-300">City</div>
             <div className="">Chattogram, Bangladesh</div>
           </div>
         </div>
-        <div className="flex justify-around gap-2 items-center">
+        <div className=" justify-around gap-2 hidden md:flex items-center">
           <div className="btn2 px-3/2 w-24 py-1">Facebook</div>
           <div className="btn2 px-3/2 w-24 py-1">Linkedin</div>
           <div className="btn2 px-3/2 w-24 py-1">Fiverr</div>
