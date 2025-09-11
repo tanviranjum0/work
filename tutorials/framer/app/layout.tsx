@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Doto, Rochester } from "next/font/google";
+import { Geist, Geist_Mono, Mulish, Rochester } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Doto({ subsets: ["latin"], weight: "400" });
+const geistSans = Mulish({ subsets: ["latin"], weight: "400" });
 // console.log(geistSans);
 
 export const metadata: Metadata = {
