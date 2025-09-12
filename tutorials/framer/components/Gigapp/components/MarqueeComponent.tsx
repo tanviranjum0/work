@@ -79,27 +79,49 @@ const items: MarqueItem[] = [
 ];
 const MarqueeComponent = () => {
   return (
-    <div className="flex scale-110 -z-10 -skew-y-12">
-      <Marquee
-        direction="right"
-        className="marquee flex py-4"
-        autoFill={true}
-        speed={40}
-      >
-        {items.map((data, index) => {
-          return (
-            <>
-              <Image
-                className="rounded-xl mx-2"
-                src={data.img}
-                alt={`Marque image ${data.id}`}
-                height={`${data.height}`}
-              />
-            </>
-          );
-        })}
-      </Marquee>
-    </div>
+    <>
+      <div className="mx-32">
+        <div className="uppercase text-center text-6xl">
+          Motion turns static design into living, breathing experiences.
+        </div>
+        <div className="uppercase text-center text-xl text-gray-500">
+          Get top-tier design in less than a week.
+        </div>
+        <div className=" uppercase text-center text-xl text-gray-500">
+          Subscriptions or one-time projects.
+        </div>
+        <div className="flex w-full justify-center">
+          {" "}
+          <div id="contactButton" className="contactButton-contact">
+            <span className="contactButtoncircle" aria-hidden="true">
+              <span className="icon arrow"></span>
+            </span>
+            <span className="contact-text">Contact</span>
+          </div>
+        </div>
+      </div>
+      <div className="flex mt-28 scale-110 -skew-y-6">
+        <Marquee
+          direction="right"
+          className="marquee flex py-4"
+          autoFill={true}
+          speed={40}
+        >
+          {items.map((data, index) => {
+            return (
+              <>
+                <Image
+                  className="rounded-xl mx-2"
+                  src={data.img}
+                  alt={`Marque image ${data.id}`}
+                  height={`${data.height}`}
+                />
+              </>
+            );
+          })}
+        </Marquee>
+      </div>
+    </>
   );
 };
 
