@@ -1,6 +1,7 @@
 "use client";
 import Marquee from "react-fast-marquee";
 import React from "react";
+import { motion } from "motion/react";
 import Image, { StaticImageData } from "next/image";
 import img1 from "../../../public/MarqueImages/web1.png";
 import img2 from "../../../public/MarqueImages/web2.png";
@@ -80,18 +81,60 @@ const items: MarqueItem[] = [
 const MarqueeComponent = () => {
   return (
     <>
-      <div className="mx-32">
-        <div className="uppercase text-center text-6xl">
+      <motion.div className="m-32">
+        <motion.div
+          initial={{
+            y: 50,
+            opacity: 0.5,
+          }}
+          animate={{
+            y: 0,
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.5,
+            type: "spring",
+          }}
+          className="uppercase text-center my-5  text-6xl"
+        >
           Motion turns static design into living, breathing experiences.
-        </div>
-        <div className="uppercase text-center text-xl text-gray-500">
+        </motion.div>
+        <motion.div
+          initial={{
+            y: 50,
+            opacity: 0.5,
+          }}
+          animate={{
+            y: 0,
+
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.7,
+            type: "spring",
+          }}
+          className="uppercase text-center text-xl  text-gray-500"
+        >
           Get top-tier design in less than a week.
-        </div>
-        <div className=" uppercase text-center text-xl text-gray-500">
+        </motion.div>
+        <motion.div
+          initial={{
+            y: 50,
+            opacity: 0.5,
+          }}
+          animate={{
+            y: 0,
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.8,
+            type: "spring",
+          }}
+          className=" uppercase text-center text-xl text-gray-500"
+        >
           Subscriptions or one-time projects.
-        </div>
-        <div className="flex w-full justify-center">
-          {" "}
+        </motion.div>
+        <div className="flex w-full my-5 justify-center">
           <div id="contactButton" className="contactButton-contact">
             <span className="contactButtoncircle" aria-hidden="true">
               <span className="icon arrow"></span>
@@ -99,8 +142,20 @@ const MarqueeComponent = () => {
             <span className="contact-text">Contact</span>
           </div>
         </div>
-      </div>
-      <div className="flex mt-28 scale-110 -skew-y-6">
+      </motion.div>
+      <motion.div
+        initial={{
+          skewY: 0,
+        }}
+        animate={{
+          skewY: -6,
+        }}
+        transition={{
+          duration: 1,
+          type: "tween",
+        }}
+        className="flex mt-28 scale-110 "
+      >
         <Marquee
           direction="right"
           className="marquee flex py-4"
@@ -120,7 +175,7 @@ const MarqueeComponent = () => {
             );
           })}
         </Marquee>
-      </div>
+      </motion.div>
     </>
   );
 };
