@@ -115,7 +115,7 @@ const MarqueeComponent = () => {
           }}
           className="uppercase text-center text-xl  text-gray-500"
         >
-          Get top-tier design in less than a week.
+          Get top-tier design in less than a week
         </motion.div>
         <motion.div
           initial={{
