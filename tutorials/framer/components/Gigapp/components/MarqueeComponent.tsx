@@ -81,7 +81,28 @@ const items: MarqueItem[] = [
 const MarqueeComponent = () => {
   return (
     <>
-      <motion.div className="m-32">
+      <motion.div className="m-32 flex flex-col justify-center items-center">
+        <motion.div className="flex items-center gap-3 justify-center">
+          <motion.div
+            key={"New"}
+            className="bg-red-500 rounded-full w-3 h-3"
+            initial={{
+              scale: 0,
+              opacity: 0,
+            }}
+            animate={{
+              scale: [0, 1, 0.5],
+              opacity: [0, 1, 0.5],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+            }}
+          ></motion.div>
+          <div className="uppercase text-lg  text-gray-500">
+            Available for new projects
+          </div>
+        </motion.div>
         <motion.div
           initial={{
             y: 50,
@@ -95,7 +116,7 @@ const MarqueeComponent = () => {
             duration: 0.5,
             type: "spring",
           }}
-          className="uppercase text-center my-5  text-6xl"
+          className="uppercase text-center my-5 font-bold text-6xl"
         >
           Motion turns static design into living, breathing experiences.
         </motion.div>
@@ -113,7 +134,7 @@ const MarqueeComponent = () => {
             duration: 0.7,
             type: "spring",
           }}
-          className="uppercase text-center text-xl  text-gray-500"
+          className=" text-center text-lg  text-gray-500"
         >
           Get top-tier design in less than a week
         </motion.div>
@@ -130,7 +151,7 @@ const MarqueeComponent = () => {
             duration: 0.8,
             type: "spring",
           }}
-          className=" uppercase text-center text-xl text-gray-500"
+          className="  text-center text-lg text-gray-500"
         >
           Subscriptions or one-time projects.
         </motion.div>
@@ -139,7 +160,7 @@ const MarqueeComponent = () => {
             <span className="contactButtoncircle" aria-hidden="true">
               <span className="icon arrow"></span>
             </span>
-            <span className="contact-text">Contact</span>
+            <span className="contact-text">Let's Work Together</span>
           </div>
         </div>
       </motion.div>
