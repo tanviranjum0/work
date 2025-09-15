@@ -25,57 +25,52 @@ const items: MarqueItem[] = [
   {
     id: 1,
     img: img1,
-    height: 200,
+    height: 220,
   },
   {
     id: 2,
     img: img2,
-    height: 535,
+    height: 585,
   },
   {
     id: 3,
     img: img3,
-    height: 274,
+    height: 300,
   },
   {
     id: 4,
     img: img4,
-    height: 200,
+    height: 220,
   },
   {
     id: 5,
     img: img5,
-    height: 200,
-  },
-  {
-    id: 6,
-    img: img6,
-    height: 497,
+    height: 220,
   },
   {
     id: 7,
     img: img7,
-    height: 200,
+    height: 220,
   },
   {
     id: 8,
     img: img8,
-    height: 497,
+    height: 546,
   },
   {
     id: 9,
     img: img9,
-    height: 200,
+    height: 220,
   },
   {
     id: 10,
     img: img10,
-    height: 273,
+    height: 300,
   },
   {
     id: 11,
     img: img11,
-    height: 200,
+    height: 220,
   },
 ];
 const MarqueeComponent = () => {
@@ -99,7 +94,7 @@ const MarqueeComponent = () => {
               repeat: Infinity,
             }}
           ></motion.div>
-          <div className="uppercase text-lg  text-gray-500">
+          <div className="uppercase text-lg text-gray-500">
             Available for new projects
           </div>
         </motion.div>
@@ -134,7 +129,7 @@ const MarqueeComponent = () => {
             duration: 0.7,
             type: "spring",
           }}
-          className=" text-center text-lg  text-gray-500"
+          className="text-center text-lg text-gray-500"
         >
           Get top-tier design in less than a week
         </motion.div>
@@ -151,7 +146,7 @@ const MarqueeComponent = () => {
             duration: 0.8,
             type: "spring",
           }}
-          className="  text-center text-lg text-gray-500"
+          className="text-center text-lg text-gray-500"
         >
           Subscriptions or one-time projects.
         </motion.div>
@@ -175,11 +170,11 @@ const MarqueeComponent = () => {
           duration: 1,
           type: "tween",
         }}
-        className="flex mt-28 scale-110 "
+        className="flex mt"
       >
         <Marquee
           direction="right"
-          className="marquee flex py-4"
+          className="marquee flex -mt-10 mb-32"
           autoFill={true}
           speed={40}
         >
@@ -190,7 +185,7 @@ const MarqueeComponent = () => {
                   className="rounded-xl mx-2"
                   src={data.img}
                   alt={`Marque image ${data.id}`}
-                  height={`${data.height}`}
+                  height={data.height}
                 />
               </>
             );
