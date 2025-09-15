@@ -81,7 +81,7 @@ const items: MarqueItem[] = [
 const MarqueeComponent = () => {
   return (
     <>
-      <motion.div className="m-32 flex flex-col justify-center items-center">
+      <motion.div className="p-32 flex flex-col overflow-hidden justify-center items-center">
         <motion.div className="flex items-center gap-3 justify-center">
           <motion.div
             key={"New"}

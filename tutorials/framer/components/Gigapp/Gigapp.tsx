@@ -6,7 +6,7 @@ import PseudoScroll from "./components/PseudoScroll";
 
 const Gigapp = () => {
   return (
-    <div className="bg-[#003631] overflow-x-hidden scroll-smooth h-screen w-screen  text-white">
+    <div className="bg-[#003631] box-border  text-white">
       <Navbar />
       <MarqueeComponent />
       <PseudoScroll />

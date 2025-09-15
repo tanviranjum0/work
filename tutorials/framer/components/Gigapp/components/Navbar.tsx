@@ -20,7 +20,7 @@ const Navbar = () => {
     showTime();
   }, []);
   return (
-    <div className="shadow-md">
+    <div className="shadow-md overflow-hidden">
       <div className="flex py-5  justify-between mx-10">
         <div className="flex justify-center gap-10  items-center">
           <Link href={"/"}>
