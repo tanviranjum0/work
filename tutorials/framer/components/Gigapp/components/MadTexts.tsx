@@ -15,7 +15,7 @@ const MadTexts = () => {
         repeat: Infinity,
         repeatType: "mirror",
         ease: "easeInOut",
-        delay: 0.3,
+        delay: 0.5,
       }
     );
   };
