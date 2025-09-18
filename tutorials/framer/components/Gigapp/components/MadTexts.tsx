@@ -1,14 +1,19 @@
 "use client";
-import { motion, useAnimate } from "motion/react";
+import {
+  motion,
+  useAnimate,
+  useMotionValueEvent,
+  useScroll,
+} from "motion/react";
 import { useEffect, useRef } from "react";
 const MadTexts = () => {
   const [scope, animate] = useAnimate();
-  const handleHover = (e) => {
-    console.log(e);
-    animate(
+
+  const handleHover = (e: string) => {
+    console.log(
       `#${e}`,
       {
-        rotate: [10, 0, -10, 0, 10],
+        rotate: [10, 0, -10, 0],
       },
       {
         duration: 0.5,
@@ -20,52 +25,211 @@ const MadTexts = () => {
     );
   };
   return (
-    <div>
-      <ul
-        ref={scope}
-        className="flex justify-center items-center w-full flex-col"
-      >
+    <div className="w-full py-10">
+      <div className="text-center text-5xl py-5 font-story">
+        Do you identify as any of these!
+      </div>
+      <ul ref={scope} className="flex justify-center items-center flex-col">
         <motion.li
           id="text1"
-          whileHover={() => handleHover("text1")}
-          //   initial={{
-          //     rotate: 0,
-          //   }}
-          //   animate={{
-          //     rotate: [10, 0, -10, 0, 10],
-          //   }}
-          //   transition={{
-          //     duration: 0.5,
-          //     repeat: Infinity,
-          //     repeatType: "mirror",
-          //     ease: "easeInOut",
-          //     delay: 0.2,
-          //   }}
-          className="p-4 text-xl my-5 rounded bg-yellow-100 text-black inline-block"
+          onHoverStart={(e) => {
+            animate(
+              "#text1",
+              { rotate: [-10, 0, 10, 0] },
+              {
+                duration: 0.5,
+                ease: "easeInOut",
+                delay: 0.1,
+              }
+            );
+          }}
+          onHoverEnd={() => animate("#text1", { rotate: 0 })}
+          className="px-4 py-2 text-xl my-2 rounded bg-yellow-100 text-black inline-block"
         >
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam,
-          nobis.
+          want to feel more joy
         </motion.li>
         <motion.li
           id="text2"
-          whileHover={() => handleHover("text2")}
-          //   initial={{
-          //     rotate: 0,
-          //   }}
-          //   animate={{
-          //     rotate: [10, 0, -10, 0, 10],
-          //   }}
-          //   transition={{
-          //     duration: 0.5,
-          //     repeat: Infinity,
-          //     repeatType: "mirror",
-          //     ease: "easeInOut",
-          //     delay: 0.2,
-          //   }}
-          className="p-4 text-xl my-5 rounded bg-yellow-100 text-black inline-block"
+          onHoverStart={(e) => {
+            animate(
+              "#text2",
+              { rotate: [10, 0, -10, 0] },
+              {
+                duration: 0.5,
+                ease: "easeInOut",
+                delay: 0.1,
+              }
+            );
+          }}
+          onHoverEnd={() => animate("#text2", { rotate: 0 })}
+          className="px-4 py-2 text-xl my-2 rounded bg-yellow-100 text-black inline-block"
         >
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam,
-          nobis.
+          desperately need to soothe my nervous system
+        </motion.li>
+        <motion.li
+          id="text3"
+          onHoverStart={(e) => {
+            animate(
+              "#text3",
+              { rotate: [-10, 0, 10, 0] },
+              {
+                duration: 0.5,
+                ease: "easeInOut",
+                delay: 0.1,
+              }
+            );
+          }}
+          onHoverEnd={() => animate("#text3", { rotate: 0 })}
+          className="px-4 py-2 text-xl my-2 rounded bg-yellow-100 text-black inline-block"
+        >
+          anguishing at the state of the world and utterly hopeless about it all
+        </motion.li>
+        <motion.li
+          id="text4"
+          onHoverStart={(e) => {
+            animate(
+              "#text4",
+              { rotate: [10, 0, -10, 0] },
+              {
+                duration: 0.5,
+                ease: "easeInOut",
+                delay: 0.1,
+              }
+            );
+          }}
+          onHoverEnd={() => animate("#text4", { rotate: 0 })}
+          className="px-4 py-2 text-xl my-2 rounded bg-yellow-100 text-black inline-block"
+        >
+          probably won’t ever get to buy a house but do have an interiors inspo
+          folder
+        </motion.li>
+        <motion.li
+          id="text5"
+          onHoverStart={(e) => {
+            animate(
+              "#text5",
+              { rotate: [-10, 0, 10, 0] },
+              {
+                duration: 0.5,
+                ease: "easeInOut",
+                delay: 0.1,
+              }
+            );
+          }}
+          onHoverEnd={() => animate("#text5", { rotate: 0 })}
+          className="px-4 py-2 text-xl my-2 rounded bg-yellow-100 text-black inline-block"
+        >
+          breaking a little free from the algorithms and doom scrolling
+        </motion.li>
+        <motion.li
+          id="test6"
+          onHoverStart={(e) => {
+            animate(
+              "#test6",
+              { rotate: [10, 0, -10, 0] },
+              {
+                duration: 0.5,
+                ease: "easeInOut",
+                delay: 0.1,
+              }
+            );
+          }}
+          onHoverEnd={() => animate("#test6", { rotate: 0 })}
+          className="px-4 py-2 text-xl my-2 rounded bg-yellow-100 text-black inline-block"
+        >
+          aware i’ve internalized productivity but not sure how to change that
+        </motion.li>
+        <motion.li
+          id="text7"
+          onHoverStart={(e) => {
+            animate(
+              "#text7",
+              { rotate: [-10, 0, 10, 0] },
+              {
+                duration: 0.5,
+                ease: "easeInOut",
+                delay: 0.1,
+              }
+            );
+          }}
+          onHoverEnd={() => animate("#text7", { rotate: 0 })}
+          className="px-4 py-2 text-xl my-2 rounded bg-yellow-100 text-black inline-block"
+        >
+          like my job but kind of having to resent working at all actually
+        </motion.li>
+        <motion.li
+          id="text10"
+          onHoverStart={(e) => {
+            animate(
+              "#text10",
+              { rotate: [10, 0, -10, 0] },
+              {
+                duration: 0.5,
+                ease: "easeInOut",
+                delay: 0.1,
+              }
+            );
+          }}
+          onHoverEnd={() => animate("#text10", { rotate: 0 })}
+          className="px-4 py-2 text-xl my-2 rounded bg-yellow-100 text-black inline-block"
+        >
+          wondering if the robots will take my job while annoyed they don’t do
+          all the shitty stuff
+        </motion.li>
+        <motion.li
+          id="text8"
+          onHoverStart={(e) => {
+            animate(
+              "#text8",
+              { rotate: [-10, 0, 10, 0] },
+              {
+                duration: 0.5,
+                ease: "easeInOut",
+                delay: 0.1,
+              }
+            );
+          }}
+          onHoverEnd={() => animate("#text8", { rotate: 0 })}
+          className="px-4 py-2 text-xl my-2 rounded bg-yellow-100 text-black inline-block"
+        >
+          doing the same things so I need new worlds opened up to me
+        </motion.li>
+        <motion.li
+          id="text9"
+          onHoverStart={(e) => {
+            animate(
+              "#text9",
+              { rotate: [10, 0, -10, 0] },
+              {
+                duration: 0.5,
+                ease: "easeInOut",
+                delay: 0.1,
+              }
+            );
+          }}
+          onHoverEnd={() => animate("#text9", { rotate: 0 })}
+          className="px-4 py-2 text-xl my-2 rounded bg-yellow-100 text-black inline-block"
+        >
+          in disbelief some people actually take siestas and make food all the
+          time
+        </motion.li>
+        <motion.li
+          id="text11"
+          onHoverStart={(e) => {
+            animate(
+              "#text11",
+              { rotate: [-10, 0, 10, 0] },
+              {
+                duration: 0.5,
+                ease: "easeInOut",
+                delay: 0.1,
+              }
+            );
+          }}
+          onHoverEnd={() => animate("#text9", { rotate: 0 })}
+          className="px-4 py-2 text-xl my-2 rounded bg-yellow-100 text-black inline-block"
+        >
+          fed up with the endless ridiculousness of so many internet corners
         </motion.li>
       </ul>
     </div>

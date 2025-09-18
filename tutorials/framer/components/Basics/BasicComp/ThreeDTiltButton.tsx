@@ -35,7 +35,7 @@ const TiltButton: React.FC = () => {
     if (!buttonRef.current) return;
 
     const rect = buttonRef.current.getBoundingClientRect();
-    console.log(rect);
+    // console.log(rect);
     const width = rect.width;
     const height = rect.height;
     const mouseX = e.clientX - rect.left;

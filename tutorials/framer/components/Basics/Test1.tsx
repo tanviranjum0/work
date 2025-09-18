@@ -40,6 +40,7 @@ const Test2 = () => {
       {/* <ShimmeringGemstoneButton /> */}
       {/* <ConfettiBrustButton /> */}
       {/* <ThreeDParallaxCard /> */}
+      {/* <ThreeDTiltButton /> */}
       {/* <InterActiveTimeline /> */}
       {/* <DynamicChartAnimation /> */}
       {/* <AnimatedProfileShowcase /> */}
@@ -49,7 +50,7 @@ const Test2 = () => {
       {/* <MagnaticButton /> */}
       {/* <LiquidRippleButton /> */}
       {/* <MorphingIconButton /> */}
-      <Marque />
+      {/* <Marque /> */}
       {/* <SwipeToDelete /> */}
       {/* <PageTransition /> */}
       {/* <Ticket /> */}
