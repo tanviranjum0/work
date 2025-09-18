@@ -27,7 +27,7 @@ const MadTexts = () => {
   return (
     <div className="w-full py-10">
       <div className="text-center text-5xl py-5 font-story">
-        Do you identify as any of these!
+        Do you identify as any of these?
       </div>
       <ul ref={scope} className="flex justify-center items-center flex-col">
         <motion.li
