@@ -8,7 +8,6 @@ import MadTexts from "./components/MadTexts";
 const Gigapp = () => {
   return (
     <div className="bg-[#003631] box-border  text-white">
-      hello
       <Navbar />
       <MarqueeComponent />
       <PseudoScroll />
