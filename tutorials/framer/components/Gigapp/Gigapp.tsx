@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import MarqueeComponent from "./components/MarqueeComponent";
 import PseudoScroll from "./components/PseudoScroll";
 import MadTexts from "./components/MadTexts";
+import ScrollAnimatedImages from "./components/ScrollAnimatedImages";
 
 const Gigapp = () => {
   return (
@@ -12,6 +13,7 @@ const Gigapp = () => {
       <MarqueeComponent />
       <PseudoScroll />
       <MadTexts />
+      <ScrollAnimatedImages />
     </div>
   );
 };
