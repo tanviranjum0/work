@@ -65,7 +65,7 @@ const ScrollAnimatedImages = () => {
   return (
     <div
       ref={container}
-      className="rounded-xl text-black p-20 bg-gray-400 w-full h-[100vh]"
+      className="rounded-xl text-black p-1 bg-gray-400 w-full h-[100vh]"
     >
       <div className="text-5xl bg-orange-200   col-span-12 my-3">
         Your design needs:{" "}
