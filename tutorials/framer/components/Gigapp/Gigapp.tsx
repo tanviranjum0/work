@@ -5,6 +5,7 @@ import MarqueeComponent from "./components/MarqueeComponent";
 import PseudoScroll from "./components/PseudoScroll";
 import MadTexts from "./components/MadTexts";
 import ScrollAnimatedImages from "./components/ScrollAnimatedImages";
+import HiddenImages from "./components/HiddenImages";
 
 const Gigapp = () => {
   return (
@@ -14,6 +15,7 @@ const Gigapp = () => {
       <PseudoScroll />
       <MadTexts />
       <ScrollAnimatedImages />
+      <HiddenImages />
       <div className="h-[100vh] bg-amber-300"></div>
     </div>
   );
