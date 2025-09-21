@@ -3,7 +3,6 @@ import {
   motion,
   useMotionValueEvent,
   useAnimate,
-  useInView,
   useScroll,
   AnimatePresence,
   useTransform,
