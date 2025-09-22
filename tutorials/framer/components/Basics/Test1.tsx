@@ -26,6 +26,8 @@ import BoxBackground from "./BasicComp/Backgrounds/BoxBackground";
 import MovingStarts from "./BasicComp/Backgrounds/MovingStarts";
 import TransperantBackground from "./BasicComp/Backgrounds/TransperantBackground";
 import One from "./BasicComp/CursorStyles/One";
+import UseAnimateExamples from "./hooks/UseAnimate";
+import UseTransform from "./hooks/UseTransform";
 
 const Test2 = () => {
   return (
@@ -60,6 +62,7 @@ const Test2 = () => {
       {/* <MovingStarts /> */}
       {/* <One /> */}
       {/* <div className="bg-[#003631] h-screen w-screen"></div> */}
+      {/* <UseTransform /> */}
     </div>
   );
 };

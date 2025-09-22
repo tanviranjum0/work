@@ -38,7 +38,7 @@ import { useEffect } from "react";
 //   );
 // }
 
-export default function CombinedValues() {
+export default function UseTransform() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 

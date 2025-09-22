@@ -1,7 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Story+Script&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
 @import "tailwindcss";
 @theme {
   --font-story: "Story Script", sans-serif;
+  --font-dancing: "Dancing Script", sans-serif;
 }
 
 .cutting-line {

@@ -23,15 +23,15 @@ const ScrollAnimatedImages = () => {
     offset: ["start end", "end start"],
   });
 
-  const left1 = useTransform(scrollYProgress, [0.4, 0.5], [30, 0]);
-  const left2 = useTransform(scrollYProgress, [0.4, 0.5], [18, 0]);
-  const left3 = useTransform(scrollYProgress, [0.4, 0.5], [6, 0]);
-  const topValue = useTransform(scrollYProgress, [0.2, 0.5], [-16, 0]);
-  const rotateValue1 = useTransform(scrollYProgress, [0.4, 0.5], [-12, 0]);
-  const rotateValue2 = useTransform(scrollYProgress, [0.4, 0.5], [12, 0]);
-  const rotateValue3 = useTransform(scrollYProgress, [0.4, 0.5], [24, 0]);
+  const left1 = useTransform(scrollYProgress, [0.2, 0.4], [30, 0]);
+  const left2 = useTransform(scrollYProgress, [0.2, 0.4], [18, 0]);
+  const left3 = useTransform(scrollYProgress, [0.2, 0.4], [6, 0]);
+  const margin = useTransform(scrollYProgress, [0, 1], ["0px", "40px"]);
+  const topValue = useTransform(scrollYProgress, [0.1, 0.5], [-16, 0]);
+  const rotateValue1 = useTransform(scrollYProgress, [0.1, 0.5], [-12, 0]);
+  const rotateValue2 = useTransform(scrollYProgress, [0.1, 0.5], [12, 0]);
+  const rotateValue3 = useTransform(scrollYProgress, [0.1, 0.5], [24, 0]);
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // console.log("scroll", latest);
     if (latest > 0.65) {
       setVisibleText(true);
       animate(
@@ -40,7 +40,7 @@ const ScrollAnimatedImages = () => {
           background:
             " linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(60, 122, 214, 1) 100%)",
         },
-        { duration: 0.5 }
+        { duration: 1 }
       );
       animate(
         "#box2",
@@ -48,7 +48,7 @@ const ScrollAnimatedImages = () => {
           background:
             " linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(60, 122, 214, 1) 100%)",
         },
-        { duration: 0.5 }
+        { duration: 1 }
       );
       animate(
         "#box3",
@@ -56,7 +56,7 @@ const ScrollAnimatedImages = () => {
           background:
             " linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(60, 122, 214, 1) 100%)",
         },
-        { duration: 0.5 }
+        { duration: 1 }
       );
     } else {
       setVisibleText(false);
@@ -102,7 +102,8 @@ const ScrollAnimatedImages = () => {
   return (
     <div className="">
       <div className="w-full h-[100vh]">
-        <div
+        <motion.div
+          style={{ margin }}
           ref={container}
           className="rounded-xl text-black p-20 bg-blue-200 m-5"
         >
@@ -140,7 +141,7 @@ const ScrollAnimatedImages = () => {
                 >
                   <motion.img
                     id="img1"
-                    className="w-40 h-40 shadow-2xl rounded-md  relative "
+                    className="w-40 h-40 shadow-2xl rounded-md relative "
                     src="https://framerusercontent.com/images/pCTYQqNTGptGPVwm4XQcjvVJVYA.jpg"
                     alt="1"
                   />
@@ -223,7 +224,7 @@ const ScrollAnimatedImages = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
       <div className="h-20"></div>
     </div>
