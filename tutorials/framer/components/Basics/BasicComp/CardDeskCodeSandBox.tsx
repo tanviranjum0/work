@@ -98,7 +98,7 @@ export default function CardDesk() {
 
   return (
     <motion.div className="bg">
-      {/* Simply map over the number of cards and display them. 
+      {/* Simply map over the number of cards and them. 
           Each card is positioned absolute and centered on the 
           screen so the cards stack. */}
       {Array(cards.length)
