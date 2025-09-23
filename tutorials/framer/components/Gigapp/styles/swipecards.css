@@ -28,7 +28,7 @@
 }
 
 .bg {
-  background-image: url("../../../public/dragCompBg.jpg");
+  /* background-image: url("../../../public/dragCompBg.jpg"); */
   background-size: cover;
   background-position: center;
   width: 100vw;
