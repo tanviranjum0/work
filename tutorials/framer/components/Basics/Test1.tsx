@@ -4,6 +4,7 @@ import ThreeDTiltButton from "./BasicComp/ThreeDTiltButton";
 import Kanban from "./BasicComp/Kanban";
 import SwipeToDelete from "./BasicComp/SwipeToDelete";
 import CardsDeck from "./BasicComp/CardsDeck";
+import CardDeskCodeSandBox from "./BasicComp/CardDeskCodeSandBox";
 import AnimatedSidebar from "./BasicComp/AnimatedSidebar";
 import FloatingNavDots from "./BasicComp/FloatingNavDots";
 import ShimmeringGemstoneButton from "./BasicComp/ShimmeringGemstoneButton";
@@ -36,6 +37,7 @@ const Test2 = () => {
       {/* <Kanban /> */}
       {/* <SwipeToDelete /> */}
       {/* <CardsDeck /> */}
+      <CardDeskCodeSandBox />
       {/* <AnimatedSidebar /> */}
       {/* <ExpandableCard /> */}
       {/* <FloatingNavDots /> */}

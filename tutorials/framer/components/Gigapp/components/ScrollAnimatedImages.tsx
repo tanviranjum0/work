@@ -32,7 +32,7 @@ const ScrollAnimatedImages = () => {
   const rotateValue2 = useTransform(scrollYProgress, [0.1, 0.5], [12, 0]);
   const rotateValue3 = useTransform(scrollYProgress, [0.1, 0.5], [24, 0]);
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (latest > 0.65) {
+    if (latest > 0.7) {
       setVisibleText(true);
       animate(
         "#box1",
