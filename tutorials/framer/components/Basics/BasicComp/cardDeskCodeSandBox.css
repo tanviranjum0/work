@@ -27,7 +27,7 @@ body {
 .card {
   position: absolute;
   top: calc(50% - 40vh);
-  left: calc(50vw - 15vw);
+  left: calc(50vw - 10vw);
   cursor: grab;
   background-color: white;
   background-size: cover 95%;
@@ -55,6 +55,6 @@ body {
   position: fixed;
   overflow: hidden;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  /* align-items: center; */
 }
