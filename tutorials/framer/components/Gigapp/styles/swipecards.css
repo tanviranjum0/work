@@ -2,21 +2,11 @@
   overscroll-behavior-y: contain;
   margin: 0;
   padding: 0;
-  height: 100%;
-  width: 100%;
   user-select: none;
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir,
     helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
-  position: fixed;
+  position: relative;
   overflow: hidden;
-}
-
-#root {
-  background: lightblue;
-  position: fixed;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
 }
 
 .card {
@@ -37,19 +27,14 @@
     0 10px 10px -10px rgba(50, 50, 73, 0.3);
 }
 
-.card {
-  cursor: grabbing;
-}
-
 .bg {
   background-image: url("../../../public/dragCompBg.jpg");
   background-size: cover;
   background-position: center;
   width: 100vw;
   height: 100vh;
-  position: fixed;
   overflow: hidden;
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
+  justify-content: center;
+  align-items: center;
 }

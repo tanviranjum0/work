@@ -8,7 +8,7 @@ import {
   useScroll,
   useSpring,
 } from "motion/react";
-import "../BasicComp/cardDeskCodeSandBox.css";
+import "../styles/swipecards.css";
 
 const cards = [
   "https://plus.unsplash.com/premium_photo-1753982324741-839128d837ad?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -113,7 +113,7 @@ function CardDesk() {
     <div>
       <motion.div
         ref={container}
-        className="bg swipecontainer h-[100vh] flex justify-between p-10 items-center"
+        className="bg swipecontainer flex justify-between p-10 items-center"
       >
         <div className="flex flex-col items-center mx-5">
           <div className="text-4xl">
@@ -259,7 +259,7 @@ function CardDesk() {
           </div>
         </div>
       </motion.div>
-      {/* <div className="h-[100vh] bg-orange-400 mt-[100vh]"></div> */}
+      <div className="h-[100vh] bg-orange-400 mt-[100vh]"></div>
     </div>
   );
 }
