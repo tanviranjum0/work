@@ -10,11 +10,12 @@ import {
   useTransform,
   useAnimate,
   useMotionValueEvent,
+  AnimatePresence,
 } from "motion/react";
 import "../styles/swipecards.css";
 
 const cards = [
-  "https://plus.unsplash.com/premium_photo-1753982324741-839128d837ad?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "../../../public/swipeCards/website1.jpeg",
   "https://plus.unsplash.com/premium_photo-1753982324741-839128d837ad?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "https://plus.unsplash.com/premium_photo-1753982324741-839128d837ad?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "https://plus.unsplash.com/premium_photo-1753982324741-839128d837ad?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -72,17 +73,11 @@ function CardDesk() {
     ["0px", "40px"]
   );
 
-  const [scope, animate] = useAnimate();
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     if (latest > 0.5) {
-      animate("#keySvg", { scale: 1 + latest }, { duration: 1 });
+      setIsUnlocked(true);
     } else {
-      animate("#keySvg", { scale: 1 }, { duration: 1 });
-    }
-    if (latest > 0.7) {
-      animate("#unlockSvg", { display: "block", scale: 1 }, { duration: 1 });
-    } else {
-      animate("#unlockSvg", { display: "none" }, { duration: 1 });
+      setIsUnlocked(false);
     }
   });
   const controls = useAnimation();
@@ -134,7 +129,7 @@ function CardDesk() {
   }, []);
 
   return (
-    <div ref={scope}>
+    <div>
       <motion.div
         ref={container}
         style={{
@@ -167,7 +162,6 @@ function CardDesk() {
           Each card is positioned absolute and centered on the 
           screen so the cards stack. */}
         <div className="w-full">
-          {" "}
           {Array(cards.length)
             .fill(null)
             .map((_, i) => (
@@ -217,27 +211,44 @@ function CardDesk() {
               Potential
             </span>
             <div className="flex mt-10 items-center justify-center">
-              <motion.div
-                id="keySvg"
-                style={{
-                  rotate,
-                }}
-                key={"svg rotation1"}
-                className="w-24"
-              >
-                <svg
-                  version="1.1"
-                  id="Layer_1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlnsXlink="http://www.w3.org/1999/xlink"
-                  x="0px"
-                  y="0px"
-                  viewBox="0 0 2731.1914 957.4548"
-                  enableBackground="new 0 0 2731.1914 957.4548"
-                  xmlSpace="preserve"
-                >
-                  <path
-                    d="M455.4235,66.1424c-54.6162,17.0518-99.3918,59.2998-124.8123,109.9444c-19.2071,38.806-20.2057,83.0207-19.2763,125.3689
+              <AnimatePresence mode="wait">
+                {!isUnlocked && (
+                  <motion.div
+                    id="keySvg"
+                    style={{
+                      rotate,
+                    }}
+                    initial={{
+                      scale: 0.7,
+                      opacity: 0.5,
+                    }}
+                    animate={{
+                      scale: 1,
+                      opacity: 1,
+                    }}
+                    exit={{
+                      scale: 0.7,
+                      opacity: 0.5,
+                    }}
+                    transition={{
+                      duration: 0.25,
+                    }}
+                    key={"svg rotation1"}
+                    className="w-24"
+                  >
+                    <svg
+                      version="1.1"
+                      id="Layer_1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlnsXlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      viewBox="0 0 2731.1914 957.4548"
+                      enableBackground="new 0 0 2731.1914 957.4548"
+                      xmlSpace="preserve"
+                    >
+                      <path
+                        d="M455.4235,66.1424c-54.6162,17.0518-99.3918,59.2998-124.8123,109.9444c-19.2071,38.806-20.2057,83.0207-19.2763,125.3689
 	c-81.3054-22.5263-175.0156,22.3917-210.1871,98.7897c-9.2783,20.1539-8.3644,20.2433-11.8496,40.3688
 	c-4.8375,27.9341-4.2083,37.05-2.2042,55.969c1.4357,22.2823,7.3027,38.5111,7.3027,38.5111
 	c18.9492,58.527,69.7227,105.9932,129.7515,120.0033c29.4164,7.2276,60.193,5.4804,89.8412,0.4908
@@ -283,52 +294,74 @@ function CardDesk() {
 	c15.801,8.6812,28.0173,22.3768,38.3102,36.9644c26.0116-18.8495,48.4291-42.141,73.6849-61.9848
 	c-22.0155-24.3114-38.4592-54.6412-42.0161-87.5662c-8.1386-65.5243,43.349-130.0781,107.2407-141.9646
 	C527.9047,129.3482,562.4468,135.5323,590.3859,152.6449z"
-                  />
-                </svg>
-              </motion.div>
+                      />
+                    </svg>
+                  </motion.div>
+                )}
 
-              <motion.div id="unlockSvg" className="w-15 hidden">
-                <svg
-                  version="1.1"
-                  id="Capa_1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlnsXlink="http://www.w3.org/1999/xlink"
-                  x="0px"
-                  y="0px"
-                  viewBox="0 0 253.334 253.334"
-                  // style="enable-background:new 0 0 253.334 253.334;"
-                  xmlSpace="preserve"
-                >
-                  <g>
-                    <path
-                      d="M160.44,89.902H74.524V52.345C74.524,34.51,89.034,20,106.87,20s32.346,14.51,32.346,32.345V62.57c0,5.523,4.478,10,10,10
+                {isUnlocked && (
+                  <motion.div
+                    initial={{
+                      scale: 0.7,
+                      opacity: 0.5,
+                    }}
+                    animate={{
+                      scale: 1,
+                      opacity: 1,
+                    }}
+                    exit={{
+                      scale: 0.7,
+                      opacity: 0.5,
+                    }}
+                    transition={{
+                      duration: 0.25,
+                    }}
+                    id="unlockSvg"
+                    className="w-15 "
+                  >
+                    <svg
+                      version="1.1"
+                      id="Capa_1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlnsXlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      viewBox="0 0 253.334 253.334"
+                      // style="enable-background:new 0 0 253.334 253.334;"
+                      xmlSpace="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M160.44,89.902H74.524V52.345C74.524,34.51,89.034,20,106.87,20s32.346,14.51,32.346,32.345V62.57c0,5.523,4.478,10,10,10
 		s10-4.477,10-10V52.345C159.215,23.482,135.733,0,106.87,0S54.524,23.482,54.524,52.345v37.557h-1.225
 		c-15.244,0-27.646,12.402-27.646,27.646v106.908c0,15.923,12.954,28.878,28.878,28.878h104.678
 		c15.924,0,28.878-12.955,28.878-28.878V117.548C188.087,102.304,175.684,89.902,160.44,89.902z M168.087,224.456
 		c0,4.896-3.982,8.878-8.878,8.878H54.531c-4.896,0-8.878-3.982-8.878-8.878V117.548c0-4.216,3.431-7.646,7.646-7.646H160.44
 		c4.216,0,7.646,3.43,7.646,7.646V224.456z"
-                    />
-                    <path
-                      d="M106.87,134.44c-11.409,0-20.691,9.282-20.691,20.691c0,7.783,4.324,14.57,10.691,18.102v25.562c0,5.523,4.478,10,10,10
+                        />
+                        <path
+                          d="M106.87,134.44c-11.409,0-20.691,9.282-20.691,20.691c0,7.783,4.324,14.57,10.691,18.102v25.562c0,5.523,4.478,10,10,10
 		s10-4.477,10-10v-25.562c6.368-3.532,10.691-10.319,10.691-18.102C127.561,143.722,118.279,134.44,106.87,134.44z"
-                    />
-                    <path
-                      d="M178.588,54.182c1.221,0.49,2.48,0.721,3.72,0.721c3.965,0,7.718-2.375,9.284-6.28l7.445-18.563
+                        />
+                        <path
+                          d="M178.588,54.182c1.221,0.49,2.48,0.721,3.72,0.721c3.965,0,7.718-2.375,9.284-6.28l7.445-18.563
 		c2.056-5.126-0.433-10.948-5.559-13.004c-5.125-2.056-10.948,0.433-13.004,5.559l-7.445,18.563
 		C170.974,46.304,173.462,52.125,178.588,54.182z"
-                    />
-                    <path
-                      d="M190.093,66.501c1.623,3.796,5.317,6.071,9.2,6.071c1.312,0,2.645-0.259,3.926-0.808l18.39-7.862
+                        />
+                        <path
+                          d="M190.093,66.501c1.623,3.796,5.317,6.071,9.2,6.071c1.312,0,2.645-0.259,3.926-0.808l18.39-7.862
 		c5.078-2.171,7.436-8.047,5.265-13.126c-2.172-5.078-8.052-7.436-13.126-5.264l-18.39,7.862
 		C190.28,55.546,187.922,61.422,190.093,66.501z"
-                    />
-                    <path
-                      d="M221.085,85.232l-18.563-7.445c-5.126-2.056-10.948,0.432-13.004,5.559c-2.056,5.126,0.433,10.948,5.559,13.004
+                        />
+                        <path
+                          d="M221.085,85.232l-18.563-7.445c-5.126-2.056-10.948,0.432-13.004,5.559c-2.056,5.126,0.433,10.948,5.559,13.004
 		l18.563,7.445c1.221,0.49,2.48,0.721,3.72,0.721c3.965,0,7.718-2.375,9.284-6.28C228.699,93.11,226.211,87.288,221.085,85.232z"
-                    />
-                  </g>
-                </svg>
-              </motion.div>
+                        />
+                      </g>
+                    </svg>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
