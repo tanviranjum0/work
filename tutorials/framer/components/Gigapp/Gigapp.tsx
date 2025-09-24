@@ -7,6 +7,7 @@ import MadTexts from "./components/MadTexts";
 import ScrollAnimatedImages from "./components/ScrollAnimatedImages";
 import HiddenImages from "./components/HiddenImages";
 import SwipeCards from "./components/SwipeCards";
+import Carousel from "./components/Carousel";
 
 const Gigapp = () => {
   return (
@@ -18,6 +19,7 @@ const Gigapp = () => {
       <ScrollAnimatedImages />
       <HiddenImages />
       <SwipeCards />
+      <Carousel />
       <div className="h-[100vh] bg-amber-300"></div>
     </div>
   );
