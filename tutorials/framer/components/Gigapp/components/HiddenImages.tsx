@@ -13,11 +13,7 @@ const HiddenImages = () => {
     target: mainContainer,
     offset: ["start end", "end start"],
   });
-  // const scaleX = useSpring(scrollYProgress, {
-  //   stiffness: 100,
-  //   damping: 30,
-  //   restDelta: 0.001,
-  // });
+
   const margin = useTransform(scrollYProgress, [0, 1], ["0px", "40px"]);
   const imageOne = useSpring(
     useTransform(scrollYProgress, [0, 0.5], [0, -200])

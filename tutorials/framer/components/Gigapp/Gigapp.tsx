@@ -18,7 +18,7 @@ const Gigapp = () => {
       <ScrollAnimatedImages />
       <HiddenImages />
       <SwipeCards />
-      {/* <div className="h-[100vh] bg-amber-300"></div> */}
+      <div className="h-[100vh] bg-amber-300"></div>
     </div>
   );
 };
