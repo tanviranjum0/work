@@ -80,23 +80,20 @@ const Carousel = () => {
     }
     setImageCount([imageId, changeDirection]);
   };
-  const leftcount = () => {
-    if (activeImageIndex == 0) {
-      return 5;
-    } else {
-      return activeImageIndex - 1;
-    }
-  };
+
+  const leftcount = wrap(0, IMAGES.length, imageCount - 1);
+  const rightcount = wrap(0, IMAGES.length, imageCount + 1);
+
   return (
-    <main className="bg-cyan-600 flex flex-col items-center">
+    <main className="bg-[#dfdad5] flex flex-col items-center">
       <div className="slider-container flex flex-col items-center my-6 relative overflow-hidden h-[500px] w-full">
         <div className="flex items-center">
-          <div className="slider relative -right-20 overflow-hidden h-[300px] w-[400px]">
+          <div className="slider relative blur-xs -right-20 overflow-hidden h-[300px] w-[400px]">
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={imageCount}
                 style={{
-                  backgroundImage: `url(${IMAGES[leftcount()].imageSrc})`,
+                  backgroundImage: `url(${IMAGES[leftcount].imageSrc})`,
                 }}
                 custom={direction}
                 variants={sliderVariants}
@@ -133,12 +130,12 @@ const Carousel = () => {
               />
             </AnimatePresence>
           </div>
-          <div className="slider -left-20 relative overflow-hidden h-[300px] w-[400px]">
+          <div className="slider  blur-xs -left-20 relative overflow-hidden h-[300px] w-[400px]">
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={imageCount}
                 style={{
-                  backgroundImage: `url(${IMAGES[activeImageIndex].imageSrc})`,
+                  backgroundImage: `url(${IMAGES[rightcount].imageSrc})`,
                 }}
                 custom={direction}
                 variants={sliderVariants}
@@ -157,8 +154,8 @@ const Carousel = () => {
         </div>
 
         <div className="buttons">
-          <button onClick={() => swipeToImage(-1)}>PREV</button>
-          <button onClick={() => swipeToImage(1)}>NEXT</button>
+          <button onClick={() => swipeToImage(-1)}>←</button>
+          <button onClick={() => swipeToImage(1)}>→</button>
         </div>
       </div>
 

@@ -37,14 +37,14 @@ const Test2 = () => {
       {/* <Kanban /> */}
       {/* <SwipeToDelete /> */}
       {/* <CardsDeck /> */}
-      <CardDeskCodeSandBox />
+      {/* <CardDeskCodeSandBox /> */}
       {/* <AnimatedSidebar /> */}
       {/* <ExpandableCard /> */}
       {/* <FloatingNavDots /> */}
       {/* <ShimmeringGemstoneButton /> */}
       {/* <ConfettiBrustButton /> */}
       {/* <ThreeDParallaxCard /> */}
-      {/* <ThreeDTiltButton /> */}
+      <ThreeDTiltButton />
       {/* <InterActiveTimeline /> */}
       {/* <DynamicChartAnimation /> */}
       {/* <AnimatedProfileShowcase /> */}

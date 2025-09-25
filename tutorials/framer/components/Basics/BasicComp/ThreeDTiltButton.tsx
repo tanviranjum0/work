@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 
 const TiltButton: React.FC = () => {
   const buttonRef = useRef<HTMLDivElement>(null);
