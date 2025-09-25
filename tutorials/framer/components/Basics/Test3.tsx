@@ -722,7 +722,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: "center",
     padding: "5px 15px",
     borderRadius: "10px",
-    cursor: "pointer",
+    // cursor: "pointer",
   },
   navActive: {
     backgroundColor: "rgba(0, 122, 255, 0.1)",
