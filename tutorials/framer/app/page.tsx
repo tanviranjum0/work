@@ -8,8 +8,8 @@ const page = () => {
     <div className="">
       {/* <Test1 /> */}
       {/* <Test2 /> */}
-      {/* <Test3 /> */}
-      <Gigapp />
+      <Test3 />
+      {/* <Gigapp /> */}
     </div>
   );
 };
