@@ -169,7 +169,7 @@ function CardDesk() {
           {Array(cards.length)
             .fill(null)
             .map((_, i) => (
-              <>
+              <div key={i + 10}>
                 {/* This is the card itself. We use the index as a `key` for the element
                   and also inject it as `custom` property so we know which is which.
                   Additionally, we provide our custom constrols to the `animate` prop 
@@ -193,7 +193,7 @@ function CardDesk() {
                   style={{ backgroundImage: `url(${cards[i]})` }}
                   whileTap={{ scale: 1.1 }}
                 />
-              </>
+              </div>
             ))}
         </div>
         <div className="flex flex-col justify-center items-center mx-5">

@@ -9,27 +9,27 @@ const IMAGES = [
   {
     id: 0,
     imageSrc:
-      "https://images.pexels.com/photos/210922/pexels-photo-210922.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+      "https://images.unsplash.com/photo-1558981359-219d6364c9c8?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 1,
     imageSrc:
-      "https://images.pexels.com/photos/164758/pexels-photo-164758.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+      "https://images.unsplash.com/photo-1725878746053-407492aa4034?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 2,
     imageSrc:
-      "https://images.pexels.com/photos/3430143/pexels-photo-3430143.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      "https://images.unsplash.com/photo-1757383747751-d1c91fb276ea?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 3,
     imageSrc:
-      "https://images.pexels.com/photos/2231756/pexels-photo-2231756.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      "https://images.unsplash.com/photo-1623841696408-10aec8ed6d44?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 4,
     imageSrc:
-      "https://images.pexels.com/photos/1813157/pexels-photo-1813157.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      "https://images.unsplash.com/photo-1565982369439-2072eee9168a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
 ];
 
@@ -56,7 +56,7 @@ const Carousel = () => {
   const [[imageCount, direction], setImageCount] = useState([0, 0]);
 
   const activeImageIndex = wrap(0, IMAGES.length, imageCount);
-
+  console.log(activeImageIndex);
   const swipeToImage = (swipeDirection) => {
     setImageCount([imageCount + swipeDirection, swipeDirection]);
   };
@@ -80,30 +80,80 @@ const Carousel = () => {
     }
     setImageCount([imageId, changeDirection]);
   };
-
+  const leftcount = () => {
+    if (activeImageIndex == 0) {
+      return 5;
+    } else {
+      return activeImageIndex - 1;
+    }
+  };
   return (
-    <main className="bg-cyan-600">
-      <div className="slider-container ">
-        <div className="slider">
-          <AnimatePresence initial={false} custom={direction}>
-            <motion.div
-              key={imageCount}
-              style={{
-                backgroundImage: `url(${IMAGES[activeImageIndex].imageSrc})`,
-              }}
-              custom={direction}
-              variants={sliderVariants}
-              initial="incoming"
-              animate="active"
-              exit="exit"
-              transition={sliderTransition}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={1}
-              onDragEnd={(_, dragInfo) => dragEndHandler(dragInfo)}
-              className="image"
-            />
-          </AnimatePresence>
+    <main className="bg-cyan-600 flex flex-col items-center">
+      <div className="slider-container flex flex-col items-center my-6 relative overflow-hidden h-[500px] w-full">
+        <div className="flex items-center">
+          <div className="slider relative -right-20 overflow-hidden h-[300px] w-[400px]">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.div
+                key={imageCount}
+                style={{
+                  backgroundImage: `url(${IMAGES[leftcount()].imageSrc})`,
+                }}
+                custom={direction}
+                variants={sliderVariants}
+                initial="incoming"
+                animate="active"
+                exit="exit"
+                transition={sliderTransition}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={1}
+                onDragEnd={(_, dragInfo) => dragEndHandler(dragInfo)}
+                className="image"
+              />
+            </AnimatePresence>
+          </div>
+          <div className="slider relative z-10 shadow-2xl shadow-black overflow-hidden h-[400px] w-[700px]">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.div
+                key={imageCount}
+                style={{
+                  backgroundImage: `url(${IMAGES[activeImageIndex].imageSrc})`,
+                }}
+                custom={direction}
+                variants={sliderVariants}
+                initial="incoming"
+                animate="active"
+                exit="exit"
+                transition={sliderTransition}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={1}
+                onDragEnd={(_, dragInfo) => dragEndHandler(dragInfo)}
+                className="image"
+              />
+            </AnimatePresence>
+          </div>
+          <div className="slider -left-20 relative overflow-hidden h-[300px] w-[400px]">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.div
+                key={imageCount}
+                style={{
+                  backgroundImage: `url(${IMAGES[activeImageIndex].imageSrc})`,
+                }}
+                custom={direction}
+                variants={sliderVariants}
+                initial="incoming"
+                animate="active"
+                exit="exit"
+                transition={sliderTransition}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={1}
+                onDragEnd={(_, dragInfo) => dragEndHandler(dragInfo)}
+                className="image"
+              />
+            </AnimatePresence>
+          </div>
         </div>
 
         <div className="buttons">
