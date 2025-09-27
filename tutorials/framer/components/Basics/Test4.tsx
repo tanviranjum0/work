@@ -1,5 +1,17 @@
 "use client";
 import img from "../../public/Nature/nature1.jpeg";
+import arrow from "../../public/imageTrail/arrow.png";
+import badminton from "../../public/imageTrail/badminton.png";
+import basketball from "../../public/imageTrail/basketball.png";
+import boxing from "../../public/imageTrail/boxing.png";
+import cricket from "../../public/imageTrail/cricket.png";
+import cycle from "../../public/imageTrail/cycle.png";
+import football from "../../public/imageTrail/football.png";
+import golf from "../../public/imageTrail/golf.png";
+import gym from "../../public/imageTrail/gym.png";
+import hiking from "../../public/imageTrail/hiking.png";
+import run from "../../public/imageTrail/run.png";
+import skete from "../../public/imageTrail/skete.png";
 import * as React from "react";
 import sync, { cancelSync } from "framesync";
 import { createExpoIn, reversed } from "@popmotion/easing";
@@ -9,8 +21,21 @@ import { mix, distance, wrap } from "@popmotion/popcorn";
 import "./test3.css";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
-// import { motion } from "motion/react";
-
+// import TrailImages from "./Test3";
+const images = [
+  arrow,
+  badminton,
+  basketball,
+  boxing,
+  cricket,
+  cycle,
+  football,
+  golf,
+  gym,
+  hiking,
+  run,
+  skete,
+];
 const powerOut4 = reversed(createExpoIn(4));
 const useAnimationLoop = (callback) => {
   useEffect(() => {
@@ -60,10 +85,10 @@ const ImagePlaceholder = ({ position, color }) => {
       animate={controls}
       transformTemplate={center}
       style={{ background: color, ...style }}
-      className="placeholder"
+      className="placeholder rounded-2xl"
     >
       <Image
-        src={img}
+        src={color}
         alt="nature"
         height={100}
         width={400}
@@ -115,14 +140,14 @@ const TrailImages = ({ distanceThreshold = 140 }) => {
 
   return (
     <div
-      className="container"
+      className="absolute bg-transparent inset-0"
       onMouseMove={(e) => (mouseInfo.now = { x: e.pageX, y: e.pageY })}
     >
-      {colors.map((color, i) => (
+      {images.map((color, i) => (
         <ImagePlaceholder
           position={imagePositions.current[i]}
           color={color}
-          key={color}
+          key={i + "image"}
         />
       ))}
     </div>
@@ -132,10 +157,10 @@ const TrailImages = ({ distanceThreshold = 140 }) => {
 const Test4 = () => {
   const textsMain = ["React", "Node.js", "Framer Motion", "Tailwind"];
   return (
-    <div className="h-[100vh] select-none font-boldonse bg-gray-200 w-[100vw]">
-      {/* <div className="">
+    <div className="h-[100vh]  font-boldonse bg-gray-200 w-[100vw]">
+      <div className="z-20 absolute inset-0 ">
         <TrailImages />
-      </div> */}
+      </div>
       <Marquee
         direction="right"
         className="marquee uppercase font-extrabold overflow-hidden "
@@ -202,7 +227,7 @@ const Test4 = () => {
           );
         })}
       </Marquee>
-      <div className="h-[50vh] m-10 z-20 relative -top-[75vh]">
+      <div className="h-[50vh] m-10 z-10 relative -top-[75vh]">
         <div className="my-5">
           <div className="text-7xl leading-32 tracking-wider">
             The Pros Train

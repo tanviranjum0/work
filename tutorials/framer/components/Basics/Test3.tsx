@@ -4,6 +4,18 @@
 // Using Framer Motion
 // https://framer.com/motion
 import img from "../../public/Nature/nature1.jpeg";
+import arrow from "../../public/imageTrail/arrow.png";
+import badminton from "../../public/imageTrail/badminton.png";
+import basketball from "../../public/imageTrail/basketball.png";
+import boxing from "../../public/imageTrail/boxing.png";
+import cricket from "../../public/imageTrail/cricket.png";
+import cycle from "../../public/imageTrail/cycle.png";
+import football from "../../public/imageTrail/football.png";
+import golf from "../../public/imageTrail/golf.png";
+import gym from "../../public/imageTrail/gym.png";
+import hiking from "../../public/imageTrail/hiking.png";
+import run from "../../public/imageTrail/run.png";
+import skete from "../../public/imageTrail/skete.png";
 import * as React from "react";
 import sync, { cancelSync } from "framesync";
 import { createExpoIn, reversed } from "@popmotion/easing";
@@ -28,12 +40,26 @@ const generateSize = () => ({
   height: generateNumber(312, 70),
   width: generateNumber(250, 50),
 });
-const placeholderColors: Set<string> = new Set();
+// const placeholderColors: Set<string> = new Set();
 
-for (let i = 0; i < 30; i++) {
-  placeholderColors.add(`hsla(${Math.round(Math.random() * 360)},100%,70%,1)`);
-}
-const colors = Array.from(placeholderColors);
+// for (let i = 0; i < 30; i++) {
+//   placeholderColors.add(`hsla(${Math.round(Math.random() * 360)},100%,70%,1)`);
+// }
+// const images = [
+//   arrow,
+//   badminton,
+//   basketball,
+//   boxing,
+//   cricket,
+//   cycle,
+//   football,
+//   golf,
+//   gym,
+//   hiking,
+//   run,
+//   skete,
+// ];
+// const colors = Array.from(placeholderColors);
 
 const ImagePlaceholder = ({ position, color }) => {
   const controls = useAnimation();
@@ -62,14 +88,14 @@ const ImagePlaceholder = ({ position, color }) => {
       animate={controls}
       transformTemplate={center}
       style={{ background: color, ...style }}
-      className="placeholder"
+      className="placeholder rounded-2xl border-2"
     >
       <Image
         src={img}
         alt="nature"
         height={100}
         width={400}
-        className="h-full w-full rounded-2xl"
+        className="h-full w-full border-2 rounded-2xl"
       />
     </motion.div>
   );
@@ -117,7 +143,7 @@ const TrailImages = ({ distanceThreshold = 140 }) => {
 
   return (
     <div
-      className="container"
+      className="absolute bg-transparent inset-0"
       onMouseMove={(e) => (mouseInfo.now = { x: e.pageX, y: e.pageY })}
     >
       {colors.map((color, i) => (

@@ -21,13 +21,14 @@ h1 {
   letter-spacing: -0.5rem;
 }
 
-.container {
-  position: fixed;
+/* .container {
+  position: absolute;
   top: 0;
+  z-index: 20;
   left: 0;
   right: 0;
   bottom: 0;
-}
+} */
 
 .placeholder {
   width: 250px;
