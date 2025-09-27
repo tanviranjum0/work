@@ -6,10 +6,8 @@
 import img from "../../public/Nature/nature1.jpeg";
 import * as React from "react";
 import sync, { cancelSync } from "framesync";
-// import { useEffect } from "react";
 import { createExpoIn, reversed } from "@popmotion/easing";
 import { useEffect, useState, useRef } from "react";
-// import { render } from "react-dom";
 import { motion, useAnimation } from "framer-motion";
 import { mix, distance, wrap } from "@popmotion/popcorn";
 import "./test3.css";
