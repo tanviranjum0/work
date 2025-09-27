@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@popmotion/popcorn": "^0.4.4",
+    "framesync": "^6.1.2",
     "lucide-react": "^0.541.0",
     "motion": "^12.23.12",
     "next": "15.4.5",
+    "popmotion": "^11.0.5",
     "react": "19.1.0",
     "react-animated-cursor": "^2.11.2",
     "react-dom": "19.1.0",

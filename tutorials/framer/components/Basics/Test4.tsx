@@ -1,13 +1,13 @@
 "use client";
 import Marquee from "react-fast-marquee";
 import { motion } from "motion/react";
-const Test2 = () => {
+const Test4 = () => {
   const textsMain = ["React", "Node.js", "Framer Motion", "Tailwind"];
   return (
-    <>
+    <div className="h-[100vh] font-boldonse bg-gray-300 w-[100vw]">
       <Marquee
         direction="right"
-        className="marquee overflow-hidden py-4 bg-sky-200"
+        className="marquee uppercase font-extrabold overflow-hidden "
         autoFill={true}
         speed={20}
       >
@@ -15,7 +15,7 @@ const Test2 = () => {
           return (
             <span
               key={index}
-              className="mx-8 text-sky-400 text-9xl font-semibold"
+              className="mx-8 text-gray-400 text-9xl leading-40 tracking-wide"
             >
               {text}
             </span>
@@ -23,7 +23,7 @@ const Test2 = () => {
         })}
       </Marquee>
       <Marquee
-        className="marquee overflow-hidden py-4 bg-amber-200"
+        className="marquee uppercase font-extrabold overflow-hidden "
         autoFill={true}
         speed={20}
       >
@@ -31,7 +31,7 @@ const Test2 = () => {
           return (
             <span
               key={index}
-              className="mx-8 text-amber-400 text-9xl font-semibold"
+              className="mx-8 text-gray-400 text-9xl leading-40 tracking-wide"
             >
               {text}
             </span>
@@ -39,7 +39,7 @@ const Test2 = () => {
         })}
       </Marquee>
       <Marquee
-        className="marquee overflow-hidden py-4 bg-gray-200"
+        className="marquee uppercase font-extrabold overflow-hidden"
         direction="right"
         autoFill={true}
         speed={20}
@@ -48,7 +48,7 @@ const Test2 = () => {
           return (
             <span
               key={index}
-              className="mx-8 text-gray-400 text-9xl font-semibold"
+              className="mx-8 text-gray-400 text-9xl leading-40 tracking-wide"
             >
               {text}
             </span>
@@ -56,7 +56,7 @@ const Test2 = () => {
         })}
       </Marquee>
       <Marquee
-        className="marquee overflow-hidden py-4 bg-emerald-200"
+        className="marquee uppercase font-extrabold overflow-hidden"
         autoFill={true}
         speed={20}
       >
@@ -64,15 +64,15 @@ const Test2 = () => {
           return (
             <span
               key={index}
-              className="mx-8 text-emerald-400 text-9xl font-semibold"
+              className="mx-8 text-gray-400 font-extrabold text-9xl leading-40 tracking-wide "
             >
               {text}
             </span>
           );
         })}
       </Marquee>
-    </>
+    </div>
   );
 };
 
-export default Test2;
+export default Test4;
