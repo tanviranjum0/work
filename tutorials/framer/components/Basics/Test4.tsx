@@ -12,7 +12,7 @@ import gym from "../../public/imageTrail/gym.png";
 import hiking from "../../public/imageTrail/hiking.png";
 import run from "../../public/imageTrail/run.png";
 import skete from "../../public/imageTrail/skete.png";
-// import * as React from "react";
+import * as React from "react";
 import sync, { cancelSync } from "framesync";
 import { createExpoIn, reversed } from "@popmotion/easing";
 import { useEffect, useState, useRef } from "react";
