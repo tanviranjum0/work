@@ -56,7 +56,6 @@ const Carousel = () => {
   const [[imageCount, direction], setImageCount] = useState([0, 0]);
 
   const activeImageIndex = wrap(0, IMAGES.length, imageCount);
-  console.log(activeImageIndex);
   const swipeToImage = (swipeDirection) => {
     setImageCount([imageCount + swipeDirection, swipeDirection]);
   };

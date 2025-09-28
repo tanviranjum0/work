@@ -8,6 +8,7 @@ import ScrollAnimatedImages from "./components/ScrollAnimatedImages";
 import HiddenImages from "./components/HiddenImages";
 import SwipeCards from "./components/SwipeCards";
 import Carousel from "./components/Carousel";
+import ImageTrail from "./components/ImageTrail";
 
 const Gigapp = () => {
   return (
@@ -20,6 +21,7 @@ const Gigapp = () => {
       <HiddenImages />
       <SwipeCards />
       <Carousel />
+      <ImageTrail />
       <div className="h-[100vh] bg-amber-300"></div>
     </div>
   );
