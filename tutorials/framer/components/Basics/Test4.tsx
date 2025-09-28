@@ -158,7 +158,7 @@ const Test4 = () => {
       <div className="h-[100vh] bg-cyan-300"></div>
 
       <div className="h-[100vh] overflow-hidden select-none font-boldonse bg-gray-200 w-[100vw]">
-        <div className="z-30  inset-0">
+        <div className="z-30 relative inset-0">
           <TrailImages />
         </div>
 
