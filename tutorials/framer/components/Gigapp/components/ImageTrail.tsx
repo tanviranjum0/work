@@ -1,83 +1,24 @@
 "use client";
 import { cn } from "@/lib/utils";
 import Marquee from "react-fast-marquee";
-const images = [
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
-  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
-];
+import arrow from "../../../public/imageTrail/arrow.png";
+import badminton from "../../../public/imageTrail/badminton.png";
+import basketball from "../../../public/imageTrail/basketball.png";
+import boxing from "../../../public/imageTrail/boxing.png";
+import cricket from "../../../public/imageTrail/cricket.png";
+import cycle from "../../../public/imageTrail/cycle.png";
+import football from "../../../public/imageTrail/football.png";
+import golf from "../../../public/imageTrail/golf.png";
+import gym from "../../../public/imageTrail/gym.png";
+import hiking from "../../../public/imageTrail/hiking.png";
+import run from "../../../public/imageTrail/run.png";
+import skete from "../../../public/imageTrail/skete.png";
+
 import { createRef, ReactNode, useRef } from "react";
+import { StaticImageData } from "next/image";
+import Image from "next/image";
 interface ImageMouseTrailProps {
-  items: string[];
+  items: (string | StaticImageData)[];
   children?: ReactNode;
   className?: string;
   imgClass?: string;
@@ -85,14 +26,34 @@ interface ImageMouseTrailProps {
   maxNumberOfImages?: number;
   fadeAnimation?: boolean;
 }
-const textsMain = ["React", "Node.js", "Framer Motion", "Tailwind"];
+const textsMain = [
+  "React",
+  "Node.js",
+  "Framer Motion",
+  "Tailwind",
+  "Bitcoin",
+  "Etherum",
+  "Dogecoin",
+];
+const images = [
+  arrow,
+  badminton,
+  basketball,
+  boxing,
+  cricket,
+  cycle,
+  football,
+  golf,
+  gym,
+  hiking,
+  run,
+  skete,
+];
 
 function ImageMouseTrail({
   items,
   children,
-  className,
-  maxNumberOfImages = 5,
-  imgClass = "w-40 h-48",
+  maxNumberOfImages,
   distance = 20,
   fadeAnimation = false,
 }: ImageMouseTrailProps) {
@@ -126,19 +87,16 @@ function ImageMouseTrail({
     last = { x, y };
   };
 
-  const distanceFromLast = (x: number, y: number) => {
+  const distanceFromLast = (x, y) => {
     return Math.hypot(x - last.x, y - last.y);
   };
-  const deactivate = (image: HTMLImageElement) => {
+  const deactivate = (image) => {
     image.dataset.status = "inactive";
   };
 
-  const handleOnMove = (e: MouseEvent) => {
+  const handleOnMove = (e) => {
     if (distanceFromLast(e.clientX, e.clientY) > window.innerWidth / distance) {
-      // console.log(e.clientX, e.clientY)
-
       const lead = refs.current[globalIndex % refs.current.length].current;
-
       const tail =
         refs.current[(globalIndex - maxNumberOfImages) % refs.current.length]
           ?.current;
@@ -151,25 +109,22 @@ function ImageMouseTrail({
 
   return (
     <section
-      onMouseMove={(e) => handleOnMove(e)}
+      onMouseMove={handleOnMove}
       onTouchMove={(e) => handleOnMove(e.touches[0])}
       ref={containerRef}
-      className={cn(
-        "grid place-content-center h-[600px] w-full bg-[#e0dfdf] relative overflow-hidden rounded-lg",
-        className
-      )}
     >
       {items.map((item, index) => (
         <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             key={index + "image"}
             className={cn(
-              "object-cover rounded-2xl scale-0 opacity:0 data-[status='active']:scale-100  data-[status='active']:opacity-100 transition-transform data-[status='active']:duration-500 duration-300 data-[status='active']:ease-out-expo  absolute   -translate-y-[50%] -translate-x-[50%] ",
-              imgClass
+              "object-fit rounded-2xl border-2 border-black  scale-0 opacity:0 data-[status='active']:scale-100 data-[status='active']:opacity-100 transition-transform data-[status='active']:duration-500 duration-300 data-[status='active']:ease-out-expo absolute -translate-y-[50%] max-h-40 max-w-fit -translate-x-[50%] "
             )}
+            height={1000}
+            width={1000}
             data-index={index}
-            data-status="inactive"
+            data-status="active"
             src={item}
             alt={`image-${index}`}
             ref={refs.current[index]}
@@ -181,17 +136,17 @@ function ImageMouseTrail({
   );
 }
 
-function Imagetrail() {
+export default function index() {
   return (
     <section>
-      <div className="h-[100vh] w-[100vw]">
+      <div className="h-[100vh] relative m-10 rounded-2xl bg-amber-300">
         <ImageMouseTrail
           items={images}
           maxNumberOfImages={10}
-          distance={10}
+          distance={25}
           imgClass="sm:w-40 w-28 sm:h-48 h-36"
         >
-          <div className="h-full max-w-full overflow-hidden select-none font-boldonse bg-gray-200 ">
+          <div className="h-[100vh] overflow-hidden rounded-2xl select-none font-boldonse bg-gray-200">
             <Marquee
               direction="right"
               className="marquee uppercase font-extrabold overflow-hidden "
@@ -201,7 +156,7 @@ function Imagetrail() {
               {textsMain.map((text, index) => {
                 return (
                   <span
-                    key={index}
+                    key={`texts1-${index}`}
                     className="mx-8 text-gray-300 text-9xl leading-40 tracking-wide"
                   >
                     {text}
@@ -217,7 +172,7 @@ function Imagetrail() {
               {textsMain.map((text, index) => {
                 return (
                   <span
-                    key={index}
+                    key={`texts2-${index}`}
                     className="mx-8 text-gray-300 text-9xl leading-40 tracking-wide"
                   >
                     {text}
@@ -234,7 +189,7 @@ function Imagetrail() {
               {textsMain.map((text, index) => {
                 return (
                   <span
-                    key={index}
+                    key={`texts3-${index}`}
                     className="mx-8 text-gray-300 text-9xl leading-40 tracking-wide"
                   >
                     {text}
@@ -250,24 +205,42 @@ function Imagetrail() {
               {textsMain.map((text, index) => {
                 return (
                   <span
-                    key={index}
+                    key={`texts4-${index}`}
                     className="mx-8 text-gray-300 font-extrabold text-9xl leading-40 tracking-wide "
                   >
                     {text}
                   </span>
                 );
               })}
+            </Marquee>{" "}
+            <Marquee
+              className="marquee uppercase font-extrabold overflow-hidden"
+              direction="right"
+              autoFill={true}
+              speed={20}
+            >
+              {textsMain.map((text, index) => {
+                return (
+                  <span
+                    key={`texts3-${index}`}
+                    className="mx-8 text-gray-300 text-9xl leading-40 tracking-wide"
+                  >
+                    {text}
+                  </span>
+                );
+              })}
             </Marquee>
-            <div className="h-[50vh] m-10 z-10 relative -top-[75vh]">
+            <div className="h-[50vh] m-10 z-10 relative -top-[80vh]">
               <div className="my-5">
-                <div className="text-7xl leading-32 tracking-wider">
+                <div className="text-7xl text-black leading-32 tracking-wider">
                   The Pros Train
                 </div>
                 <div className="text-7xl  tracking-wider">
-                  with <span className="text-sky-500">Plates</span>
+                  <span className="text-black">with</span>{" "}
+                  <span className="text-sky-500">Plates</span>
                 </div>
               </div>
-              <div className="font-sans text-xl font-bold">
+              <div className="font-sans text-black text-xl font-bold">
                 <div className="">
                   He was still too young to know that the heart's memory
                   eliminates
@@ -287,5 +260,3 @@ function Imagetrail() {
     </section>
   );
 }
-
-export default Imagetrail;
