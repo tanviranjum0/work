@@ -1,160 +1,289 @@
 "use client";
-// This is a re-implementation of Codrop's Image Trail Effects demo
-// https://tympanus.net/codrops/2019/08/07/image-trail-effects/
-// Using Framer Motion
-// https://framer.com/motion
-import img from "../../public/Nature/nature1.jpeg";
-import arrow from "../../public/imageTrail/arrow.png";
-import badminton from "../../public/imageTrail/badminton.png";
-import basketball from "../../public/imageTrail/basketball.png";
-import boxing from "../../public/imageTrail/boxing.png";
-import cricket from "../../public/imageTrail/cricket.png";
-import cycle from "../../public/imageTrail/cycle.png";
-import football from "../../public/imageTrail/football.png";
-import golf from "../../public/imageTrail/golf.png";
-import gym from "../../public/imageTrail/gym.png";
-import hiking from "../../public/imageTrail/hiking.png";
-import run from "../../public/imageTrail/run.png";
-import skete from "../../public/imageTrail/skete.png";
-import * as React from "react";
-import sync, { cancelSync } from "framesync";
-import { createExpoIn, reversed } from "@popmotion/easing";
-import { useEffect, useState, useRef } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { mix, distance, wrap } from "@popmotion/popcorn";
-import "./test3.css";
-import Image from "next/image";
+import { cn } from "@/lib/utils";
+import Marquee from "react-fast-marquee";
 
-const powerOut4 = reversed(createExpoIn(4));
-const useAnimationLoop = (callback) => {
-  useEffect(() => {
-    sync.update(callback, true);
-    return () => cancelSync.update(callback);
-  }, [callback]);
-};
-const center = (_, generated: string) => `translate(-50%, -50%) ${generated}`;
-const generateNumber = (base, range) => {
-  return base - range / 2 + Math.round(Math.random() * range);
-};
-const generateSize = () => ({
-  height: generateNumber(312, 70),
-  width: generateNumber(250, 50),
-});
-// const placeholderColors: Set<string> = new Set();
+import { createRef, ReactNode, useRef } from "react";
+interface ImageMouseTrailProps {
+  items: string[];
+  children?: ReactNode;
+  className?: string;
+  imgClass?: string;
+  distance?: number;
+  maxNumberOfImages?: number;
+  fadeAnimation?: boolean;
+}
+const textsMain = ["React", "Node.js", "Framer Motion", "Tailwind"];
 
-// for (let i = 0; i < 30; i++) {
-//   placeholderColors.add(`hsla(${Math.round(Math.random() * 360)},100%,70%,1)`);
-// }
-// const images = [
-//   arrow,
-//   badminton,
-//   basketball,
-//   boxing,
-//   cricket,
-//   cycle,
-//   football,
-//   golf,
-//   gym,
-//   hiking,
-//   run,
-//   skete,
-// ];
-// const colors = Array.from(placeholderColors);
+function ImageMouseTrail({
+  items,
+  children,
+  className,
+  maxNumberOfImages = 5,
+  imgClass = "w-40 h-48",
+  distance = 20,
+  fadeAnimation = false,
+}: ImageMouseTrailProps) {
+  const containerRef = useRef(null);
+  const refs = useRef(items.map(() => createRef<HTMLImageElement>()));
+  const currentZIndexRef = useRef(1);
 
-const ImagePlaceholder = ({ position, color }) => {
-  const controls = useAnimation();
+  let globalIndex = 0;
+  let last = { x: 0, y: 0 };
 
-  useEffect(() => {
-    if (!position) return;
-    const { xOrigin, x, yOrigin, y } = position;
-    controls.start({
-      x: [xOrigin, x, x],
-      y: [yOrigin, y, y],
-      opacity: [1, 1, 0],
-      scale: [1, 1, 0.2],
-      transition: {
-        duration: 0.8,
-        ease: ["easeOut", powerOut4, powerOut4],
-        times: [0, 0.7, 1],
-      },
-    });
-  }, [position]);
+  const activate = (image: HTMLImageElement, x: number, y: number) => {
+    const containerRect = containerRef.current?.getBoundingClientRect();
+    const relativeX = x - containerRect.left;
+    const relativeY = y - containerRect.top;
+    image.style.left = `${relativeX}px`;
+    image.style.top = `${relativeY}px`;
+    console.log(refs.current[refs.current?.length - 1]);
 
-  const style = position ? position.style : {};
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={controls}
-      transformTemplate={center}
-      style={{ background: color, ...style }}
-      className="placeholder rounded-2xl border-2"
-    >
-      <Image
-        src={img}
-        alt="nature"
-        height={100}
-        width={400}
-        className="h-full w-full border-2 rounded-2xl"
-      />
-    </motion.div>
-  );
-};
-
-const TrailImages = ({ distanceThreshold = 140 }) => {
-  const mouseInfo = useRef({
-    now: { x: 0, y: 0 },
-    prev: { x: 0, y: 0 },
-    prevImage: { x: 0, y: 0 },
-  }).current;
-
-  const imagePositions = useRef([]);
-
-  const [index, setIndex] = useState(0);
-
-  useAnimationLoop(() => {
-    const mouseDistance = distance(mouseInfo.now, mouseInfo.prevImage);
-
-    mouseInfo.prev = {
-      x: mix(mouseInfo.prev.x || mouseInfo.now.x, mouseInfo.now.x, 0.1),
-      y: mix(mouseInfo.prev.y || mouseInfo.now.y, mouseInfo.now.y, 0.1),
-    };
-
-    if (mouseDistance > distanceThreshold) {
-      const newIndex = index + 1;
-      const imageIndex = wrap(0, colors.length - 1, newIndex);
-
-      imagePositions.current[imageIndex] = {
-        xOrigin: mouseInfo.prev.x,
-        yOrigin: mouseInfo.prev.y,
-        x: mouseInfo.now.x,
-        y: mouseInfo.now.y,
-        style: {
-          ...generateSize(),
-          zIndex: imageIndex,
-        },
-      };
-
-      mouseInfo.prevImage = mouseInfo.now;
-
-      setIndex(newIndex);
+    if (currentZIndexRef.current > 40) {
+      currentZIndexRef.current = 1;
     }
-  });
+    image.style.zIndex = String(currentZIndexRef.current);
+    currentZIndexRef.current++;
+
+    image.dataset.status = "active";
+    if (fadeAnimation) {
+      setTimeout(() => {
+        image.dataset.status = "inactive";
+      }, 1500);
+    }
+    last = { x, y };
+  };
+
+  const distanceFromLast = (x, y) => {
+    return Math.hypot(x - last.x, y - last.y);
+  };
+  const deactivate = (image) => {
+    image.dataset.status = "inactive";
+  };
+
+  const handleOnMove = (e) => {
+    if (distanceFromLast(e.clientX, e.clientY) > window.innerWidth / distance) {
+      // console.log(e.clientX, e.clientY)
+
+      const lead = refs.current[globalIndex % refs.current.length].current;
+
+      const tail =
+        refs.current[(globalIndex - maxNumberOfImages) % refs.current.length]
+          ?.current;
+
+      if (lead) activate(lead, e.clientX, e.clientY);
+      if (tail) deactivate(tail);
+      globalIndex++;
+    }
+  };
 
   return (
-    <div
-      className="absolute bg-transparent inset-0"
-      onMouseMove={(e) => (mouseInfo.now = { x: e.pageX, y: e.pageY })}
+    <section
+      onMouseMove={handleOnMove}
+      onTouchMove={(e) => handleOnMove(e.touches[0])}
+      ref={containerRef}
+      className={cn(
+        "grid place-content-center h-[600px] w-full bg-[#e0dfdf] relative overflow-hidden rounded-lg",
+        className
+      )}
     >
-      {colors.map((color, i) => (
-        <ImagePlaceholder
-          position={imagePositions.current[i]}
-          color={color}
-          key={color}
-        />
+      {items.map((item, index) => (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            key={index + "imaage"}
+            className={cn(
+              "object-cover rounded-2xl scale-0 opacity:0 data-[status='active']:scale-100  data-[status='active']:opacity-100 transition-transform data-[status='active']:duration-500 duration-300 data-[status='active']:ease-out-expo  absolute   -translate-y-[50%] -translate-x-[50%] ",
+              imgClass
+            )}
+            data-index={index}
+            data-status="active"
+            src={item}
+            alt={`image-${index}`}
+            ref={refs.current[index]}
+          />
+        </>
       ))}
-    </div>
+      {children}
+    </section>
   );
-};
-
-export default TrailImages;
+}
+const images = [
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1548192746-dd526f154ed9?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1584043204475-8cc101d6c77a?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1518599904199-0ca897819ddb?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1709949908219-fd9046282019?q=80&w=1200&auto=format",
+  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
+];
+export default function index() {
+  return (
+    <section>
+      <div className="h-[100vh]">
+        <ImageMouseTrail
+          items={images}
+          maxNumberOfImages={10}
+          distance={10}
+          imgClass="sm:w-40 w-28 sm:h-48 h-36"
+        >
+          <div className="h-[100vh] m-10 max-w-full overflow-hidden select-none font-boldonse bg-gray-200 ">
+            <Marquee
+              direction="right"
+              className="marquee uppercase font-extrabold overflow-hidden "
+              autoFill={true}
+              speed={20}
+            >
+              {textsMain.map((text, index) => {
+                return (
+                  <span
+                    key={index}
+                    className="mx-8 text-gray-300 text-9xl leading-40 tracking-wide"
+                  >
+                    {text}
+                  </span>
+                );
+              })}
+            </Marquee>
+            <Marquee
+              className="marquee uppercase font-extrabold overflow-hidden "
+              autoFill={true}
+              speed={20}
+            >
+              {textsMain.map((text, index) => {
+                return (
+                  <span
+                    key={index}
+                    className="mx-8 text-gray-300 text-9xl leading-40 tracking-wide"
+                  >
+                    {text}
+                  </span>
+                );
+              })}
+            </Marquee>
+            <Marquee
+              className="marquee uppercase font-extrabold overflow-hidden"
+              direction="right"
+              autoFill={true}
+              speed={20}
+            >
+              {textsMain.map((text, index) => {
+                return (
+                  <span
+                    key={index}
+                    className="mx-8 text-gray-300 text-9xl leading-40 tracking-wide"
+                  >
+                    {text}
+                  </span>
+                );
+              })}
+            </Marquee>
+            <Marquee
+              className="marquee uppercase font-extrabold overflow-hidden"
+              autoFill={true}
+              speed={20}
+            >
+              {textsMain.map((text, index) => {
+                return (
+                  <span
+                    key={index}
+                    className="mx-8 text-gray-300 font-extrabold text-9xl leading-40 tracking-wide "
+                  >
+                    {text}
+                  </span>
+                );
+              })}
+            </Marquee>
+            <div className="h-[50vh] m-10 z-10 relative -top-[75vh]">
+              <div className="my-5">
+                <div className="text-7xl leading-32 tracking-wider">
+                  The Pros Train
+                </div>
+                <div className="text-7xl  tracking-wider">
+                  with <span className="text-sky-500">Plates</span>
+                </div>
+              </div>
+              <div className="font-sans text-xl font-bold">
+                <div className="">
+                  He was still too young to know that the heart's memory
+                  eliminates
+                </div>
+                <div className="">
+                  the bad and magnifies the good, and that thanks to this
+                  artifice
+                </div>
+                <div className="">
+                  we manage to endure the burden of the past.
+                </div>
+              </div>
+            </div>
+          </div>
+        </ImageMouseTrail>
+      </div>
+    </section>
+  );
+}

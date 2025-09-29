@@ -154,101 +154,95 @@ const TrailImages = ({ distanceThreshold = 140 }) => {
 const Test4 = () => {
   const textsMain = ["React", "Node.js", "Framer Motion", "Tailwind"];
   return (
-    <div className="relative">
-      <div className="h-[100vh] bg-cyan-300"></div>
-
-      <div className="h-[100vh] overflow-hidden select-none font-boldonse bg-gray-200 w-[100vw]">
-        <div className="z-30 relative inset-0">
-          <TrailImages />
+    <div className="h-[100vh] overflow-x-hidden select-none font-boldonse bg-gray-200 w-[100vw]">
+      <div className="z-20 absolute inset-0 ">
+        <TrailImages />
+      </div>
+      <Marquee
+        direction="right"
+        className="marquee uppercase font-extrabold overflow-hidden "
+        autoFill={true}
+        speed={20}
+      >
+        {textsMain.map((text, index) => {
+          return (
+            <span
+              key={index}
+              className="mx-8 text-gray-300 text-9xl leading-40 tracking-wide"
+            >
+              {text}
+            </span>
+          );
+        })}
+      </Marquee>
+      <Marquee
+        className="marquee uppercase font-extrabold overflow-hidden "
+        autoFill={true}
+        speed={20}
+      >
+        {textsMain.map((text, index) => {
+          return (
+            <span
+              key={index}
+              className="mx-8 text-gray-300 text-9xl leading-40 tracking-wide"
+            >
+              {text}
+            </span>
+          );
+        })}
+      </Marquee>
+      <Marquee
+        className="marquee uppercase font-extrabold overflow-hidden"
+        direction="right"
+        autoFill={true}
+        speed={20}
+      >
+        {textsMain.map((text, index) => {
+          return (
+            <span
+              key={index}
+              className="mx-8 text-gray-300 text-9xl leading-40 tracking-wide"
+            >
+              {text}
+            </span>
+          );
+        })}
+      </Marquee>
+      <Marquee
+        className="marquee uppercase font-extrabold overflow-hidden"
+        autoFill={true}
+        speed={20}
+      >
+        {textsMain.map((text, index) => {
+          return (
+            <span
+              key={index}
+              className="mx-8 text-gray-300 font-extrabold text-9xl leading-40 tracking-wide "
+            >
+              {text}
+            </span>
+          );
+        })}
+      </Marquee>
+      <div className="h-[50vh] m-10 z-10 relative -top-[75vh]">
+        <div className="my-5">
+          <div className="text-7xl leading-32 tracking-wider">
+            The Pros Train
+          </div>
+          <div className="text-7xl  tracking-wider">
+            with <span className="text-sky-500">Plates</span>
+          </div>
         </div>
-
-        <Marquee
-          direction="right"
-          className="marquee uppercase font-extrabold overflow-hidden "
-          autoFill={true}
-          speed={20}
-        >
-          {textsMain.map((text, index) => {
-            return (
-              <span
-                key={index}
-                className="mx-8 text-gray-300 text-9xl leading-40 tracking-wide"
-              >
-                {text}
-              </span>
-            );
-          })}
-        </Marquee>
-        <Marquee
-          className="marquee uppercase font-extrabold overflow-hidden "
-          autoFill={true}
-          speed={20}
-        >
-          {textsMain.map((text, index) => {
-            return (
-              <span
-                key={index}
-                className="mx-8 text-gray-300 text-9xl leading-40 tracking-wide"
-              >
-                {text}
-              </span>
-            );
-          })}
-        </Marquee>
-        <Marquee
-          className="marquee uppercase font-extrabold overflow-hidden"
-          direction="right"
-          autoFill={true}
-          speed={20}
-        >
-          {textsMain.map((text, index) => {
-            return (
-              <span
-                key={index}
-                className="mx-8 text-gray-300 text-9xl leading-40 tracking-wide"
-              >
-                {text}
-              </span>
-            );
-          })}
-        </Marquee>
-        <Marquee
-          className="marquee uppercase font-extrabold overflow-hidden"
-          autoFill={true}
-          speed={20}
-        >
-          {textsMain.map((text, index) => {
-            return (
-              <span
-                key={index}
-                className="mx-8 text-gray-300 font-extrabold text-9xl leading-40 tracking-wide "
-              >
-                {text}
-              </span>
-            );
-          })}
-        </Marquee>
-        <div className="h-[50vh] m-10 z-10 relative -top-[75vh]">
-          <div className="my-5">
-            <div className="text-7xl leading-32 tracking-wider">
-              The Pros Train
-            </div>
-            <div className="text-7xl  tracking-wider">
-              with <span className="text-sky-500">Plates</span>
-            </div>
+        <div className="font-sans text-xl font-bold">
+          <div className="">
+            He was still too young to know that the heart's memory eliminates
           </div>
-          <div className="font-sans text-xl font-bold">
-            <div className="">
-              He was still too young to know that the heart's memory eliminates
-            </div>
-            <div className="">
-              the bad and magnifies the good, and that thanks to this artifice
-            </div>
-            <div className="">we manage to endure the burden of the past.</div>
+          <div className="">
+            the bad and magnifies the good, and that thanks to this artifice
           </div>
+          <div className="">we manage to endure the burden of the past.</div>
         </div>
       </div>
-      <div className="h-[100vh] bg-amber-300"></div>
     </div>
   );
 };
