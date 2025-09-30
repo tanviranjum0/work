@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useAnimation } from "motion/react";
 import { clsx } from "clsx";
-const BackgroundCellAnimation = () => {
+const BackgroundRipple = () => {
   return (
     <div className="relative h-screen bg-slate-950 flex justify-center overflow-hidden">
       <BackgroundCellCore />
@@ -141,4 +141,4 @@ const BackgroundCellCore = () => {
   );
 };
 
-export default BackgroundCellCore;
+export default BackgroundRipple;
