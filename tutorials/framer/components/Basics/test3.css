@@ -1,0 +1,326 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: url(https://renseign.com/img/story/back.jpg);
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#order {
+  text-decoration: underline;
+  display: block;
+  width: 100px;
+  margin: 0 auto;
+  border: 1px solid #fff;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 2px;
+  color: #fff;
+  text-shadow: -3px 3px 1px rgba(0, 0, 0, 0.5);
+}
+
+#order:hover {
+  box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.75);
+  text-shadow: -3px 3px 1px rgba(0, 0, 0, 0.75);
+}
+
+#bar {
+  background-color: #37375a;
+  height: 15px;
+  position: absolute;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.puceImg {
+  z-index: 1;
+  border: 1px solid #37375a;
+}
+
+#puceProfile {
+  background: url(https://renseign.com/img/story/profile.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#puceHtml {
+  background: url(https://renseign.com/img/story/html.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#puceCss {
+  background: url(https://renseign.com/img/story/css.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#pucePhp {
+  background: url(https://renseign.com/img/story/php.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#puceJs {
+  background: url(https://renseign.com/img/story/js.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#puceCs {
+  background: url(https://renseign.com/img/story/cs.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#puceNext {
+  background: url(https://renseign.com/img/story/next.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#pucePt2 {
+  background: url(https://renseign.com/img/story/pt2.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#puceEnvr {
+  background: url(https://renseign.com/img/story/envr.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#puce4t5 {
+  background: url(https://renseign.com/img/story/4t5.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+.rotateOne {
+  height: 18px;
+  -moz-transform: rotate(25.8deg);
+  -o-transform: rotate(25.8deg);
+  -ms-transform: rotate(25.8deg);
+  -webkit-transform: rotate(25.8deg);
+  background-color: transparent;
+  position: absolute;
+  width: 100%;
+}
+
+.rotateTwo {
+  height: 18px;
+  -moz-transform: rotate(-205.8deg);
+  -o-transform: rotate(-205.8deg);
+  -ms-transform: rotate(-205.8deg);
+  -webkit-transform: rotate(-205.8deg);
+  background-color: transparent;
+  position: absolute;
+  width: 100%;
+}
+
+.rotateThree {
+  height: 18px;
+  -moz-transform: rotate(-312.3deg);
+  -o-transform: rotate(-312.3deg);
+  -ms-transform: rotate(-312.3deg);
+  -webkit-transform: rotate(-312.3deg);
+  background-color: transparent;
+  position: absolute;
+}
+
+div.timeline {
+  width: 600px;
+  height: 2350px;
+  margin: 0 auto;
+  position: relative;
+  color: #fff;
+  text-shadow: -3px 3px 1px rgba(0, 0, 0, 0.5);
+}
+
+div.timeline a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+div.fakePuce {
+  border-radius: 50em;
+  position: absolute;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+img.puce {
+  position: absolute;
+}
+
+div.timeline p {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  display: inline-block;
+}
+
+.full {
+  width: 100%;
+}
+
+img.puceTwo {
+  top: 250px;
+}
+img.puceThree {
+  top: 500px;
+}
+img.puceFour {
+  top: 750px;
+}
+img.puceFive {
+  top: 1000px;
+}
+img.puceSix {
+  top: 1250px;
+}
+img.puceSeven {
+  top: 1500px;
+}
+img.puceHeight {
+  top: 1750px;
+}
+img.puceNine {
+  top: 2000px;
+}
+img.puceTen {
+  bottom: 0px;
+}
+
+div.timeline p.descOne {
+  top: 35px;
+}
+div.timeline p.descTwo {
+  top: 280px;
+}
+div.timeline p.descThree {
+  top: 530px;
+}
+div.timeline p.descFour {
+  top: 775px;
+}
+div.timeline p.descFive {
+  top: 1020px;
+}
+div.timeline p.descSix {
+  top: 1270px;
+}
+div.timeline p.descSeven {
+  top: 1515px;
+}
+div.timeline p.descHeight {
+  top: 1760px;
+}
+div.timeline p.descNine {
+  top: 2005px;
+}
+
+.bounce {
+  -webkit-animation-name: bounce;
+  animation-name: bounce;
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes bounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0);
+  }
+
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0);
+  }
+
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -4px, 0);
+  }
+}
