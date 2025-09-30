@@ -1,6 +1,25 @@
-import React from "react";
-
+"use client";
+import { useEffect } from "react";
+import "./test3.css";
 const Test3 = () => {
+  // var s = skrollr.init({
+  //   smoothScrolling: true,
+  //   mobileDeceleration: 0.004,
+  // });
+
+  useEffect(() => {
+    function delayAnimation() {
+      var animatedEl = document.getElementById("bounce") as HTMLDivElement;
+      animatedEl.className = "";
+      setTimeout(function () {
+        animatedEl.className = "bounce";
+        setTimeout(delayAnimation, 1000);
+      }, 1500);
+    }
+
+    delayAnimation();
+  }, []);
+
   return (
     <>
       <body>

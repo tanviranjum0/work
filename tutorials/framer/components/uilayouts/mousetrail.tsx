@@ -1,7 +1,7 @@
 // @ts-nocheck
-'use client';
-import { cn } from '@/lib/utils';
-import { createRef, ReactNode, useRef } from 'react';
+"use client";
+import { cn } from "@/lib/utils";
+import { createRef, ReactNode, useRef } from "react";
 interface ImageMouseTrailProps {
   items: string[];
   children?: ReactNode;
@@ -16,7 +16,7 @@ export default function ImageMouseTrail({
   children,
   className,
   maxNumberOfImages = 5,
-  imgClass = 'w-40 h-48',
+  imgClass = "w-40 h-48",
   distance = 20,
   fadeAnimation = false,
 }: ImageMouseTrailProps) {
@@ -41,10 +41,10 @@ export default function ImageMouseTrail({
     image.style.zIndex = String(currentZIndexRef.current);
     currentZIndexRef.current++;
 
-    image.dataset.status = 'active';
+    image.dataset.status = "active";
     if (fadeAnimation) {
       setTimeout(() => {
-        image.dataset.status = 'inactive';
+        image.dataset.status = "inactive";
       }, 1500);
     }
     last = { x, y };
@@ -54,7 +54,7 @@ export default function ImageMouseTrail({
     return Math.hypot(x - last.x, y - last.y);
   };
   const deactivate = (image) => {
-    image.dataset.status = 'inactive';
+    image.dataset.status = "inactive";
   };
 
   const handleOnMove = (e) => {
@@ -79,7 +79,7 @@ export default function ImageMouseTrail({
       onTouchMove={(e) => handleOnMove(e.touches[0])}
       ref={containerRef}
       className={cn(
-        'grid place-content-center h-[600px] w-full bg-[#e0dfdf] relative overflow-hidden rounded-lg',
+        "grid place-content-center h-[600px] w-full bg-[#e0dfdf] relative overflow-hidden rounded-lg",
         className
       )}
     >
@@ -93,7 +93,7 @@ export default function ImageMouseTrail({
               imgClass
             )}
             data-index={index}
-            data-status='inactive'
+            data-status="inactive"
             src={item}
             alt={`image-${index}`}
             ref={refs.current[index]}
