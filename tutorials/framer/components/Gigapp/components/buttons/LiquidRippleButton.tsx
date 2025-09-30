@@ -52,7 +52,7 @@ const LiquidRippleButton: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Click Me
+        Let's Connect
         {ripples.map((ripple) => (
           <motion.span
             key={ripple.id}
@@ -79,7 +79,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "100vh",
+    // height: "100vh",
+    height: "100%",
     background: "linear-gradient(135deg, #43cea2 0%, #185a9d 100%)",
   },
   button: {

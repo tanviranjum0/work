@@ -9,7 +9,7 @@ import HiddenImages from "./components/HiddenImages";
 import SwipeCards from "./components/SwipeCards";
 import Carousel from "./components/Carousel";
 import ImageTrail from "./components/ImageTrail";
-import BackgroundCellCore from "./components/BackgroundRipple";
+import BackgroundRipple from "./components/BackgroundRipple";
 
 const Gigapp = () => {
   return (
@@ -23,7 +23,7 @@ const Gigapp = () => {
       <SwipeCards />
       <Carousel />
       <ImageTrail />
-      <BackgroundCellCore />
+      <BackgroundRipple />
       <div className="h-[100vh] bg-amber-300"></div>
     </div>
   );

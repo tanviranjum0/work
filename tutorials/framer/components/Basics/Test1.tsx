@@ -44,7 +44,7 @@ const Test2 = () => {
       {/* <ShimmeringGemstoneButton /> */}
       {/* <ConfettiBrustButton /> */}
       {/* <ThreeDParallaxCard /> */}
-      <ThreeDTiltButton />
+      {/* <ThreeDTiltButton /> */}
       {/* <InterActiveTimeline /> */}
       {/* <DynamicChartAnimation /> */}
       {/* <AnimatedProfileShowcase /> */}
@@ -52,7 +52,7 @@ const Test2 = () => {
       {/* <AnimatedProfileShowcase /> */}
       {/* <AnimatedProductShowcase /> */}
       {/* <MagnaticButton /> */}
-      {/* <LiquidRippleButton /> */}
+      <LiquidRippleButton />
       {/* <MorphingIconButton /> */}
       {/* <Marque /> */}
       {/* <SwipeToDelete /> */}

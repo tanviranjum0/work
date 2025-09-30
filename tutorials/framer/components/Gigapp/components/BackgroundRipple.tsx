@@ -2,15 +2,30 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useAnimation } from "motion/react";
 import { clsx } from "clsx";
+import LiquidRippleButton from "./buttons/LiquidRippleButton";
 const BackgroundRipple = () => {
   return (
-    <div className="relative h-screen bg-slate-950 flex justify-center overflow-hidden">
-      <BackgroundCellCore />
-      <div className="relative z-50 mt-40 pointer-events-none select-none">
-        <h1 className="md:text-2xl lg:text-7xl font-medium text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-400 pointer-events-none">
-          Background cell animation <br />
-          with framer motion
-        </h1>
+    <div className="bg-slate-700">
+      <div className="relative h-screen items-center inset-0 m-20 flex overflow-hidden">
+        <BackgroundCellCore />
+        <div className="relative w-[800px] z-50  pointer-events-none select-none">
+          <h1 className="md:text-2xl w-full lg:text-5xl font-medium  bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-400 pointer-events-none">
+            <span className="text-6xl"> Background cell animation</span> <br />
+            with framer motions <span className="text-cyan-700">.</span>
+          </h1>
+          <div className="text-2xl flex justify-center items-center text-black h-14 bg-linear-65 from-purple-500 to-pink-500 w-[350px] my-3">
+            Click on the right box <span className="font-bold px-2">→</span>
+          </div>
+          <p className="cursor-text text-lg p-3 leading-10">
+            I've spent the last 5 years building and scaling software for some
+            pretty cool companies. I also teach people to paint online (incase
+            you've got an empty canvas layin' around 🎨).
+          </p>
+          <div className="text-4xl">
+            {" "}
+            <LiquidRippleButton />
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -108,7 +123,7 @@ const BackgroundCellCore = () => {
     <div
       ref={ref}
       onMouseMove={handleMouseMove}
-      className="h-full absolute inset-0 w-full overflow-hidden"
+      className="h-[500px] w-[800px]  right-0 absolute  overflow-hidden"
     >
       <div className="absolute h-full inset-y-0  overflow-hidden">
         <div className="absolute h-full w-full pointer-events-none -bottom-2 z-40 bg-slate-950 [mask-image:linear-gradient(to_bottom,transparent,black)]"></div>

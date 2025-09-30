@@ -27,7 +27,7 @@
   border-left: 100px solid red;
   border-bottom: 50px solid transparent;
 }
-
+/* 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -44,7 +44,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
+} */
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
@@ -57,12 +57,15 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #a855f7, #ec4899);
+  /* background: linear-gradient(135deg, #a855f7, #ec4899); */
+  background: #ffc9ce;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #9333ea, #db2777);
+  background: #d4bbbe;
+
+  /* background: linear-gradient(135deg, #9333ea, #db2777); */
 }
 
 /* Glass morphism utility classes */
@@ -72,11 +75,11 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.glass-dark {
+/* .glass-dark {
   background: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-}
+} */
 
 /* 3D transform utilities */
 .perspective-1000 {
