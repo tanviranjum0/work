@@ -17,16 +17,16 @@ const BackgroundRipple = () => {
           </span>
           <div
             onClick={() => console.log("clicked")}
-            className="text-2xl cursor-not-allowed flex justify-center items-center text-black h-14 bg-linear-65 from-teal-200 to-teal-400 w-[350px] my-3"
+            className="text-2xl cursor-not-allowed flex gap-3 justify-center items-center text-black h-14 bg-linear-65 from-teal-200 to-teal-400 w-[350px] my-3"
           >
-            Click on the right box <span className="font-bold px-2">→</span>
+            Click on the right box.
+            <Image src={fartImage} alt="fart image" height={50} width={50} />
           </div>
           <p className="cursor-text flex w-[80%] bg-clip-text text-transparent  bg-gradient-to-b from-neutral-100 to-neutral-400 text-lg p-3 leading-7">
             <span>
               I've spent the last 5 years building and scaling software for some
               pretty cool companies. I also teach people to paint online (incase
               you've got an empty canvas layin' around ).{" "}
-              <Image src={fartImage} alt="fart image" height={50} width={50} />
             </span>
           </p>
           <div className="">

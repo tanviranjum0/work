@@ -52,18 +52,18 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(63, 40, 40, 0.47);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
   /* background: linear-gradient(135deg, #a855f7, #ec4899); */
-  background: #ffc9ce;
+  background: #003631;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #d4bbbe;
+  background: #012522;
 
   /* background: linear-gradient(135deg, #9333ea, #db2777); */
 }
