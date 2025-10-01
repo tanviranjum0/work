@@ -9,7 +9,7 @@ interface Ripple {
   size: number;
 }
 
-const LiquidRippleButton: React.FC = () => {
+const LiquidRippleButton = ({ inText }: { inText: string }) => {
   const [ripples, setRipples] = useState<Ripple[]>([]);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const nextId = useRef(0);
@@ -32,7 +32,7 @@ const LiquidRippleButton: React.FC = () => {
       y,
       size,
     };
-
+    console.log(newRipple);
     setRipples((prev) => [...prev, newRipple]);
   };
 
@@ -41,8 +41,9 @@ const LiquidRippleButton: React.FC = () => {
   };
 
   return (
-    <div style={styles.container}>
+    <div>
       <motion.button
+        className="bg-linear-65 from-teal-200 to-teal-400"
         ref={buttonRef}
         style={styles.button}
         onClick={createRipple}
@@ -52,7 +53,7 @@ const LiquidRippleButton: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Let's Connect
+        {inText}
         {ripples.map((ripple) => (
           <motion.span
             key={ripple.id}
@@ -75,19 +76,11 @@ const LiquidRippleButton: React.FC = () => {
 };
 
 const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    // height: "100vh",
-    height: "100%",
-    background: "linear-gradient(135deg, #43cea2 0%, #185a9d 100%)",
-  },
   button: {
     position: "relative",
     overflow: "hidden",
     padding: "16px 32px",
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    // backgroundColor: "rgba(255, 255, 255, 0.9)",
     color: "#185a9d",
     width: "15rem",
     border: "none",

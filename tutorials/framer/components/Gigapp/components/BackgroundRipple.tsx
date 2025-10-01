@@ -3,27 +3,34 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useAnimation } from "motion/react";
 import { clsx } from "clsx";
 import LiquidRippleButton from "./buttons/LiquidRippleButton";
+import fartImage from "../../../public/fart.png";
+import Image from "next/image";
 const BackgroundRipple = () => {
   return (
-    <div className="bg-slate-700">
-      <div className="relative h-screen items-center inset-0 m-20 flex overflow-hidden">
+    <div className=" bg-slate-700">
+      <div className="relative h-screen items-center inset-0 flex overflow-hidden">
         <BackgroundCellCore />
-        <div className="relative w-[800px] z-50  pointer-events-none select-none">
-          <h1 className="md:text-2xl w-full lg:text-5xl font-medium  bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-400 pointer-events-none">
+        <div className="relative m-20 w-[800px]">
+          <span className="md:text-2xl w-full lg:text-5xl font-medium  bg-clip-text text-transparent  bg-gradient-to-b from-neutral-100 to-neutral-400 ">
             <span className="text-6xl"> Background cell animation</span> <br />
-            with framer motions <span className="text-cyan-700">.</span>
-          </h1>
-          <div className="text-2xl flex justify-center items-center text-black h-14 bg-linear-65 from-purple-500 to-pink-500 w-[350px] my-3">
+            with framer motions <span className="text-lime-600">.</span>
+          </span>
+          <div
+            onClick={() => console.log("clicked")}
+            className="text-2xl cursor-not-allowed flex justify-center items-center text-black h-14 bg-linear-65 from-teal-200 to-teal-400 w-[350px] my-3"
+          >
             Click on the right box <span className="font-bold px-2">→</span>
           </div>
-          <p className="cursor-text text-lg p-3 leading-10">
-            I've spent the last 5 years building and scaling software for some
-            pretty cool companies. I also teach people to paint online (incase
-            you've got an empty canvas layin' around 🎨).
+          <p className="cursor-text flex w-[80%] bg-clip-text text-transparent  bg-gradient-to-b from-neutral-100 to-neutral-400 text-lg p-3 leading-7">
+            <span>
+              I've spent the last 5 years building and scaling software for some
+              pretty cool companies. I also teach people to paint online (incase
+              you've got an empty canvas layin' around ).{" "}
+              <Image src={fartImage} alt="fart image" height={50} width={50} />
+            </span>
           </p>
-          <div className="text-4xl">
-            {" "}
-            <LiquidRippleButton />
+          <div className="">
+            <LiquidRippleButton inText={"Let's Connect"} />
           </div>
         </div>
       </div>
@@ -47,7 +54,7 @@ const Pattern = ({
     <div
       className={clsx(
         "flex flex-row relative z-30",
-        className ? "border-blue-600 relative z-[100]" : "border-neutral-700"
+        className ? "border-blue-600 relative z-[5]" : "border-neutral-700"
       )}
     >
       {matrix.map((row, rowIdx) => (
@@ -77,7 +84,7 @@ const Pattern = ({
                 className={clsx(
                   "flex flex-row relative z-30",
                   className
-                    ? "border-blue-600 relative z-[100]"
+                    ? "border-blue-600 relative z-[6]"
                     : "border-neutral-700"
                 )}
                 onClick={() => setClickedCell([rowIdx, colIdx])}
@@ -123,7 +130,7 @@ const BackgroundCellCore = () => {
     <div
       ref={ref}
       onMouseMove={handleMouseMove}
-      className="h-[500px] w-[800px]  right-0 absolute  overflow-hidden"
+      className="h-[500px] w-[800px] right-0 absolute cursor-cell overflow-hidden"
     >
       <div className="absolute h-full inset-y-0  overflow-hidden">
         <div className="absolute h-full w-full pointer-events-none -bottom-2 z-40 bg-slate-950 [mask-image:linear-gradient(to_bottom,transparent,black)]"></div>
