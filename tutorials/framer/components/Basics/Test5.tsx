@@ -1,163 +1,158 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useAnimation } from "motion/react";
-import { clsx } from "clsx";
-// import LiquidRippleButton from "./buttons/LiquidRippleButton";
-import LiquidRippleButton from "../Gigapp/components/buttons/LiquidRippleButton";
 
-const BackgroundRipple = () => {
-  return (
-    <div className=" bg-slate-700">
-      <div className="relative h-screen items-center inset-0 flex overflow-hidden">
-        <BackgroundCellCore />
-        <div className="relative m-20 w-[800px]">
-          <span className="md:text-2xl w-full lg:text-5xl font-medium  bg-clip-text text-transparent  bg-gradient-to-b from-neutral-100 to-neutral-400 ">
-            <span className="text-6xl"> Background cell animation</span> <br />
-            with framer motions <span className="text-lime-600">.</span>
-          </span>
-          <div
-            onClick={() => console.log("clicked")}
-            className="text-2xl cursor-not-allowed flex justify-center items-center text-black h-14 bg-linear-65 from-teal-200 to-teal-400 w-[350px] my-3"
-          >
-            Click on the right box <span className="font-bold px-2">→</span>
-          </div>
-          <p className="cursor-text w-[80%] bg-clip-text text-transparent  bg-gradient-to-b from-neutral-100 to-neutral-400 text-lg p-3 leading-7">
-            I've spent the last 5 years building and scaling software for some
-            pretty cool companies. I also teach people to paint online (incase
-            you've got an empty canvas layin' around 🎨).
-          </p>
-          <div className="">
-            <LiquidRippleButton inText={"Let's Connect"} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+import * as React from "react";
+import * as SliderPrimitive from "@radix-ui/react-slider";
+import { cn } from "@/lib/utils";
+import NumberFlow from "@number-flow/react";
 
-const Pattern = ({
-  className,
-  cellClassName,
-}: {
-  className?: string;
-  cellClassName?: boolean;
-}) => {
-  const x = new Array(47).fill(0);
-  const y = new Array(30).fill(0);
-  const matrix = x.map((_, i) => y.map((_, j) => [i, j]));
-  const [clickedCell, setClickedCell] = useState<any>(null);
+interface DualRangeSliderProps
+  extends React.ComponentProps<typeof SliderPrimitive.Root> {
+  labelPosition?: "top" | "bottom" | "static";
+  lableContenPos?: "left" | "right";
+  label?: React.ReactNode | ((value: number | undefined) => React.ReactNode);
+}
 
-  return (
-    <div
-      className={clsx(
-        "flex flex-row relative z-30",
-        className ? "border-blue-600 relative z-[5]" : "border-neutral-700"
-      )}
-    >
-      {matrix.map((row, rowIdx) => (
-        <div
-          key={`matrix-row-${rowIdx}`}
-          className="flex flex-col  relative z-20 border-b"
-        >
-          {row.map((column, colIdx) => {
-            const controls = useAnimation();
+const DualRangeSlider = React.forwardRef<
+  React.ElementRef<typeof SliderPrimitive.Root>,
+  DualRangeSliderProps
+>(
+  (
+    {
+      className,
+      label,
+      labelPosition = "top",
+      lableContenPos = "right",
+      ...props
+    },
+    ref
+  ) => {
+    const initialValue = Array.isArray(props.value)
+      ? props.value
+      : [props.min, props.max];
 
-            useEffect(() => {
-              if (clickedCell) {
-                const distance = Math.sqrt(
-                  Math.pow(clickedCell[0] - rowIdx, 2) +
-                    Math.pow(clickedCell[1] - colIdx, 2)
-                );
-                controls.start({
-                  opacity: [0, 1 - distance * 0.1, 0],
-                  transition: { duration: distance * 0.2 },
-                });
-              }
-            }, [clickedCell]);
-
-            return (
-              <div
-                key={`matrix-col-${colIdx}`}
-                className={clsx(
-                  "flex flex-row relative z-30",
-                  className
-                    ? "border-blue-600 relative z-[6]"
-                    : "border-neutral-700"
+    return (
+      <SliderPrimitive.Root
+        ref={ref}
+        className={cn(
+          "relative flex w-full touch-none select-none items-center",
+          className
+        )}
+        {...props}
+      >
+        <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full dark:bg-gray-800 bg-gray-300">
+          <SliderPrimitive.Range className="absolute h-full bg-primary" />
+        </SliderPrimitive.Track>
+        <>
+          {initialValue.map((value, index) => (
+            <React.Fragment key={index}>
+              <SliderPrimitive.Thumb className="relative block h-4 w-4 rounded-full border-2 border-primary dark:bg-neutral-800 bg-neutral-50 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                {label && labelPosition !== "static" && (
+                  <div
+                    className={cn(
+                      "absolute flex w-full justify-center items-start gap-0.5",
+                      labelPosition === "top" && "-top-7",
+                      labelPosition === "bottom" && "top-4"
+                    )}
+                  >
+                    {lableContenPos === "left" && (
+                      <>
+                        {typeof label === "function" ? (
+                          <span className="inline-block  -translate-y-0.5">
+                            {label(value)}
+                          </span>
+                        ) : (
+                          label && (
+                            <span className="inline-block ">{label}</span>
+                          )
+                        )}
+                      </>
+                    )}
+                    <NumberFlow
+                      willChange
+                      // @ts-ignore
+                      value={value}
+                      isolate
+                      opacityTiming={{
+                        duration: 250,
+                        easing: "ease-out",
+                      }}
+                      transformTiming={{
+                        easing: `linear(0, 0.0033 0.8%, 0.0263 2.39%, 0.0896 4.77%, 0.4676 15.12%, 0.5688, 0.6553, 0.7274, 0.7862, 0.8336 31.04%, 0.8793, 0.9132 38.99%, 0.9421 43.77%, 0.9642 49.34%, 0.9796 55.71%, 0.9893 62.87%, 0.9952 71.62%, 0.9983 82.76%, 0.9996 99.47%)`,
+                        duration: 500,
+                      }}
+                    />
+                    {lableContenPos === "right" && (
+                      <>
+                        {typeof label === "function" ? (
+                          <span className="inline-block  -translate-y-1">
+                            {label(value)}
+                          </span>
+                        ) : (
+                          label && (
+                            <span className="inline-block ">{label}</span>
+                          )
+                        )}
+                      </>
+                    )}
+                  </div>
                 )}
-                onClick={() => setClickedCell([rowIdx, colIdx])}
+              </SliderPrimitive.Thumb>
+            </React.Fragment>
+          ))}
+        </>
+
+        {label && labelPosition === "static" && (
+          <>
+            {initialValue.map((value, index) => (
+              <div
+                className={cn(
+                  "absolute -top-7 w-fit right-0 flex  justify-center items-start gap-0.5"
+                )}
               >
-                <motion.div
-                  initial={{
-                    opacity: 0,
+                {lableContenPos === "left" && (
+                  <>
+                    {typeof label === "function" ? (
+                      <span className="inline-block  -translate-y-0.5">
+                        {label(value)}
+                      </span>
+                    ) : (
+                      label && <span className="inline-block ">{label}</span>
+                    )}
+                  </>
+                )}
+                <NumberFlow
+                  willChange
+                  // @ts-ignore
+                  value={value}
+                  isolate
+                  opacityTiming={{
+                    duration: 250,
+                    easing: "ease-out",
                   }}
-                  whileHover={{
-                    opacity: [0, 1, 0.5],
+                  transformTiming={{
+                    easing: `linear(0, 0.0033 0.8%, 0.0263 2.39%, 0.0896 4.77%, 0.4676 15.12%, 0.5688, 0.6553, 0.7274, 0.7862, 0.8336 31.04%, 0.8793, 0.9132 38.99%, 0.9421 43.77%, 0.9642 49.34%, 0.9796 55.71%, 0.9893 62.87%, 0.9952 71.62%, 0.9983 82.76%, 0.9996 99.47%)`,
+                    duration: 500,
                   }}
-                  transition={{
-                    duration: 0.5,
-                    ease: "backOut",
-                  }}
-                  animate={controls}
-                  className="bg-[rgba(14,165,233,0.3)] h-12 w-12" //  rgba(14, 165, 233, 0.15) for a more subtle effect
-                ></motion.div>
+                />
+                {lableContenPos === "right" && (
+                  <>
+                    {typeof label === "function" ? (
+                      <span className="inline-block  -translate-y-1">
+                        {label(value)}
+                      </span>
+                    ) : (
+                      label && <span className="inline-block ">{label}</span>
+                    )}
+                  </>
+                )}
               </div>
-            );
-          })}
-        </div>
-      ))}
-    </div>
-  );
-};
+            ))}
+          </>
+        )}
+      </SliderPrimitive.Root>
+    );
+  }
+);
+DualRangeSlider.displayName = "DualRangeSlider";
 
-const BackgroundCellCore = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  const ref = useRef<any>(null);
-
-  const handleMouseMove = (event: any) => {
-    const rect = ref.current && ref.current.getBoundingClientRect();
-    setMousePosition({
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top,
-    });
-  };
-
-  const size = 300;
-  return (
-    <div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      className="h-[500px] w-[800px] right-0 absolute cursor-cell overflow-hidden"
-    >
-      <div className="absolute h-full inset-y-0  overflow-hidden">
-        <div className="absolute h-full w-full pointer-events-none -bottom-2 z-40 bg-slate-950 [mask-image:linear-gradient(to_bottom,transparent,black)]"></div>
-        <div
-          className="absolute inset-0 z-20 bg-transparent"
-          style={{
-            maskImage: `radial-gradient(
-            ${size / 4}px circle at center,
-           white, transparent
-          )`,
-            WebkitMaskImage: `radial-gradient(
-          ${size / 4}px circle at center,
-          white, transparent
-        )`,
-            WebkitMaskPosition: `${mousePosition.x - size / 2}px ${
-              mousePosition.y - size / 2
-            }px`,
-            WebkitMaskSize: `${size}px`,
-            maskSize: `${size}px`,
-            pointerEvents: "none",
-            maskRepeat: "no-repeat",
-            WebkitMaskRepeat: "no-repeat",
-          }}
-        >
-          <Pattern cellClassName={true} />
-        </div>
-        <Pattern className="opacity-50" cellClassName={false} />
-      </div>
-    </div>
-  );
-};
-
-export default BackgroundRipple;
+export { DualRangeSlider };
