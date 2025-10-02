@@ -1,14 +1,26 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { DualRangeSlider } from "./Test5";
+import { motion } from "motion/react";
+import { start } from "repl";
 
 const Test3 = () => {
-  const [leftSection, setLeftSection] = useState(false);
-  const [db, setDb] = useState({
+  const [leftSection, setLeftSection] = useState<boolean>(false);
+  const [db, setDb] = useState<{
+    bounce: number;
+    duration: number;
+  }>({
     bounce: 0,
     duration: 0,
   });
-  const [sdm, setSdm] = useState({
+  const [sdm, setSdm] = useState<{
+    stiffness: number;
+    mass: number;
+    damping: number;
+    velocity: number;
+    restDelta: number;
+    restSpeed: number;
+  }>({
     stiffness: 0,
     mass: 0,
     damping: 0,
@@ -16,25 +28,61 @@ const Test3 = () => {
     restDelta: 0,
     restSpeed: 0,
   });
-  const [widthPercentage, setWidthPercentage] = useState(25);
+
   useEffect(() => {
-    console.log(widthPercentage);
-  }, [widthPercentage]);
+    console.log(db);
+  }, [db]);
+  useEffect(() => {
+    console.log(sdm);
+  }, [sdm]);
   return (
-    <div className="h-[100vh] p-10 bg-conic from-blue-600 to-sky-400 to-50%">
+    <div className="h-[100vh] p-10  jus bg-conic from-blue-600 to-sky-400 to-50%">
       <div className="text-4xl my-3">Spring Setting</div>
       <div className="grid grid-cols-10 gap-4">
-        <div className="bg-gray-300 col-span-8  h-[10rem] p-[10px] rounded-xl">
-          <div className="h-[4rem] w-[4rem]  bg-radial from-pink-400 from-40% to-fuchsia-700 rounded"></div>
+        <div className="bg-gray-300 w-full col-span-8 h-[10rem] p-[10px] rounded-xl">
+          <div className="flex relative">
+            <motion.div
+              initial={{
+                left: "0%",
+              }}
+              animate={{ left: "90%" }}
+              transition={{
+                duration: 2,
+              }}
+              className="h-[4rem] relative w-[4rem] self-end  bg-radial from-pink-400 from-40% to-fuchsia-700 rounded"
+            ></motion.div>
+          </div>
           <div className="flex justify-between">
-            <span className="h-[4rem] my-1 w-[4rem] bg-conic/decreasing from-violet-700 via-lime-300 to-violet-700 rounded"></span>
-            <span className="h-[4rem] w-[4rem] bg-linear-to-t from-red-500 to-amber-500 rounded"></span>
+            <motion.span
+              initial={{
+                scale: 1,
+              }}
+              animate={{
+                scale: 0.3,
+              }}
+              transition={{
+                duration: 2,
+              }}
+              className="h-[4rem] my-1 w-[4rem] bg-conic/decreasing from-violet-700 via-lime-300 to-violet-700 rounded"
+            ></motion.span>
+            <motion.span
+              initial={{
+                rotate: 0,
+              }}
+              animate={{
+                rotate: 360,
+              }}
+              transition={{
+                duration: 2,
+              }}
+              className="h-[4rem] w-[4rem] bg-linear-to-t from-red-500 to-amber-500 rounded"
+            ></motion.span>
           </div>
         </div>
         <div className="bg-gray-600 p-[10px] h-[10rem] col-span-2 rounded-xl"></div>
       </div>
       <div className="grid grid-cols-2 gap-5">
-        <div onClick={() => setLeftSection(true)} className="">
+        <div onClick={() => setLeftSection(true)}>
           <div className="text-3xl my-2">Duration and Bounce</div>
           <div className="border-2 p-3 rounded-2xl">
             <div className="mx-5 grid grid-cols-12 py-1.5">
@@ -44,9 +92,12 @@ const Test3 = () => {
                   label
                   lableContenPos={"left"}
                   value={[db.duration]}
-                  onValueChange={([widthPercentage]) =>
-                    widthPercentage != null &&
-                    setWidthPercentage(widthPercentage)
+                  onValueChange={([duration]) =>
+                    duration != null &&
+                    setDb({
+                      duration,
+                      bounce: db.bounce,
+                    })
                   }
                   min={0}
                   max={3}
@@ -63,7 +114,10 @@ const Test3 = () => {
                   value={[db.bounce]}
                   onValueChange={([bounce]) =>
                     bounce != null &&
-                    setDb((prev)=>{...prev})
+                    setDb({
+                      duration: db.duration,
+                      bounce,
+                    })
                   }
                   min={0}
                   max={1}
@@ -82,10 +136,17 @@ const Test3 = () => {
                 <DualRangeSlider
                   label
                   lableContenPos={"left"}
-                  value={[widthPercentage]}
-                  onValueChange={([widthPercentage]) =>
-                    widthPercentage != null &&
-                    setWidthPercentage(widthPercentage)
+                  value={[sdm.stiffness]}
+                  onValueChange={([stiffness]) =>
+                    stiffness != null &&
+                    setSdm({
+                      stiffness,
+                      mass: sdm.mass,
+                      damping: sdm.damping,
+                      velocity: sdm.velocity,
+                      restDelta: sdm.restDelta,
+                      restSpeed: sdm.restSpeed,
+                    })
                   }
                   min={0}
                   max={300}
@@ -99,10 +160,17 @@ const Test3 = () => {
                 <DualRangeSlider
                   label
                   lableContenPos={"left"}
-                  value={[widthPercentage]}
-                  onValueChange={([widthPercentage]) =>
-                    widthPercentage != null &&
-                    setWidthPercentage(widthPercentage)
+                  value={[sdm.damping]}
+                  onValueChange={([damping]) =>
+                    damping != null &&
+                    setSdm({
+                      stiffness: sdm.stiffness,
+                      mass: sdm.mass,
+                      damping,
+                      velocity: sdm.velocity,
+                      restDelta: sdm.restDelta,
+                      restSpeed: sdm.restSpeed,
+                    })
                   }
                   min={0}
                   max={100}
@@ -116,10 +184,17 @@ const Test3 = () => {
                 <DualRangeSlider
                   label
                   lableContenPos={"left"}
-                  value={[widthPercentage]}
-                  onValueChange={([widthPercentage]) =>
-                    widthPercentage != null &&
-                    setWidthPercentage(widthPercentage)
+                  value={[sdm.mass]}
+                  onValueChange={([mass]) =>
+                    mass != null &&
+                    setSdm({
+                      stiffness: sdm.stiffness,
+                      mass,
+                      damping: sdm.damping,
+                      velocity: sdm.velocity,
+                      restDelta: sdm.restDelta,
+                      restSpeed: sdm.restSpeed,
+                    })
                   }
                   min={0}
                   max={10}
@@ -133,10 +208,17 @@ const Test3 = () => {
                 <DualRangeSlider
                   label
                   lableContenPos={"left"}
-                  value={[widthPercentage]}
-                  onValueChange={([widthPercentage]) =>
-                    widthPercentage != null &&
-                    setWidthPercentage(widthPercentage)
+                  value={[sdm.velocity]}
+                  onValueChange={([velocity]) =>
+                    velocity != null &&
+                    setSdm({
+                      stiffness: sdm.stiffness,
+                      mass: sdm.mass,
+                      damping: sdm.damping,
+                      velocity,
+                      restDelta: sdm.restDelta,
+                      restSpeed: sdm.restSpeed,
+                    })
                   }
                   min={0}
                   max={50}
@@ -150,10 +232,17 @@ const Test3 = () => {
                 <DualRangeSlider
                   label
                   lableContenPos={"left"}
-                  value={[widthPercentage]}
-                  onValueChange={([widthPercentage]) =>
-                    widthPercentage != null &&
-                    setWidthPercentage(widthPercentage)
+                  value={[sdm.restDelta]}
+                  onValueChange={([restDelta]) =>
+                    restDelta != null &&
+                    setSdm({
+                      stiffness: sdm.stiffness,
+                      mass: sdm.mass,
+                      damping: sdm.damping,
+                      velocity: sdm.velocity,
+                      restDelta,
+                      restSpeed: sdm.restSpeed,
+                    })
                   }
                   min={0}
                   max={1}
@@ -167,10 +256,17 @@ const Test3 = () => {
                 <DualRangeSlider
                   label
                   lableContenPos={"left"}
-                  value={[widthPercentage]}
-                  onValueChange={([widthPercentage]) =>
-                    widthPercentage != null &&
-                    setWidthPercentage(widthPercentage)
+                  value={[sdm.restSpeed]}
+                  onValueChange={([restSpeed]) =>
+                    restSpeed != null &&
+                    setSdm({
+                      stiffness: sdm.stiffness,
+                      mass: sdm.mass,
+                      damping: sdm.damping,
+                      velocity: sdm.velocity,
+                      restDelta: sdm.restDelta,
+                      restSpeed,
+                    })
                   }
                   min={0}
                   max={1}
