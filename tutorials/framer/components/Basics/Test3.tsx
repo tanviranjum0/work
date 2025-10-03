@@ -73,7 +73,7 @@ const Test3 = () => {
                 rotate: 360,
               }}
               transition={{
-                duration: 2,
+                duration: 2.5,
               }}
               className="h-[4rem] w-[4rem] bg-linear-to-t from-red-500 to-amber-500 rounded"
             ></motion.span>
