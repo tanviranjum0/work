@@ -43,7 +43,7 @@ const Test3 = () => {
       setAlreadyAnimated(true);
     }
     if (alreadyAnimated) {
-      animate("#leftRightMovingbox", { left: "0%" }, { duration: 2 });
+      // animate("#leftRightMovingbox", { left: "0%" }, { duration: 2 });
       animate("#scalingBox", { scale: 0.3 }, { duration: 2 });
       animate("#rotatingBox", { rotate: 0 }, { duration: 2 });
       setAlreadyAnimated(false);
