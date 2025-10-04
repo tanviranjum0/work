@@ -1,11 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DualRangeSlider } from "./Test5";
-import { motion } from "motion/react";
-import { start } from "repl";
+import { motion, useAnimate } from "motion/react";
+import { truncateSync } from "node:fs";
 
 const Test3 = () => {
+  const container = useRef<HTMLDivElement>(null);
+  const [scope, animate] = useAnimate();
   const [leftSection, setLeftSection] = useState<boolean>(false);
+  const [alreadyAnimated, setAlreadyAnimated] = useState<boolean>(true);
   const [db, setDb] = useState<{
     bounce: number;
     duration: number;
@@ -30,18 +33,40 @@ const Test3 = () => {
   });
 
   useEffect(() => {
+    if (!leftSection) {
+      setLeftSection(true);
+    }
+    if (!alreadyAnimated) {
+      animate("#leftRightMovingbox", { left: "90%" }, { duration: 2 });
+      animate("#scalingBox", { scale: 1 }, { duration: 2 });
+      animate("#rotatingBox", { rotate: 360 }, { duration: 2 });
+      setAlreadyAnimated(true);
+    }
+    if (alreadyAnimated) {
+      animate("#leftRightMovingbox", { left: "0%" }, { duration: 2 });
+      animate("#scalingBox", { scale: 0.3 }, { duration: 2 });
+      animate("#rotatingBox", { rotate: 0 }, { duration: 2 });
+      setAlreadyAnimated(false);
+    }
     console.log(db);
   }, [db]);
   useEffect(() => {
+    if (leftSection) {
+      setLeftSection(false);
+    }
     console.log(sdm);
   }, [sdm]);
   return (
-    <div className="h-[100vh] p-10  jus bg-conic from-blue-600 to-sky-400 to-50%">
+    <div
+      ref={container}
+      className="h-[100vh] p-10 bg-conic from-blue-600 to-sky-400 to-50%"
+    >
       <div className="text-4xl my-3">Spring Setting</div>
       <div className="grid grid-cols-10 gap-4">
         <div className="bg-gray-300 w-full col-span-8 h-[10rem] p-[10px] rounded-xl">
           <div className="flex relative">
             <motion.div
+              id="leftRightMovingBox"
               initial={{
                 left: "0%",
               }}
@@ -54,6 +79,7 @@ const Test3 = () => {
           </div>
           <div className="flex justify-between">
             <motion.span
+              id="scalingBox"
               initial={{
                 scale: 1,
               }}
@@ -66,6 +92,7 @@ const Test3 = () => {
               className="h-[4rem] my-1 w-[4rem] bg-conic/decreasing from-violet-700 via-lime-300 to-violet-700 rounded"
             ></motion.span>
             <motion.span
+              id="rotatingBox"
               initial={{
                 rotate: 0,
               }}
@@ -73,7 +100,7 @@ const Test3 = () => {
                 rotate: 360,
               }}
               transition={{
-                duration: 2.5,
+                duration: 2,
               }}
               className="h-[4rem] w-[4rem] bg-linear-to-t from-red-500 to-amber-500 rounded"
             ></motion.span>
@@ -84,7 +111,9 @@ const Test3 = () => {
       <div className="grid grid-cols-2 gap-5">
         <div onClick={() => setLeftSection(true)}>
           <div className="text-3xl my-2">Duration and Bounce</div>
-          <div className="border-2 p-3 rounded-2xl">
+          <div
+            className={`border-2 p-3 ${leftSection && "border-4"} rounded-2xl`}
+          >
             <div className="mx-5 grid grid-cols-12 py-1.5">
               <span className="col-span-2 font-semibold">Duration</span>
               <div className="flex gap-4 col-span-10 ml-1">
@@ -129,7 +158,11 @@ const Test3 = () => {
         </div>
         <div onClick={() => setLeftSection(false)} className="">
           <div className="text-3xl my-2">Stiffness, Damping, Mass...</div>
-          <div className="border-2 p-3 rounded-2xl">
+          <div
+            className={`border-2 ${
+              !leftSection && "border-4"
+            }  p-3 rounded-2xl`}
+          >
             <div className="mx-5 grid grid-cols-12 py-1.5">
               <span className="col-span-2 font-semibold">Stiffness</span>
               <div className="flex gap-4 col-span-10 ml-2">
