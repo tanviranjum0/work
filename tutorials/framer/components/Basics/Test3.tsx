@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { DualRangeSlider } from "./Test5";
 import { motion, useAnimate } from "motion/react";
 interface SDMTypes {
-  // type?: string | null;
+  type?: string | null;
   stiffness: number;
   mass: number;
   damping: number;
