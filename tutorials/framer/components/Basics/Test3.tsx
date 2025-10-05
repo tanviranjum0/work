@@ -2,13 +2,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DualRangeSlider } from "./Test5";
 import { motion, useAnimate } from "motion/react";
-import { truncateSync } from "node:fs";
 
 const Test3 = () => {
-  const container = useRef<HTMLDivElement>(null);
+  const isFirstRender = useRef<boolean>(true);
   const [scope, animate] = useAnimate();
   const [leftSection, setLeftSection] = useState<boolean>(false);
-  const [alreadyAnimated, setAlreadyAnimated] = useState<boolean>(true);
+  const [alreadyAnimated, setAlreadyAnimated] = useState<boolean>(false);
   const [db, setDb] = useState<{
     bounce: number;
     duration: number;
@@ -37,28 +36,148 @@ const Test3 = () => {
       setLeftSection(true);
     }
     if (!alreadyAnimated) {
-      animate("#leftRightMovingbox", { left: "90%" }, { duration: 2 });
-      animate("#scalingBox", { scale: 1 }, { duration: 2 });
-      animate("#rotatingBox", { rotate: 360 }, { duration: 2 });
+      animate(
+        "#leftRightMovingBox",
+        { left: "90%" },
+        { duration: db.duration, type: "spring", bounce: db.bounce }
+      );
+      animate(
+        "#scalingBox",
+        { scale: 1 },
+        { duration: db.duration, type: "spring", bounce: db.bounce }
+      );
+      animate(
+        "#rotatingBox",
+        { rotate: 360 },
+        { duration: db.duration, type: "spring", bounce: db.bounce }
+      );
       setAlreadyAnimated(true);
+      return;
     }
     if (alreadyAnimated) {
-      // animate("#leftRightMovingbox", { left: "0%" }, { duration: 2 });
-      animate("#scalingBox", { scale: 0.3 }, { duration: 2 });
-      animate("#rotatingBox", { rotate: 0 }, { duration: 2 });
+      animate(
+        "#leftRightMovingBox",
+        { left: "0%" },
+        { duration: db.duration, type: "spring", bounce: db.bounce }
+      );
+      animate(
+        "#scalingBox",
+        { scale: 0.3 },
+        { duration: db.duration, type: "spring", bounce: db.bounce }
+      );
+      animate(
+        "#rotatingBox",
+        { rotate: 0 },
+        { duration: db.duration, type: "spring", bounce: db.bounce }
+      );
       setAlreadyAnimated(false);
+      return;
     }
     console.log(db);
   }, [db]);
+
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     if (leftSection) {
       setLeftSection(false);
     }
-    console.log(sdm);
+    if (!alreadyAnimated) {
+      // animate(
+      //   "#leftRightMovingBox",
+      //   { left: "90%" },
+      //   {
+      //     type: "spring",
+      //     stiffness: sdm.stiffness,
+      //     mass: sdm.mass,
+      //     damping: sdm.damping,
+      //     velocity: sdm.velocity,
+      //     restDelta: sdm.restDelta,
+      //     restSpeed: sdm.restSpeed,
+      //   }
+      // );
+      animate(
+        "#scalingBox",
+        { scale: 1 },
+        {
+          // type: "spring",
+          stiffness: sdm.stiffness,
+          mass: sdm.mass,
+          damping: sdm.damping,
+          velocity: sdm.velocity,
+          restDelta: sdm.restDelta,
+          restSpeed: sdm.restSpeed,
+        }
+      );
+      animate(
+        "#rotatingBox",
+        { rotate: 360 },
+        {
+          // type: "spring",
+          stiffness: sdm.stiffness,
+          mass: sdm.mass,
+          damping: sdm.damping,
+          velocity: sdm.velocity,
+          restDelta: sdm.restDelta,
+          restSpeed: sdm.restSpeed,
+        }
+      );
+      setAlreadyAnimated(true);
+
+      console.log(sdm);
+    }
+    if (alreadyAnimated) {
+      // animate(
+      //   "#leftRightMovingBox",
+      //   { left: "0%" },
+      //   {
+      //     type: "spring",
+      //     stiffness: sdm.stiffness,
+      //     mass: sdm.mass,
+      //     damping: sdm.damping,
+      //     velocity: sdm.velocity,
+      //     restDelta: sdm.restDelta,
+      //     restSpeed: sdm.restSpeed,
+      //   }
+      // );
+      animate(
+        "#scalingBox",
+        { scale: 0.3 },
+        {
+          // type: "spring",
+          stiffness: sdm.stiffness,
+          mass: sdm.mass,
+          damping: sdm.damping,
+          velocity: sdm.velocity,
+          restDelta: sdm.restDelta,
+          restSpeed: sdm.restSpeed,
+        }
+      );
+      animate(
+        "#rotatingBox",
+        { rotate: 0 },
+        {
+          // type: "spring",
+          stiffness: sdm.stiffness,
+          mass: sdm.mass,
+          damping: sdm.damping,
+          velocity: sdm.velocity,
+          restDelta: sdm.restDelta,
+          restSpeed: sdm.restSpeed,
+        }
+      );
+      setAlreadyAnimated(false);
+
+      console.log(sdm);
+    }
+    // console.log(sdm);
   }, [sdm]);
+
   return (
-    <div
-      ref={container}
+    <motion.div
+      ref={scope}
       className="h-[100vh] p-10 bg-conic from-blue-600 to-sky-400 to-50%"
     >
       <div className="text-4xl my-3">Spring Setting</div>
@@ -66,14 +185,10 @@ const Test3 = () => {
         <div className="bg-gray-300 w-full col-span-8 h-[10rem] p-[10px] rounded-xl">
           <div className="flex relative">
             <motion.div
-              id="leftRightMovingBox"
               initial={{
                 left: "0%",
               }}
-              animate={{ left: "90%" }}
-              transition={{
-                duration: 2,
-              }}
+              id="leftRightMovingBox"
               className="h-[4rem] relative w-[4rem] self-end  bg-radial from-pink-400 from-40% to-fuchsia-700 rounded"
             ></motion.div>
           </div>
@@ -81,27 +196,15 @@ const Test3 = () => {
             <motion.span
               id="scalingBox"
               initial={{
-                scale: 1,
-              }}
-              animate={{
-                scale: 0.3,
-              }}
-              transition={{
-                duration: 2,
+                scale: 0,
               }}
               className="h-[4rem] my-1 w-[4rem] bg-conic/decreasing from-violet-700 via-lime-300 to-violet-700 rounded"
             ></motion.span>
             <motion.span
-              id="rotatingBox"
               initial={{
                 rotate: 0,
               }}
-              animate={{
-                rotate: 360,
-              }}
-              transition={{
-                duration: 2,
-              }}
+              id="rotatingBox"
               className="h-[4rem] w-[4rem] bg-linear-to-t from-red-500 to-amber-500 rounded"
             ></motion.span>
           </div>
@@ -310,7 +413,7 @@ const Test3 = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
