@@ -2,7 +2,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DualRangeSlider } from "./Test5";
 import { motion, useAnimate } from "motion/react";
-
+interface SDMTypes {
+  // type?: string | null;
+  stiffness: number;
+  mass: number;
+  damping: number;
+  velocity: number;
+  restDelta: number;
+  restSpeed: number;
+}
 const Test3 = () => {
   const isFirstRender = useRef<boolean>(true);
   const [scope, animate] = useAnimate();
@@ -12,165 +20,94 @@ const Test3 = () => {
     bounce: number;
     duration: number;
   }>({
-    bounce: 0,
-    duration: 0,
+    bounce: 0.25,
+    duration: 0.8,
   });
-  const [sdm, setSdm] = useState<{
-    stiffness: number;
-    mass: number;
-    damping: number;
-    velocity: number;
-    restDelta: number;
-    restSpeed: number;
-  }>({
-    stiffness: 0,
-    mass: 0,
-    damping: 0,
+  const [sdm, setSdm] = useState<SDMTypes>({
+    stiffness: 100,
+    mass: 1,
+    damping: 10,
     velocity: 0,
-    restDelta: 0,
-    restSpeed: 0,
+    restDelta: 0.01,
+    restSpeed: 0.01,
   });
 
+  // useEffect(() => {
+  //   if (!leftSection) {
+  //     setLeftSection(true);
+  //   }
+  //   if (!alreadyAnimated) {
+  //     animate(
+  //       "#leftRightMovingBox",
+  //       { left: "calc(100% - 4rem)" },
+  //       { duration: db.duration, type: "spring", bounce: db.bounce }
+  //     );
+  //     animate(
+  //       "#scalingBox",
+  //       { scale: 1 },
+  //       { duration: db.duration, type: "spring", bounce: db.bounce }
+  //     );
+  //     animate(
+  //       "#rotatingBox",
+  //       { rotate: 360 },
+  //       { duration: db.duration, type: "spring", bounce: db.bounce }
+  //     );
+  //     setAlreadyAnimated(true);
+  //     return;
+  //   }
+  //   if (alreadyAnimated) {
+  //     animate(
+  //       "#leftRightMovingBox",
+  //       { left: "0%" },
+  //       { duration: db.duration, type: "spring", bounce: db.bounce }
+  //     );
+  //     animate(
+  //       "#scalingBox",
+  //       { scale: 0.3 },
+  //       { duration: db.duration, type: "spring", bounce: db.bounce }
+  //     );
+  //     animate(
+  //       "#rotatingBox",
+  //       { rotate: 0 },
+  //       { duration: db.duration, type: "spring", bounce: db.bounce }
+  //     );
+  //     setAlreadyAnimated(false);
+  //     return;
+  //   }
+  //   console.log(db);
+  // }, [db]);
+  //Mass, Velocity, Stiffness
   useEffect(() => {
-    if (!leftSection) {
-      setLeftSection(true);
-    }
-    if (!alreadyAnimated) {
-      animate(
-        "#leftRightMovingBox",
-        { left: "90%" },
-        { duration: db.duration, type: "spring", bounce: db.bounce }
-      );
-      animate(
-        "#scalingBox",
-        { scale: 1 },
-        { duration: db.duration, type: "spring", bounce: db.bounce }
-      );
-      animate(
-        "#rotatingBox",
-        { rotate: 360 },
-        { duration: db.duration, type: "spring", bounce: db.bounce }
-      );
-      setAlreadyAnimated(true);
-      return;
-    }
-    if (alreadyAnimated) {
-      animate(
-        "#leftRightMovingBox",
-        { left: "0%" },
-        { duration: db.duration, type: "spring", bounce: db.bounce }
-      );
-      animate(
-        "#scalingBox",
-        { scale: 0.3 },
-        { duration: db.duration, type: "spring", bounce: db.bounce }
-      );
-      animate(
-        "#rotatingBox",
-        { rotate: 0 },
-        { duration: db.duration, type: "spring", bounce: db.bounce }
-      );
-      setAlreadyAnimated(false);
-      return;
-    }
-    console.log(db);
-  }, [db]);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
+    // if (isFirstRender.current) {
+    //   isFirstRender.current = false;
+    //   return;
+    // }
+    console.log("Started");
     if (leftSection) {
       setLeftSection(false);
     }
     if (!alreadyAnimated) {
-      // animate(
-      //   "#leftRightMovingBox",
-      //   { left: "90%" },
-      //   {
-      //     type: "spring",
-      //     stiffness: sdm.stiffness,
-      //     mass: sdm.mass,
-      //     damping: sdm.damping,
-      //     velocity: sdm.velocity,
-      //     restDelta: sdm.restDelta,
-      //     restSpeed: sdm.restSpeed,
-      //   }
-      // );
-      animate(
-        "#scalingBox",
-        { scale: 1 },
-        {
-          // type: "spring",
-          stiffness: sdm.stiffness,
-          mass: sdm.mass,
-          damping: sdm.damping,
-          velocity: sdm.velocity,
-          restDelta: sdm.restDelta,
-          restSpeed: sdm.restSpeed,
-        }
-      );
-      animate(
-        "#rotatingBox",
-        { rotate: 360 },
-        {
-          // type: "spring",
-          stiffness: sdm.stiffness,
-          mass: sdm.mass,
-          damping: sdm.damping,
-          velocity: sdm.velocity,
-          restDelta: sdm.restDelta,
-          restSpeed: sdm.restSpeed,
-        }
-      );
+      console.log(sdm);
+      // console.log("Not Already Animated");
+      animate("#leftRightMovingBox", { left: "calc(100% - 4rem)" }, sdm);
+      // console.log("Animated Left Right");
+      animate("#scalingBox", { scale: 1 }, sdm);
+      // console.log("Animated Scale Box");
+
+      animate("#rotatingBox", { rotate: 360 }, sdm);
+
+      // console.log("Setting Already Animated");
+
       setAlreadyAnimated(true);
-
+    } else if (alreadyAnimated) {
       console.log(sdm);
-    }
-    if (alreadyAnimated) {
-      // animate(
-      //   "#leftRightMovingBox",
-      //   { left: "0%" },
-      //   {
-      //     type: "spring",
-      //     stiffness: sdm.stiffness,
-      //     mass: sdm.mass,
-      //     damping: sdm.damping,
-      //     velocity: sdm.velocity,
-      //     restDelta: sdm.restDelta,
-      //     restSpeed: sdm.restSpeed,
-      //   }
-      // );
-      animate(
-        "#scalingBox",
-        { scale: 0.3 },
-        {
-          // type: "spring",
-          stiffness: sdm.stiffness,
-          mass: sdm.mass,
-          damping: sdm.damping,
-          velocity: sdm.velocity,
-          restDelta: sdm.restDelta,
-          restSpeed: sdm.restSpeed,
-        }
-      );
-      animate(
-        "#rotatingBox",
-        { rotate: 0 },
-        {
-          // type: "spring",
-          stiffness: sdm.stiffness,
-          mass: sdm.mass,
-          damping: sdm.damping,
-          velocity: sdm.velocity,
-          restDelta: sdm.restDelta,
-          restSpeed: sdm.restSpeed,
-        }
-      );
+      // console.log("Already Animated");
+
+      animate("#leftRightMovingBox", { left: "0%" }, sdm);
+      animate("#scalingBox", { scale: 0.3 }, sdm);
+      animate("#rotatingBox", { rotate: 0 }, sdm);
+      // console.log("Setting Not Animated");
       setAlreadyAnimated(false);
-
-      console.log(sdm);
     }
     // console.log(sdm);
   }, [sdm]);
@@ -225,7 +162,6 @@ const Test3 = () => {
                   lableContenPos={"left"}
                   value={[db.duration]}
                   onValueChange={([duration]) =>
-                    duration != null &&
                     setDb({
                       duration,
                       bounce: db.bounce,
@@ -245,7 +181,6 @@ const Test3 = () => {
                   lableContenPos={"left"}
                   value={[db.bounce]}
                   onValueChange={([bounce]) =>
-                    bounce != null &&
                     setDb({
                       duration: db.duration,
                       bounce,
@@ -274,8 +209,8 @@ const Test3 = () => {
                   lableContenPos={"left"}
                   value={[sdm.stiffness]}
                   onValueChange={([stiffness]) =>
-                    stiffness != null &&
                     setSdm({
+                      type: "spring",
                       stiffness,
                       mass: sdm.mass,
                       damping: sdm.damping,
@@ -298,8 +233,8 @@ const Test3 = () => {
                   lableContenPos={"left"}
                   value={[sdm.damping]}
                   onValueChange={([damping]) =>
-                    damping != null &&
                     setSdm({
+                      type: "spring",
                       stiffness: sdm.stiffness,
                       mass: sdm.mass,
                       damping,
@@ -322,8 +257,8 @@ const Test3 = () => {
                   lableContenPos={"left"}
                   value={[sdm.mass]}
                   onValueChange={([mass]) =>
-                    mass != null &&
                     setSdm({
+                      type: "spring",
                       stiffness: sdm.stiffness,
                       mass,
                       damping: sdm.damping,
@@ -346,8 +281,8 @@ const Test3 = () => {
                   lableContenPos={"left"}
                   value={[sdm.velocity]}
                   onValueChange={([velocity]) =>
-                    velocity != null &&
                     setSdm({
+                      type: "spring",
                       stiffness: sdm.stiffness,
                       mass: sdm.mass,
                       damping: sdm.damping,
@@ -370,8 +305,8 @@ const Test3 = () => {
                   lableContenPos={"left"}
                   value={[sdm.restDelta]}
                   onValueChange={([restDelta]) =>
-                    restDelta != null &&
                     setSdm({
+                      type: "spring",
                       stiffness: sdm.stiffness,
                       mass: sdm.mass,
                       damping: sdm.damping,
@@ -394,8 +329,8 @@ const Test3 = () => {
                   lableContenPos={"left"}
                   value={[sdm.restSpeed]}
                   onValueChange={([restSpeed]) =>
-                    restSpeed != null &&
                     setSdm({
+                      type: "spring",
                       stiffness: sdm.stiffness,
                       mass: sdm.mass,
                       damping: sdm.damping,
