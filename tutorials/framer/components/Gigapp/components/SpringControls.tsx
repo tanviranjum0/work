@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { DualRangeSlider } from "./Test5";
+import { DualRangeSlider } from "./packages/DualRangeSlider";
 import { FaCopy } from "react-icons/fa";
 import { IoMdDoneAll } from "react-icons/io";
 import { motion, useAnimate } from "motion/react";
@@ -13,7 +13,7 @@ interface SDMTypes {
   restDelta: number;
   restSpeed: number;
 }
-const Test3 = () => {
+const SpringControls = () => {
   const isFirstRender = useRef<boolean>(true);
   const [scope, animate] = useAnimate();
   const [leftSection, setLeftSection] = useState<boolean>(false);
@@ -35,7 +35,6 @@ const Test3 = () => {
     restSpeed: 0.01,
   });
   const handleCopyControls = () => {
-    // setCopied(false);
     const divElement = document.getElementById(
       "copiableControlsDiv"
     ) as HTMLDivElement;
@@ -184,7 +183,7 @@ const Test3 = () => {
   return (
     <motion.div
       ref={scope}
-      className="h-[100vh] p-10 bg-conic from-blue-600 to-sky-400 to-50%"
+      className="h-[100vh] text-black p-10 bg-conic from-blue-600 to-sky-400 to-50%"
     >
       <div className="text-4xl my-3">Spring Setting</div>
       <div className="grid grid-cols-10 gap-4">
@@ -464,9 +463,12 @@ const Test3 = () => {
           </div>
         </div>
         {/* <div onClick={handleCopyControls}>Hello</div> */}
+        <div className="text-lg">
+          This component is inspired from https://framermotionexamples.com/{" "}
+        </div>
       </div>
     </motion.div>
   );
 };
 
-export default Test3;
+export default SpringControls;

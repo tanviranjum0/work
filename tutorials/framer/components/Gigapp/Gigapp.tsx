@@ -10,6 +10,7 @@ import SwipeCards from "./components/SwipeCards";
 import Carousel from "./components/Carousel";
 import ImageTrail from "./components/ImageTrail";
 import BackgroundRipple from "./components/BackgroundRipple";
+import SpringControls from "./components/SpringControls";
 
 const Gigapp = () => {
   return (
@@ -24,6 +25,7 @@ const Gigapp = () => {
       <Carousel />
       <ImageTrail />
       <BackgroundRipple />
+      <SpringControls />
       <div className="h-[100vh] bg-amber-300"></div>
     </div>
   );
