@@ -25,7 +25,7 @@ const Gigapp = () => {
       <Carousel />
       <ImageTrail />
       <BackgroundRipple />
-      <SpringControls />
+      {/* <SpringControls /> */}
       <div className="h-[100vh] bg-amber-300"></div>
     </div>
   );
