@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DualRangeSlider } from "./Test5";
 import { motion, useAnimate } from "motion/react";
+import { SiDm } from "react-icons/si";
 interface SDMTypes {
   // type?: string | null;
   stiffness: number;
@@ -31,85 +32,121 @@ const Test3 = () => {
     restDelta: 0.01,
     restSpeed: 0.01,
   });
-
-  // useEffect(() => {
-  //   if (!leftSection) {
-  //     setLeftSection(true);
-  //   }
-  //   if (!alreadyAnimated) {
-  //     animate(
-  //       "#leftRightMovingBox",
-  //       { left: "calc(100% - 4rem)" },
-  //       { duration: db.duration, type: "spring", bounce: db.bounce }
-  //     );
-  //     animate(
-  //       "#scalingBox",
-  //       { scale: 1 },
-  //       { duration: db.duration, type: "spring", bounce: db.bounce }
-  //     );
-  //     animate(
-  //       "#rotatingBox",
-  //       { rotate: 360 },
-  //       { duration: db.duration, type: "spring", bounce: db.bounce }
-  //     );
-  //     setAlreadyAnimated(true);
-  //     return;
-  //   }
-  //   if (alreadyAnimated) {
-  //     animate(
-  //       "#leftRightMovingBox",
-  //       { left: "0%" },
-  //       { duration: db.duration, type: "spring", bounce: db.bounce }
-  //     );
-  //     animate(
-  //       "#scalingBox",
-  //       { scale: 0.3 },
-  //       { duration: db.duration, type: "spring", bounce: db.bounce }
-  //     );
-  //     animate(
-  //       "#rotatingBox",
-  //       { rotate: 0 },
-  //       { duration: db.duration, type: "spring", bounce: db.bounce }
-  //     );
-  //     setAlreadyAnimated(false);
-  //     return;
-  //   }
-  //   console.log(db);
-  // }, [db]);
+  const toggleAnimation = () => {
+    if (leftSection) {
+      if (alreadyAnimated) {
+        animate(
+          "#leftRightMovingBox",
+          { left: "0%" },
+          { duration: db.duration, type: "spring", bounce: db.bounce }
+        );
+        animate(
+          "#scalingBox",
+          { scale: 0.3 },
+          { duration: db.duration, type: "spring", bounce: db.bounce }
+        );
+        animate(
+          "#rotatingBox",
+          { rotate: 0 },
+          { duration: db.duration, type: "spring", bounce: db.bounce }
+        );
+        setAlreadyAnimated(false);
+      } else {
+        animate(
+          "#leftRightMovingBox",
+          { left: "calc(100% - 4rem)" },
+          { duration: db.duration, type: "spring", bounce: db.bounce }
+        );
+        animate(
+          "#scalingBox",
+          { scale: 1 },
+          { duration: db.duration, type: "spring", bounce: db.bounce }
+        );
+        animate(
+          "#rotatingBox",
+          { rotate: 360 },
+          { duration: db.duration, type: "spring", bounce: db.bounce }
+        );
+        setAlreadyAnimated(true);
+      }
+    }
+    if (!leftSection) {
+      if (alreadyAnimated) {
+        animate("#leftRightMovingBox", { left: "0%" }, sdm);
+        animate("#scalingBox", { scale: 0 }, sdm);
+        animate("#rotatingBox", { rotate: 0 }, sdm);
+        setAlreadyAnimated(false);
+      } else {
+        animate("#leftRightMovingBox", { left: "calc(100% - 4rem)" }, sdm);
+        animate("#scalingBox", { scale: 1 }, sdm);
+        animate("#rotatingBox", { rotate: 360 }, sdm);
+        setAlreadyAnimated(true);
+      }
+    }
+  };
+  useEffect(() => {
+    if (!leftSection) {
+      setLeftSection(true);
+    }
+    if (!alreadyAnimated) {
+      animate(
+        "#leftRightMovingBox",
+        { left: "calc(100% - 4rem)" },
+        { duration: db.duration, type: "spring", bounce: db.bounce }
+      );
+      animate(
+        "#scalingBox",
+        { scale: 1 },
+        { duration: db.duration, type: "spring", bounce: db.bounce }
+      );
+      animate(
+        "#rotatingBox",
+        { rotate: 360 },
+        { duration: db.duration, type: "spring", bounce: db.bounce }
+      );
+      setAlreadyAnimated(true);
+      return;
+    }
+    if (alreadyAnimated) {
+      animate(
+        "#leftRightMovingBox",
+        { left: "0%" },
+        { duration: db.duration, type: "spring", bounce: db.bounce }
+      );
+      animate(
+        "#scalingBox",
+        { scale: 0.3 },
+        { duration: db.duration, type: "spring", bounce: db.bounce }
+      );
+      animate(
+        "#rotatingBox",
+        { rotate: 0 },
+        { duration: db.duration, type: "spring", bounce: db.bounce }
+      );
+      setAlreadyAnimated(false);
+      return;
+    }
+  }, [db]);
   //Mass, Velocity, Stiffness
   useEffect(() => {
-    // if (isFirstRender.current) {
-    //   isFirstRender.current = false;
-    //   return;
-    // }
-    console.log("Started");
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     if (leftSection) {
       setLeftSection(false);
     }
     if (!alreadyAnimated) {
-      console.log(sdm);
-      // console.log("Not Already Animated");
       animate("#leftRightMovingBox", { left: "calc(100% - 4rem)" }, sdm);
-      // console.log("Animated Left Right");
       animate("#scalingBox", { scale: 1 }, sdm);
-      // console.log("Animated Scale Box");
-
       animate("#rotatingBox", { rotate: 360 }, sdm);
-
-      // console.log("Setting Already Animated");
-
       setAlreadyAnimated(true);
     } else if (alreadyAnimated) {
-      console.log(sdm);
-      // console.log("Already Animated");
-
       animate("#leftRightMovingBox", { left: "0%" }, sdm);
       animate("#scalingBox", { scale: 0.3 }, sdm);
       animate("#rotatingBox", { rotate: 0 }, sdm);
-      // console.log("Setting Not Animated");
       setAlreadyAnimated(false);
     }
-    // console.log(sdm);
   }, [sdm]);
 
   return (
@@ -119,7 +156,10 @@ const Test3 = () => {
     >
       <div className="text-4xl my-3">Spring Setting</div>
       <div className="grid grid-cols-10 gap-4">
-        <div className="bg-gray-300 w-full col-span-8 h-[10rem] p-[10px] rounded-xl">
+        <div
+          onClick={toggleAnimation}
+          className="bg-gray-300 w-full col-span-8 h-[10rem] p-[10px] rounded-xl"
+        >
           <div className="flex relative">
             <motion.div
               initial={{
@@ -146,7 +186,11 @@ const Test3 = () => {
             ></motion.span>
           </div>
         </div>
-        <div className="bg-gray-600 p-[10px] h-[10rem] col-span-2 rounded-xl"></div>
+        <div className="bg-gray-600 p-[10px] h-[10rem] col-span-2 rounded-xl">
+          {`const transition = {
+          ${sdm.damping}
+          }`}
+        </div>
       </div>
       <div className="grid grid-cols-2 gap-5">
         <div onClick={() => setLeftSection(true)}>
