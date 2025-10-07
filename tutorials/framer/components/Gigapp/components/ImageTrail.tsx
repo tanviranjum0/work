@@ -136,7 +136,7 @@ function ImageMouseTrail({
   );
 }
 
-export default function index() {
+function ImageTrail() {
   return (
     <section>
       <div className="h-[100vh] relative m-10 rounded-2xl bg-amber-300">
@@ -260,3 +260,5 @@ export default function index() {
     </section>
   );
 }
+
+export default ImageTrail;

@@ -1,29 +1,7 @@
 "use client";
-import {
-  motion,
-  useAnimate,
-  useMotionValueEvent,
-  useScroll,
-} from "motion/react";
-import { useEffect, useRef } from "react";
+import { motion, useAnimate } from "motion/react";
 const MadTexts = () => {
   const [scope, animate] = useAnimate();
-
-  const handleHover = (e: string) => {
-    console.log(
-      `#${e}`,
-      {
-        rotate: [10, 0, -10, 0],
-      },
-      {
-        duration: 0.5,
-        repeat: Infinity,
-        repeatType: "mirror",
-        ease: "easeInOut",
-        delay: 0.5,
-      }
-    );
-  };
   return (
     <div className="w-full py-10">
       <div className="text-center text-5xl py-5 font-story">
