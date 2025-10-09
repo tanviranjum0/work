@@ -11,6 +11,7 @@ import Carousel from "./components/Carousel";
 import ImageTrail from "./components/ImageTrail";
 import BackgroundRipple from "./components/BackgroundRipple";
 import SpringControls from "./components/SpringControls";
+import Link from "next/link";
 
 const Gigapp = () => {
   return (
@@ -26,6 +27,9 @@ const Gigapp = () => {
       <ImageTrail />
       <BackgroundRipple />
       <SpringControls />
+      <Link href={"/about"} className="p-5 bg-fuchsia-400 text-2xl">
+        About
+      </Link>
       <div className="h-[100vh] bg-amber-300"></div>
     </div>
   );
