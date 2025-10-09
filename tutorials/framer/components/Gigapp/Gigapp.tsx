@@ -1,3 +1,5 @@
+"use client";
+import { motion } from "motion/react";
 import React from "react";
 import "./Gigapp.css";
 import Navbar from "./components/Navbar";
@@ -27,9 +29,6 @@ const Gigapp = () => {
       <ImageTrail />
       <BackgroundRipple />
       <SpringControls />
-      <Link href={"/about"} className="p-5 bg-fuchsia-400 text-2xl">
-        About
-      </Link>
       <div className="h-[100vh] bg-amber-300"></div>
     </div>
   );
