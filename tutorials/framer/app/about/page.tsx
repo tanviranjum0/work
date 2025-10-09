@@ -30,7 +30,7 @@ const page = () => {
       >
         <ul className="flex gap-3">
           <Link href={"/another"} className="p-5 bg-fuchsia-400">
-            Home
+            Nice
           </Link>
         </ul>
       </motion.div>
