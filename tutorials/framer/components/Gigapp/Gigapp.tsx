@@ -14,6 +14,7 @@ import ImageTrail from "./components/ImageTrail";
 import BackgroundRipple from "./components/BackgroundRipple";
 import SpringControls from "./components/SpringControls";
 import Link from "next/link";
+import PageTransitions from "./components/PageTransitions";
 
 const Gigapp = () => {
   return (
@@ -29,6 +30,7 @@ const Gigapp = () => {
       <ImageTrail />
       <BackgroundRipple />
       <SpringControls />
+      <PageTransitions />
       <div className="h-[100vh] bg-amber-300"></div>
     </div>
   );
