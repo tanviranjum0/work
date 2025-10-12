@@ -48,7 +48,7 @@ export default function StickyImageScroll() {
   });
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center">
+    <div className="w-full min-h-screen box-border flex items-center justify-center">
       <section
         ref={containerRef}
         className="relative flex  w-full inset-0 -my-0 min-h-[500vh] bg-gradient-to-br from-[#015149] to-[#023c36]"

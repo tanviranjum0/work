@@ -8,7 +8,7 @@ const PageTransitions = () => {
   const [activePage, setActivePage] = useState("1");
 
   return (
-    <div className="w-[100vw] flex justify-center items-center h-[100vh]">
+    <div className="w-full box-border flex justify-center items-center h-[100vh]">
       <AnimatePresence mode="wait">
         {activePage == "1" ? (
           <motion.div
@@ -32,7 +32,7 @@ const PageTransitions = () => {
                 clipPath: "polygon(50% 0, 50% 0, 50% 100%, 50% 100%)",
               },
             }}
-            className="h-[100vh] text-2xl bg-emerald-400 w-[100vw] flex flex-col justify-center items-center"
+            className="h-[100vh] text-2xl bg-emerald-400 w-full flex flex-col justify-center items-center"
           >
             <div className="text-2xl my-3">Page Transition Demo</div>
             <div onClick={() => setActivePage("2")} className="">

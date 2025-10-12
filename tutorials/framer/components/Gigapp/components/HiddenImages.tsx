@@ -29,27 +29,7 @@ const HiddenImages = () => {
       ref={mainContainer}
       className="object-cover overflow-hidden w-full h-[100vh] mb-10"
     >
-      {/* <motion.div
-        style={{
-          scaleX,
-          transformOrigin: "left",
-          background: "blue",
-          position: "sticky",
-          top: 0,
-          width: "100%",
-          height: "20px",
-        }}
-        className="h-20 bg-red-500 origin-bottom-left w-full "
-      ></motion.div> */}
       <motion.div style={{ margin }}>
-        {/* <Image
-          className="rounded-xl shadow-2xl"
-          src={skyImage}
-          height={1000}
-          loading="lazy"
-          draggable={false}
-          alt="sky image"
-        /> */}
         <div className="relative py-20 px-16 overflow-hidden rounded-xl text-black bg-image-hidden-images ">
           <div className="flex flex-col gap-8 max-w-2xl">
             <div className="text-7xl tracking-wider">It's your moment</div>

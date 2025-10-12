@@ -19,7 +19,7 @@ import Footer from "./components/Footer";
 
 const Gigapp = () => {
   return (
-    <div className="bg-[#003631] box-border  text-white">
+    <div className="bg-[#003631] text-white">
       <Navbar />
       <MarqueeComponent />
       <PseudoScroll />
