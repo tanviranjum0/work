@@ -13,7 +13,7 @@ const page = () => {
       {/* <Test3 /> */}
       {/* <Test4 /> */}
       {/* <Test5 /> */}
-      <Gigapp />
+      {/* <Gigapp /> */}
     </div>
   );
 };
