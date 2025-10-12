@@ -232,6 +232,7 @@
 .bg-image-footer {
   background: url("../../public/footerBackground.jpg") no-repeat;
   background-size: cover;
+  opacity: 0.7;
   background-attachment: fixed;
   background-position: 50%;
   width: 100%;
