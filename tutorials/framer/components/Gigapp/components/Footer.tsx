@@ -2,7 +2,7 @@
 const Footer = () => {
   return (
     <div className="h-[100vh] bg-image-footer  box-border w-full  flex justify-center items-center">
-      Hello
+      {/* Hello */}
     </div>
   );
 };
