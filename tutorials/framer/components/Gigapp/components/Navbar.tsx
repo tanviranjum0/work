@@ -70,7 +70,7 @@ const Navbar = () => {
             <div className="">Chattogram, Bangladesh</div>
           </div>
         </div>
-        <div className=" justify-around gap-2 hidden md:flex items-center">
+        <div className="justify-around gap-2 hidden md:flex items-center">
           <div className="btn2 px-3/2 w-24 py-1">Facebook</div>
           <div className="btn2 px-3/2 w-24 py-1">Linkedin</div>
           <div className="btn2 px-3/2 w-24 py-1">Fiverr</div>

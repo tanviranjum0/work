@@ -96,6 +96,46 @@
   box-shadow: 0 4px 3px 1px #014d45, 0 6px 8px #014d45, 0 -4px 4px #014d45,
     0 -6px 4px #014d45, inset 0 0 5px 3px #014d45, inset 0 0 30px #024740;
 }
+/* footer */
+.footerBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  cursor: pointer;
+  /* width: 100px;
+  height: 30px; */
+  background-image: linear-gradient(
+    to top,
+    #014d45 0%,
+    #014d45 80%,
+    #014d45 100%
+  );
+  border-radius: 30px;
+  border: 0.5px solid black;
+  transition: all 0.2s ease;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #8b8686;
+  /* color: #606060; */
+  /* text-shadow: 0 1px #fff; */
+}
+
+/* .footerBtn:hover {
+  box-shadow: 0 4px 3px 1px #002e2a, 0 6px 8px #002e2a, 0 -4px 4px #002e2a,
+    0 -6px 4px #002e2a, inset 0 0 3px 3px #002e2a;
+} */
+
+.footerBtn:active {
+  box-shadow: 0 4px 3px 1px #002e2a, 0 6px 8px #002e2a, 0 -4px 4px #002e2a,
+    0 -6px 4px #002e2a, inset 0 0 5px 3px #002e2a, inset 0 0 30px #013732;
+}
+
+.footerBtn:focus {
+  box-shadow: 0 4px 3px 1px #014d45, 0 6px 8px #014d45, 0 -4px 4px #014d45,
+    0 -6px 4px #014d45, inset 0 0 5px 3px #014d45, inset 0 0 30px #024740;
+}
 
 /* Live Indicator */
 .live-indicator-block {
