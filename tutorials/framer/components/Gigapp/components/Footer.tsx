@@ -38,12 +38,14 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full h-full">
-              <div className="my-2">tanviranjum010@gmail.com</div>
-              <div className="text-xl">
-                Always busy and want to book an exact time to call
+            <div className=" flex flex-col gap-5">
+              <div className="my-2 cursor-pointer">
+                tanviranjum010@gmail.com
               </div>
-              <div className="rounded-full p-3 bg-cyan-400">
+              <div className="text-xl">
+                Always busy and want to book an exact time to call?
+              </div>
+              <div className="rounded-full cursor-pointer w-52 text-center font-bold p-3 bg-cyan-400">
                 Book a call for free
               </div>
             </div>
