@@ -6,7 +6,7 @@ import { useState } from "react";
 import PTbutton from "./buttons/PTbutton";
 const PageTransitions = () => {
   const [activePage, setActivePage] = useState("1");
-  // hello
+
   return (
     <div className="w-full box-border flex justify-center items-center h-[100vh]">
       <AnimatePresence mode="wait">
