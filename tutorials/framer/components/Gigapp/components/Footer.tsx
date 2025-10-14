@@ -1,8 +1,10 @@
 "use client";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 const Footer = () => {
+  const [service, setService] = useState<string>("consulting");
+  const [budget, setBudget] = useState("0k");
   const mainContainer = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: mainContainer,
@@ -11,168 +13,225 @@ const Footer = () => {
   const margin = useTransform(scrollYProgress, [0, 1], [80, 160]);
   // console.log(margin);
   return (
-    <div className="h-[100vh] text-white bg-image-footer -z-10 box-border w-full  flex justify-center items-center">
-      <motion.div
-        ref={mainContainer}
-        style={{
-          margin,
-        }}
-        className="h-full w-full opacity-100 bg-linear-to-r/oklch from-indigo-500 to-teal-400 rounded-4xl"
-      >
-        <div className="grid grid-cols-2 gap-4">
-          <div className="px-20 py-10 flex flex-col h-[100vh] gap-20 justify-between">
-            <div className="">
-              <div className="text-5xl pb-10">Tell me about your project</div>
-              <div className="flex flex-col gap-2">
-                <div className="text-xl gap-2 flex items-center">
-                  <IoShieldCheckmarkSharp />
-                  <span>I will respond you within 12 hours</span>
-                </div>
-                <div className="text-xl gap-2 flex items-center">
-                  <IoShieldCheckmarkSharp />
-                  <span>I will sign an NDA if requested</span>
-                </div>
-                <div className="text-xl gap-2 flex items-center">
-                  <IoShieldCheckmarkSharp />
-                  <span>Access to dedicated consultant specialist</span>
-                </div>
-              </div>
-            </div>
-            <div className=" flex flex-col gap-5">
-              <div className="my-2 cursor-pointer">
-                tanviranjum010@gmail.com
-              </div>
-              <div className="text-xl">
-                Always busy and want to book an exact time to call?
-              </div>
-              <div className="rounded-full cursor-pointer w-52 text-center font-bold p-3 bg-cyan-400">
-                Book a call for free
-              </div>
-            </div>
-          </div>
-          <div className="px-20 py-10 flex flex-col h-[100vh] justify-between">
-            <div className="">
+    <div className=" bg-image-footer">
+      <div className="h-[85vh] text-white -z-10 box-border w-full  flex justify-center items-center">
+        <motion.div
+          ref={mainContainer}
+          style={{
+            margin,
+          }}
+          className="h-full w-full opacity-100 bg-linear-to-r/oklch from-teal-500 to-black rounded-4xl"
+        >
+          <div className="grid grid-cols-2 gap-4">
+            <div className="px-20 py-10 flex flex-col h-[85vh] gap-20 justify-between">
               <div className="">
-                <div className="text-2xl">Service</div>
-                <div className="flex gap-2">
-                  <span className="footerBtn py-1 px-1.5">Consulting</span>
-                  <span className="footerBtn py-1 px-1.5">Website</span>
-                  <span className="footerBtn py-1 px-1.5">Animation</span>
-                  <span className="footerBtn py-1 px-1.5">Backend</span>
+                <div className="text-5xl pb-10">Tell me about your project</div>
+                <div className="flex flex-col gap-2">
+                  <div className="text-xl gap-2 flex items-center">
+                    <IoShieldCheckmarkSharp />
+                    <span>I will respond you within 12 hours</span>
+                  </div>
+                  <div className="text-xl gap-2 flex items-center">
+                    <IoShieldCheckmarkSharp />
+                    <span>I will sign an NDA if requested</span>
+                  </div>
+                  <div className="text-xl gap-2 flex items-center">
+                    <IoShieldCheckmarkSharp />
+                    <span>Access to dedicated consultant specialist</span>
+                  </div>
                 </div>
               </div>
-              <div className="">
-                <div className="text-2xl">Budget</div>
-                <div className="flex gap-2">
-                  <span className="footerBtn py-1 px-1.5">Less than $10k</span>
-                  <span className="footerBtn py-1 px-1.5">$10k to $50k</span>
-                  <span className="footerBtn py-1 px-1.5">More than $50k</span>
+              <div className=" flex flex-col gap-5">
+                <a
+                  target="_blank"
+                  rel="nofollow"
+                  href={`mailto:tanviranjum010@gmail.com`}
+                  className="my-2 underline cursor-pointer"
+                >
+                  tanviranjum010@gmail.com
+                </a>
+                <div className="text-xl">
+                  Always busy and want to book an exact time to call?
+                </div>
+                <div className="rounded-full cursor-pointer w-52 text-center font-bold p-3 bg-cyan-800">
+                  Book a call for free
                 </div>
               </div>
             </div>
-            <form autoComplete="on" className="mx-auto w-full">
-              <div className="flex gap-3">
-                <div className="relative z-0 w-full mb-5 group">
+            <div className="px-20 py-10 flex flex-col h-[85vh] justify-between">
+              <div className="">
+                <div className="">
+                  <div className="text-2xl">Service</div>
+                  <div className="flex gap-2">
+                    <span
+                      onClick={() => setService("consulting")}
+                      className={`footerBtn py-1 px-1.5 ${
+                        service == "consulting" && "bg-fuchsia-800"
+                      }`}
+                    >
+                      Consulting
+                    </span>
+                    <span
+                      onClick={() => setService("website")}
+                      className={`footerBtn py-1 px-1.5 ${
+                        service == "website" && "bg-fuchsia-800"
+                      }`}
+                    >
+                      Website
+                    </span>
+                    <span
+                      onClick={() => setService("animation")}
+                      className={`footerBtn py-1 px-1.5 ${
+                        service == "animation" && "bg-fuchsia-800"
+                      }`}
+                    >
+                      Animation
+                    </span>
+                    <span
+                      onClick={() => setService("backend")}
+                      className={`footerBtn py-1 px-1.5 ${
+                        service == "backend" && "bg-fuchsia-800"
+                      }`}
+                    >
+                      Backend
+                    </span>
+                  </div>
+                </div>
+                <div className="">
+                  <div className="text-2xl">Budget</div>
+                  <div className="flex gap-2">
+                    <span
+                      onClick={() => setBudget("0k")}
+                      className={`footerBtn py-1 px-1.5 ${
+                        budget == "0k" && "bg-lime-800"
+                      }`}
+                    >
+                      Less than $10k
+                    </span>
+                    <span
+                      onClick={() => setBudget("10k")}
+                      className={`footerBtn py-1 px-1.5 ${
+                        budget == "10k" && "bg-lime-800"
+                      }`}
+                    >
+                      $10k to $50k
+                    </span>
+                    <span
+                      onClick={() => setBudget("50k")}
+                      className={`footerBtn py-1 px-1.5 ${
+                        budget == "50k" && "bg-lime-800"
+                      }`}
+                    >
+                      More than $50k
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <form autoComplete="on" className="mx-auto w-full">
+                <div className="flex gap-3">
+                  <div className="relative z-0 w-full group">
+                    <input
+                      type="text"
+                      name="name"
+                      id="name"
+                      className="block py-2.5 px-0 w-full bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black peer"
+                      placeholder=" "
+                      required
+                    />
+                    <label
+                      htmlFor="name"
+                      className="peer-focus:font-medium absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-gray-200 peer-focus:dark:text-gray-200 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    >
+                      Full Name
+                    </label>
+                  </div>
+                  <div className="relative z-0 w-full group">
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      className="block py-2.5 px-0 w-full bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black peer"
+                      placeholder=" "
+                      required
+                    />
+                    <label
+                      htmlFor="email"
+                      className="peer-focus:font-medium absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-gray-200 peer-focus:dark:text-gray-200 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    >
+                      Email
+                    </label>
+                  </div>
+                </div>
+                <div className="relative z-0 w-full mt-3 group">
                   <input
                     type="text"
-                    name="name"
-                    id="name"
-                    className="block py-2.5 px-0 w-full bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black peer"
+                    name="message"
+                    id="message"
+                    className="block py-2.5 px-0 w-full  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black peer"
                     placeholder=" "
                     required
                   />
                   <label
-                    htmlFor="name"
+                    htmlFor="message"
                     className="peer-focus:font-medium absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-gray-200 peer-focus:dark:text-gray-200 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                   >
-                    Full Name
+                    Message
                   </label>
                 </div>
-                <div className="relative z-0 w-full mb-5 group">
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    className="block py-2.5 px-0 w-full bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black peer"
-                    placeholder=" "
-                    required
-                  />
-                  <label
-                    htmlFor="email"
-                    className="peer-focus:font-medium absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-gray-200 peer-focus:dark:text-gray-200 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                  >
-                    Email
-                  </label>
+                <div className="flex flex-col ">
+                  <div className="text-2xl my-3">Attach a file(optional)</div>
+                  <div className="flex items-center mb-4 justify-center w-full">
+                    <label
+                      htmlFor="dropzone-file"
+                      className="flex flex-col items-center justify-center w-full  border-2 border-gray-100 rounded-lg cursor-pointer bg-gray-900 "
+                    >
+                      <div className="flex flex-col  items-center justify-center py-3">
+                        <svg
+                          className="w-4 h-4  text-gray-100"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 20 16"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                          />
+                        </svg>
+                        <p className="text-sm text-gray-300">
+                          <span className="font-semibold">Click to upload</span>
+                        </p>
+                        <p className="text-xs text-gray-300">
+                          SVG, PNG, JPG or GIF (MAX. 800x400px)
+                        </p>
+                      </div>
+                      <input
+                        onChange={(e) => {
+                          const image = e.target.files[0];
+                          console.log(image);
+                        }}
+                        id="dropzone-file"
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
                 </div>
-              </div>
-              <div className="relative z-0 w-full mb-5 group">
-                <textarea
-                  name="message"
-                  id="message"
-                  className="block py-2.5 px-0 w-full  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black peer"
-                  placeholder=" "
-                  required
-                />
-                <label
-                  htmlFor="message"
-                  className="peer-focus:font-medium absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-gray-200 peer-focus:dark:text-gray-200 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                <button
+                  onClick={() => {}}
+                  className="rounded-full cursor-pointer min-w-max sm:w-full border-2  border-black bg-white px-6 py-3 font-semibold uppercase text-black transition-all duration-300 hover:translate-x-[-4px] hover:translate-y-[-4px]  hover:shadow-[4px_4px_0px_black] active:translate-x-[0px] active:translate-y-[0px] active:rounded-2xl active:shadow-none"
                 >
-                  Message
-                </label>
-              </div>
-              <div className="flex flex-col ">
-                <div className="text-2xl my-4">Attach a file(optional)</div>
-                <div className="flex items-center my-4 justify-center w-full">
-                  <label
-                    htmlFor="dropzone-file"
-                    className="flex flex-col items-center justify-center w-full  border-2 border-gray-100 rounded-lg cursor-pointer bg-gray-900 "
-                  >
-                    <div className="flex flex-col  items-center justify-center py-3">
-                      <svg
-                        className="w-4 h-4  text-gray-100"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 20 16"
-                      >
-                        <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                        />
-                      </svg>
-                      <p className="text-sm text-gray-300">
-                        <span className="font-semibold">Click to upload</span>
-                      </p>
-                      <p className="text-xs text-gray-300">
-                        SVG, PNG, JPG or GIF (MAX. 800x400px)
-                      </p>
-                    </div>
-                    <input
-                      onChange={(e) => {
-                        const image = e.target.files[0];
-                        console.log(image);
-                      }}
-                      id="dropzone-file"
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                    />
-                  </label>
-                </div>
-              </div>
-              <button
-                onClick={() => {}}
-                className="rounded-full min-w-max sm:w-full border-2  border-black bg-white px-6 py-3 font-semibold uppercase text-black transition-all duration-300 hover:translate-x-[-4px] hover:translate-y-[-4px]  hover:shadow-[4px_4px_0px_black] active:translate-x-[0px] active:translate-y-[0px] active:rounded-2xl active:shadow-none"
-              >
-                Submit Inquiry
-              </button>
-            </form>
+                  Submit Inquiry
+                </button>
+              </form>
+            </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 };
