@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import logo from "../../../public/logo3.png";
 import { useEffect } from "react";
 import Link from "next/link";
