@@ -62,7 +62,7 @@ const app = () => {
     if (e.target.id == "idType") {
       setFormData({ ...formData, idType: null });
 
-      document.getElementById("IdNumber").value = "";
+      document.getElementById("IdNumber")?.value = "";
 
       if (e.target.value == "passport") {
         setNid(false);

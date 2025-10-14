@@ -1,7 +1,7 @@
 "use client";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef, useState } from "react";
+import { ButtonHTMLAttributes, useRef, useState } from "react";
 const Footer = () => {
   const [service, setService] = useState<string>("consulting");
   const [budget, setBudget] = useState("0k");
@@ -11,7 +11,37 @@ const Footer = () => {
     offset: ["start end", "end start"],
   });
   const margin = useTransform(scrollYProgress, [0, 1], [80, 160]);
-  // console.log(margin);
+  interface FormData {
+    name: string;
+    email: string;
+    message: string;
+    file?: File;
+    service: string;
+    budget: string;
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLButtonElement>): void => {
+    e.preventDefault();
+    const name = document.getElementById("name") as HTMLInputElement;
+    const email = document.getElementById("email") as HTMLInputElement;
+    const message = document.getElementById("message") as HTMLInputElement;
+    const files = document.getElementById("dropzone-file") as HTMLInputElement;
+
+    const formData: FormData = {
+      name: name.value,
+      email: email.value,
+      message: message.value,
+      file: files.files && files.files.length > 0 ? files.files[0] : undefined,
+      service,
+      budget,
+    };
+
+    console.log(formData);
+
+    if (formData.file) {
+      console.log(formData.file);
+    }
+  };
   return (
     <div className=" bg-image-footer">
       <div className="h-[85vh] text-white -z-10 box-border w-full  flex justify-center items-center">
@@ -42,23 +72,26 @@ const Footer = () => {
                 </div>
               </div>
               <div className=" flex flex-col gap-5">
-                <a
-                  target="_blank"
-                  rel="nofollow"
-                  href={`mailto:tanviranjum010@gmail.com`}
+                <div
+                  onClick={() =>
+                    window.open(
+                      "https://mail.google.com/mail/?view=cm&fs=1&to=roksanakhanamseo@gmail.com&su=Framer%20motion%20business%20discussion&body=Type%20your%20message%20here!",
+                      "_blank"
+                    )
+                  }
                   className="my-2 underline cursor-pointer"
                 >
                   tanviranjum010@gmail.com
-                </a>
+                </div>
                 <div className="text-xl">
                   Always busy and want to book an exact time to call?
                 </div>
-                <div className="rounded-full cursor-pointer w-52 text-center font-bold p-3 bg-cyan-800">
+                <div className="rounded-full select-none cursor-pointer w-52 text-center font-bold p-3 bg-cyan-800">
                   Book a call for free
                 </div>
               </div>
             </div>
-            <div className="px-20 py-10 flex flex-col h-[85vh] justify-between">
+            <div className="px-20 py-10 select-none flex flex-col h-[85vh] justify-between">
               <div className="">
                 <div className="">
                   <div className="text-2xl">Service</div>
@@ -66,7 +99,7 @@ const Footer = () => {
                     <span
                       onClick={() => setService("consulting")}
                       className={`footerBtn py-1 px-1.5 ${
-                        service == "consulting" && "bg-fuchsia-800"
+                        service == "consulting" && "bg-lime-800"
                       }`}
                     >
                       Consulting
@@ -74,7 +107,7 @@ const Footer = () => {
                     <span
                       onClick={() => setService("website")}
                       className={`footerBtn py-1 px-1.5 ${
-                        service == "website" && "bg-fuchsia-800"
+                        service == "website" && "bg-lime-800"
                       }`}
                     >
                       Website
@@ -82,7 +115,7 @@ const Footer = () => {
                     <span
                       onClick={() => setService("animation")}
                       className={`footerBtn py-1 px-1.5 ${
-                        service == "animation" && "bg-fuchsia-800"
+                        service == "animation" && "bg-lime-800"
                       }`}
                     >
                       Animation
@@ -90,7 +123,7 @@ const Footer = () => {
                     <span
                       onClick={() => setService("backend")}
                       className={`footerBtn py-1 px-1.5 ${
-                        service == "backend" && "bg-fuchsia-800"
+                        service == "backend" && "bg-lime-800"
                       }`}
                     >
                       Backend
@@ -205,24 +238,25 @@ const Footer = () => {
                           <span className="font-semibold">Click to upload</span>
                         </p>
                         <p className="text-xs text-gray-300">
-                          SVG, PNG, JPG or GIF (MAX. 800x400px)
+                          SVG, PNG, JPG, GIF or PDF
                         </p>
                       </div>
                       <input
                         onChange={(e) => {
-                          const image = e.target.files[0];
-                          console.log(image);
+                          if (e.target.files && e.target.files.length > 0) {
+                            const image = e.target.files[0];
+                            console.log(image);
+                          }
                         }}
                         id="dropzone-file"
                         type="file"
-                        accept="image/*"
                         className="hidden"
                       />
                     </label>
                   </div>
                 </div>
                 <button
-                  onClick={() => {}}
+                  onClick={(e) => handleSubmit(e)}
                   className="rounded-full cursor-pointer min-w-max sm:w-full border-2  border-black bg-white px-6 py-3 font-semibold uppercase text-black transition-all duration-300 hover:translate-x-[-4px] hover:translate-y-[-4px]  hover:shadow-[4px_4px_0px_black] active:translate-x-[0px] active:translate-y-[0px] active:rounded-2xl active:shadow-none"
                 >
                   Submit Inquiry

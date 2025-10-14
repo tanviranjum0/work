@@ -105,8 +105,7 @@
   cursor: pointer;
   background-image: oklch(78.9% 0.154 211.53);
   border-radius: 5px;
-  border: 1px solid black;
-  border-color: #002e2a;
+  border: 0.5px solid rgba(238, 239, 244, 0.45);
   transition: all 0.2s ease;
   font-family: "Source Sans Pro", sans-serif;
   font-size: 14px;
@@ -122,15 +121,6 @@
     inset 0 0 2.5px 1.5px oklch(51.757% 0.09989 165.324),
     inset 0 0 15px oklch(49.995% 0.10955 63.103);
 }
-/* 
-.footerBtn:focus {
-  box-shadow: 0 2px 1.5px 1px oklch(54.191% 0.09217 211.676),
-    0 3px 4px oklch(54.191% 0.09217 211.676),
-    0 -2px 2px oklch(54.191% 0.09217 211.676),
-    0 -3px 2px oklch(54.191% 0.09217 211.676),
-    inset 0 0 3px 1.5px oklch(54.191% 0.09217 211.676),
-    inset 0 0 5px oklch(54.191% 0.09217 211.676);
-} */
 
 /* Live Indicator */
 .live-indicator-block {
@@ -264,6 +254,7 @@
   width: 100%;
   height: 100vh;
 }
+
 .bg-image-footer {
   background: url("../../public/footerBackground.jpg") no-repeat;
   background-size: cover;
