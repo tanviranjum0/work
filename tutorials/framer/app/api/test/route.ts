@@ -1,5 +1,5 @@
 // app/api/users/route.js
-"use server";
+// "use server";
 export async function GET(request: Request) {
   // Handle GET requests to /api/users
   const users = [
