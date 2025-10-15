@@ -3,7 +3,7 @@
 import { FormContext } from "@/components/context/FormContext";
 import Image from "next/image";
 import React, { useContext, useState } from "react";
-import avater from "../../../../images/appRelated/avater.jpeg";
+import avater  "../../../../images/appRelated/avater.jpeg";
 import { useRouter, useParams } from "next/navigation";
 
 interface formdata {

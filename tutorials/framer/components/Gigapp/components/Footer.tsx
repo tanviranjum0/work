@@ -1,7 +1,7 @@
 "use client";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { motion, useScroll, useTransform } from "motion/react";
-import { ButtonHTMLAttributes, useRef, useState } from "react";
+import { useRef, useState } from "react";
 const Footer = () => {
   const [service, setService] = useState<string>("consulting");
   const [budget, setBudget] = useState("0k");
@@ -11,36 +11,32 @@ const Footer = () => {
     offset: ["start end", "end start"],
   });
   const margin = useTransform(scrollYProgress, [0, 1], [80, 160]);
-  interface FormData {
-    name: string;
-    email: string;
-    message: string;
-    file?: File;
-    service: string;
-    budget: string;
-  }
 
-  const handleSubmit = (e: React.FormEvent<HTMLButtonElement>): void => {
+  const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const name = document.getElementById("name") as HTMLInputElement;
-    const email = document.getElementById("email") as HTMLInputElement;
-    const message = document.getElementById("message") as HTMLInputElement;
-    const files = document.getElementById("dropzone-file") as HTMLInputElement;
-
-    const formData: FormData = {
-      name: name.value,
-      email: email.value,
-      message: message.value,
-      file: files.files && files.files.length > 0 ? files.files[0] : undefined,
-      service,
-      budget,
-    };
-
-    console.log(formData);
-
-    if (formData.file) {
-      console.log(formData.file);
-    }
+    // const name = document.getElementById("name") as HTMLInputElement;
+    // const email = document.getElementById("email") as HTMLInputElement;
+    // const message = document.getElementById("message") as HTMLInputElement;
+    // const files = document.getElementById("dropzone-file") as HTMLInputElement;
+    // const formData = new FormData();
+    // formData.append("name", name.value);
+    // formData.append("service", service);
+    // formData.append("budget", budget);
+    // formData.append("email", email.value);
+    // formData.append("message", message.value);
+    // if (files.files && files.files.length > 0) {
+    //   formData.append("file", files.files[0]);
+    // }
+    // const res = fetch("/api/contact", {
+    //   method: "POST",
+    //   body: formData,
+    // });
+    const res = await fetch("/api/test", {
+      method: "post",
+      body: JSON.stringify({ name: "Tanvir" }),
+    });
+    const data = await res.json();
+    console.log(data);
   };
   return (
     <div className=" bg-image-footer">
