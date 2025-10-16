@@ -1,8 +1,5 @@
-// app/api/users/route.js
-import { ReadableStream } from "stream/web";
 import { NextRequest, NextResponse } from "next/server";
-
-// "use server";
+// import fs from "fs";
 export async function GET(request: Request) {
   // Handle GET requests to /api/users
   const users = [
@@ -15,8 +12,21 @@ export async function GET(request: Request) {
   });
 }
 
-export async function POST(request: NextRequest, response: NextResponse) {
-  const { name } = await request.body;
-  console.log("Received form data:", name);
-  return new Response("User created", { status: 201 });
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.formData(); // Assuming JSON body
+    console.log("Received POST request with body:", body.get("image"));
+    const image = await body.get("image");
+
+    return NextResponse.json(
+      { message: "Data received successfully!" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error processing POST request:", error);
+    return NextResponse.json(
+      { error: "Failed to process request" },
+      { status: 500 }
+    );
+  }
 }
