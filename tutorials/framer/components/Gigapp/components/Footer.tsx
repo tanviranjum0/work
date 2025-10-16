@@ -12,31 +12,36 @@ const Footer = () => {
   });
   const margin = useTransform(scrollYProgress, [0, 1], [80, 160]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // const name = document.getElementById("name") as HTMLInputElement;
-    // const email = document.getElementById("email") as HTMLInputElement;
-    // const message = document.getElementById("message") as HTMLInputElement;
-    // const files = document.getElementById("dropzone-file") as HTMLInputElement;
-    // const formData = new FormData();
-    // formData.append("name", name.value);
-    // formData.append("service", service);
-    // formData.append("budget", budget);
-    // formData.append("email", email.value);
-    // formData.append("message", message.value);
-    // if (files.files && files.files.length > 0) {
-    //   formData.append("file", files.files[0]);
-    // }
-    // const res = fetch("/api/contact", {
-    //   method: "POST",
-    //   body: formData,
-    // });
-    const res = await fetch("/api/test", {
-      method: "post",
-      body: JSON.stringify({ name: "Tanvir" }),
-    });
-    const data = await res.json();
-    console.log(data);
+    const name = document.getElementById("name") as HTMLInputElement;
+    const email = document.getElementById("email") as HTMLInputElement;
+    const message = document.getElementById("message") as HTMLInputElement;
+    const files = document.getElementById("dropzone-file") as HTMLInputElement;
+    const formData = new FormData();
+    formData.append("name", name.value);
+    formData.append("service", service);
+    formData.append("budget", budget);
+    formData.append("email", email.value);
+    formData.append("message", message.value);
+    if (files.files && files.files.length > 0) {
+      formData.append("file", files.files[0]);
+    }
+    // console.log(name.value, email.value, message.value, service, budget, files);
+
+    const apiCall = async () => {
+      const res = await fetch("/api/test", {
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData,
+      });
+
+      const data = await res.json();
+      console.log(data);
+    };
+    apiCall();
   };
   return (
     <div className=" bg-image-footer">
