@@ -5,29 +5,32 @@ import { useRef, useState } from "react";
 const Footer = () => {
   const [service, setService] = useState<string>("consulting");
   const [budget, setBudget] = useState("0k");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const mainContainer = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: mainContainer,
     offset: ["start end", "end start"],
   });
   const margin = useTransform(scrollYProgress, [0, 1], [80, 160]);
-
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      console.log(file);
+      setSelectedFile(file);
+    }
+  };
   const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const name = document.getElementById("name") as HTMLInputElement;
     const email = document.getElementById("email") as HTMLInputElement;
     const message = document.getElementById("message") as HTMLInputElement;
-    const files = document.getElementById("dropzone-file") as HTMLInputElement;
+    // const files = document.getElementById("dropzone-file") as HTMLInputElement;
     const formData = new FormData();
     formData.append("name", name.value);
     formData.append("service", service);
     formData.append("budget", budget);
     formData.append("email", email.value);
     formData.append("message", message.value);
-    if (files.files && files.files.length > 0) {
-      formData.append("file", files.files[0]);
-    }
-    // console.log(name.value, email.value, message.value, service, budget, files);
 
     const apiCall = async () => {
       const res = await fetch("/api/test", {
@@ -35,11 +38,11 @@ const Footer = () => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        body: formData,
+        body: JSON.stringify({ name: "Tanvir" }),
       });
 
-      const data = await res.json();
-      console.log(data);
+      // const data = await res.json();
+      console.log(res);
     };
     apiCall();
   };
@@ -243,12 +246,7 @@ const Footer = () => {
                         </p>
                       </div>
                       <input
-                        onChange={(e) => {
-                          if (e.target.files && e.target.files.length > 0) {
-                            const image = e.target.files[0];
-                            console.log(image);
-                          }
-                        }}
+                        onChange={(e) => handleFileChange(e)}
                         id="dropzone-file"
                         type="file"
                         className="hidden"

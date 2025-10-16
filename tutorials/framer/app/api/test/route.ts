@@ -1,6 +1,6 @@
 // app/api/users/route.js
-
-import { NextRequest } from "next/server";
+import { ReadableStream } from "stream/web";
+import { NextRequest, NextResponse } from "next/server";
 
 // "use server";
 export async function GET(request: Request) {
@@ -15,13 +15,8 @@ export async function GET(request: Request) {
   });
 }
 
-export async function POST(request: NextRequest) {
-  // Handle POST requests to /api/users
-  // const data = await request.json();
-  console.log(request.arrayBuffer());
-  // Process the data, e.g., save to a database
-  return new Response(JSON.stringify({ message: "User created" }), {
-    status: 201,
-    headers: { "Content-Type": "application/json" },
-  });
+export async function POST(request: NextRequest, response: NextResponse) {
+  const { name } = await request.body;
+  console.log("Received form data:", name);
+  return new Response("User created", { status: 201 });
 }
