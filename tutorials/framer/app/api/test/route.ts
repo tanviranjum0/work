@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-// import fs from "fs";
 export async function GET(request: Request) {
   // Handle GET requests to /api/users
   const users = [
@@ -16,7 +15,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.formData(); // Assuming JSON body
     console.log("Received POST request with body:", body.get("image"));
-    const image = await body.get("image");
+    // const image =  body.get("image");
 
     return NextResponse.json(
       { message: "Data received successfully!" },
