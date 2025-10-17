@@ -1,12 +1,11 @@
 "use client";
-
 import React from "react";
 import Image from "next/image";
 // https://www.geeksforgeeks.org/javascript/how-to-convert-base64-to-file-in-javascript/ ||For Base64 to file
 // https://www.geeksforgeeks.org/javascript/how-to-convert-image-into-base64-string-using-javascript/ ||For image to Base64
-const Test4 = () => {
+const Base64Images = () => {
   let base64String = "";
-  function imageUploaded(e: React.ChangeEvent<HTMLInputElement>) {
+  function ImageToBase64(e: React.ChangeEvent<HTMLInputElement>) {
     const input = e.target;
     const display = document.getElementById("imgDisplay") as HTMLImageElement;
 
@@ -104,11 +103,6 @@ Sr9w4jatKm+38z//Z`; // Replace with your actual Base64 string
   const mimeType = "image/jpeg"; // MIME type for JPEG image
   const fileName = "image.jpg"; // Desired file name with extension
 
-  // if (typeof document !== "undefined") {
-  //   document.getElementById("download")?.addEventListener("click", () => {
-  //     base64ToFile(Bstring, mimeType, fileName);
-  //   });
-  // }
   return (
     <div className="bg-amber-400 h-[100vh] flex justify-center items-center">
       <input
@@ -116,7 +110,7 @@ Sr9w4jatKm+38z//Z`; // Replace with your actual Base64 string
         type="file"
         name=""
         id="fileId"
-        onChange={imageUploaded}
+        onChange={ImageToBase64}
       />
       <button className="p-3 bg-cyan-300 rounded" onClick={displayString}>
         Display String
@@ -146,4 +140,4 @@ Sr9w4jatKm+38z//Z`; // Replace with your actual Base64 string
   );
 };
 
-export default Test4;
+export default Base64Images;
