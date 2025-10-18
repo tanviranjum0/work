@@ -5,7 +5,7 @@ import { FaCopy } from "react-icons/fa";
 import { IoMdDoneAll } from "react-icons/io";
 import { motion, useAnimate, useScroll, useTransform } from "motion/react";
 interface SDMTypes {
-  // type?: string | null;
+  type: "spring";
   stiffness: number;
   mass: number;
   damping: number;
@@ -37,6 +37,7 @@ const SpringControls = () => {
     duration: 0.8,
   });
   const [sdm, setSdm] = useState<SDMTypes>({
+    type: "spring",
     stiffness: 100,
     mass: 1,
     damping: 10,
@@ -269,7 +270,7 @@ const SpringControls = () => {
             </div>
             const transition = {"{"}
             <br></br>
-            <div>type : 'spring',</div>
+            <div>type : &apso;spring&apso;,</div>
             <div> {sdm.stiffness !== 0 && `stiffness : ${sdm.stiffness},`}</div>
             <div> {sdm.mass !== 0 && `mass : ${sdm.mass},`}</div>
             <div> {sdm.damping !== 0 && `damping : ${sdm.damping},`}</div>

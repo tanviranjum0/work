@@ -91,7 +91,6 @@ const Row = ({
 
 const Pattern = ({
   className,
-  cellClassName,
 }: {
   className?: string;
   cellClassName?: boolean;

@@ -14,7 +14,7 @@ import hiking from "@/public/imageTrail/hiking.png";
 import run from "@/public/imageTrail/run.png";
 import skete from "@/public/imageTrail/skete.png";
 
-import { createRef, MouseEvent, ReactNode, TouchEvent, useRef } from "react";
+import { createRef, MouseEvent, ReactNode, useRef } from "react";
 import { StaticImageData } from "next/image";
 import Image from "next/image";
 interface ImageMouseTrailProps {
@@ -57,7 +57,7 @@ function ImageMouseTrail({
   distance = 20,
   fadeAnimation = false,
 }: ImageMouseTrailProps) {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const refs = useRef(items.map(() => createRef<HTMLImageElement>()));
   const currentZIndexRef = useRef(1);
 
@@ -65,9 +65,9 @@ function ImageMouseTrail({
   let last = { x: 0, y: 0 };
 
   const activate = (image: HTMLImageElement, x: number, y: number) => {
-    const containerRect = containerRef.current?.getBoundingClientRect();
-    const relativeX = x - containerRect.left;
-    const relativeY = y - containerRect.top;
+    const containerRect = containerRef?.current?.getBoundingClientRect();
+    const relativeX = x - (containerRect?.left ?? 0);
+    const relativeY = y - (containerRect?.top ?? 0);
     image.style.left = `${relativeX}px`;
     image.style.top = `${relativeY}px`;
     console.log(refs.current[refs.current?.length - 1]);
@@ -108,11 +108,7 @@ function ImageMouseTrail({
   };
 
   return (
-    <section
-      onMouseMove={handleOnMove}
-      onTouchMove={(e: TouchEvent) => handleOnMove(e.touches[0])}
-      ref={containerRef}
-    >
+    <section onMouseMove={handleOnMove} ref={containerRef}>
       {items.map((item, index) => (
         <>
           <Image

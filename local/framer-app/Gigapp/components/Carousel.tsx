@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence, PanInfo } from "motion/react";
 import { wrap } from "@popmotion/popcorn";
 import "../styles/carousel.css";
+import Image from "next/image";
 
 // import { IMAGES } from "./Images";
 const IMAGES = [
@@ -161,7 +162,12 @@ const Carousel = () => {
             onClick={() => skipToImage(image.id)}
             className="thumbnail-container"
           >
-            <img src={image.imageSrc} alt="Musician" />
+            <Image
+              width={1000}
+              height={1000}
+              src={image.imageSrc}
+              alt="Musician"
+            />
             <div
               className={`active-indicator ${
                 image.id === activeImageIndex ? "active" : null

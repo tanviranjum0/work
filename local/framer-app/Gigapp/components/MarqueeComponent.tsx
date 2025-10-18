@@ -8,7 +8,6 @@ import img2 from "@/public/MarqueImages/web2.png";
 import img3 from "@/public/MarqueImages/web3.png";
 import img4 from "@/public/MarqueImages/web4.png";
 import img5 from "@/public/MarqueImages/web5.png";
-import img6 from "@/public/MarqueImages/web6.png";
 import img7 from "@/public/MarqueImages/web7.png";
 import img8 from "@/public/MarqueImages/web8.png";
 import img9 from "@/public/MarqueImages/web9.png";
@@ -155,7 +154,7 @@ const MarqueeComponent = () => {
             <span className="contactButtoncircle" aria-hidden="true">
               <span className="icon arrow"></span>
             </span>
-            <span className="contact-text">Let's Work Together</span>
+            <span className="contact-text">Let&apos;s Work Together</span>
           </div>
         </div>
       </motion.div>
@@ -178,7 +177,7 @@ const MarqueeComponent = () => {
           autoFill={true}
           speed={40}
         >
-          {items.map((data, index) => {
+          {items.map((data) => {
             return (
               <>
                 <Image

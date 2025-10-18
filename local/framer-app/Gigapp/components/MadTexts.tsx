@@ -10,7 +10,7 @@ const MadTexts = () => {
       <ul ref={scope} className="flex justify-center items-center flex-col">
         <motion.li
           id="text1"
-          onHoverStart={(e) => {
+          onHoverStart={() => {
             animate(
               "#text1",
               { rotate: [-10, 0, 10, 0] },
@@ -28,7 +28,7 @@ const MadTexts = () => {
         </motion.li>
         <motion.li
           id="text2"
-          onHoverStart={(e) => {
+          onHoverStart={() => {
             animate(
               "#text2",
               { rotate: [10, 0, -10, 0] },
@@ -46,7 +46,7 @@ const MadTexts = () => {
         </motion.li>
         <motion.li
           id="text3"
-          onHoverStart={(e) => {
+          onHoverStart={() => {
             animate(
               "#text3",
               { rotate: [-10, 0, 10, 0] },
@@ -64,7 +64,7 @@ const MadTexts = () => {
         </motion.li>
         <motion.li
           id="text4"
-          onHoverStart={(e) => {
+          onHoverStart={() => {
             animate(
               "#text4",
               { rotate: [10, 0, -10, 0] },
@@ -83,7 +83,7 @@ const MadTexts = () => {
         </motion.li>
         <motion.li
           id="text5"
-          onHoverStart={(e) => {
+          onHoverStart={() => {
             animate(
               "#text5",
               { rotate: [-10, 0, 10, 0] },
@@ -101,7 +101,7 @@ const MadTexts = () => {
         </motion.li>
         <motion.li
           id="test6"
-          onHoverStart={(e) => {
+          onHoverStart={() => {
             animate(
               "#test6",
               { rotate: [10, 0, -10, 0] },
@@ -119,7 +119,7 @@ const MadTexts = () => {
         </motion.li>
         <motion.li
           id="text7"
-          onHoverStart={(e) => {
+          onHoverStart={() => {
             animate(
               "#text7",
               { rotate: [-10, 0, 10, 0] },
@@ -137,7 +137,7 @@ const MadTexts = () => {
         </motion.li>
         <motion.li
           id="text10"
-          onHoverStart={(e) => {
+          onHoverStart={() => {
             animate(
               "#text10",
               { rotate: [10, 0, -10, 0] },
@@ -156,7 +156,7 @@ const MadTexts = () => {
         </motion.li>
         <motion.li
           id="text8"
-          onHoverStart={(e) => {
+          onHoverStart={() => {
             animate(
               "#text8",
               { rotate: [-10, 0, 10, 0] },
@@ -174,7 +174,7 @@ const MadTexts = () => {
         </motion.li>
         <motion.li
           id="text9"
-          onHoverStart={(e) => {
+          onHoverStart={() => {
             animate(
               "#text9",
               { rotate: [10, 0, -10, 0] },
@@ -193,7 +193,7 @@ const MadTexts = () => {
         </motion.li>
         <motion.li
           id="text11"
-          onHoverStart={(e) => {
+          onHoverStart={() => {
             animate(
               "#text11",
               { rotate: [-10, 0, 10, 0] },

@@ -23,7 +23,22 @@ const cards = [
 
 const transition = { type: "spring", stiffness: 300, damping: 50 };
 
-const item = {
+const item: {
+  enter: {
+    x: number;
+    y: number;
+    scale: number;
+    rotateY: number;
+    rotateZ: number;
+  };
+  main: (i: number) => {
+    x: number;
+    y: number;
+    scale: number;
+    rotateY: number;
+    rotateZ: number;
+  };
+} = {
   enter: {
     x: 0,
     y: -1000,
