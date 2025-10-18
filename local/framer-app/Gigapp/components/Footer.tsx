@@ -15,7 +15,7 @@ const Footer = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      console.log(file);
+      // console.log(file);
       setSelectedFile(file);
     }
   };
@@ -24,7 +24,6 @@ const Footer = () => {
     const name = document.getElementById("name") as HTMLInputElement;
     const email = document.getElementById("email") as HTMLInputElement;
     const message = document.getElementById("message") as HTMLInputElement;
-    // const files = document.getElementById("dropzone-file") as HTMLInputElement;
     const formData = new FormData();
     formData.append("name", name.value);
     formData.append("service", service);
@@ -41,10 +40,11 @@ const Footer = () => {
         body: JSON.stringify({ name: "Tanvir" }),
       });
 
-      // const data = await res.json();
-      console.log(res);
+      const data = await res.json();
+      console.log(data);
     };
     apiCall();
+    console.log(selectedFile);
   };
   return (
     <div className=" bg-image-footer">
@@ -239,16 +239,21 @@ const Footer = () => {
                           />
                         </svg>
                         <p className="text-sm text-gray-300">
-                          <span className="font-semibold">Click to upload</span>
+                          <span id="fileSelectStatus" className="font-semibold">
+                            {selectedFile
+                              ? selectedFile.name
+                              : "Click to upload"}
+                          </span>
                         </p>
                         <p className="text-xs text-gray-300">
-                          SVG, PNG, JPG, GIF or PDF
+                          PNG, JPG or JPEG (MAX. 800x400px)
                         </p>
                       </div>
                       <input
                         onChange={(e) => handleFileChange(e)}
                         id="dropzone-file"
                         type="file"
+                        accept="image/png, image/jpeg, image/jpg"
                         className="hidden"
                       />
                     </label>
