@@ -1,5 +1,5 @@
 "use client";
-import { IoShieldCheckmarkSharp } from "react-icons/io5";
+// import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 const Footer = () => {
