@@ -13,10 +13,12 @@ export async function GET(request: Request) {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.formData(); // Assuming JSON body
-    console.log("Received POST request with body:", body.get("image"));
+    // const body = await request.formData(); // Assuming JSON body
+    // console.log("Received POST request with body:", body.get("image"));
     // const image =  body.get("image");
 
+    const body = await request.json();
+    console.log("Received POST request with body:", body);
     return NextResponse.json(
       { message: "Data received successfully!" },
       { status: 200 }
