@@ -2,22 +2,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-
-const remove = (arr: number[], item: number) => {
-  const newArr = [...arr];
-  newArr.splice(
-    newArr.findIndex((i) => i === item),
-    1
-  );
-  return newArr;
-};
-
-let newIndex = 0;
-const add = (arr: number[], message: string) => {
-  newIndex++;
-  document?.getElementById(`${newIndex}`)?.innerText = message;
-  return [...arr, newIndex];
-};
+import { set } from "mongoose";
 
 const Path = (props: { props: React.SVGAttributes<SVGPathElement> }) => (
   <motion.path
@@ -40,21 +25,31 @@ const CloseButton = ({ close }) => (
     </svg>
   </button>
 );
-
+const add = (
+  setNotifications: React.Dispatch<React.SetStateAction<string[]>>,
+  message: string
+) => {
+  setNotifications((prev) => [...prev, message]);
+};
 const Notification = () => {
-  const [notifications, setNotifications] = useState<string[]>(["Hello"]);
+  const [notifications, setNotifications] = useState<string[]>([]);
 
+  const remove = (index: number) => {
+    console.log("Removing index:", index);
+    const newArr = notifications.filter((_, i) => i !== index);
+    setNotifications(newArr);
+  };
   return (
     <div className="h-[100vh] w-[100vw] flex flex-col">
       <ul className="fixed right-0 top-0  bottom-0 flex flex-col list-none justify-end">
         <AnimatePresence initial={false} mode="popLayout">
-          {notifications.map((id) => {
-            setTimeout(() => {
-              setNotifications(remove(notifications, id));
-            }, 3000);
+          {notifications?.map((id, index) => {
+            // setTimeout(() => {
+            //   setNotifications(remove(index));
+            // }, 3000);
             return (
               <motion.li
-                key={id}
+                key={id + index}
                 layout
                 className="w-[300px] bg-white m-2.5 relative rounded-xl grow-0 shrink-0 basis-24"
                 initial={{ opacity: 0, y: 50, scale: 0.3 }}
@@ -64,9 +59,7 @@ const Notification = () => {
                 <div id={`${id}`} className="p-5">
                   This is notification {id}
                 </div>
-                <CloseButton
-                  close={() => setNotifications(remove(notifications, id))}
-                />
+                <CloseButton close={() => remove(index)} />
               </motion.li>
             );
           })}
@@ -74,7 +67,9 @@ const Notification = () => {
       </ul>
       <button
         className="outline-none appearance-none cursor-pointer fixed bottom-2.5 left-2.5 w-16 h-16 rounded-[50%] text-2xl border-none flex bg-black justify-center items-center"
-        onClick={() => setNotifications(add(notifications, "New Notification"))}
+        onClick={() =>
+          add(setNotifications, `Notification ${notifications.length + 1}`)
+        }
       >
         +
       </button>
@@ -83,3 +78,7 @@ const Notification = () => {
 };
 
 export default Notification;
+
+const MicroNotification = () => {
+  return <div>MicroNotification</div>;
+};
