@@ -12,7 +12,7 @@ const remove = (arr: number[], item: number) => {
   return newArr;
 };
 
-// let newIndex = 0;
+let newIndex = 0;
 const add = (arr: number[], message: string) => {
   newIndex++;
   document?.getElementById(`${newIndex}`)?.innerText = message;
