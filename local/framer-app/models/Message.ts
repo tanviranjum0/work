@@ -20,13 +20,11 @@ const messageSchema = new mongoose.Schema(
     },
     service: {
       type: String,
-      required: true,
       enum: ["Consulting", "Website", "Animation", "Backend"],
       default: "Consulting",
     },
     budget: {
       type: String,
-      required: true,
       enum: ["0k", "10k", "50k"],
       default: "0k",
     },

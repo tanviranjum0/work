@@ -32,7 +32,7 @@ const Footer = () => {
     formData.append("message", message.value);
 
     const apiCall = async () => {
-      const res = await fetch("/api/test", {
+      const res = await fetch("/api/message", {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",

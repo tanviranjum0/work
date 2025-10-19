@@ -112,7 +112,7 @@ function ImageMouseTrail({
       {items.map((item, index) => (
         <>
           <Image
-            key={index + "image"}
+            key={index + "imageImageMouseTrail"}
             className={cn(
               "object-fit rounded-2xl border-2 border-black  scale-0 opacity:0 data-[status='active']:scale-100 data-[status='active']:opacity-100 transition-transform data-[status='active']:duration-500 duration-300 data-[status='active']:ease-out-expo absolute -translate-y-[50%] max-h-40 max-w-fit -translate-x-[50%] "
             )}
