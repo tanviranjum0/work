@@ -134,7 +134,7 @@ Sr9w4jatKm+38z//Z`; // Replace with your actual Base64 string
         id="download"
         onClick={() => base64ToFile(Bstring, mimeType, fileName)}
       >
-        Download
+        {/* Download */}
       </div>
     </div>
   );
