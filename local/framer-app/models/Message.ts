@@ -10,14 +10,17 @@ const messageSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isValidImage: {
+      type: Boolean,
+      default: false,
+    },
     email: {
       type: String,
       required: true,
-      unique: true,
     },
-    image: {
-      type: String,
-    },
+    // image: {
+    //   type: String,
+    // },
     service: {
       type: String,
       enum: ["Consulting", "Website", "Animation", "Backend"],

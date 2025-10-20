@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 import { addNewNotification } from "./Notification";
 const Footer = () => {
-  const [service, setService] = useState<string>("consulting");
+  const [service, setService] = useState<string>("Consulting");
   const [budget, setBudget] = useState("0k");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const mainContainer = useRef<HTMLDivElement>(null);
@@ -25,6 +25,7 @@ const Footer = () => {
     const name = document.getElementById("name") as HTMLInputElement;
     const email = document.getElementById("email") as HTMLInputElement;
     const message = document.getElementById("message") as HTMLInputElement;
+    const image = document.getElementById("dropzone-file") as HTMLInputElement;
     const formData = new FormData();
     formData.append("name", name.value);
     formData.append("service", service);
@@ -32,15 +33,35 @@ const Footer = () => {
     formData.append("email", email.value);
     formData.append("message", message.value);
 
+    if (!name.value || !email.value || !message.value) {
+      return addNewNotification({
+        message: "Please fill all required fields.",
+        type: "error",
+      });
+    }
+    if (!/\S+@\S+\.\S+/.test(email.value)) {
+      return addNewNotification({
+        message: "Please enter a valid email address.",
+        type: "error",
+      });
+    }
+    if (!image.files[0]) {
+      formData.append("isValidImage", "false");
+    } else {
+      formData.append("image", image.files[0]);
+      formData.append("isValidImage", "true");
+    }
     const apiCall = async () => {
       const res = await fetch("/api/message", {
         method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        body: JSON.stringify({ name: "Tanvir" }),
+        body: formData,
       });
-
+      console.log(res);
+      // if (res.status == 409)
+      //   return addNewNotification({
+      //     message: "This email is already existed.",
+      //     type: "error",
+      //   });
       const data = await res.json();
       console.log(data);
     };
@@ -110,33 +131,33 @@ const Footer = () => {
                   <div className="text-2xl">Service</div>
                   <div className="flex gap-2">
                     <span
-                      onClick={() => setService("consulting")}
+                      onClick={() => setService("Consulting")}
                       className={`footerBtn py-1 px-1.5 ${
-                        service == "consulting" && "bg-lime-800"
+                        service == "Consulting" && "bg-lime-800"
                       }`}
                     >
                       Consulting
                     </span>
                     <span
-                      onClick={() => setService("website")}
+                      onClick={() => setService("Website")}
                       className={`footerBtn py-1 px-1.5 ${
-                        service == "website" && "bg-lime-800"
+                        service == "Website" && "bg-lime-800"
                       }`}
                     >
                       Website
                     </span>
                     <span
-                      onClick={() => setService("animation")}
+                      onClick={() => setService("Animation")}
                       className={`footerBtn py-1 px-1.5 ${
-                        service == "animation" && "bg-lime-800"
+                        service == "Animation" && "bg-lime-800"
                       }`}
                     >
                       Animation
                     </span>
                     <span
-                      onClick={() => setService("backend")}
+                      onClick={() => setService("Backend")}
                       className={`footerBtn py-1 px-1.5 ${
-                        service == "backend" && "bg-lime-800"
+                        service == "Backend" && "bg-lime-800"
                       }`}
                     >
                       Backend
