@@ -80,14 +80,14 @@ const Notification = () => {
           })}
         </AnimatePresence>
       </ul>
-      <button
+      {/* <button
         className="outline-none appearance-none cursor-pointer fixed bottom-2.5 left-2.5 w-16 h-16 rounded-[50%] text-2xl border-none flex bg-black justify-center items-center"
         onClick={() =>
           addNewNotification({ message: "Notification Hello", type: "error" })
         }
       >
         +
-      </button>
+      </button> */}
     </div>
   );
 };
@@ -111,7 +111,6 @@ const MicroNotification = ({
       remove(index);
     }, 3000);
     return () => {
-      // Clear the timeout when the component unmounts or re-renders
       clearTimeout(timeoutId);
     };
   }, [index, remove]);

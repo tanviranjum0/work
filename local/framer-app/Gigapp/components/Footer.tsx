@@ -57,11 +57,6 @@ const Footer = () => {
         body: formData,
       });
       console.log(res);
-      // if (res.status == 409)
-      //   return addNewNotification({
-      //     message: "This email is already existed.",
-      //     type: "error",
-      //   });
       const data = await res.json();
       console.log(data);
     };
