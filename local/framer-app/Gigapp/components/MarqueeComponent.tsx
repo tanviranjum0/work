@@ -177,16 +177,15 @@ const MarqueeComponent = () => {
           autoFill={true}
           speed={40}
         >
-          {items.map((data) => {
+          {items.map((data, i) => {
             return (
-              <>
-                <Image
-                  className="rounded-xl mx-2"
-                  src={data.img}
-                  alt={`Marque image ${data.id}`}
-                  height={data.height}
-                />
-              </>
+              <Image
+                key={i + data.id}
+                className={`rounded-xl   mx-2`}
+                src={data.img}
+                alt={`Marque image ${data.id}`}
+                height={data.height}
+              />
             );
           })}
         </Marquee>

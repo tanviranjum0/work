@@ -2,6 +2,7 @@
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
+import { addNewNotification } from "./Notification";
 const Footer = () => {
   const [service, setService] = useState<string>("consulting");
   const [budget, setBudget] = useState("0k");
@@ -90,7 +91,15 @@ const Footer = () => {
                 <div className="text-xl">
                   Always busy and want to book an exact time to call?
                 </div>
-                <div className="rounded-full select-none cursor-pointer w-52 text-center font-bold p-3 bg-cyan-800">
+                <div
+                  onClick={() =>
+                    addNewNotification({
+                      message: "Booking feature coming soon!",
+                      type: "info",
+                    })
+                  }
+                  className="rounded-full select-none cursor-pointer w-52 text-center font-bold p-3 bg-cyan-800"
+                >
                   Book a call for free
                 </div>
               </div>

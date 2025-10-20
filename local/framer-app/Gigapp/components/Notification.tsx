@@ -2,7 +2,6 @@
 import * as React from "react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { set } from "mongoose";
 
 const Path = (props: { props: React.SVGAttributes<SVGPathElement> }) => (
   <motion.path
@@ -25,42 +24,58 @@ const CloseButton = ({ close }) => (
     </svg>
   </button>
 );
-const add = (
-  setNotifications: React.Dispatch<React.SetStateAction<string[]>>,
-  message: string
-) => {
-  setNotifications((prev) => [...prev, message]);
-};
+let addNewNotification: ({
+  message,
+  type,
+}: {
+  message: string;
+  type: string;
+}) => void;
 const Notification = () => {
-  const [notifications, setNotifications] = useState<string[]>([]);
-
+  const [notifications, setNotifications] = useState<
+    { message: string; type: string }[]
+  >([]);
+  addNewNotification = ({
+    message,
+    type,
+  }: {
+    message: string;
+    type: string;
+  }) => {
+    setNotifications((prev) => {
+      console.log("Previous notifications:", prev);
+      if (!prev) {
+        return [
+          {
+            message: message,
+            type: type,
+          },
+        ];
+      } else {
+        return [...prev, { message, type }];
+      }
+    });
+  };
   const remove = (index: number) => {
     console.log("Removing index:", index);
     const newArr = notifications.filter((_, i) => i !== index);
+    console.log("New notifications array:", newArr);
     setNotifications(newArr);
   };
   return (
     <div className="h-[100vh] w-[100vw] flex flex-col">
       <ul className="fixed right-0 top-0  bottom-0 flex flex-col list-none justify-end">
         <AnimatePresence initial={false} mode="popLayout">
-          {notifications?.map((id, index) => {
-            // setTimeout(() => {
-            //   setNotifications(remove(index));
-            // }, 3000);
+          {notifications?.map((noti, index) => {
             return (
-              <motion.li
-                key={id + index}
-                layout
-                className="w-[300px] bg-white m-2.5 relative rounded-xl grow-0 shrink-0 basis-24"
-                initial={{ opacity: 0, y: 50, scale: 0.3 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.5, transition: { duration: 1 } }}
-              >
-                <div id={`${id}`} className="p-5">
-                  This is notification {id}
-                </div>
-                <CloseButton close={() => remove(index)} />
-              </motion.li>
+              <MicroNotification
+                key={noti.message + index}
+                message={noti.message}
+                type={noti.type}
+                index={index}
+                remove={remove}
+                setNotifications={setNotifications}
+              />
             );
           })}
         </AnimatePresence>
@@ -68,7 +83,7 @@ const Notification = () => {
       <button
         className="outline-none appearance-none cursor-pointer fixed bottom-2.5 left-2.5 w-16 h-16 rounded-[50%] text-2xl border-none flex bg-black justify-center items-center"
         onClick={() =>
-          add(setNotifications, `Notification ${notifications.length + 1}`)
+          addNewNotification({ message: "Notification Hello", type: "error" })
         }
       >
         +
@@ -77,8 +92,51 @@ const Notification = () => {
   );
 };
 
-export default Notification;
-
-const MicroNotification = () => {
-  return <div>MicroNotification</div>;
+const MicroNotification = ({
+  message,
+  type,
+  index,
+  remove,
+}: {
+  message: string;
+  type: string;
+  index: number;
+  remove: (index: number) => void;
+  setNotifications: React.Dispatch<
+    React.SetStateAction<{ message: string; type: string }[]>
+  >;
+}) => {
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      remove(index);
+    }, 3000);
+    return () => {
+      // Clear the timeout when the component unmounts or re-renders
+      clearTimeout(timeoutId);
+    };
+  }, [index, remove]);
+  return (
+    <div>
+      <motion.li
+        layout
+        className="w-[300px] bg-white m-2.5 relative rounded-xl grow-0 shrink-0 basis-24"
+        initial={{ opacity: 0, y: 50, scale: 0.3 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.3 } }}
+      >
+        <div
+          className={`text-black p-5 font-bold ${
+            type === "error" && "text-red-500"
+          }  ${type === "info" && "text-blue-500"}`}
+        >
+          {message}
+        </div>
+        <CloseButton close={() => remove(index)} />
+      </motion.li>
+    </div>
+  );
 };
+
+export { addNewNotification };
+
+export default Notification;
