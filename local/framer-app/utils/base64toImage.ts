@@ -1,21 +1,29 @@
 // https://www.geeksforgeeks.org/javascript/how-to-convert-base64-to-file-in-javascript/ ||For Base64 to file
 // https://www.geeksforgeeks.org/javascript/how-to-convert-image-into-base64-string-using-javascript/ ||For image to Base64
 "use client";
-export const imageToBase64 = (file: { file: File }) => {
+import React from "react";
+
+export const imageToBase64 = ({
+  file,
+  setSelectedImageBase64,
+}: {
+  file: Blob | File;
+  setSelectedImageBase64: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+  if (!file) return;
   let base64String = "";
   const reader = new FileReader();
-
   reader.onload = function () {
     if (reader.result) {
       base64String = (reader.result as string)
         .replace("data:", "")
         .replace(/^.+,/, "");
     }
-    return base64String;
+    setSelectedImageBase64(base64String);
   };
-
   reader.readAsDataURL(file);
 };
+
 export const base64ToImage = (
   Bstring: string,
   mimeType: string,

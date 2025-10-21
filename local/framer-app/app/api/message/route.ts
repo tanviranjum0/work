@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import Message from "@/models/Message";
 import Db from "@/utils/db";
-import { imageToBase64 } from "@/utils/base64toImage";
 // import { format } from "path";
+interface DataBody {
+  name: FormDataEntryValue | null;
+  image?: FormDataEntryValue | null;
+  email: FormDataEntryValue | null;
+  message: FormDataEntryValue | null;
+  service: FormDataEntryValue | null;
+  budget: FormDataEntryValue | null;
+  isValidImage: FormDataEntryValue | boolean | null;
+}
 
 export async function GET(request: Request) {
   // Handle GET requests to /api/users
@@ -19,12 +27,7 @@ export async function GET(request: Request) {
 export async function POST(request: NextRequest) {
   try {
     const FormData = await request.formData(); // Assuming JSON body
-    // console.log("Received POST request with body:", body.get("image"));
-    // const image = body.get("image");
-    // const body = await request.json();
-    // console.log(FormData.get("name"));
-
-    const body = {
+    const body: DataBody = {
       service: FormData.get("service"),
       budget: FormData.get("budget"),
       name: FormData.get("name"),
@@ -32,15 +35,10 @@ export async function POST(request: NextRequest) {
       message: FormData.get("message"),
       isValidImage: FormData.get("isValidImage") === "true" ? true : false,
     };
-
-    console.log("Received POST request with body:", body);
+    if (FormData.get("image")) {
+      body.image = FormData.get("image");
+    }
     await Db.connect();
-    // const existUser = await Message.findOne({ email: body.email });
-
-    // if (existUser)
-    //   return NextResponse.json("This email is already existed.", {
-    //     status: 409,
-    //   });
     const message = await Message.create(body);
     await Db.disconnect();
     return NextResponse.json({ message }, { status: 201 });

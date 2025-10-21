@@ -8,6 +8,7 @@ const Footer = () => {
   const [service, setService] = useState<string>("Consulting");
   const [budget, setBudget] = useState("0k");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedImageBase64, setSelectedImageBase64] = useState<string>("");
   const mainContainer = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: mainContainer,
@@ -22,16 +23,12 @@ const Footer = () => {
   };
   const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     const name = document.getElementById("name") as HTMLInputElement;
     const email = document.getElementById("email") as HTMLInputElement;
     const message = document.getElementById("message") as HTMLInputElement;
-    const image = document.getElementById("dropzone-file") as HTMLInputElement;
-    const formData = new FormData();
-    formData.append("name", name.value);
-    formData.append("service", service);
-    formData.append("budget", budget);
-    formData.append("email", email.value);
-    formData.append("message", message.value);
+    const image = document.getElementById("dropzone-file")
+      ?.files[0] as HTMLInputElement;
 
     if (!name.value || !email.value || !message.value) {
       return addNewNotification({
@@ -45,10 +42,22 @@ const Footer = () => {
         type: "error",
       });
     }
-    if (!image.files[0]) {
+    const formData = new FormData();
+    formData.append("name", name.value);
+    formData.append("service", service);
+    formData.append("budget", budget);
+    formData.append("email", email.value);
+    formData.append("message", message.value);
+
+    if (!image) {
       formData.append("isValidImage", "false");
     } else {
-      formData.append("image", image.files[0]);
+      // cast to any (or to the exact expected param shape) so TypeScript matches the util signature
+      imageToBase64({
+        file: image,
+        setSelectedImageBase64: setSelectedImageBase64,
+      } as any);
+      formData.append("image", selectedImageBase64);
       formData.append("isValidImage", "true");
     }
     const apiCall = async () => {
@@ -56,12 +65,10 @@ const Footer = () => {
         method: "POST",
         body: formData,
       });
-      console.log(res);
       const data = await res.json();
       console.log(data);
     };
     apiCall();
-    console.log(selectedFile);
   };
   return (
     <div className=" bg-image-footer">
@@ -218,7 +225,7 @@ const Footer = () => {
                       name="email"
                       id="email"
                       className="block py-2.5 px-0 w-full bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black peer"
-                      placeholder=" "
+                      placeholder=""
                       required
                     />
                     <label

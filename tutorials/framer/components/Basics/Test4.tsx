@@ -8,13 +8,11 @@ const Test4 = () => {
   let base64String = "";
   function imageUploaded(e: React.ChangeEvent<HTMLInputElement>) {
     const input = e.target;
-    const display = document.getElementById("imgDisplay") as HTMLImageElement;
+    // const display = document.getElementById("imgDisplay") as HTMLImageElement;
 
     if (!input?.files) return;
     let file = input.files[0];
-
     let reader = new FileReader();
-
     reader.onload = function () {
       if (reader.result) {
         base64String = (reader.result as string)
