@@ -23,9 +23,9 @@ const Test4 = () => {
       }
       console.log(base64String);
     };
-    reader.readAsDataURL(file);
 
-    display.src = URL.createObjectURL(file);
+    reader.readAsDataURL(file);
+    // display.src = URL.createObjectURL(file);
   }
 
   function displayString() {

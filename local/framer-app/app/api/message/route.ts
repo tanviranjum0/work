@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Message from "@/models/Message";
 import Db from "@/utils/db";
+import { imageToBase64 } from "@/utils/base64toImage";
 // import { format } from "path";
 
 export async function GET(request: Request) {
@@ -19,18 +20,19 @@ export async function POST(request: NextRequest) {
   try {
     const FormData = await request.formData(); // Assuming JSON body
     // console.log("Received POST request with body:", body.get("image"));
-    // const image =  body.get("image");
+    // const image = body.get("image");
     // const body = await request.json();
-    console.log(FormData.get("name"));
+    // console.log(FormData.get("name"));
+
     const body = {
       service: FormData.get("service"),
       budget: FormData.get("budget"),
       name: FormData.get("name"),
       email: FormData.get("email"),
       message: FormData.get("message"),
-      // image: FormData.get("image"),
       isValidImage: FormData.get("isValidImage") === "true" ? true : false,
     };
+
     console.log("Received POST request with body:", body);
     await Db.connect();
     // const existUser = await Message.findOne({ email: body.email });

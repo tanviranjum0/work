@@ -2,6 +2,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+// import { imageToBase64 } from "@/utils/base64toImage";
 
 const Path = (props: { props: React.SVGAttributes<SVGPathElement> }) => (
   <motion.path
