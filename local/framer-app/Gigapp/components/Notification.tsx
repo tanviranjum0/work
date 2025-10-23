@@ -4,7 +4,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 // import { imageToBase64 } from "@/utils/base64toImage";
 
-const Path = (props: { props: React.SVGAttributes<SVGPathElement> }) => (
+interface PathProps extends React.ComponentProps<typeof motion.path> {}
+
+const Path: React.FC<PathProps> = (props: PathProps) => (
   <motion.path
     fill="transparent"
     strokeWidth="3"
@@ -14,7 +16,7 @@ const Path = (props: { props: React.SVGAttributes<SVGPathElement> }) => (
   />
 );
 
-const CloseButton = ({ close }) => (
+const CloseButton = ({ close }: { close: () => void }) => (
   <button
     onClick={close}
     className="absolute top-3.5 right-2.5  bg-white border-none"
@@ -44,7 +46,6 @@ const Notification = () => {
     type: string;
   }) => {
     setNotifications((prev) => {
-      console.log("Previous notifications:", prev);
       if (!prev) {
         return [
           {
@@ -58,13 +59,11 @@ const Notification = () => {
     });
   };
   const remove = (index: number) => {
-    console.log("Removing index:", index);
     const newArr = notifications.filter((_, i) => i !== index);
-    console.log("New notifications array:", newArr);
     setNotifications(newArr);
   };
   return (
-    <div className="h-[100vh] w-[100vw] flex flex-col">
+    <div className=" flex flex-col">
       <ul className="fixed right-0 top-0  bottom-0 flex flex-col list-none justify-end">
         <AnimatePresence initial={false} mode="popLayout">
           {notifications?.map((noti, index) => {
@@ -127,7 +126,9 @@ const MicroNotification = ({
         <div
           className={`text-black p-5 font-bold ${
             type === "error" && "text-red-500"
-          }  ${type === "info" && "text-blue-500"}`}
+          }  ${type === "info" && "text-blue-500"} ${
+            type === "success" && "text-green-700"
+          }`}
         >
           {message}
         </div>

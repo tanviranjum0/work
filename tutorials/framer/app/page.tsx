@@ -8,10 +8,10 @@ import Gigapp from "@/components/Gigapp/Gigapp";
 const page = () => {
   return (
     <div className="">
-      {/* <Test1 /> */}
+      <Test1 />
       {/* <Test2 /> */}
       {/* <Test3 /> */}
-      <Test4 />
+      {/* <Test4 /> */}
       {/* <Test5 /> */}
       {/* <Gigapp /> */}
     </div>

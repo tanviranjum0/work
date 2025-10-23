@@ -45,14 +45,14 @@ const Test2 = () => {
       {/* <ConfettiBrustButton /> */}
       {/* <ThreeDParallaxCard /> */}
       {/* <ThreeDTiltButton /> */}
-      {/* <InterActiveTimeline /> */}
+      <InterActiveTimeline />
       {/* <DynamicChartAnimation /> */}
       {/* <AnimatedProfileShowcase /> */}
       {/* <GameElement /> */}
       {/* <AnimatedProfileShowcase /> */}
       {/* <AnimatedProductShowcase /> */}
       {/* <MagnaticButton /> */}
-      <LiquidRippleButton />
+      {/* <LiquidRippleButton /> */}
       {/* <MorphingIconButton /> */}
       {/* <Marque /> */}
       {/* <SwipeToDelete /> */}
