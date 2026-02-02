@@ -20,7 +20,9 @@ function initializeSocket(server) {
 
     if (process.env.ENVIRONMENT == "production") {
       socket.on("log", async (log) => {
-        log.formattedTimestamp = moment().tz("Asia/Kolkata").format("MMM DD hh:mm:ss A");
+        log.formattedTimestamp = moment()
+          .tz("Asia/Kolkata")
+          .format("MMM DD hh:mm:ss A");
         try {
           await frontendLogModel.create(log);
         } catch (error) {
