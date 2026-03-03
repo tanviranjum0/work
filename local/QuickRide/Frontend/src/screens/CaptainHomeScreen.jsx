@@ -41,9 +41,11 @@ function CaptainHomeScreen() {
     ltd: null,
     lng: null,
   });
-  const [mapLocation, setMapLocation] = useState(
-    `https://www.google.com/maps?q=${riderLocation.ltd},${riderLocation.lng}&output=embed`
-  );
+  // const [mapLocation, setMapLocation] = useState(
+  //   `https://www.google.com/maps?q=${riderLocation.ltd},${riderLocation.lng}&output=embed`
+  // );
+
+  const [mapLocation, setMapLocation] = useState("");
   const [earnings, setEarnings] = useState({
     total: 0,
     today: 0,

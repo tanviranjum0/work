@@ -158,7 +158,7 @@ function NewRide({
             <div className="flex gap-2">
               <Button
                 title={"Ignore"}
-                loading={loading}
+                loading={false}
                 fun={ignoreRide}
                 classes={"bg-white text-zinc-900 border-2 border-black"}
               />

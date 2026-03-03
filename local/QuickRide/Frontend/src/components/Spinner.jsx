@@ -1,4 +1,4 @@
-function Spinner({scale}) {
+function Spinner({ scale }) {
   return (
     <div>
       <img

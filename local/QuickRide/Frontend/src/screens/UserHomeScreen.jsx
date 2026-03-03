@@ -7,6 +7,7 @@ import {
   SelectVehicle,
   RideDetails,
   Sidebar,
+  Spinner,
 } from "../components";
 import axios from "axios";
 import debounce from "lodash.debounce";
@@ -24,6 +25,7 @@ function UserHomeScreen() {
   const [selectedInput, setSelectedInput] = useState("pickup");
   const [locationSuggestion, setLocationSuggestion] = useState([]);
   const [mapLocation, setMapLocation] = useState("");
+
   const [rideCreated, setRideCreated] = useState(false);
 
   // Ride details
@@ -202,6 +204,8 @@ function UserHomeScreen() {
   };
 
   // Update Location
+
+
   const updateLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -237,6 +241,7 @@ function UserHomeScreen() {
   useEffect(() => {
     updateLocation();
   }, []);
+
 
   // Socket Events
   useEffect(() => {
@@ -356,12 +361,16 @@ function UserHomeScreen() {
     };
   }, [confirmedRideData]);
 
+
+
+  // Add an event listener for the 'load' event
+  ;
   return (
     <div
       className="relative w-full h-dvh bg-contain"
       style={{ backgroundImage: `url(${map})` }}
     >
-      <Sidebar />
+
       <iframe
         src={mapLocation}
         className="absolute map w-full h-[120vh]"
@@ -369,57 +378,60 @@ function UserHomeScreen() {
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
       ></iframe>
-      {/* Find a trip component */}
-      {showFindTripPanel && (
-        <div className="absolute b-0 flex flex-col justify-start p-4 pb-2 gap-4 rounded-b-lg bg-white h-fit w-full">
-          <h1 className="text-2xl font-semibold">Find a trip</h1>
-          <div className="flex items-center relative w-full h-fit">
-            <div className="h-3/5 w-[3px] flex flex-col items-center justify-between bg-black rounded-full absolute mx-5">
-              <div className="w-2 h-2 rounded-full border-[3px]  bg-white border-black"></div>
-              <div className="w-2 h-2 rounded-sm border-[3px]  bg-white border-black"></div>
-            </div>
-            <div className="w-full">
-              <input
-                id="pickup"
-                placeholder="Add a pick-up location"
-                className="w-full bg-zinc-100 pl-10 pr-4 py-3 rounded-lg outline-black text-sm mb-2 truncate"
-                value={pickupLocation}
-                onChange={onChangeHandler}
-                autoComplete="off"
-              />
-              <input
-                id="destination"
-                placeholder="Add a drop-off location"
-                className="w-full bg-zinc-100 pl-10 pr-4 py-3 rounded-lg outline-black text-sm truncate"
-                value={destinationLocation}
-                onChange={onChangeHandler}
-                autoComplete="off"
-              />
-            </div>
-          </div>
-          {pickupLocation.length > 2 && destinationLocation.length > 2 && (
-            <Button
-              title={"Search"}
-              loading={loading}
-              fun={() => {
-                getDistanceAndFare(pickupLocation, destinationLocation);
-              }}
-            />
-          )}
 
-          <div className="w-full h-full overflow-y-scroll ">
-            {locationSuggestion.length > 0 && (
-              <LocationSuggestions
-                suggestions={locationSuggestion}
-                setSuggestions={setLocationSuggestion}
-                setPickupLocation={setPickupLocation}
-                setDestinationLocation={setDestinationLocation}
-                input={selectedInput}
+      {/* Find a trip component */}
+      {
+        showFindTripPanel && (
+          <div className="absolute b-0 flex flex-col justify-start p-4 pb-2 gap-4 rounded-b-lg bg-white h-fit w-full">
+            <h1 className="text-2xl font-semibold">Find a trip</h1>
+            <div className="flex items-center relative w-full h-fit">
+              <div className="h-3/5 w-[3px] flex flex-col items-center justify-between bg-black rounded-full absolute mx-5">
+                <div className="w-2 h-2 rounded-full border-[3px]  bg-white border-black"></div>
+                <div className="w-2 h-2 rounded-sm border-[3px]  bg-white border-black"></div>
+              </div>
+              <div className="w-full">
+                <input
+                  id="pickup"
+                  placeholder="Add a pick-up location"
+                  className="w-full bg-zinc-100 pl-10 pr-4 py-3 rounded-lg outline-black text-sm mb-2 truncate"
+                  value={pickupLocation}
+                  onChange={onChangeHandler}
+                  autoComplete="off"
+                />
+                <input
+                  id="destination"
+                  placeholder="Add a drop-off location"
+                  className="w-full bg-zinc-100 pl-10 pr-4 py-3 rounded-lg outline-black text-sm truncate"
+                  value={destinationLocation}
+                  onChange={onChangeHandler}
+                  autoComplete="off"
+                />
+              </div>
+            </div>
+            {pickupLocation.length > 2 && destinationLocation.length > 2 && (
+              <Button
+                title={"Search"}
+                loading={loading}
+                fun={() => {
+                  getDistanceAndFare(pickupLocation, destinationLocation);
+                }}
               />
             )}
+
+            <div className="w-full h-full overflow-y-scroll ">
+              {locationSuggestion.length > 0 && (
+                <LocationSuggestions
+                  suggestions={locationSuggestion}
+                  setSuggestions={setLocationSuggestion}
+                  setPickupLocation={setPickupLocation}
+                  setDestinationLocation={setDestinationLocation}
+                  input={selectedInput}
+                />
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )
+      }
 
       {/* Select Vehicle Panel */}
       <SelectVehicle
@@ -446,7 +458,7 @@ function UserHomeScreen() {
         rideCreated={rideCreated}
         confirmedRideData={confirmedRideData}
       />
-    </div>
+    </div >
   );
 }
 
