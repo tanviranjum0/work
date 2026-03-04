@@ -36,7 +36,7 @@ function LocationSuggestions({
             }
           }}
           key={index}
-          className="cursor-pointer flex items-center gap-2 border-b-2 last:border-b-0 py-3 border-gray-200"
+          className="cursor-pointer hover:shadow-lg flex items-center gap-2 border-b-2 last:border-b-0 py-3 border-gray-200"
         >
           <div className="bg-gray-100 p-2 rounded-full">
             <MapPin size={20} />

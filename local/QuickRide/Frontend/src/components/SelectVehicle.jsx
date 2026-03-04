@@ -38,7 +38,7 @@ function SelectVehicle({
   return (
     <>
       <div
-        className={`${showPanel ? "bottom-0" : "-bottom-[60%]"} transition-all duration-500 absolute  bg-white w-full rounded-t-xl p-4 pt-0`}
+        className={`${showPanel ? "bottom-0" : "-bottom-[60%]"} transition-all duration-500 absolute  backdrop-blur-xl w-full rounded-t-xl p-4 pt-0`}
       >
         <div
           onClick={() => {
@@ -78,7 +78,7 @@ const Vehicle = ({
         setShowPanel(false);
         showNextPanel(true);
       }}
-      className="cursor-pointer my-1 flex items-center w-full  rounded-xl border-[3px] transition-all duration-150 border-zinc-100 bg-zinc-50 hover:border-black overflow-hidden"
+      className="cursor-pointer shadow-lg my-1 flex items-center w-full  rounded-xl border-[3px] transition-all duration-150 border-zinc-100 bg-zinc-50 hover:border-black overflow-hidden"
     >
       <div className="py-4">
         <img

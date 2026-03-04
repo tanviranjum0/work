@@ -382,10 +382,10 @@ function UserHomeScreen() {
       {/* Find a trip component */}
       {
         showFindTripPanel && (
-          <div className="absolute b-0 flex flex-col justify-start p-4 pb-2 gap-4 rounded-b-lg bg-white h-fit w-full">
+          <div className="absolute b-0 flex flex-col justify-start p-4 pb-2 gap-4 rounded-b-lg backdrop-blur-xl h-fit w-full">
             <h1 className="text-2xl font-semibold">Find a trip</h1>
             <div className="flex items-center relative w-full h-fit">
-              <div className="h-3/5 w-[3px] flex flex-col items-center justify-between bg-black rounded-full absolute mx-5">
+              <div className="h-3/5 w-[3px] flex flex-col items-center justify-between bg-red-500 rounded-full absolute mx-5">
                 <div className="w-2 h-2 rounded-full border-[3px]  bg-white border-black"></div>
                 <div className="w-2 h-2 rounded-sm border-[3px]  bg-white border-black"></div>
               </div>
@@ -393,7 +393,7 @@ function UserHomeScreen() {
                 <input
                   id="pickup"
                   placeholder="Add a pick-up location"
-                  className="w-full bg-zinc-100 pl-10 pr-4 py-3 rounded-lg outline-black text-sm mb-2 truncate"
+                  className="w-full bg-zinc-100 shadow-lg pl-10 pr-4 py-3 rounded-lg outline-black text-sm mb-2 truncate"
                   value={pickupLocation}
                   onChange={onChangeHandler}
                   autoComplete="off"
@@ -401,7 +401,7 @@ function UserHomeScreen() {
                 <input
                   id="destination"
                   placeholder="Add a drop-off location"
-                  className="w-full bg-zinc-100 pl-10 pr-4 py-3 rounded-lg outline-black text-sm truncate"
+                  className="w-full bg-zinc-100 shadow-lg pl-10 pr-4 py-3 rounded-lg outline-black text-sm truncate"
                   value={destinationLocation}
                   onChange={onChangeHandler}
                   autoComplete="off"
