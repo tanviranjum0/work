@@ -30,7 +30,7 @@ function NewRide({
     <>
       <div
         className={`${showPanel ? "bottom-0" : "-bottom-[60%]"
-          } transition-all duration-500 absolute bg-white w-full rounded-t-xl p-4 pt-0`}
+          } transition-all duration-500 absolute  backdrop-blur-xl  w-full rounded-t-xl p-4 pt-0`}
       >
         {/* <div
           onClick={() => {
@@ -173,7 +173,7 @@ function NewRide({
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 placeholder={"Enter OTP"}
-                className="w-full bg-zinc-100 px-4 py-3 rounded-lg outline-none text-sm mb-2"
+                className="w-full bg-zinc-100  border-2 border-black px-4 py-3 rounded-lg text-sm mb-2"
               />
               {error && (
                 <p className="text-red-500 text-xs mb-2 text-center">{error}</p>

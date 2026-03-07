@@ -348,7 +348,7 @@ function CaptainHomeScreen() {
       ></iframe>
 
       {showCaptainDetailsPanel && (
-        <div className="absolute bottom-0 flex flex-col justify-start p-4 gap-2 rounded-t-lg bg-white h-fit w-full">
+        <div className="absolute bottom-0 flex flex-col justify-start p-4 gap-2 rounded-t-lg  backdrop-blur-xl  h-fit w-full">
           {/* Driver details */}
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
@@ -377,26 +377,26 @@ function CaptainHomeScreen() {
           </div>
 
           {/* Ride details */}
-          <div className="flex justify-around items-center mt-2 py-4 rounded-lg bg-zinc-800">
-            <div className="flex flex-col items-center text-white">
+          <div className="flex justify-around items-center mt-2 py-4 rounded-lg bg-white text-black">
+            <div className="flex flex-col items-center">
               <h1 className="mb-1 text-xl">{rides?.accepted}</h1>
-              <p className="text-xs text-gray-400 text-center leading-3">
+              <p className="text-xs text-gray-700 text-center leading-3">
                 Rides
                 <br />
                 Accepted
               </p>
             </div>
-            <div className="flex flex-col items-center text-white">
+            <div className="flex flex-col items-center">
               <h1 className="mb-1 text-xl">{rides?.distanceTravelled}</h1>
-              <p className="text-xs text-gray-400 text-center leading-3">
+              <p className="text-xs text-gray-700 text-center leading-3">
                 Km
                 <br />
                 Travelled
               </p>
             </div>
-            <div className="flex flex-col items-center text-white">
+            <div className="flex flex-col items-center">
               <h1 className="mb-1 text-xl">{rides?.cancelled}</h1>
-              <p className="text-xs text-gray-400 text-center leading-3">
+              <p className="text-xs text-gray-700 text-center leading-3">
                 Rides
                 <br />
                 Cancelled

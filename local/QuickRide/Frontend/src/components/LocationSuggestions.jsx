@@ -25,7 +25,7 @@ function LocationSuggestions({
       {suggestions.map((suggestion, index) => (
         <div
           onClick={() => {
-            console.log(suggestion);
+            // console.log(suggestion);
             if (input == "pickup") {
               setPickupLocation(suggestion);
               setSuggestions([]);
