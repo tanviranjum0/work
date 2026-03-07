@@ -31,7 +31,7 @@ const defaultRideData = {
 
 function CaptainHomeScreen() {
   const token = localStorage.getItem("token");
-
+  const [showSidebar, setShowSidebar] = useState(false);
   const { captain } = useCaptain();
   const { socket } = useContext(SocketDataContext);
   const [loading, setLoading] = useState(false);
@@ -338,7 +338,7 @@ function CaptainHomeScreen() {
         onClose={hideAlert}
         type={alert.type}
       />
-      <Sidebar />
+      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <iframe
         src={mapLocation}
         className="map w-full h-[80vh]"
@@ -352,7 +352,7 @@ function CaptainHomeScreen() {
           {/* Driver details */}
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
-              <div className="my-2 select-none rounded-full w-10 h-10 bg-blue-400 mx-auto flex items-center justify-center">
+              <div onClick={() => setShowSidebar((prev) => !prev)} className="my-2 cursor-pointer hover:border-2 border-black hover:opacity-95 hover:scale-95 select-none rounded-full w-10 h-10 bg-blue-400 mx-auto flex items-center justify-center">
                 <h1 className="text-lg text-white">
                   {captain?.fullname?.firstname[0]}
                   {captain?.fullname?.lastname[0]}

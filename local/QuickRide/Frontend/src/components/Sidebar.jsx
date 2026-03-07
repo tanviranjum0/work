@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
-
+import demo from "/icon-quickride.png";
 import { ChevronRight, CircleUserRound, History, KeyRound, Menu, X } from "lucide-react";
 import Button from "./Button";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Console from "../utils/console";
 
-function Sidebar() {
+function Sidebar({ showSidebar, setShowSidebar }) {
   const token = localStorage.getItem("token");
-  const [showSidebar, setShowSidebar] = useState(false);
-
   const [newUser, setNewUser] = useState({});
 
   useEffect(() => {
@@ -50,7 +48,7 @@ function Sidebar() {
           setShowSidebar(!showSidebar);
         }}
       >
-        {showSidebar ? <X /> : <Menu />}
+        {showSidebar ? <X /> : <img src={demo} width={20} height={20} />}
       </div>
 
       {/* Sidebar Component */}
@@ -119,5 +117,6 @@ function Sidebar() {
     </>
   );
 }
+
 
 export default Sidebar;
