@@ -42,14 +42,16 @@ function Sidebar({ showSidebar, setShowSidebar }) {
   };
   return (
     <>
-      <div
-        className="m-3 mt-4 absolute right-0 top-0 z-20 cursor-pointer bg-white p-1 rounded"
-        onClick={() => {
-          setShowSidebar(!showSidebar);
-        }}
-      >
-        {showSidebar ? <X /> : <img src={demo} width={20} height={20} />}
-      </div>
+      {showSidebar &&
+        <div
+          className="m-3 mt-4 absolute right-0 top-0 z-20 cursor-pointer bg-white p-1 rounded"
+          onClick={() => {
+            setShowSidebar(!showSidebar);
+          }}
+        >
+          <X />
+          {/* {showSidebar ? <X /> : <img src={demo} width={20} height={20} />} */}
+        </div>}
 
       {/* Sidebar Component */}
       <div

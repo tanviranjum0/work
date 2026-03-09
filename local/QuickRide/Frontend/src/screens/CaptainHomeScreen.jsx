@@ -350,8 +350,8 @@ function CaptainHomeScreen() {
       {showCaptainDetailsPanel && (
         <div className="absolute bottom-0 flex flex-col justify-start p-4 gap-2 rounded-t-lg  backdrop-blur-xl  h-fit w-full">
           {/* Driver details */}
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-3">
+          <div className="grid grid-cols-3 justify-between items-center">
+            <div className="flex col-span-1 items-center gap-3">
               <div onClick={() => setShowSidebar((prev) => !prev)} className="my-2 cursor-pointer hover:border-2 border-black hover:opacity-95 hover:scale-95 select-none rounded-full w-10 h-10 bg-blue-400 mx-auto flex items-center justify-center">
                 <h1 className="text-lg text-white">
                   {captain?.fullname?.firstname[0]}
@@ -359,7 +359,7 @@ function CaptainHomeScreen() {
                 </h1>
               </div>
 
-              <div>
+              <div className="">
                 <h1 className="text-lg font-semibold leading-6">
                   {captain?.fullname?.firstname} {captain?.fullname?.lastname}
                 </h1>
@@ -370,9 +370,13 @@ function CaptainHomeScreen() {
               </div>
             </div>
 
-            <div className="text-right">
-              <p className="text-xs text-gray-500 ">Earnings</p>
-              <h1 className="font-semibold">$ {earnings?.today}</h1>
+            <div className="text-center col-span-1 ">
+              <p className="text-xs text-gray-500 ">Today&apos;s Earning</p>
+              <h1 className="font-semibold">$ {earnings?.today.toFixed(2)}</h1>
+            </div>
+            <div className="text-center col-span-1 ">
+              <p className="text-xs text-gray-500 ">Total Earning</p>
+              <h1 className="font-semibold">$ {earnings?.total.toFixed(2)}</h1>
             </div>
           </div>
 
