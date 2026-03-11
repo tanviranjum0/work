@@ -25,7 +25,7 @@ import { ChevronLeft, Trash2 } from "lucide-react";
 
 function App() {
   return (
-    <div className="w-full h-dvh flex items-center">
+    <div className="w-full h-full flex items-center">
       <div className="relative w-full  h-full bg-white overflow-hidden">
         {/* Force Reset Button to clear data */}
         <div className="absolute top-36 -right-11 opacity-20 hover:opacity-100 z-50 flex items-center p-1 PL-0 gap-1 bg-zinc-50 border-2 border-r-0 border-gray-300 hover:-translate-x-11 rounded-l-md transition-all duration-300">
