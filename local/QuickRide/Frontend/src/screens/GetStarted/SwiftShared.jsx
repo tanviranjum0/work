@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -191,8 +194,8 @@ export function Navbar({ activePage, onNavigate }) {
 
                 {/* Desktop actions */}
                 <div className="hidden md:flex items-center gap-3">
-                    <Btn variant="ghost" cls="!px-5 !py-2.5 !text-sm" onClick={() => onNavigate("login")}>Log In</Btn>
-                    <Btn variant="primary" cls="!px-5 !py-2.5 !text-sm" onClick={() => onNavigate("home")}>Book a Ride →</Btn>
+                    {/* <Btn variant="ghost" cls="!px-5 !py-2.5 !text-sm" onClick={() => onNavigate("login")}>Log In</Btn> */}
+                    <Btn variant="primary" cls="!px-5 !py-2.5 !text-sm" onClick={() => onNavigate("login")}>Get Started →</Btn>
                 </div>
 
                 {/* Mobile hamburger */}

@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 
 /* ── Shared ───────────────────────────────────────────────────────────────── */
-import { injectFonts, ANIM_CSS, Navbar, Footer, CTASection, Btn, Badge, SectionHead, RIDE_TYPES, TESTIMONIALS } from "./SwiftShared";
+import { injectFonts, ANIM_CSS, Navbar, Footer, CTASection, Btn, SectionHead, RIDE_TYPES, TESTIMONIALS } from "./SwiftShared";
 
 /* ── Pages ────────────────────────────────────────────────────────────────── */
 import FeaturesPage from "./FeaturesPage";
@@ -295,7 +297,7 @@ function TestimonialsPreview() {
                 <SectionHead badge="Real Stories" title="Loved by" highlight="millions" sub="Don't take our word for it — here's what our riders say." center light />
                 <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-6 sm:p-10 mb-6 border border-white/5 overflow-hidden">
                     <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full opacity-10 blur-3xl" style={{ background: t.gradient }} />
-                    <p className="font-display italic text-white/90 leading-relaxed mb-6 text-lg sm:text-2xl">"{t.text}"</p>
+                    <p className="font-display italic text-white/90 leading-relaxed mb-6 text-lg sm:text-2xl">&quot;{t.text}&quot;</p>
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div className="flex items-center gap-3.5">
                             <div className="w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0" style={{ background: t.gradient }}>{t.avatar}</div>
@@ -589,7 +591,7 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
                     <div className="text-center pb-2">
                         <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-3xl mx-auto mb-4">🔑</div>
                         <h3 className="font-display text-2xl font-bold text-slate-900 mb-1">Reset your password</h3>
-                        <p className="text-sm text-slate-500 font-body">Enter your email and we'll send a reset link right away.</p>
+                        <p className="text-sm text-slate-500 font-body">Enter your email and we&apos;ll send a reset link right away.</p>
                     </div>
                     <LInput label="Email address" type="email" placeholder="you@example.com" value={form.email} onChange={set("email")} accent={accent} />
                     <ActionBtn loading={loading} onClick={handleSubmit} bg={btnBg} shadow={btnShadow} label="Send Reset Link →" loadingLabel="Sending…" />
@@ -629,7 +631,7 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
                     <Divider />
                     <SocialButtons />
                     <p className="text-center text-xs text-slate-500 font-body">
-                        Don't have an account?{" "}
+                        Don&apos;t have an account?{" "}
                         <button onClick={() => setAuthMode("signup")} className="font-semibold border-none bg-transparent cursor-pointer font-body" style={{ color: isRider ? "#1a56ff" : "#00c4a7" }}>
                             Sign up free
                         </button>
@@ -866,7 +868,7 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
                     )}
 
                     <p className="text-center text-xs text-slate-400 font-body leading-relaxed -mt-1">
-                        By signing up you agree to Swift's{" "}
+                        By signing up you agree to Swift&apos;s{" "}
                         <span className="cursor-pointer hover:underline" style={{ color: isRider ? "#1a56ff" : "#00c4a7" }}>Terms</span>{" & "}
                         <span className="cursor-pointer hover:underline" style={{ color: isRider ? "#1a56ff" : "#00c4a7" }}>Privacy Policy</span>
                     </p>
@@ -1029,7 +1031,7 @@ function LoginPage({ onNavigate }) {
 ══════════════════════════════════════════════════════════════════════════════ */
 export default function SwiftApp() {
     const [page, setPage] = useState("home");
-
+    console.log(page)
     useEffect(() => { injectFonts(); }, []);
 
     // Scroll to top on every page change

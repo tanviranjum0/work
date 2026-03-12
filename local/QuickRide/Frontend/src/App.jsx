@@ -18,6 +18,7 @@ import {
   ResetPassword,
   ForgotPassword
 } from "./screens/";
+import SwiftApp from "./screens/GetStarted/SwiftApp"
 import { logger } from "./utils/logger";
 import { SocketDataContext } from "./contexts/SocketContext";
 import { useEffect, useContext } from "react";
@@ -46,7 +47,7 @@ function App() {
         <BrowserRouter>
           <LoggingWrapper />
           <Routes>
-            <Route path="/" element={<GetStarted />} />
+            <Route path="/" element={<SwiftApp />} />
             <Route
               path="/home"
               element={
