@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 /* ── Shared ───────────────────────────────────────────────────────────────── */
 import { injectFonts, ANIM_CSS, Navbar, Footer, CTASection, Btn, SectionHead, RIDE_TYPES, TESTIMONIALS } from "./SwiftShared";
 
@@ -269,7 +270,7 @@ function FeaturesPreview({ onNavigate }) {
     return (
         <section className="py-20 sm:py-24 bg-white">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                <SectionHead badge="Why Swift" badgeColor="teal" title="Designed around" highlight="your trust" sub="Every feature in Swift was built answering one question: what does the rider actually need to feel safe, comfortable, and in control?" />
+                <SectionHead badge="Why Swift" badgeColor="teal" title="Designed around" highlight="your trust" sub="Every feature in Swift was built answering one question: what does the user actually need to feel safe, comfortable, and in control?" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
                     {FEATURES_HOME.map((f, i) => (
                         <div key={i} className="lift bg-slate-50 rounded-2xl p-5 border border-slate-100">
@@ -294,7 +295,7 @@ function TestimonialsPreview() {
     return (
         <section className="py-20 sm:py-24 bg-slate-900 overflow-hidden">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                <SectionHead badge="Real Stories" title="Loved by" highlight="millions" sub="Don't take our word for it — here's what our riders say." center light />
+                <SectionHead badge="Real Stories" title="Loved by" highlight="millions" sub="Don't take our word for it — here's what our users say." center light />
                 <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-6 sm:p-10 mb-6 border border-white/5 overflow-hidden">
                     <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full opacity-10 blur-3xl" style={{ background: t.gradient }} />
                     <p className="font-display italic text-white/90 leading-relaxed mb-6 text-lg sm:text-2xl">&quot;{t.text}&quot;</p>
@@ -364,11 +365,11 @@ function HomePage({ onNavigate }) {
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   LOGIN PAGE — Rider & Captain
+   LOGIN PAGE — user & Captain
 ══════════════════════════════════════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   LOGIN PAGE — Rider & Captain (full-page section)
+   LOGIN PAGE — user & Captain (full-page section)
 ══════════════════════════════════════════════════════════════════════════════ */
 const LOGIN_PAGE_CSS = `
   @keyframes spin       { to { transform: rotate(360deg); } }
@@ -381,7 +382,7 @@ const LOGIN_PAGE_CSS = `
 `;
 
 /* ── Data for panels ───────────────────────────────────────────────────────── */
-const RIDER_HIGHLIGHTS = [
+const user_HIGHLIGHTS = [
     { icon: "⭐", title: "4.9★ rated service", sub: "from 800K+ verified reviews" },
     { icon: "🛡️", title: "Fully insured rides", sub: "$1M coverage, every trip" },
     { icon: "⚡", title: "Average 3-min pickup", sub: "Real-time GPS tracking" },
@@ -395,7 +396,7 @@ const CAPTAIN_HIGHLIGHTS = [
     { icon: "📈", title: "Bonuses & rewards", sub: "Trip targets unlock extra earnings" },
 ];
 
-const RIDER_STATS = [["2.4M+", "Rides/month"], ["180+", "Cities"]];
+const user_STATS = [["2.4M+", "Rides/month"], ["180+", "Cities"]];
 const CAPTAIN_STATS = [["60K+", "Active captains"], ["$28/hr", "Avg earnings"]];
 
 /* ── Sub-components ─────────────────────────────────────────────────────────── */
@@ -404,7 +405,7 @@ const CAPTAIN_STATS = [["60K+", "Active captains"], ["$28/hr", "Avg earnings"]];
 function LInput({ label, type = "text", placeholder, value, onChange, extra, accent = "login" }) {
     return (
         <div>
-            {label && <label className="text-xs font-bold uppercase tracking-wider text-slate-500 font-body mb-1.5 block">{label}</label>}
+            {label && <label className="text-xs font-bold uppercase tracking-wider text-slate-500 font-body my-2 block">{label}</label>}
             <input
                 type={type}
                 placeholder={placeholder}
@@ -451,11 +452,11 @@ function SocialButtons() {
 }
 
 /** Left branding panel */
-function BrandPanel({ isRider }) {
-    const highlights = isRider ? RIDER_HIGHLIGHTS : CAPTAIN_HIGHLIGHTS;
-    const stats = isRider ? RIDER_STATS : CAPTAIN_STATS;
-    const accentHex = isRider ? "#93c5fd" : "#6ee7b7";
-    const bg = isRider
+function BrandPanel({ isuser }) {
+    const highlights = isuser ? user_HIGHLIGHTS : CAPTAIN_HIGHLIGHTS;
+    const stats = isuser ? user_STATS : CAPTAIN_STATS;
+    const accentHex = isuser ? "#93c5fd" : "#6ee7b7";
+    const bg = isuser
         ? "linear-gradient(145deg,#0b0f1a 0%,#0f2055 55%,#1a56ff 100%)"
         : "linear-gradient(145deg,#021a10 0%,#064e3b 55%,#00c4a7 100%)";
 
@@ -465,9 +466,9 @@ function BrandPanel({ isRider }) {
 
             {/* Decorative orbs */}
             <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full blur-3xl pointer-events-none opacity-20"
-                style={{ background: isRider ? "#3b82f6" : "#34d399" }} />
+                style={{ background: isuser ? "#3b82f6" : "#34d399" }} />
             <div className="absolute -bottom-16 -left-16 w-56 h-56 rounded-full blur-3xl pointer-events-none opacity-15"
-                style={{ background: isRider ? "#818cf8" : "#6ee7b7" }} />
+                style={{ background: isuser ? "#818cf8" : "#6ee7b7" }} />
             <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
                 style={{ backgroundImage: "linear-gradient(white 1px,transparent 1px),linear-gradient(90deg,white 1px,transparent 1px)", backgroundSize: "36px 36px" }} />
 
@@ -483,13 +484,13 @@ function BrandPanel({ isRider }) {
                 {/* Headline */}
                 <div>
                     <div className="text-xs font-bold uppercase tracking-widest mb-3 font-body" style={{ color: accentHex }}>
-                        {isRider ? "For Riders" : "For Captains"}
+                        {isuser ? "For users" : "For Captains"}
                     </div>
                     <h2 className="font-display text-3xl sm:text-4xl font-bold text-white leading-tight mb-3">
-                        {isRider ? <>Your city,<br />your way.</> : <>Drive more.<br />Earn more.</>}
+                        {isuser ? <>Your city,<br />your way.</> : <>Drive more.<br />Earn more.</>}
                     </h2>
                     <p className="text-sm text-white/55 font-body leading-relaxed max-w-xs">
-                        {isRider
+                        {isuser
                             ? "Safe, affordable rides in 180+ cities. Booked in 10 seconds, tracked live, door-to-door."
                             : "Join 60,000+ Swift Captains. Flexible hours, instant payouts, and the best support in the business."}
                     </p>
@@ -523,30 +524,164 @@ function BrandPanel({ isRider }) {
 }
 
 /* ── LoginForm (used by LoginPage) ─────────────────────────────────────────── */
-function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
-    const [form, setFormState] = useState({ firstName: "", lastName: "", email: "", phone: "", password: "", vehicleColour: "", vehicleCapacity: "", vehicleNumber: "", vehicleType: "" });
+function LoginForm({ role, authMode, setAuthMode, onNavigate, }) {
+    const navigation = useNavigate();
+    const [responseError, setResponseError] = useState("")
+    useEffect(() => {
+        setTimeout(() => {
+            setResponseError("");
+        }, 5000);
+    }, [responseError]);
+    const [form, setFormState] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        password: "",
+        vehicleColour: "",
+        vehicleCapacity: "",
+        vehicleNumber: "",
+        vehicleType: ""
+    });
     const [showPass, setShowPass] = useState(false);
     const [loading, setLoading] = useState(false);
     const [captainStep, setCaptainStep] = useState(1);
     const [done, setDone] = useState(false);
 
-    const isRider = role === "rider";
+    const isuser = role === "user";
     const isLogin = authMode === "login";
     const isSignup = authMode === "signup";
     const isForgot = authMode === "forgot";
-    const accent = isRider ? "login" : "captain";
-    const btnBg = isRider
+    const accent = isuser ? "login" : "captain";
+    const btnBg = isuser
         ? "linear-gradient(135deg,#1a56ff,#0f3fd4)"
         : "linear-gradient(135deg,#00c4a7,#00a38d)";
-    const btnShadow = isRider
+    const btnShadow = isuser
         ? "0 8px 24px rgba(26,86,255,.3)"
         : "0 8px 24px rgba(0,196,167,.3)";
 
     const set = (k) => (e) => setFormState(f => ({ ...f, [k]: e.target.value }));
 
     const handleSubmit = () => {
-        setLoading(true);
-        setTimeout(() => { setLoading(false); setDone(true); }, 1800);
+        if (role === "user" && authMode === "signup") {
+            const signupUser = async (data) => {
+                const userData = {
+                    fullname: {
+                        firstname: data.firstName,
+                        lastname: data.lastName,
+                    },
+                    email: data.email,
+                    password: data.password,
+                    phone: data.phone,
+                };
+
+                try {
+                    setLoading(true);
+                    const response = await axios.post(
+                        `${import.meta.env.VITE_SERVER_URL}/user/register`,
+                        userData
+                    );
+                    localStorage.setItem("token", response.data.token);
+                    navigation("/home");
+                } catch (error) {
+                    setResponseError(error.response.data[0].msg);
+                } finally {
+                    setLoading(false);
+                }
+            };
+            signupUser(form);
+        } else if (role === "captain" && authMode === "signup") {
+            const signupCaptain = async (data) => {
+                const captainData = {
+                    fullname: {
+                        firstname: data.firstName,
+                        lastname: data.lastName,
+                    },
+                    email: data.email,
+                    password: data.password,
+                    phone: data.phone,
+                    vehicle: {
+                        color: data.vehicleColour,
+                        number: data.vehicleNumber,
+                        capacity: data.vehicleCapacity,
+                        type: data.vehicleType,
+                    },
+                };
+
+                try {
+                    setLoading(true);
+                    const response = await axios.post(
+                        `${import.meta.env.VITE_SERVER_URL}/captain/register`,
+                        captainData
+                    );
+                    localStorage.setItem("token", response.data.token);
+                    navigation("/captain/home");
+                } catch (error) {
+                    setResponseError(
+                        error.response.data[0]?.msg || error.response.data.message
+                    );
+                } finally {
+                    setLoading(false);
+                }
+                signupCaptain(form)
+            };
+
+        }
+        if (authMode == "login") {
+            if (role === "user") {
+                const loginUser = async (data) => {
+                    if (data.email.trim() !== "" && data.password.trim() !== "") {
+                        try {
+                            setLoading(true);
+                            const response = await axios.post(
+                                `${import.meta.env.VITE_SERVER_URL}/user/login`,
+                                data
+                            );
+                            localStorage.setItem("token", response.data.token);
+                            localStorage.setItem("userData", JSON.stringify({
+                                type: "user",
+                                data: response.data.user,
+                            }));
+                            navigation("/home");
+                        } catch (error) {
+                            setResponseError(error.response.data.message);
+
+                        } finally {
+                            setLoading(false);
+                        }
+                    }
+                };
+                loginUser(form)
+            } else if (role === "captain") {
+
+
+                const loginCaptain = async (data) => {
+                    if (data.email.trim() !== "" && data.password.trim() !== "") {
+                        try {
+                            setLoading(true)
+                            const response = await axios.post(
+                                `${import.meta.env.VITE_SERVER_URL}/captain/login`,
+                                data
+                            );
+                            localStorage.setItem("token", response.data.token);
+                            localStorage.setItem("userData", JSON.stringify({
+                                type: "captain",
+                                data: response.data.captain,
+                            }));
+                            navigation("/captain/home");
+                        } catch (error) {
+                            setResponseError(error.response.data.message);
+
+                        } finally {
+                            setLoading(false);
+                        }
+                    }
+                };
+                loginCaptain(form);
+            }
+
+        }
+
     };
 
     /* ── Success screen ── */
@@ -554,25 +689,25 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
         return (
             <div className="flex flex-col items-center justify-center text-center gap-5 py-10 px-2 form-slide">
                 <div className="w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-lg"
-                    style={{ background: isRider ? "linear-gradient(135deg,#dbeafe,#bfdbfe)" : "linear-gradient(135deg,#d1fae5,#a7f3d0)" }}>
+                    style={{ background: isuser ? "linear-gradient(135deg,#dbeafe,#bfdbfe)" : "linear-gradient(135deg,#d1fae5,#a7f3d0)" }}>
                     ✅
                 </div>
                 <div>
                     <h3 className="font-display text-2xl font-bold text-slate-900 mb-1">
-                        {isLogin ? "Welcome back!" : isRider ? "Account created!" : "Application submitted!"}
+                        {isLogin ? "Welcome back!" : isuser ? "Account created!" : "Application submitted!"}
                     </h3>
                     <p className="text-sm text-slate-500 font-body max-w-xs leading-relaxed">
                         {isLogin
-                            ? `You're signed in as a ${isRider ? "rider" : "captain"}. Redirecting you now…`
-                            : isRider
-                                ? "Your Swift rider account is ready. Book your first ride in 10 seconds."
+                            ? `You're signed in as a ${isuser ? "user" : "captain"}. Redirecting you now…`
+                            : isuser
+                                ? "Your Swift user account is ready. Book your first ride in 10 seconds."
                                 : "Our team will review your application within 24 hours. You'll get an email once approved."}
                     </p>
                 </div>
                 <button onClick={() => onNavigate("home")}
                     className="px-8 py-3 rounded-xl font-bold text-white font-body border-none cursor-pointer hover:-translate-y-0.5 transition-all duration-200 shadow-lg"
                     style={{ background: btnBg, boxShadow: btnShadow }}>
-                    {isRider ? "Book a Ride →" : "Go to Dashboard →"}
+                    {isuser ? "Book a Ride →" : "Go to Dashboard →"}
                 </button>
                 <button onClick={() => { setDone(false); setFormState({ firstName: "", lastName: "", email: "", phone: "", password: "", vehicleColour: "", vehicleCapacity: "", vehicleNumber: "", vehicleType: "" }); }}
                     className="text-xs text-slate-400 font-body hover:text-slate-600 border-none bg-transparent cursor-pointer">
@@ -586,7 +721,7 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
         <div className="flex flex-col gap-5 form-slide" key={`${role}-${authMode}-${captainStep}`}>
 
             {/* ── Forgot password ── */}
-            {isForgot && (
+            {/* {isForgot && (
                 <>
                     <div className="text-center pb-2">
                         <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-3xl mx-auto mb-4">🔑</div>
@@ -597,10 +732,10 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
                     <ActionBtn loading={loading} onClick={handleSubmit} bg={btnBg} shadow={btnShadow} label="Send Reset Link →" loadingLabel="Sending…" />
                     <p className="text-center text-xs text-slate-500 font-body">
                         Remembered it?{" "}
-                        <button onClick={() => setAuthMode("login")} className="font-semibold border-none bg-transparent cursor-pointer" style={{ color: isRider ? "#1a56ff" : "#00c4a7" }}>Back to sign in</button>
+                        <button onClick={() => setAuthMode("login")} className="font-semibold border-none bg-transparent cursor-pointer" style={{ color: isuser ? "#1a56ff" : "#00c4a7" }}>Back to sign in</button>
                     </p>
                 </>
-            )}
+            )} */}
 
             {/* ── Login form ── */}
             {isLogin && (
@@ -616,23 +751,27 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
                     />
                     {/* Remember / forgot row */}
                     <div className="flex justify-between items-center -mt-2">
-                        <label className="flex items-center gap-2 text-xs text-slate-500 font-body cursor-pointer select-none">
-                            <input type="checkbox" className="w-3.5 h-3.5 rounded" style={{ accentColor: isRider ? "#1a56ff" : "#00c4a7" }} />
+                        {/* <label className="flex items-center gap-2 text-xs text-slate-500 font-body cursor-pointer select-none">
+                            <input type="checkbox" className="w-3.5 h-3.5 rounded" style={{ accentColor: isuser ? "#1a56ff" : "#00c4a7" }} />
                             Remember me
-                        </label>
-                        <button onClick={() => setAuthMode("forgot")}
+                        </label> */}
+                        <button onClick={() => navigation(`/${role}/forgot-password`)}
                             className="text-xs font-semibold hover:underline border-none bg-transparent cursor-pointer font-body"
-                            style={{ color: isRider ? "#1a56ff" : "#00c4a7" }}>
+                            style={{ color: isuser ? "#1a56ff" : "#00c4a7" }}>
                             Forgot password?
                         </button>
                     </div>
+                    <p className="text-sm text-center my-2 text-red-500">
+                        {responseError && responseError}
+                    </p>
                     <ActionBtn loading={loading} onClick={handleSubmit} bg={btnBg} shadow={btnShadow}
-                        label={`Sign In as ${isRider ? "Rider" : "Captain"} →`} loadingLabel="Signing in…" />
-                    <Divider />
-                    <SocialButtons />
+                        label={`Sign In as ${isuser ? "user" : "Captain"} →`} loadingLabel="Signing in…" />
+
+                    {/* <Divider /> */}
+                    {/* <SocialButtons /> */}
                     <p className="text-center text-xs text-slate-500 font-body">
                         Don&apos;t have an account?{" "}
-                        <button onClick={() => setAuthMode("signup")} className="font-semibold border-none bg-transparent cursor-pointer font-body" style={{ color: isRider ? "#1a56ff" : "#00c4a7" }}>
+                        <button onClick={() => setAuthMode("signup")} className="font-semibold border-none bg-transparent cursor-pointer font-body" style={{ color: isuser ? "#1a56ff" : "#00c4a7" }}>
                             Sign up free
                         </button>
                     </p>
@@ -643,7 +782,7 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
             {isSignup && (
                 <>
                     {/* Captain step indicator */}
-                    {!isRider && (
+                    {!isuser && (
                         <div className="flex items-center gap-2 mb-1">
                             {[1, 2].map(s => (
                                 <div key={s} className="flex items-center gap-2">
@@ -661,10 +800,10 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
                     )}
 
                     {/* ── Step 1: Personal info ── */}
-                    {(isRider || captainStep === 1) && (
+                    {(isuser || captainStep === 1) && (
                         <>
-                            {/* Rider keeps: full name + phone + email + password + confirm */}
-                            {isRider && (
+                            {/* user keeps: full name + phone + email + password + confirm */}
+                            {isuser && (
                                 <>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <LInput label="First name" placeholder="Alex" value={form.firstName} onChange={set("firstName")} accent={accent} />
@@ -698,7 +837,7 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
                             )}
 
                             {/* Captain Step 1: First name, Last name, Phone (10-digit), Password */}
-                            {!isRider && (
+                            {!isuser && (
                                 <>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <LInput label="First name" placeholder="Marcus" value={form.firstName} onChange={set("firstName")} accent="captain" />
@@ -753,7 +892,7 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
                     )}
 
                     {/* ── Step 2: Captain vehicle details ── */}
-                    {!isRider && captainStep === 2 && (
+                    {!isuser && captainStep === 2 && (
                         <>
                             {/* Vehicle colour */}
                             <div>
@@ -851,14 +990,19 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
                     )}
 
                     {/* ── CTA ── */}
-                    {isRider || captainStep === 2 ? (
-                        <ActionBtn loading={loading}
-                            onClick={handleSubmit}
-                            bg={btnBg} shadow={btnShadow}
-                            label={isRider ? "Create Rider Account →" : "Submit Application →"}
-                            loadingLabel="Creating account…"
-                            disabled={isRider && form.password !== form.confirm && form.confirm?.length > 0}
-                        />
+                    {isuser || captainStep === 2 ? (
+                        <>
+                            <p className="text-sm text-center my-2 text-red-500">
+                                {responseError && responseError}
+                            </p>
+                            <ActionBtn loading={loading}
+                                onClick={handleSubmit}
+                                bg={btnBg} shadow={btnShadow}
+                                label={isuser ? "Create user Account →" : "Submit Application →"}
+                                loadingLabel="Creating account…"
+                                disabled={isuser && form.password !== form.confirm && form.confirm?.length > 0}
+                            />
+                        </>
                     ) : (
                         <button onClick={() => setCaptainStep(2)}
                             className="w-full py-3.5 rounded-xl font-bold text-base text-white font-body border-none cursor-pointer transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
@@ -869,14 +1013,14 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate }) {
 
                     <p className="text-center text-xs text-slate-400 font-body leading-relaxed -mt-1">
                         By signing up you agree to Swift&apos;s{" "}
-                        <span className="cursor-pointer hover:underline" style={{ color: isRider ? "#1a56ff" : "#00c4a7" }}>Terms</span>{" & "}
-                        <span className="cursor-pointer hover:underline" style={{ color: isRider ? "#1a56ff" : "#00c4a7" }}>Privacy Policy</span>
+                        <span className="cursor-pointer hover:underline" style={{ color: isuser ? "#1a56ff" : "#00c4a7" }}>Terms</span>{" & "}
+                        <span className="cursor-pointer hover:underline" style={{ color: isuser ? "#1a56ff" : "#00c4a7" }}>Privacy Policy</span>
                     </p>
                     <p className="text-center text-xs text-slate-500 font-body">
                         Already have an account?{" "}
                         <button onClick={() => { setAuthMode("login"); setCaptainStep(1); }}
                             className="font-semibold border-none bg-transparent cursor-pointer font-body"
-                            style={{ color: isRider ? "#1a56ff" : "#00c4a7" }}>
+                            style={{ color: isuser ? "#1a56ff" : "#00c4a7" }}>
                             Sign in
                         </button>
                     </p>
@@ -911,10 +1055,9 @@ function Divider() {
 
 /* ══ Main LoginPage ══════════════════════════════════════════════════════════ */
 function LoginPage({ onNavigate }) {
-    const [role, setRole] = useState("rider");    // "rider" | "captain"
+    const [role, setRole] = useState("user");    // "user" | "captain"
     const [authMode, setAuthMode] = useState("login");    // "login" | "signup" | "forgot"
-    const isRider = role === "rider";
-
+    const isuser = role === "user";
     const switchRole = (r) => { setRole(r); setAuthMode("login"); };
 
     return (
@@ -932,12 +1075,12 @@ function LoginPage({ onNavigate }) {
                     </div>
                     <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-2">
                         Sign in to your<br />
-                        <em className="not-italic" style={{ color: isRider ? "#1a56ff" : "#00c4a7" }}>
-                            {isRider ? "rider" : "captain"} account
+                        <em className="not-italic" style={{ color: isuser ? "#1a56ff" : "#00c4a7" }}>
+                            {isuser ? "user" : "captain"} account
                         </em>
                     </h1>
                     <p className="text-slate-500 text-sm sm:text-base font-body max-w-md mx-auto leading-relaxed">
-                        {isRider
+                        {isuser
                             ? "Book, track, and pay for rides across 180+ cities — all in one place."
                             : "Manage your trips, track earnings, and access captain-only tools."}
                     </p>
@@ -951,10 +1094,10 @@ function LoginPage({ onNavigate }) {
                             style={{
                                 width: "calc(50% - 6px)",
                                 left: 6,
-                                background: isRider ? "linear-gradient(135deg,#1a56ff,#0f3fd4)" : "linear-gradient(135deg,#00c4a7,#00a38d)",
-                                transform: isRider ? "translateX(0)" : "translateX(calc(100% + 3px))",
+                                background: isuser ? "linear-gradient(135deg,#1a56ff,#0f3fd4)" : "linear-gradient(135deg,#00c4a7,#00a38d)",
+                                transform: isuser ? "translateX(0)" : "translateX(calc(100% + 3px))",
                             }} />
-                        {[["🚗  Rider", "rider"], ["🧢  Captain", "captain"]].map(([label, val]) => (
+                        {[["🚗  user", "user"], ["🧢  Captain", "captain"]].map(([label, val]) => (
                             <button key={val} onClick={() => switchRole(val)}
                                 className={`relative z-10 flex-1 py-3 text-sm font-bold font-body rounded-xl border-none cursor-pointer transition-colors duration-200 ${role === val ? "text-white" : "text-slate-500 hover:text-slate-700 bg-transparent"}`}>
                                 {label}
@@ -968,7 +1111,7 @@ function LoginPage({ onNavigate }) {
                     <div className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl shadow-blue-100/60 overflow-hidden flex flex-col lg:flex-row border border-blue-50">
 
                         {/* Brand panel */}
-                        <BrandPanel isRider={isRider} />
+                        <BrandPanel isuser={isuser} />
 
                         {/* Form panel */}
                         <div className="flex-1 p-6 sm:p-10 flex flex-col">
@@ -988,13 +1131,13 @@ function LoginPage({ onNavigate }) {
                             {/* Form heading */}
                             <div className="mb-6">
                                 <h2 className="font-display text-2xl font-bold text-slate-900">
-                                    {authMode === "login" ? (isRider ? "Welcome back 👋" : "Good to see you 🧢")
-                                        : authMode === "signup" ? (isRider ? "Join Swift as a rider" : "Become a Swift Captain")
+                                    {authMode === "login" ? (isuser ? "Welcome back 👋" : "Good to see you 🧢")
+                                        : authMode === "signup" ? (isuser ? "Join Swift as a user" : "Become a Swift Captain")
                                             : "Reset your password"}
                                 </h2>
                                 <p className="text-sm text-slate-500 font-body mt-1">
-                                    {authMode === "login" ? `Sign in to your Swift ${isRider ? "rider" : "captain"} account`
-                                        : authMode === "signup" ? (isRider ? "Get your first ride in under 2 minutes" : "Apply in 2 minutes — start earning this week")
+                                    {authMode === "login" ? `Sign in to your Swift ${isuser ? "user" : "captain"} account`
+                                        : authMode === "signup" ? (isuser ? "Get your first ride in under 2 minutes" : "Apply in 2 minutes — start earning this week")
                                             : "We'll email you a secure reset link"}
                                 </p>
                             </div>
@@ -1031,7 +1174,6 @@ function LoginPage({ onNavigate }) {
 ══════════════════════════════════════════════════════════════════════════════ */
 export default function SwiftApp() {
     const [page, setPage] = useState("home");
-    console.log(page)
     useEffect(() => { injectFonts(); }, []);
 
     // Scroll to top on every page change

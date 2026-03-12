@@ -76,7 +76,7 @@ function CaptainLogin() {
           <Button title={"Login"} loading={loading} type="submit" />
         </form>
         <p className="text-sm font-normal text-center mt-4">
-          Don't have an account?{" "}
+          Don&aos;t have an account?{" "}
           <Link to={"/captain/signup"} className="font-semibold">
             Sign up
           </Link>
