@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import map from "/map.png";
@@ -45,6 +47,7 @@ function UserHomeScreen() {
   const [showSelectVehiclePanel, setShowSelectVehiclePanel] = useState(false);
   const [showRideDetailsPanel, setShowRideDetailsPanel] = useState(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleLocationChange = useCallback(
     debounce(async (inputValue, token) => {
       if (inputValue.length >= 3) {

@@ -565,6 +565,10 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate, }) {
     const handleSubmit = () => {
         if (role === "user" && authMode === "signup") {
             const signupUser = async (data) => {
+                if (!data.firstName || !data.lastName || !data.email || !data.password || !data.phone) {
+                    setResponseError("All input fields are required.");
+                    return;
+                }
                 const userData = {
                     fullname: {
                         firstname: data.firstName,
@@ -584,7 +588,8 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate, }) {
                     localStorage.setItem("token", response.data.token);
                     navigation("/home");
                 } catch (error) {
-                    setResponseError(error.response.data[0].msg);
+                    console.log(error.response)
+                    setResponseError(error.response.data[0]?.msg || error.response.data.message);
                 } finally {
                     setLoading(false);
                 }
@@ -592,6 +597,11 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate, }) {
             signupUser(form);
         } else if (role === "captain" && authMode === "signup") {
             const signupCaptain = async (data) => {
+                console.log(data);
+                if (!data.firstName || !data.lastName || !data.email || !data.password || !data.phone || !data.vehicleColour || !data.vehicleCapacity || !data.vehicleNumber || !data.vehicleType) {
+                    setResponseError("All input fields are required.");
+                    return;
+                }
                 const captainData = {
                     fullname: {
                         firstname: data.firstName,
@@ -617,65 +627,84 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate, }) {
                     localStorage.setItem("token", response.data.token);
                     navigation("/captain/home");
                 } catch (error) {
-                    setResponseError(
-                        error.response.data[0]?.msg || error.response.data.message
+                    setResponseError(error.response.data[0]?.msg || error.response.data.message
                     );
                 } finally {
                     setLoading(false);
                 }
-                signupCaptain(form)
+
             };
 
+            signupCaptain(form)
         }
         if (authMode == "login") {
             if (role === "user") {
+                function validateEmail(email) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    return emailRegex.test(email);
+                }
+                if (!validateEmail(form.email)) {
+                    setResponseError("Please enter a valid email address.");
+                    return;
+                }
+                if (form.password.trim() == "") {
+                    setResponseError("Please enter a valid password.");
+                    return;
+                }
                 const loginUser = async (data) => {
-                    if (data.email.trim() !== "" && data.password.trim() !== "") {
-                        try {
-                            setLoading(true);
-                            const response = await axios.post(
-                                `${import.meta.env.VITE_SERVER_URL}/user/login`,
-                                data
-                            );
-                            localStorage.setItem("token", response.data.token);
-                            localStorage.setItem("userData", JSON.stringify({
-                                type: "user",
-                                data: response.data.user,
-                            }));
-                            navigation("/home");
-                        } catch (error) {
-                            setResponseError(error.response.data.message);
+                    try {
+                        setLoading(true);
+                        const response = await axios.post(
+                            `${import.meta.env.VITE_SERVER_URL}/user/login`,
+                            { email: data.email, password: data.password }
+                        );
+                        localStorage.setItem("token", response.data.token);
+                        localStorage.setItem("userData", JSON.stringify({
+                            type: "user",
+                            data: response.data.user,
+                        }));
+                        navigation("/home");
+                    } catch (error) {
+                        setResponseError(error.response.data[0]?.msg || error.response.data.message);
 
-                        } finally {
-                            setLoading(false);
-                        }
+                    } finally {
+                        setLoading(false);
                     }
                 };
-                loginUser(form)
+                loginUser(form);
             } else if (role === "captain") {
-
-
+                function validateEmail(email) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    return emailRegex.test(email);
+                }
+                if (!validateEmail(form.email)) {
+                    setResponseError("Please enter a valid email address.");
+                    return;
+                }
+                if (form.password.trim() == "") {
+                    setResponseError("Please enter a valid password.");
+                    return;
+                }
                 const loginCaptain = async (data) => {
-                    if (data.email.trim() !== "" && data.password.trim() !== "") {
-                        try {
-                            setLoading(true)
-                            const response = await axios.post(
-                                `${import.meta.env.VITE_SERVER_URL}/captain/login`,
-                                data
-                            );
-                            localStorage.setItem("token", response.data.token);
-                            localStorage.setItem("userData", JSON.stringify({
-                                type: "captain",
-                                data: response.data.captain,
-                            }));
-                            navigation("/captain/home");
-                        } catch (error) {
-                            setResponseError(error.response.data.message);
+                    try {
+                        setLoading(true)
+                        const response = await axios.post(
+                            `${import.meta.env.VITE_SERVER_URL}/captain/login`,
+                            data
+                        );
+                        localStorage.setItem("token", response.data.token);
+                        localStorage.setItem("userData", JSON.stringify({
+                            type: "captain",
+                            data: response.data.captain,
+                        }));
+                        navigation("/captain/home");
+                    } catch (error) {
+                        setResponseError(error.response.data[0]?.msg || error.response.data.message);
 
-                        } finally {
-                            setLoading(false);
-                        }
+                    } finally {
+                        setLoading(false);
                     }
+
                 };
                 loginCaptain(form);
             }
@@ -765,7 +794,7 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate, }) {
                         {responseError && responseError}
                     </p>
                     <ActionBtn loading={loading} onClick={handleSubmit} bg={btnBg} shadow={btnShadow}
-                        label={`Sign In as ${isuser ? "user" : "Captain"} →`} loadingLabel="Signing in…" />
+                        label={`Sign In as ${isuser ? "User" : "Captain"} →`} loadingLabel="Signing in…" />
 
                     {/* <Divider /> */}
                     {/* <SocialButtons /> */}
@@ -868,7 +897,7 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate, }) {
                                             <p className="text-xs text-teal-500 font-body mt-1.5 font-semibold">✓ Valid phone number</p>
                                         )}
                                     </div>
-
+                                    <LInput label="Email address" type="email" placeholder="you@example.com" value={form.email} onChange={set("email")} accent={accent} />
                                     {/* Single password input */}
                                     <div>
                                         <label className="text-xs font-bold uppercase tracking-wider text-slate-500 font-body mb-1.5 block">Password</label>
@@ -966,12 +995,12 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate, }) {
                                 <label className="text-xs font-bold uppercase tracking-wider text-slate-500 font-body mb-2 block">Vehicle type</label>
                                 <div className="grid grid-cols-3 gap-3">
                                     {[
-                                        { icon: "🚗", label: "Car", desc: "4-wheeler, standard" },
-                                        { icon: "🏍️", label: "Motorcycle", desc: "2-wheeler, solo" },
-                                        { icon: "🛺", label: "Auto", desc: "3-wheeler, compact" },
+                                        { icon: "🚗", label: "car", desc: "4-wheeler, standard" },
+                                        { icon: "🏍️", label: "bike", desc: "2-wheeler, solo" },
+                                        { icon: "🛺", label: "auto", desc: "3-wheeler, compact" },
                                     ].map(t => (
                                         <button key={t.label} onClick={() => setFormState(f => ({ ...f, vehicleType: t.label }))}
-                                            className={`flex flex-col items-center gap-2 py-4 px-2 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${form.vehicleType === t.label ? "border-teal-400 bg-teal-50 shadow-md" : "border-slate-200 bg-white hover:border-teal-300"}`}>
+                                            className={`flex flex-col uppercase items-center gap-2 py-4 px-2 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${form.vehicleType === t.label ? "border-teal-400 bg-teal-50 shadow-md" : "border-slate-200 bg-white hover:border-teal-300"}`}>
                                             <span className="text-3xl">{t.icon}</span>
                                             <div className="text-center">
                                                 <div className={`text-sm font-bold font-body ${form.vehicleType === t.label ? "text-teal-700" : "text-slate-700"}`}>{t.label}</div>
@@ -1000,7 +1029,6 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate, }) {
                                 bg={btnBg} shadow={btnShadow}
                                 label={isuser ? "Create user Account →" : "Submit Application →"}
                                 loadingLabel="Creating account…"
-                                disabled={isuser && form.password !== form.confirm && form.confirm?.length > 0}
                             />
                         </>
                     ) : (
@@ -1097,7 +1125,7 @@ function LoginPage({ onNavigate }) {
                                 background: isuser ? "linear-gradient(135deg,#1a56ff,#0f3fd4)" : "linear-gradient(135deg,#00c4a7,#00a38d)",
                                 transform: isuser ? "translateX(0)" : "translateX(calc(100% + 3px))",
                             }} />
-                        {[["🚗  user", "user"], ["🧢  Captain", "captain"]].map(([label, val]) => (
+                        {[["🚗  User", "user"], ["🧢  Captain", "captain"]].map(([label, val]) => (
                             <button key={val} onClick={() => switchRole(val)}
                                 className={`relative z-10 flex-1 py-3 text-sm font-bold font-body rounded-xl border-none cursor-pointer transition-colors duration-200 ${role === val ? "text-white" : "text-slate-500 hover:text-slate-700 bg-transparent"}`}>
                                 {label}
@@ -1132,7 +1160,7 @@ function LoginPage({ onNavigate }) {
                             <div className="mb-6">
                                 <h2 className="font-display text-2xl font-bold text-slate-900">
                                     {authMode === "login" ? (isuser ? "Welcome back 👋" : "Good to see you 🧢")
-                                        : authMode === "signup" ? (isuser ? "Join Swift as a user" : "Become a Swift Captain")
+                                        : authMode === "signup" ? (isuser ? "Join Swift as a User" : "Become a Swift Captain")
                                             : "Reset your password"}
                                 </h2>
                                 <p className="text-sm text-slate-500 font-body mt-1">

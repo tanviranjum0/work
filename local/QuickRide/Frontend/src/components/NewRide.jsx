@@ -44,7 +44,7 @@ function NewRide({
         <div>
           <div className="flex justify-between items-center pb-4 pt-2">
             <div className="flex items-center gap-3">
-              <div className="my-2 select-none rounded-full w-10 h-10 bg-green-500 mx-auto flex items-center justify-center">
+              <div className="my-2 rounded-full w-10 h-10 bg-green-500 mx-auto flex items-center justify-center">
                 <h1 className="text-lg text-white">
                   {rideData?.user?.fullname?.firstname[0]}
                   {rideData?.user?.fullname?.lastname[0]}

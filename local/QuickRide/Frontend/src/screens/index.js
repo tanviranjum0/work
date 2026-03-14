@@ -19,7 +19,7 @@ import CaptainEditProfile from "./CaptainEditProfile";
 
 import Error from "./Error";
 import ChatScreen from "./ChatScreen";
-import VerifyEmail from "./VerifyEmail";
+import EmailVerificationConfirmation from "./EmailVerificationConfirmation";
 import ResetPassword from "./ResetPassword";
 import ForgotPassword from "./ForgotPassword";
 
@@ -38,7 +38,7 @@ export {
   CaptainEditProfile,
   Error,
   ChatScreen,
-  VerifyEmail,
+  EmailVerificationConfirmation,
   ResetPassword,
-  ForgotPassword
+  ForgotPassword,
 };

@@ -58,7 +58,7 @@ function Sidebar({ showSidebar, setShowSidebar }) {
         className={`${showSidebar ? " left-0 " : " -left-[100%] "
           } z-10 duration-300 absolute w-full h-dvh bottom-0 bg-white p-4 pt-5 flex flex-col justify-between`}
       >
-        <div className="select-none">
+        <div className="">
           <h1 className="relative text-2xl font-semibold ">Profile</h1>
 
           <div className="leading-3 mt-8 mb-4">

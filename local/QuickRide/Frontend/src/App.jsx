@@ -14,11 +14,12 @@ import {
   CaptainEditProfile,
   Error,
   ChatScreen,
-  VerifyEmail,
+  EmailVerificationConfirmation,
   ResetPassword,
   ForgotPassword
 } from "./screens/";
-import SwiftApp from "./screens/GetStarted/SwiftApp"
+import SwiftApp from "./screens/GetStarted/SwiftApp";
+import EmailVerificationPage from "./screens/EmailVerificationPage";
 import { logger } from "./utils/logger";
 import { SocketDataContext } from "./contexts/SocketContext";
 import { useEffect, useContext } from "react";
@@ -57,6 +58,7 @@ function App() {
               }
             />
             <Route path="/login" element={<UserLogin />} />
+            <Route path="/test" element={<EmailVerificationPage />} />
             <Route path="/signup" element={<UserSignup />} />
             <Route
               path="/user/edit-profile"
@@ -102,7 +104,7 @@ function App() {
               }
             />
             <Route path="/:userType/chat/:rideId" element={<ChatScreen />} />
-            <Route path="/:userType/verify-email/" element={<VerifyEmail />} />
+            <Route path="/:userType/verify-email/" element={<EmailVerificationConfirmation />} />
             <Route path="/:userType/forgot-password/" element={<ForgotPassword />} />
             <Route path="/:userType/reset-password/" element={<ResetPassword />} />
 

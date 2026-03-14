@@ -21,7 +21,7 @@ function Input({ label, type, name, placeholder, defaultValue, register, error, 
           {...register(name)}
           type={type || "text"}
           placeholder={placeholder || label}
-          className={`w-full bg-zinc-100 px-4 py-3 rounded-lg outline-none text-sm my-1 ${disabled && "cursor-not-allowed select-none text-zinc-400"}`}
+          className={`w-full bg-zinc-100 px-4 py-3 rounded-lg outline-none text-sm my-1 ${disabled && "cursor-not-allowed text-zinc-400"}`}
           disabled={disabled}
           defaultValue={defaultValue}
         />
