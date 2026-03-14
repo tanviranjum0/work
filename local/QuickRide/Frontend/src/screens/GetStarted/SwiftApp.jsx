@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+// import "./swiftapp.css"
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -64,6 +65,7 @@ function Hero({ onNavigate }) {
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16 lg:py-24 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
                 {/* Left */}
+
                 <div className="order-2 lg:order-1">
                     <div className="fade-up flex items-center gap-2 mb-5">
                         <div className="w-2 h-2 rounded-full bg-teal-500 anim-pulseDot" />
@@ -165,10 +167,28 @@ function Hero({ onNavigate }) {
                             <div className="text-xs text-slate-400 font-semibold uppercase tracking-wider font-body">Drivers nearby</div>
                             <div className="font-display text-xl font-bold text-slate-900">12 <span className="text-sm text-teal-500 font-medium">active</span></div>
                         </div>
+
                         <div className="absolute -bottom-4 -right-4 sm:-right-8 bg-slate-900 rounded-2xl px-3 py-2.5 shadow-xl anim-floatC hidden sm:block">
                             <div className="text-xs text-white/40 font-semibold uppercase tracking-wider font-body">Your fare</div>
                             <div className="font-display text-xl font-bold text-white">$14.50</div>
                             <div className="text-xs text-teal-400 font-semibold font-body">Fixed · No surges</div>
+                        </div>
+                        <div onClick={() => onNavigate("login")} className="w-full my-10 cursor-pointer ">
+                            <button
+                                className="bg-white text-center w-full rounded-2xl h-14 relative text-black text-xl font-semibold group"
+                                type="button"
+                            >
+                                <div
+                                    className="bg-green-400 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[calc(100%-8px)] z-10 duration-500"
+                                >
+                                    <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                </div>
+                                <p className="translate-x-2">Get Started</p>
+                            </button>
+
+
                         </div>
                     </div>
                 </div>
@@ -434,22 +454,7 @@ function StrengthBar({ password }) {
     );
 }
 
-/** Social login buttons */
-function SocialButtons() {
-    return (
-        <div className="grid grid-cols-2 gap-3">
-            {[["🍎", "Continue with Apple", "#111", "#fff"], ["G", "Continue with Google", "#fff", "#374151"]].map(([ic, label, bg, col]) => (
-                <button key={label}
-                    className="flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 text-xs font-bold font-body cursor-pointer hover:shadow-md transition-all duration-200"
-                    style={{ background: bg, color: col }}>
-                    <span className="text-base">{ic}</span>
-                    <span className="hidden sm:inline">{label}</span>
-                    <span className="sm:hidden">{ic === "G" ? "Google" : "Apple"}</span>
-                </button>
-            ))}
-        </div>
-    );
-}
+
 
 /** Left branding panel */
 function BrandPanel({ isuser }) {

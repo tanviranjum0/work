@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import {
   GetStarted,
@@ -19,7 +20,6 @@ import {
   ForgotPassword
 } from "./screens/";
 import SwiftApp from "./screens/GetStarted/SwiftApp";
-import EmailVerificationPage from "./screens/EmailVerificationPage";
 import { logger } from "./utils/logger";
 import { SocketDataContext } from "./contexts/SocketContext";
 import { useEffect, useContext } from "react";
@@ -58,7 +58,6 @@ function App() {
               }
             />
             <Route path="/login" element={<UserLogin />} />
-            <Route path="/test" element={<EmailVerificationPage />} />
             <Route path="/signup" element={<UserSignup />} />
             <Route
               path="/user/edit-profile"

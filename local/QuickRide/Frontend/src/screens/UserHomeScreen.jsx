@@ -8,8 +8,6 @@ import {
   LocationSuggestions,
   SelectVehicle,
   RideDetails,
-  Sidebar,
-  Spinner,
 } from "../components";
 import axios from "axios";
 import debounce from "lodash.debounce";
