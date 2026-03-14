@@ -106,7 +106,6 @@ const VerifyEmail = () => {
     }
   }, [emailVerificationToken]);
   return (
-
     <>
       <style>{VERIFY_CSS}</style>
       <div className="min-h-screen bg-gradient-to-br from-teal-50 via-green-50 to-white flex flex-col items-center justify-center px-4 pt-16 pb-16 font-body">
