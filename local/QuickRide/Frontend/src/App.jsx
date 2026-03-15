@@ -111,13 +111,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </div>
-      {/* <div className="hidden sm:block w-full h-full bg-[#eae1fe] overflow-hidden  select-none border-l-2 border-black">
-          <img
-            className="h-full object-cover mx-auto  select-none "
-            src="https://img.freepik.com/free-vector/taxi-app-service-concept_23-2148497472.jpg?semt=ais_hybrid"
-            alt="Side image"
-          />
-        </div> */}
+
     </div>
   );
 }

@@ -179,10 +179,10 @@ function Hero({ onNavigate }) {
                                 type="button"
                             >
                                 <div
-                                    className="bg-green-400 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[calc(100%-8px)] z-10 duration-500"
+                                    className="bg-[rgb(37_99_235)]  rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[calc(100%-8px)] z-10 duration-500"
                                 >
                                     <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 </div>
                                 <p className="translate-x-2">Get Started</p>
@@ -250,7 +250,7 @@ function RideTypesPreview({ onNavigate }) {
                             ))}
                         </div>
                         <div className="flex flex-wrap gap-2">
-                            <Btn variant="primary">Book Now →</Btn>
+                            <Btn variant="primary" onClick={() => onNavigate("login")}>Book Now →</Btn>
                             <Btn variant="ghost" onClick={() => onNavigate("pricing")}>See Pricing</Btn>
                         </div>
                     </div>
@@ -1213,6 +1213,13 @@ export default function SwiftApp() {
     useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [page]);
 
     const navigate = (p) => setPage(p);
+
+    const token = localStorage.getItem("token");
+    useEffect(() => {
+        if (!token) {
+            navigate("login");
+        }
+    }, []);
 
     const pages = {
         home: <HomePage onNavigate={navigate} />,
