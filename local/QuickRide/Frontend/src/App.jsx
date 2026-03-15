@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import {
   GetStarted,
   UserLogin,
@@ -24,8 +24,9 @@ import { logger } from "./utils/logger";
 import { SocketDataContext } from "./contexts/SocketContext";
 import { useEffect, useContext } from "react";
 import { ChevronLeft, Trash2 } from "lucide-react";
-
+// import axios from "axios";
 function App() {
+
   return (
     <div className="w-full h-full flex items-center">
       <div className="relative w-full  h-full bg-white overflow-hidden">

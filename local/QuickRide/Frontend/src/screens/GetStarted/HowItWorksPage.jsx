@@ -101,7 +101,7 @@ function PageHero({ onNavigate }) {
                         </p>
                         <div className="fade-up3 flex flex-wrap gap-3">
                             <Btn variant="primary" onClick={() => onNavigate("home")}>Try It Now →</Btn>
-                            <Btn variant="ghost">Download App</Btn>
+                            <Btn variant="ghost" onClick={() => alert("The download feature is disabled in this preview to focus on the UI/UX walkthrough.")}>Download App</Btn>
                         </div>
                     </div>
 

@@ -106,7 +106,7 @@ function PageHero({ onNavigate }) {
                 </p>
                 <div className="fade-up3 flex flex-wrap justify-center gap-3">
                     <Btn variant="primary" onClick={() => onNavigate("home")}>Book a Ride Now →</Btn>
-                    <Btn variant="ghost">View Pricing</Btn>
+                    <Btn variant="ghost" onClick={() => onNavigate("pricing")}>View Pricing</Btn>
                 </div>
 
                 {/* Quick stats */}

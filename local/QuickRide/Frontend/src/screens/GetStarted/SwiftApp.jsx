@@ -48,7 +48,7 @@ function Hero({ onNavigate }) {
     const [pickup, setPickup] = useState("");
     const [dest, setDest] = useState("");
     const sel = RIDE_TYPES.find(r => r.id === activeType);
-
+    const navigate = useNavigate();
     const drivers = [
         { x: "28%", y: "38%", delay: "0s" }, { x: "55%", y: "52%", delay: "0.8s" },
         { x: "70%", y: "30%", delay: "1.4s" }, { x: "42%", y: "66%", delay: "0.4s" },
@@ -173,7 +173,7 @@ function Hero({ onNavigate }) {
                             <div className="font-display text-xl font-bold text-white">$14.50</div>
                             <div className="text-xs text-teal-400 font-semibold font-body">Fixed · No surges</div>
                         </div>
-                        <div onClick={() => onNavigate("login")} className="w-full my-10 cursor-pointer ">
+                        <div onClick={() => navigate("/home")} className="w-full my-10 cursor-pointer ">
                             <button
                                 className="bg-white text-center w-full rounded-2xl h-14 relative text-black text-xl font-semibold group"
                                 type="button"
@@ -187,8 +187,6 @@ function Hero({ onNavigate }) {
                                 </div>
                                 <p className="translate-x-2">Get Started</p>
                             </button>
-
-
                         </div>
                     </div>
                 </div>
@@ -1208,19 +1206,39 @@ function LoginPage({ onNavigate }) {
 export default function SwiftApp() {
     const [page, setPage] = useState("home");
     useEffect(() => { injectFonts(); }, []);
-
     // Scroll to top on every page change
     useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [page]);
 
     const navigate = (p) => setPage(p);
 
     const token = localStorage.getItem("token");
+    const navigation = useNavigate()
     useEffect(() => {
-        if (!token) {
-            navigate("login");
-        }
-    }, []);
-
+        axios
+            .get(`${import.meta.env.VITE_SERVER_URL}/user/profile`, {
+                headers: {
+                    token: token,
+                },
+            })
+            .then((response) => {
+                console.log("Response", response)
+                if (response.status === 200) {
+                    navigation("/home")
+                }
+            })
+        axios
+            .get(`${import.meta.env.VITE_SERVER_URL}/captain/profile`, {
+                headers: {
+                    token: token,
+                },
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    navigation("/captain/home")
+                }
+            })
+            ;
+    }, [])
     const pages = {
         home: <HomePage onNavigate={navigate} />,
         features: <FeaturesPage onNavigate={navigate} />,

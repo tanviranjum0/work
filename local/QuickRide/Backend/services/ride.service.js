@@ -16,21 +16,21 @@ const getFare = async (pickup, destination) => {
   const distanceTime = await mapService.getDistanceTime(pickup, destination);
 
   const baseFare = {
-    auto: 30 / 100,
-    car: 50 / 100,
+    auto: 50 / 100,
+    car: 80 / 100,
     bike: 20 / 100,
   };
 
   const perKmRate = {
-    auto: 10 / 100,
-    car: 15 / 100,
-    bike: 8 / 100,
+    auto: 50 / 100,
+    car: 80 / 100,
+    bike: 20 / 100,
   };
 
   const perMinuteRate = {
-    auto: 2 / 100,
-    car: 3 / 100,
-    bike: 1.5 / 100,
+    auto: 5 / 100,
+    car: 10 / 100,
+    bike: 2.5 / 100,
   };
 
   const fare = {

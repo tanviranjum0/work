@@ -176,7 +176,7 @@ function ComingSoonSection() {
                         <p className="text-white/55 font-body text-base mb-6 max-w-md mx-auto leading-relaxed">Request Swift in your city. When we hit 500 requests, our expansion team fast-tracks the launch.</p>
                         <div className="flex flex-col sm:flex-row gap-3 max-w-sm mx-auto">
                             <input className="ride-input flex-1 px-4 py-3 rounded-xl bg-white/8 border border-white/12 text-white text-sm font-body placeholder-white/35" placeholder="Your city name..." />
-                            <Btn variant="primary">Request It →</Btn>
+                            <Btn variant="primary" onClick={() => alert("The city request feature is disabled in this preview to focus on the UI/UX walkthrough.")}>Request It →</Btn>
                         </div>
                     </div>
                 </div>

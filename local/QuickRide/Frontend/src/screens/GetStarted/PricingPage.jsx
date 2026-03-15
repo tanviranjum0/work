@@ -115,7 +115,7 @@ function RidePricing() {
                 <SectionHead badge="Per-Ride Pricing" title="Pay only for" highlight="what you ride" sub="All fares are calculated upfront. Select a ride type to see full pricing breakdown." center />
 
                 {/* Ride type selector */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
                     {RIDE_TYPES.map(r => (
                         <button key={r.id} onClick={() => setActiveRide(r.id)}
                             className={`relative rounded-2xl p-4 sm:p-5 border-2 cursor-pointer text-left transition-all duration-200 font-body ${activeRide === r.id ? "shadow-lg" : "bg-white border-slate-100 hover:border-slate-200"}`}
@@ -142,11 +142,11 @@ function RidePricing() {
                             </div>
                             <div className="flex flex-col gap-2">
                                 {[
-                                    ["Base fare", sel.id === "standard" ? "$2.50" : sel.id === "express" ? "$3.50" : sel.id === "xl" ? "$4.00" : "$6.00"],
-                                    ["Per mile rate", sel.id === "standard" ? "$0.90" : sel.id === "express" ? "$1.20" : sel.id === "xl" ? "$1.40" : "$2.00"],
-                                    ["Per minute rate", sel.id === "standard" ? "$0.18" : sel.id === "express" ? "$0.25" : sel.id === "xl" ? "$0.28" : "$0.40"],
-                                    ["Booking fee", "$1.50"],
-                                    ["Minimum fare", sel.id === "standard" ? "$5.00" : sel.id === "express" ? "$7.00" : sel.id === "xl" ? "$9.00" : "$14.00"],
+                                    ["Base fare", sel.id === "Bike" ? "$0.20" : sel.id === "Car" ? "$0.80" : sel.id === "Auto" ? "$0.50" : "$0.00"],
+                                    ["Per Kms rate", sel.id === "Bike" ? "$0.20" : sel.id === "Car" ? "$0.80" : sel.id === "Auto" ? "$0.50" : "$0.00"],
+                                    ["Per minute rate", sel.id === "Bike" ? "$0.025" : sel.id === "Car" ? "$0.10" : sel.id === "Auto" ? "$0.05" : "$0.00"],
+                                    ["Booking fee", "$0.20"],
+                                    ["Minimum fare", sel.id === "Bike" ? "$1.00" : sel.id === "Car" ? "$1.00" : sel.id === "Auto" ? "$1.00" : "$1.00"],
                                     ["Max surge multiplier", "2.0×"],
                                 ].map(([label, value]) => (
                                     <div key={label} className="flex justify-between items-center bg-white rounded-xl px-4 py-3 border border-slate-100">
@@ -157,13 +157,13 @@ function RidePricing() {
                             </div>
                         </div>
                         <div>
-                            <div className="font-display text-lg font-bold text-slate-900 mb-4">Example Trip: Airport (12 miles, 25 min)</div>
+                            <div className="font-display text-lg font-bold text-slate-900 mb-4">Example Trip: Airport (12 KMs, 25 min)</div>
                             <div className="bg-white rounded-2xl p-5 border border-slate-100">
                                 {[
-                                    ["Base fare", sel.id === "standard" ? "$2.50" : sel.id === "express" ? "$3.50" : sel.id === "xl" ? "$4.00" : "$6.00"],
-                                    ["Distance (12 mi)", sel.id === "standard" ? "$10.80" : sel.id === "express" ? "$14.40" : sel.id === "xl" ? "$16.80" : "$24.00"],
-                                    ["Time (25 min)", sel.id === "standard" ? "$4.50" : sel.id === "express" ? "$6.25" : sel.id === "xl" ? "$7.00" : "$10.00"],
-                                    ["Booking fee", "$1.50"],
+                                    ["Base fare", sel.id === "Bike" ? "$0.20" : sel.id === "Car" ? "$0.80" : sel.id === "Auto" ? "$0.50" : "$0.00"],
+                                    ["Distance (12 km)", sel.id === "Bike" ? "$2.40" : sel.id === "Car" ? "$9.60" : sel.id === "Auto" ? "$6.00" : "$0.00"],
+                                    ["Time (25 min)", sel.id === "Bike" ? "$0.625" : sel.id === "Car" ? "$2.50" : sel.id === "Auto" ? "$1.25" : "$10.00"],
+                                    ["Booking fee", "$0.20"],
                                 ].map(([l, v]) => (
                                     <div key={l} className="flex justify-between py-2 border-b border-slate-50 last:border-0">
                                         <span className="text-sm text-slate-500 font-body">{l}</span>
@@ -173,7 +173,7 @@ function RidePricing() {
                                 <div className="flex justify-between pt-3 mt-1 border-t border-slate-200">
                                     <span className="font-bold text-slate-900 font-body">Total Fare</span>
                                     <span className="font-display text-xl font-bold text-blue-600">
-                                        {sel.id === "standard" ? "$19.30" : sel.id === "express" ? "$25.65" : sel.id === "xl" ? "$29.30" : "$41.50"}
+                                        {sel.id === "Bike" ? "$3.425" : sel.id === "Car" ? "$13.10" : sel.id === "Auto" ? "$7.95" : "$41.50"}
                                     </span>
                                 </div>
                                 <p className="text-xs text-slate-400 font-body mt-2">* This is an estimate. Final fare shown before confirmation.</p>
@@ -346,7 +346,7 @@ export default function PricingPage({ onNavigate }) {
         <div className="font-body">
             <PageHero onNavigate={onNavigate} />
             <RidePricing />
-            <MembershipPlans />
+            {/* <MembershipPlans /> */}
             <CorporatePricing onNavigate={onNavigate} />
             <PricingFAQ />
             <CTASection onNavigate={onNavigate} />

@@ -2,7 +2,7 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 /* ─────────────────────────────────────────────────────────────────────────────
    SWIFT — Shared Utilities, Components & Data
    Import from this file in every page component.
@@ -78,10 +78,9 @@ export const ANIM_CSS = `
 
 /* ── Shared Data ──────────────────────────────────────────────────────────── */
 export const RIDE_TYPES = [
-    { id: "standard", icon: "🚗", name: "Standard", eta: "3–5 min", price: "$8–12", desc: "Comfortable everyday rides", capacity: "1–4 passengers", accent: "#1a56ff" },
-    { id: "express", icon: "⚡", name: "Express", eta: "1–2 min", price: "$14–18", desc: "Priority pickup, fastest route", capacity: "1–4 passengers", accent: "#f59e0b", badge: "Popular" },
-    { id: "xl", icon: "🚐", name: "XL", eta: "5–8 min", price: "$18–26", desc: "Extra space for groups & luggage", capacity: "1–6 passengers", accent: "#00c4a7" },
-    { id: "premium", icon: "👑", name: "Premium", eta: "4–7 min", price: "$28–40", desc: "Luxury vehicles, top-rated drivers", capacity: "1–4 passengers", accent: "#9333ea" },
+    { id: "Bike", icon: "🏍️", name: "Bike", eta: "3–5 min", price: "$0.20–15", desc: "Comfortable everyday rides", capacity: "1 passenger", accent: "#1a56ff" },
+    { id: "Car", icon: "🚗", name: "Car", eta: "1–2 min", price: "$0.80–50", desc: "Extra space for groups & luggage", capacity: "1–4 passengers", accent: "#f59e0b", badge: "Popular" },
+    { id: "Auto", icon: "🛺", name: "Auto", eta: "5–8 min", price: "$0.50–25", desc: "Budget rides having more space", capacity: "1–3 passengers", accent: "#00c4a7" },
 ];
 
 export const TESTIMONIALS = [
@@ -163,7 +162,7 @@ export function SectionHead({ badge, badgeColor = "blue", title, highlight, sub,
 export function Navbar({ activePage, onNavigate }) {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-
+    const navigate = useNavigate();
     useEffect(() => {
         const h = () => setScrolled(window.scrollY > 20);
         window.addEventListener("scroll", h);
@@ -195,7 +194,7 @@ export function Navbar({ activePage, onNavigate }) {
                 {/* Desktop actions */}
                 <div className="hidden md:flex items-center gap-3">
                     {/* <Btn variant="ghost" cls="!px-5 !py-2.5 !text-sm" onClick={() => onNavigate("login")}>Log In</Btn> */}
-                    <Btn variant="primary" cls="!px-5 !py-2.5 !text-sm" onClick={() => onNavigate("login")}>Get Started →</Btn>
+                    <Btn variant="primary" cls="!px-5 !py-2.5 !text-sm" onClick={() => navigate("/home")}>Get Started →</Btn>
                 </div>
 
                 {/* Mobile hamburger */}
@@ -242,8 +241,8 @@ export function CTASection({ onNavigate }) {
                         Join over 2.4 million riders who chose Swift for safe, affordable, and effortlessly smooth rides across the city.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                        <Btn variant="white">🍎 Download for iOS</Btn>
-                        <Btn variant="white">▶ Download for Android</Btn>
+                        <Btn onClick={() => alert("The download feature is disabled in this preview to focus on the UI/UX walkthrough.")} variant="white">🍎 Download for iOS</Btn>
+                        <Btn onClick={() => alert("The download feature is disabled in this preview to focus on the UI/UX walkthrough.")} variant="white">▶ Download for Android</Btn>
                     </div>
                     <p className="mt-5 text-xs text-white/45 font-body">Free to download · No signup required · Cancel anytime</p>
                 </div>
