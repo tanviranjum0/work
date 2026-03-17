@@ -173,7 +173,7 @@ function Hero({ onNavigate }) {
                             <div className="font-display text-xl font-bold text-white">$14.50</div>
                             <div className="text-xs text-teal-400 font-semibold font-body">Fixed · No surges</div>
                         </div>
-                        <div onClick={() => navigate("/home")} className="w-full my-10 cursor-pointer ">
+                        <div onClick={() => onNavigate("login")} className="w-full my-10 cursor-pointer ">
                             <button
                                 className="bg-white text-center w-full rounded-2xl h-14 relative text-black text-xl font-semibold group"
                                 type="button"
@@ -565,6 +565,51 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate, }) {
 
     const set = (k) => (e) => setFormState(f => ({ ...f, [k]: e.target.value }));
 
+
+
+
+    const token = localStorage.getItem("token");
+    useEffect(() => {
+        async function checkAuth() {
+
+            const userCheck = await fetch(`${import.meta.env.VITE_SERVER_URL}/user/profile`, {
+                headers: {
+                    token: token,
+                },
+            })
+            const result = await userCheck.json();
+
+            if (result.message == "Unauthorized User") {
+                console.log("Not a user, checking captain...");
+                await checkCaptain()
+
+            } else {
+                console.log("User authenticated, redirecting to user home...");
+                navigation("/home")
+                return;
+            }
+
+            async function checkCaptain() {
+                const captainCheck = await fetch(`${import.meta.env.VITE_SERVER_URL}/captain/profile`, {
+                    headers: {
+                        token: token,
+                    },
+                })
+                const result = await captainCheck.json();
+
+                if (result.message == "Unauthorized User") {
+                    console.log("Not authenticated, redirecting to login...");
+                } else {
+                    console.log("Captain authenticated, redirecting to user home...");
+                    navigation("/captain/home");
+                    return;
+
+                }
+            }
+        }
+
+        if (token) checkAuth();
+    }, [])
     const handleSubmit = () => {
         if (role === "user" && authMode === "signup") {
             const signupUser = async (data) => {
@@ -600,7 +645,7 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate, }) {
             signupUser(form);
         } else if (role === "captain" && authMode === "signup") {
             const signupCaptain = async (data) => {
-                console.log(data);
+                // console.log(data);
                 if (!data.firstName || !data.lastName || !data.email || !data.password || !data.phone || !data.vehicleColour || !data.vehicleCapacity || !data.vehicleNumber || !data.vehicleType) {
                     setResponseError("All input fields are required.");
                     return;
@@ -751,23 +796,6 @@ function LoginForm({ role, authMode, setAuthMode, onNavigate, }) {
 
     return (
         <div className="flex flex-col gap-5 form-slide" key={`${role}-${authMode}-${captainStep}`}>
-
-            {/* ── Forgot password ── */}
-            {/* {isForgot && (
-                <>
-                    <div className="text-center pb-2">
-                        <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-3xl mx-auto mb-4">🔑</div>
-                        <h3 className="font-display text-2xl font-bold text-slate-900 mb-1">Reset your password</h3>
-                        <p className="text-sm text-slate-500 font-body">Enter your email and we&apos;ll send a reset link right away.</p>
-                    </div>
-                    <LInput label="Email address" type="email" placeholder="you@example.com" value={form.email} onChange={set("email")} accent={accent} />
-                    <ActionBtn loading={loading} onClick={handleSubmit} bg={btnBg} shadow={btnShadow} label="Send Reset Link →" loadingLabel="Sending…" />
-                    <p className="text-center text-xs text-slate-500 font-body">
-                        Remembered it?{" "}
-                        <button onClick={() => setAuthMode("login")} className="font-semibold border-none bg-transparent cursor-pointer" style={{ color: isuser ? "#1a56ff" : "#00c4a7" }}>Back to sign in</button>
-                    </p>
-                </>
-            )} */}
 
             {/* ── Login form ── */}
             {isLogin && (
@@ -1208,36 +1236,14 @@ export default function SwiftApp() {
     useEffect(() => { injectFonts(); }, []);
     // Scroll to top on every page change
     useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [page]);
+    const token = localStorage.getItem("token");
 
     const navigate = (p) => setPage(p);
 
-    const token = localStorage.getItem("token");
-    const navigation = useNavigate()
     useEffect(() => {
-        axios
-            .get(`${import.meta.env.VITE_SERVER_URL}/user/profile`, {
-                headers: {
-                    token: token,
-                },
-            })
-            .then((response) => {
-                console.log("Response", response)
-                if (response.status === 200) {
-                    navigation("/home")
-                }
-            })
-        axios
-            .get(`${import.meta.env.VITE_SERVER_URL}/captain/profile`, {
-                headers: {
-                    token: token,
-                },
-            })
-            .then((response) => {
-                if (response.status === 200) {
-                    navigation("/captain/home")
-                }
-            })
-            ;
+        if (token) {
+            navigate("login")
+        }
     }, [])
     const pages = {
         home: <HomePage onNavigate={navigate} />,
