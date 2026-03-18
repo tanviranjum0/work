@@ -156,7 +156,7 @@ const iPhoneCallSlideButton: React.FC = () => {
                 onDragEnd={handleAnswerDragEnd}
                 whileTap={{ scale: 0.95 }}
               >
-                <Phone className="w-5 h-5 text-white" fill="white" />
+                {/* <Phone className="w-5 h-5 text-white" fill="white" /> */}
               </motion.div>
 
               {/* Success Overlay */}
