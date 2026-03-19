@@ -25,7 +25,7 @@ const iPhoneCallSlideButton: React.FC = () => {
     if (offset >= MAX_DRAG * 0.9) {
       answerX.set(MAX_DRAG);
 
-      // handleCallAnswer();
+      handleCallAnswer();
     }
   };
 
