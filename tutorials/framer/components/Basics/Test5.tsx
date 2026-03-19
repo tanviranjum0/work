@@ -1,14 +1,11 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { motion, useMotionValue, useTransform, PanInfo } from "framer-motion";
-import { Phone, PhoneOff, Video, MessageSquare, Bell } from "lucide-react";
+import { Phone } from "lucide-react";
 
 const iPhoneCallSlideButton: React.FC = () => {
   const [isAnswered, setIsAnswered] = useState(false);
-  const [isRejected, setIsRejected] = useState(false);
-
   const answerX = useMotionValue(0);
-  const rejectX = useMotionValue(0);
 
   // Container width - using a fixed calculation
   const CONTAINER_WIDTH = 350; // Approximate container width
@@ -17,16 +14,13 @@ const iPhoneCallSlideButton: React.FC = () => {
 
   // Background opacity for answer button
   const answerBgOpacity = useTransform(answerX, [0, MAX_DRAG], [0.3, 1]);
-  const rejectBgOpacity = useTransform(rejectX, [0, MAX_DRAG], [0.3, 1]);
 
   // Text opacity
   const answerTextOpacity = useTransform(answerX, [0, MAX_DRAG / 2], [1, 0]);
-  const rejectTextOpacity = useTransform(rejectX, [0, MAX_DRAG / 2], [1, 0]);
 
   // Handle answer slide
   const handleAnswerDrag = (_: any, info: PanInfo) => {
     const offset = info.offset.x;
-
     // Check if dragged to the end
     if (offset >= MAX_DRAG * 0.9) {
       answerX.set(MAX_DRAG);
@@ -37,31 +31,9 @@ const iPhoneCallSlideButton: React.FC = () => {
 
   const handleAnswerDragEnd = (_: any, info: PanInfo) => {
     const offset = info.offset.x;
-
     // If not at the end, snap back
     if (offset < MAX_DRAG * 0.9 && !isAnswered) {
       answerX.set(0);
-    }
-  };
-
-  // Handle reject slide
-  const handleRejectDrag = (_: any, info: PanInfo) => {
-    const offset = info.offset.x;
-
-    // Check if dragged to the end
-    if (offset >= MAX_DRAG * 0.9) {
-      rejectX.set(MAX_DRAG);
-
-      handleCallReject();
-    }
-  };
-
-  const handleRejectDragEnd = (_: any, info: PanInfo) => {
-    const offset = info.offset.x;
-
-    // If not at the end, snap back
-    if (offset < MAX_DRAG * 0.9 && !isRejected) {
-      rejectX.set(0);
     }
   };
 
@@ -74,19 +46,6 @@ const iPhoneCallSlideButton: React.FC = () => {
     // Your custom function here
     setTimeout(() => {
       // alert("Call Connected! 🎉");
-      resetCall();
-    }, 1500);
-  };
-
-  // Call reject function
-  const handleCallReject = () => {
-    if (isRejected) return;
-    setIsRejected(true);
-    console.log("❌ Call Rejected!");
-
-    // Your custom function here
-    setTimeout(() => {
-      alert("Call Declined");
       resetCall();
     }, 1500);
   };
@@ -156,7 +115,7 @@ const iPhoneCallSlideButton: React.FC = () => {
                 onDragEnd={handleAnswerDragEnd}
                 whileTap={{ scale: 0.95 }}
               >
-                {/* <Phone className="w-5 h-5 text-white" fill="white" /> */}
+                <Phone className="w-5 h-5 text-white" fill="white" />
               </motion.div>
 
               {/* Success Overlay */}
