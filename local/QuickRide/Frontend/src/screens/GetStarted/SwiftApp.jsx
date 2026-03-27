@@ -44,7 +44,7 @@ const FEATURES_HOME = [
 
 /* ── Hero Section ─────────────────────────────────────────────────────────── */
 function Hero({ onNavigate }) {
-    const [activeType, setActiveType] = useState("express");
+    const [activeType, setActiveType] = useState("Bike");
     const [pickup, setPickup] = useState("");
     const [dest, setDest] = useState("");
     const sel = RIDE_TYPES.find(r => r.id === activeType);
