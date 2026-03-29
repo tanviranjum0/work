@@ -99,13 +99,14 @@ function Hero({ onNavigate }) {
                             </div>
                         )}
                         <div className="flex flex-col gap-2.5 mb-4">
-                            {[{ color: "#1a56ff", ph: "Pickup location", val: pickup, set: setPickup },
-                            { color: "#00c4a7", ph: "Where to?", val: dest, set: setDest }].map(f => (
-                                <div key={f.ph} className="relative">
-                                    <div className="absolute left-3.5 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full border-2 border-white" style={{ background: f.color }} />
-                                    <input className="ride-input font-body w-full pl-9 pr-3 py-3 rounded-xl text-sm text-slate-800 bg-slate-50 border border-slate-200 transition-all duration-200" placeholder={f.ph} value={f.val} onChange={e => f.set(e.target.value)} />
-                                </div>
-                            ))}
+                            <div className="relative">
+                                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full border-2 border-white" style={{ background: "#1a56ff" }} />
+                                <input className="ride-input font-body w-full pl-9 pr-3 py-3 rounded-xl text-sm text-slate-800 bg-slate-50 border border-slate-200 transition-all duration-200" placeholder="Pickup location" />
+                            </div>
+                            <div className="relative">
+                                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full border-2 border-white" style={{ background: "#00c4a7" }} />
+                                <input className="ride-input font-body w-full pl-9 pr-3 py-3 rounded-xl text-sm text-slate-800 bg-slate-50 border border-slate-200 transition-all duration-200" placeholder="Where to?" />
+                            </div>
                         </div>
                         <Btn variant="primary" full cls="!py-3.5 !text-base">
                             <span>Find My Ride</span><span className="text-xl">→</span>
