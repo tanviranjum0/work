@@ -211,6 +211,7 @@ function UserHomeScreen() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
+          console.log(position);
           setMapLocation(
             `https://www.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}&output=embed`
           );
@@ -280,19 +281,6 @@ function UserHomeScreen() {
       setDefaults();
       localStorage.removeItem("rideDetails");
       localStorage.removeItem("panelDetails");
-
-      // if (navigator.geolocation) {
-      //   navigator.geolocation.getCurrentPosition(
-      //     (position) => {
-      //       setMapLocation(
-      //         `https://www.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}&output=embed`
-      //       );
-      //     },
-      //     (error) => {
-      //       console.error("Error fetching position:", error);
-      //     }
-      //   );
-      // }
     });
   }, [user]);
 

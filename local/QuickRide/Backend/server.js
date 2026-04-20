@@ -4,7 +4,8 @@ const express = require("express");
 const { createServer } = require("http");
 const app = express();
 const server = createServer(app);
-
+const dns = require("node:dns/promises");
+dns.setServers(["1.1.1.1"]);
 socket.initializeSocket(server);
 
 const cors = require("cors");
