@@ -24,7 +24,7 @@ import { logger } from "./utils/logger";
 import { SocketDataContext } from "./contexts/SocketContext";
 import { useEffect, useContext } from "react";
 import { ChevronLeft, Trash2 } from "lucide-react";
-// import axios from "axios";
+import axios from "axios";
 function App() {
 
   return (
