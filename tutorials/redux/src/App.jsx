@@ -12,6 +12,7 @@ const initialCounters = [
   }
 ]
 const App = () => {
+
   const [counters, setCounters] = useState(initialCounters)
   const handleIncrement = (id) => {
     setCounters(counters.map(counter => counter.id === id ? { ...counter, count: counter.count + 1 } : counter));
