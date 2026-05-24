@@ -1,24 +1,18 @@
+import { useSelector } from "react-redux"
 import Counter from "./components/Counter"
 import Stats from "./components/Stats"
-import { useState } from "react"
-const initialCounters = [
-  {
-    id: 1,
-    count: 0
-  },
-  {
-    id: 2,
-    count: 0
-  }
-]
-const App = () => {
+import { increment, decrement } from "./features/counters/counterSlice"
+import { useDispatch } from "react-redux"
+import Posts from "./components/Posts"
 
-  const [counters, setCounters] = useState(initialCounters)
+const App = () => {
+  const counters = useSelector((state) => state.counters)
+  const dispatch = useDispatch()
   const handleIncrement = (id) => {
-    setCounters(counters.map(counter => counter.id === id ? { ...counter, count: counter.count + 1 } : counter));
+    dispatch(increment(id))
   }
   const handleDecrement = (id) => {
-    setCounters(counters.map(counter => counter.id === id ? { ...counter, count: counter.count - 1 } : counter));
+    dispatch(decrement(id))
   }
   return (
     <div className="m-20">
@@ -26,6 +20,7 @@ const App = () => {
       <div className="text-2xl">
         {counters.map(counter => <Counter key={counter.id} onDecrement={() => handleDecrement(counter.id)} onIncrement={() => handleIncrement(counter.id)} count={counter.count} />)}
         <Stats total={counters.reduce((sum, counter) => sum + counter.count, 0)} />
+        <Posts />
       </div>
     </div>
   )

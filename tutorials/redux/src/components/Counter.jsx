@@ -1,6 +1,5 @@
 
 import Count from './Count'
-import { useState } from 'react'
 const Counter = ({ count, onIncrement, onDecrement }) => {
     return (
         <div className="flex flex-col items-center justify-center w-full">
