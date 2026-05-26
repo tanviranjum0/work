@@ -5,6 +5,7 @@ import { increment, decrement } from "./features/counters/counterSlice"
 import { useDispatch } from "react-redux"
 import Posts from "./components/Posts"
 
+
 const App = () => {
   const counters = useSelector((state) => state.counters)
   const dispatch = useDispatch()
