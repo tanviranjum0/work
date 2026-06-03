@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, FormEvent, ChangeEvent, JSX } from "react";
 
 /* ─── Types ─────────────────────────────────────────────────────────────── */
@@ -929,7 +930,7 @@ export default function SignUpPage(): JSX.Element {
                     </div>
 
                     <p className="ss-login-row">
-                      Already have an account? <a href="/login">Log in</a>
+                      Already have an account? <Link href="/login">Log in</Link>
                     </p>
                   </>
                 ) : (
