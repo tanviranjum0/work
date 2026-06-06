@@ -494,7 +494,7 @@ export default function SignUpPage(): JSX.Element {
 
   const handleStep1 = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    console.log("Step 1 Data:", { fullName, email, password });
+    console.log("Step 1 Data:", { fullName, email, password, confirm });
 
     // setStep(2);
   };
