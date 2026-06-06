@@ -216,6 +216,11 @@ export default function LoginPage(): JSX.Element {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setLoading(true);
+
+    console.log("Login Data:", {
+      email,
+      password,
+    });
     await new Promise<void>((r) => setTimeout(r, 1500));
     setLoading(false);
   };

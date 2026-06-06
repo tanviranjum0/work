@@ -475,12 +475,12 @@ export default function SignUpPage(): JSX.Element {
   // Step 1
   const [fullName, setFullName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
+  // const [phone, setPhone] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirm, setConfirm] = useState<string>("");
 
   // Step 2
   const [company, setCompany] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirm, setConfirm] = useState<string>("");
   const [showPass, setShowPass] = useState<boolean>(false);
   const [showConf, setShowConf] = useState<boolean>(false);
   const [agreed, setAgreed] = useState<boolean>(false);
@@ -494,7 +494,9 @@ export default function SignUpPage(): JSX.Element {
 
   const handleStep1 = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    setStep(2);
+    console.log("Step 1 Data:", { fullName, email, password });
+
+    // setStep(2);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -897,7 +899,7 @@ export default function SignUpPage(): JSX.Element {
                         required
                         leadingIcon={<MailIcon />}
                       />
-                      <InputField
+                      {/* <InputField
                         id="phone"
                         label="Phone Number"
                         type="tel"
@@ -907,50 +909,7 @@ export default function SignUpPage(): JSX.Element {
                         autoComplete="tel"
                         required
                         leadingIcon={<PhoneIcon />}
-                      />
-
-                      <button type="submit" className="ss-btn-primary">
-                        Continue <ArrowRightIcon />
-                      </button>
-                    </form>
-
-                    <div className="ss-divider">
-                      <div className="ss-divider-line" />
-                      <span className="ss-divider-text">or sign up with</span>
-                      <div className="ss-divider-line" />
-                    </div>
-
-                    <div className="ss-social-row">
-                      <button type="button" className="ss-btn-social">
-                        <GoogleIcon /> Google
-                      </button>
-                      <button type="button" className="ss-btn-social">
-                        <MicrosoftIcon /> Microsoft
-                      </button>
-                    </div>
-
-                    <p className="ss-login-row">
-                      Already have an account? <Link href="/login">Log in</Link>
-                    </p>
-                  </>
-                ) : (
-                  /* ── Step 2: Account Setup ── */
-                  <>
-                    <h1 className="ss-h1">Account Setup</h1>
-                    <p className="ss-sub">Almost there — secure your account</p>
-
-                    <form onSubmit={handleSubmit}>
-                      <InputField
-                        id="company"
-                        label="Company / Business Name"
-                        type="text"
-                        placeholder="Acme Logistics Inc."
-                        value={company}
-                        onChange={(e) => setCompany(e.target.value)}
-                        autoComplete="organization"
-                        optional
-                        leadingIcon={<BuildingIcon />}
-                      />
+                      /> */}
 
                       {/* Password */}
                       <InputField
@@ -1021,6 +980,49 @@ export default function SignUpPage(): JSX.Element {
                             {showConf ? <EyeOffIcon /> : <EyeIcon />}
                           </button>
                         }
+                      />
+
+                      <button type="submit" className="ss-btn-primary">
+                        Continue <ArrowRightIcon />
+                      </button>
+                    </form>
+
+                    <div className="ss-divider">
+                      <div className="ss-divider-line" />
+                      <span className="ss-divider-text">or sign up with</span>
+                      <div className="ss-divider-line" />
+                    </div>
+
+                    <div className="ss-social-row">
+                      <button type="button" className="ss-btn-social">
+                        <GoogleIcon /> Google
+                      </button>
+                      {/* <button type="button" className="ss-btn-social">
+                        <MicrosoftIcon /> Microsoft
+                      </button> */}
+                    </div>
+
+                    <p className="ss-login-row">
+                      Already have an account? <Link href="/login">Log in</Link>
+                    </p>
+                  </>
+                ) : (
+                  /* ── Step 2: Account Setup ── */
+                  <>
+                    <h1 className="ss-h1">Account Setup</h1>
+                    <p className="ss-sub">Almost there — secure your account</p>
+
+                    <form onSubmit={handleSubmit}>
+                      <InputField
+                        id="company"
+                        label="Company / Business Name"
+                        type="text"
+                        placeholder="Acme Logistics Inc."
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                        autoComplete="organization"
+                        optional
+                        leadingIcon={<BuildingIcon />}
                       />
 
                       {/* Terms */}
