@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { Types } from "mongoose";
+// import {get2FATemplate} from "../emails/emailTemplates.js";
+import { send2FAEmail } from "../emails/emailHandler.js";
+// import cloudinary from "../config/cloudinary.js";
 
 // import { sendWelcomeEmail } from "../emails/emailHandlers.js";
 import { generateToken } from "../utils/genarateToken.js";
@@ -18,21 +21,20 @@ interface AuthRequest extends Request {
 /**
  * SIGNUP
  */
-export const signup = async (
+
+export const send2FASignupCode = async (
   req: Request,
   res: Response,
 ): Promise<Response> => {
-  const { fullName, email, password } = req.body as {
-    fullName: string;
+  const { email, fullName, password } = req.body as {
     email: string;
+    fullName: string;
     password: string;
   };
-
   try {
     if (!fullName || !email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
-
     if (password.length < 6) {
       return res.status(400).json({
         message: "Password must be at least 6 characters",
@@ -50,25 +52,66 @@ export const signup = async (
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
 
-    const newUser: UserDocument = new User({
+    // Here you would typically send the code via email
+    await send2FAEmail(email, code).catch((err) =>
+      console.error("Failed to send 2FA email:", err),
+    );
+    const newUser: UserDocument = await User.create({
       fullName,
       email,
       password: hashedPassword,
+      twoFaCode: parseInt(code),
     });
 
-    const savedUser = await newUser.save();
+    send2FAEmail(email, code).catch((err) =>
+      console.error("Failed to send 2FA email:", err),
+    );
+    return res.status(200).json({ message: "Verification code sent" });
+  } catch (error: unknown) {
+    console.error("Error in send2faSignupCode controller:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
+export const signup = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
+  const { email, code } = req.body as {
+    email: string;
+    code: number;
+  };
+
+  try {
+    if (!email || !code) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid email or code" });
+    }
+    if (user.twoFaCode !== code) {
+      return res.status(400).json({ message: "Invalid email or code" });
+    }
     // 🔥 Convert ObjectId → string
-    const userId = savedUser._id.toString();
+
+    const updatedUser: UserDocument = await User.findByIdAndUpdate(
+      user._id,
+      { isVerified: true, twoFaCode: 0 },
+      { new: true },
+    );
+
+    const userId = updatedUser._id.toString();
 
     generateToken(userId, res);
 
     res.status(201).json({
+      message: "User created successfully",
       _id: userId,
-      fullName: savedUser.fullName,
-      email: savedUser.email,
-      profilePic: savedUser.profilePic,
+      fullName: updatedUser.fullName,
+      email: updatedUser.email,
     });
 
     // fire-and-forget email

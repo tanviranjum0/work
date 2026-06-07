@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState, FormEvent, ChangeEvent, JSX } from "react";
 
@@ -480,7 +481,7 @@ export default function SignUpPage(): JSX.Element {
   const [confirm, setConfirm] = useState<string>("");
 
   // Step 2
-  const [company, setCompany] = useState<string>("");
+  const [twofacode, setTwofacode] = useState<string>("");
   const [showPass, setShowPass] = useState<boolean>(false);
   const [showConf, setShowConf] = useState<boolean>(false);
   const [agreed, setAgreed] = useState<boolean>(false);
@@ -492,18 +493,59 @@ export default function SignUpPage(): JSX.Element {
   const canSubmit: boolean =
     agreed && !mismatch && password.length >= 6 && !loading;
 
-  const handleStep1 = (e: FormEvent<HTMLFormElement>): void => {
+  const handleStep1 = async (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    console.log("Step 1 Data:", { fullName, email, password, confirm });
-
-    // setStep(2);
+    console.log("Step 1 Data:", {
+      fullName,
+      email,
+      password,
+      confirm,
+      canSubmit,
+      showConf,
+      mismatch,
+    });
+    if (mismatch) {
+      document.getElementById("confirm")?.focus();
+      return;
+    }
+    const data = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/send-2fa-code",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, fullName, password }),
+      },
+    );
+    const result = await data.json();
+    if (result.message === "Verification code sent") {
+      setStep(2);
+    }
   };
-
+  const router = useRouter();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (!canSubmit) return;
     setLoading(true);
-    await new Promise<void>((r) => setTimeout(r, 1800));
+    const data = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/verify-2fa-code",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, code: twofacode }),
+      },
+    );
+    const result = await data.json();
+    // console.log("Verification result:", result);
+    if (result.message === "User created successfully") {
+      router.push("/home");
+    } else {
+      // console.error("Signup failed:", result);
+      alert(result.message || "Signup failed. Please try again.");
+    }
     setLoading(false);
     setDone(true);
   };
@@ -1014,14 +1056,13 @@ export default function SignUpPage(): JSX.Element {
 
                     <form onSubmit={handleSubmit}>
                       <InputField
-                        id="company"
-                        label="Company / Business Name"
+                        id="twofacode"
+                        label="Enter Verification Code (emailed to you)"
                         type="text"
-                        placeholder="Acme Logistics Inc."
-                        value={company}
-                        onChange={(e) => setCompany(e.target.value)}
+                        placeholder="e.g. 123456"
+                        value={twofacode}
+                        onChange={(e) => setTwofacode(e.target.value)}
                         autoComplete="organization"
-                        optional
                         leadingIcon={<BuildingIcon />}
                       />
 

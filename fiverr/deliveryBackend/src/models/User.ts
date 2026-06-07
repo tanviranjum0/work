@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 
 export interface UserDocument {
-  save: any;
-  username: string;
+  _id: mongoose.Types.ObjectId;
+  save?: any;
+  fullName: string;
   email: string;
   password: string;
-  avatar?: object;
+  isVerified?: boolean;
+  twoFaCode?: number;
 }
 
 const userSchema = new mongoose.Schema<UserDocument>(
@@ -13,7 +15,6 @@ const userSchema = new mongoose.Schema<UserDocument>(
     fullName: {
       type: String,
       required: true,
-      unique: true,
     },
     email: {
       type: String,
@@ -24,8 +25,12 @@ const userSchema = new mongoose.Schema<UserDocument>(
       type: String,
       required: true,
     },
-    avatar: {
-      type: Object,
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    twoFaCode: {
+      type: Number,
     },
   },
   { timestamps: true },
