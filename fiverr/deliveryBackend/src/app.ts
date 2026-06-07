@@ -15,7 +15,7 @@ dotenv.config();
 dns.setServers(["8.8.8.8", "8.8.4.4", "1.1.1.1"]);
 const app: Application = express();
 const PORT = process.env.PORT || 4000;
-const MONGO_URL = process.env.mongoURL;
+const MONGO_URL = process.env.MONGO_URL;
 console.log("MongoDB URL:", MONGO_URL);
 connectDB(MONGO_URL || "mongodb://localhost:27017/deliveryApp");
 // Body parsing middleware

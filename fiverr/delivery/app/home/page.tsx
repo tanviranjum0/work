@@ -1,3 +1,9 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client";
+
+import { useEffect, useState } from "react";
+
 type IconName =
   | "box"
   | "grid"
@@ -106,6 +112,18 @@ function Icon({ name }: { name: IconName }) {
 }
 
 export default function ShipSwiftDashboardPage() {
+  const [user, setUser] = useState<{
+    _id: string;
+    fullName: string;
+    email: string;
+  } | null>(null);
+  useEffect(() => {
+    const cachedUser = localStorage.getItem("user");
+    if (cachedUser) {
+      setUser(JSON.parse(cachedUser));
+    }
+  }, []);
+
   return (
     <main className="ship-shell">
       <style>{dashboardStyles}</style>
@@ -142,7 +160,7 @@ export default function ShipSwiftDashboardPage() {
           <header className="ship-header">
             <div>
               <h1>Dashboard</h1>
-              <p>Welcome back, John Doe!</p>
+              <p>Welcome back, {user?.fullName || "User"}!</p>
             </div>
 
             <button className="ship-date-button" type="button">

@@ -21,11 +21,6 @@ const checkLogin = (
     token = req.signedCookies.jwt;
   }
 
-  // 2. Check Authorization header
-  else if (req.headers.authorization?.startsWith("Bearer ")) {
-    token = req.headers.authorization.split(" ")[1];
-  }
-
   if (!token) {
     res.status(401).json({ message: "Unauthorized: No token provided" });
     return;
@@ -34,7 +29,7 @@ const checkLogin = (
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
     console.log("Decoded JWT:", decoded);
-    req.userId = decoded.userId;
+    req.userId = (decoded as JwtPayload).userId;
     next(); // ✅ Only called AFTER verification
   } catch (error) {
     res.status(401).json({ message: "Unauthorized: Invalid token" });

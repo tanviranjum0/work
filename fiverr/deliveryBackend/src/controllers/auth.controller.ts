@@ -4,7 +4,6 @@ import { Types } from "mongoose";
 // import {get2FATemplate} from "../emails/emailTemplates.js";
 import { send2FAEmail } from "../emails/emailHandler.js";
 // import cloudinary from "../config/cloudinary.js";
-
 // import { sendWelcomeEmail } from "../emails/emailHandlers.js";
 import { generateToken } from "../utils/genarateToken.js";
 import User, { UserDocument } from "../models/User.js";
@@ -98,24 +97,29 @@ export const signup = async (
     if (!user) {
       return res.status(400).json({ message: "Invalid user" });
     }
-    if (user.twoFaCode !== parseInt(code)) {
+
+    if (user.twoFaCode != parseInt(code)) {
       return res.status(400).json({ message: "Invalid 2FA code" });
     }
     // 🔥 Convert ObjectId → string
-
-    const updatedUser: UserDocument = await User.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       user._id,
-      { isVerified: true, twoFaCode: 0 },
-      { new: true },
+      {
+        isVerified: true,
+        twoFaCode: 0,
+      },
+      { returnDocument: "after" },
     );
 
-    const userId = updatedUser._id.toString();
+    if (!updatedUser) {
+      return res.status(400).json({ message: "Failed to verify user" });
+    }
 
-    generateToken(userId, res);
+    generateToken(updatedUser, res);
 
     res.status(201).json({
       message: "User created successfully",
-      _id: userId,
+      _id: updatedUser._id,
       fullName: updatedUser.fullName,
       email: updatedUser.email,
     });
@@ -158,14 +162,18 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
     if (!isPasswordCorrect) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
+    if (!user.isVerified) {
+      return res
+        .status(400)
+        .json({ message: "Please verify your email before logging in" });
+    }
 
-    generateToken(user._id.toString(), res);
+    generateToken(user, res);
 
     return res.status(200).json({
       _id: user._id.toString(),
       fullName: user.fullName,
       email: user.email,
-      profilePic: user.profilePic,
     });
   } catch (error: unknown) {
     console.error("Error in login controller:", error);
@@ -232,19 +240,78 @@ export const resend2FALoginCode = async (
       return res.status(400).json({ message: "Invalid user" });
     }
     const code = Math.floor(100000 + Math.random() * 900000).toString();
+    await User.findByIdAndUpdate(user._id, { twoFaCode: parseInt(code) });
     await send2FAEmail(email, code).catch((err) =>
       console.error("Failed to send 2FA email:", err),
     );
-    await User.findByIdAndUpdate(user._id, { twoFaCode: parseInt(code) });
 
     setTimeout(() => {
       User.findByIdAndUpdate(user._id, { twoFaCode: 0 }).catch((err) =>
         console.error("Failed to clear 2FA code:", err),
       );
     }, 60000);
-    return res.status(200).json({ message: "2FA code resent successfully" });
+    return res.status(200).json({ message: "2FA code sent successfully" });
   } catch (error: unknown) {
     console.error("Error in resend 2FA login code:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const login2FAVerification = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
+  const { email, code } = req.body as {
+    email: string;
+    code: number;
+  };
+
+  try {
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+    if (!code) {
+      return res.status(400).json({ message: "2FA code is required" });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid user" });
+    }
+
+    if (user.twoFaCode != parseInt(code)) {
+      return res.status(400).json({ message: "Invalid 2FA code" });
+    }
+    // 🔥 Convert ObjectId → string
+    const updatedUser = await User.findByIdAndUpdate(
+      user._id,
+      {
+        isVerified: true,
+        twoFaCode: 0,
+      },
+      { returnDocument: "after" },
+    );
+
+    if (!updatedUser) {
+      return res.status(400).json({ message: "Failed to verify user" });
+    }
+
+    generateToken(updatedUser, res);
+
+    res.status(201).json({
+      message: "User created successfully",
+      _id: updatedUser._id,
+      fullName: updatedUser.fullName,
+      email: updatedUser.email,
+    });
+
+    // fire-and-forget email
+    // sendWelcomeEmail(savedUser.email, savedUser.fullName, ENV.CLIENT_URL).catch(
+    //   (err) => console.error("Failed to send welcome email:", err),
+    // );
+
+    return res;
+  } catch (error: unknown) {
+    console.error("Error in signup controller:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };

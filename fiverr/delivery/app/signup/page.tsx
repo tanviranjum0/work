@@ -509,7 +509,7 @@ export default function SignUpPage(): JSX.Element {
     setLoading(true);
     console.log("Submitting Step 2 with:", { email, twofacode });
     const data = await fetch(
-      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/verify-2fa-code",
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/signup-verify-2fa-code",
       {
         method: "POST",
         headers: {
@@ -523,6 +523,14 @@ export default function SignUpPage(): JSX.Element {
     // console.log("Verification result:", result);
     if (result.message === "User created successfully") {
       // router.push("/home");
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          _id: result._id,
+          fullName: result.fullName,
+          email: result.email,
+        }),
+      );
       setDone(true);
     } else {
       // console.error("Signup failed:", result);
@@ -546,7 +554,7 @@ export default function SignUpPage(): JSX.Element {
       },
     );
     const result = await data.json();
-    if (result.message === "2FA code resent successfully") {
+    if (result.message === "2FA code sent successfully") {
       startCooldown();
     } else {
       console.error("Failed to resend 2FA code:", result);

@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-
+import { useRouter } from "next/navigation";
 import { useState, FormEvent, ChangeEvent, JSX } from "react";
+import useCooldownTimer from "../hooks/useCooldownTimer";
 
 /* ─── Types ─────────────────────────────────────────────────────────────── */
 
@@ -208,11 +209,22 @@ function InputField({
 /* ─── Main Component ─────────────────────────────────────────────────────── */
 
 export default function LoginPage(): JSX.Element {
+  const { timeLeft, isActive, startCooldown } = useCooldownTimer(
+    60000,
+    "login-2fa-cooldown",
+  );
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPass, setShowPass] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [error, setError] = useState<string>("");
+  const [verificationRequired, setVerificationRequired] =
+    useState<boolean>(false);
+  const [verificationLoading, setVerificationLoading] =
+    useState<boolean>(false);
+  const [verificationError, setVerificationError] = useState<string>("");
+  const [verificationCode, setVerificationCode] = useState<string>("");
+  const router = useRouter();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setLoading(true);
@@ -221,8 +233,73 @@ export default function LoginPage(): JSX.Element {
       email,
       password,
     });
-    await new Promise<void>((r) => setTimeout(r, 1500));
+    setError("");
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
+      },
+    );
+    const data = await res.json();
+    if (!res.ok) {
+      if (data.message == "Please verify your email before logging in") {
+        const data = await fetch(
+          process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/resend-2fa-code",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({ email }),
+          },
+        );
+        const result = await data.json();
+        if (result.message === "2FA code sent successfully") {
+          startCooldown();
+          setVerificationRequired(true);
+        } else {
+          console.error("Failed to resend 2FA code:", result);
+        }
+      }
+      setError(data.message);
+      return;
+    }
+
     setLoading(false);
+    router.push("/home");
+  };
+
+  const handleVerificationSubmit = async (
+    e: FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
+    e.preventDefault();
+    startCooldown();
+    setVerificationLoading(true);
+    setVerificationError("");
+    console.log("Verification Data:", {
+      email,
+      code: verificationCode,
+    });
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/login-verify-2fa",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, code: verificationCode }),
+      },
+    );
+    const data = await res.json();
+    if (!res.ok) {
+      setVerificationError(data.message);
+      setVerificationLoading(false);
+      return;
+    }
+    router.push("/home");
+    setVerificationLoading(false);
   };
 
   return (
@@ -466,56 +543,102 @@ export default function LoginPage(): JSX.Element {
             <p className="ss-sub">Login to your account</p>
 
             {/* Form */}
-            <form onSubmit={handleSubmit}>
-              <InputField
-                id="email"
-                label="Email address"
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setEmail(e.target.value)
-                }
-                autoComplete="email"
-                required
-              />
+            {!verificationRequired && (
+              <form onSubmit={handleSubmit}>
+                <InputField
+                  id="email"
+                  label="Email address"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setEmail(e.target.value)
+                  }
+                  autoComplete="email"
+                  required
+                />
 
-              <InputField
-                id="password"
-                label="Password"
-                type={showPass ? "text" : "password"}
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setPassword(e.target.value)
-                }
-                autoComplete="current-password"
-                required
-                rightSlot={
+                <InputField
+                  id="password"
+                  label="Password"
+                  type={showPass ? "text" : "password"}
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setPassword(e.target.value)
+                  }
+                  autoComplete="current-password"
+                  required
+                  rightSlot={
+                    <button
+                      type="button"
+                      className="ss-eye-btn"
+                      onClick={() => setShowPass((p) => !p)}
+                      aria-label={showPass ? "Hide password" : "Show password"}
+                    >
+                      {showPass ? <EyeOffIcon /> : <EyeIcon />}
+                    </button>
+                  }
+                />
+
+                {/* Forgot password */}
+                <div className="ss-forgot-row">
+                  <a href="#" className="ss-forgot">
+                    Forgot password?
+                  </a>
+                </div>
+                <div className="text-center font-semibold text-red-500 ">
+                  {error}
+                </div>
+                {/* Login button */}
+                <button
+                  type="submit"
+                  className="ss-btn-login"
+                  disabled={loading}
+                >
+                  {loading ? <span className="ss-spinner" /> : "Login"}
+                </button>
+              </form>
+            )}
+            {verificationRequired && (
+              <>
+                <form onSubmit={handleVerificationSubmit}>
+                  <InputField
+                    id="verification-code-login"
+                    label="Verification Code"
+                    type="text"
+                    placeholder="Enter the code from your email"
+                    value={verificationCode}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setVerificationCode(e.target.value)
+                    }
+                    autoComplete="one-time-code"
+                    required
+                  />
+                  {isActive && (
+                    <div className="text-center text-gray-600">
+                      {timeLeft} seconds left
+                    </div>
+                  )}
+
+                  <div className="text-center font-semibold text-red-500 ">
+                    {verificationError}
+                  </div>
+                  {/* Login button */}
                   <button
-                    type="button"
-                    className="ss-eye-btn"
-                    onClick={() => setShowPass((p) => !p)}
-                    aria-label={showPass ? "Hide password" : "Show password"}
+                    type="submit"
+                    className="ss-btn-login"
+                    disabled={verificationLoading}
                   >
-                    {showPass ? <EyeOffIcon /> : <EyeIcon />}
+                    {verificationLoading ? (
+                      <span className="ss-spinner" />
+                    ) : (
+                      "Submit 2FA Code"
+                    )}
                   </button>
-                }
-              />
-
-              {/* Forgot password */}
-              <div className="ss-forgot-row">
-                <a href="#" className="ss-forgot">
-                  Forgot password?
-                </a>
-              </div>
-
-              {/* Login button */}
-              <button type="submit" className="ss-btn-login" disabled={loading}>
-                {loading ? <span className="ss-spinner" /> : "Login"}
-              </button>
-            </form>
-
+                </form>
+              </>
+            )}
             {/* Divider */}
             <div className="ss-divider">
               <div className="ss-divider-line" />
@@ -528,9 +651,9 @@ export default function LoginPage(): JSX.Element {
               <button type="button" className="ss-btn-social">
                 <GoogleIcon /> Google
               </button>
-              <button type="button" className="ss-btn-social">
+              {/* <button type="button" className="ss-btn-social">
                 <MicrosoftIcon /> Microsoft
-              </button>
+              </button> */}
             </div>
 
             {/* Sign up */}
