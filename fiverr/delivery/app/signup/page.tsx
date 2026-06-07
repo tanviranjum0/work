@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import useCooldownTimer from "../hooks/useCooldownTimer";
 import { useState, FormEvent, ChangeEvent, JSX } from "react";
 
 /* ─── Types ─────────────────────────────────────────────────────────────── */
@@ -152,17 +152,6 @@ function GoogleIcon(): JSX.Element {
   );
 }
 
-function MicrosoftIcon(): JSX.Element {
-  return (
-    <svg width={18} height={18} viewBox="0 0 21 21">
-      <rect x={0} y={0} width={10} height={10} fill="#F25022" />
-      <rect x={11} y={0} width={10} height={10} fill="#7FBA00" />
-      <rect x={0} y={11} width={10} height={10} fill="#00A4EF" />
-      <rect x={11} y={11} width={10} height={10} fill="#FFB900" />
-    </svg>
-  );
-}
-
 function UserIcon(): JSX.Element {
   return (
     <svg
@@ -195,23 +184,6 @@ function MailIcon(): JSX.Element {
     >
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
       <polyline points="22,6 12,13 2,6" />
-    </svg>
-  );
-}
-
-function PhoneIcon(): JSX.Element {
-  return (
-    <svg
-      width={15}
-      height={15}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="#9CA3AF"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63 19.79 19.79 0 01.12 2 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
     </svg>
   );
 }
@@ -487,25 +459,25 @@ export default function SignUpPage(): JSX.Element {
   const [agreed, setAgreed] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [done, setDone] = useState<boolean>(false);
-
+  const [step2Error, setStep2Error] = useState<string>("");
+  const [step1Error, setStep1Error] = useState<string>("");
+  const { timeLeft, isActive, startCooldown } = useCooldownTimer(
+    60000,
+    "signup-2fa-cooldown",
+  );
   const strength = getStrength(password);
   const mismatch: boolean = confirm.length > 0 && confirm !== password;
   const canSubmit: boolean =
     agreed && !mismatch && password.length >= 6 && !loading;
 
-  const handleStep1 = async (e: FormEvent<HTMLFormElement>): void => {
+  //Resend OTP
+  const [resendOTPLoading, setResendOTPLoading] = useState<boolean>(false);
+  const handleStep1 = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    console.log("Step 1 Data:", {
-      fullName,
-      email,
-      password,
-      confirm,
-      canSubmit,
-      showConf,
-      mismatch,
-    });
+    setLoading(true);
     if (mismatch) {
       document.getElementById("confirm")?.focus();
+      setLoading(false);
       return;
     }
     const data = await fetch(
@@ -515,19 +487,27 @@ export default function SignUpPage(): JSX.Element {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ email, fullName, password }),
       },
     );
     const result = await data.json();
     if (result.message === "Verification code sent") {
+      startCooldown();
       setStep(2);
+    } else {
+      setStep1Error(
+        result.message || "Failed to send verification code. Please try again.",
+      );
     }
+    setLoading(false);
+    return;
   };
-  const router = useRouter();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (!canSubmit) return;
     setLoading(true);
+    console.log("Submitting Step 2 with:", { email, twofacode });
     const data = await fetch(
       process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/verify-2fa-code",
       {
@@ -535,19 +515,43 @@ export default function SignUpPage(): JSX.Element {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ email, code: twofacode }),
       },
     );
     const result = await data.json();
     // console.log("Verification result:", result);
     if (result.message === "User created successfully") {
-      router.push("/home");
+      // router.push("/home");
+      setDone(true);
     } else {
       // console.error("Signup failed:", result);
-      alert(result.message || "Signup failed. Please try again.");
+      setStep2Error(result.message || "Signup failed. Please try again.");
     }
     setLoading(false);
-    setDone(true);
+  };
+
+  const handleResendOTP = async (): Promise<void> => {
+    if (isActive) return;
+    setResendOTPLoading(true);
+    const data = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/resend-2fa-code",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ email }),
+      },
+    );
+    const result = await data.json();
+    if (result.message === "2FA code resent successfully") {
+      startCooldown();
+    } else {
+      console.error("Failed to resend 2FA code:", result);
+    }
+    setResendOTPLoading(false);
   };
 
   return (
@@ -901,9 +905,9 @@ export default function SignUpPage(): JSX.Element {
                   <br />
                   Check your email to verify your address and get started.
                 </p>
-                <button className="ss-success-btn">
+                <Link href="/home" className="ss-success-btn">
                   Go to Dashboard <ArrowRightIcon />
-                </button>
+                </Link>
               </div>
             ) : (
               <>
@@ -1023,9 +1027,20 @@ export default function SignUpPage(): JSX.Element {
                           </button>
                         }
                       />
-
-                      <button type="submit" className="ss-btn-primary">
-                        Continue <ArrowRightIcon />
+                      <div className="bg-red-500">{step1Error}</div>
+                      <button
+                        disabled={loading}
+                        type="submit"
+                        className="ss-btn-primary"
+                      >
+                        {loading ? (
+                          <span className="ss-spinner" />
+                        ) : (
+                          <>
+                            <span>Continue</span>
+                            <ArrowRightIcon />
+                          </>
+                        )}
                       </button>
                     </form>
 
@@ -1058,14 +1073,42 @@ export default function SignUpPage(): JSX.Element {
                       <InputField
                         id="twofacode"
                         label="Enter Verification Code (emailed to you)"
-                        type="text"
+                        type="number"
                         placeholder="e.g. 123456"
                         value={twofacode}
                         onChange={(e) => setTwofacode(e.target.value)}
-                        autoComplete="organization"
+                        autoComplete="one-time-code"
                         leadingIcon={<BuildingIcon />}
                       />
 
+                      {isActive ? (
+                        <button
+                          disabled
+                          type="button"
+                          className="ss-btn-primary"
+                          style={{ marginTop: 8 }}
+                        >
+                          {timeLeft} seconds remaining
+                        </button>
+                      ) : (
+                        <button
+                          disabled={resendOTPLoading}
+                          type="button"
+                          onClick={handleResendOTP}
+                          className="ss-btn-primary"
+                          style={{ marginTop: 8 }}
+                        >
+                          {resendOTPLoading ? (
+                            <span className="ss-spinner" />
+                          ) : (
+                            "Resend 2FA code"
+                          )}
+                        </button>
+                      )}
+
+                      <div className="text-red-500 text-center my-2 font-semibold">
+                        {step2Error}
+                      </div>
                       {/* Terms */}
                       <div className="ss-check-row">
                         <input
@@ -1096,7 +1139,7 @@ export default function SignUpPage(): JSX.Element {
                         <button
                           type="submit"
                           className="ss-btn-primary"
-                          disabled={!canSubmit}
+                          disabled={!canSubmit || loading}
                           style={{ flex: 1, marginTop: 4 }}
                         >
                           {loading ? (

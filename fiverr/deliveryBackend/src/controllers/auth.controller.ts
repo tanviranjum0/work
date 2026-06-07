@@ -65,9 +65,12 @@ export const send2FASignupCode = async (
       twoFaCode: parseInt(code),
     });
 
-    send2FAEmail(email, code).catch((err) =>
-      console.error("Failed to send 2FA email:", err),
-    );
+    setTimeout(() => {
+      User.findByIdAndUpdate(newUser._id, { twoFaCode: 0 }).catch((err) =>
+        console.error("Failed to clear 2FA code:", err),
+      );
+    }, 60000);
+
     return res.status(200).json({ message: "Verification code sent" });
   } catch (error: unknown) {
     console.error("Error in send2faSignupCode controller:", error);
@@ -85,15 +88,18 @@ export const signup = async (
   };
 
   try {
-    if (!email || !code) {
-      return res.status(400).json({ message: "All fields are required" });
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+    if (!code) {
+      return res.status(400).json({ message: "2FA code is required" });
     }
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Invalid email or code" });
+      return res.status(400).json({ message: "Invalid user" });
     }
-    if (user.twoFaCode !== code) {
-      return res.status(400).json({ message: "Invalid email or code" });
+    if (user.twoFaCode !== parseInt(code)) {
+      return res.status(400).json({ message: "Invalid 2FA code" });
     }
     // 🔥 Convert ObjectId → string
 
@@ -208,6 +214,37 @@ export const updateProfile = async (
     return res.status(200).json(updatedUser);
   } catch (error: unknown) {
     console.error("Error in update profile:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const resend2FALoginCode = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
+  const { email } = req.body as { email: string };
+  try {
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid user" });
+    }
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    await send2FAEmail(email, code).catch((err) =>
+      console.error("Failed to send 2FA email:", err),
+    );
+    await User.findByIdAndUpdate(user._id, { twoFaCode: parseInt(code) });
+
+    setTimeout(() => {
+      User.findByIdAndUpdate(user._id, { twoFaCode: 0 }).catch((err) =>
+        console.error("Failed to clear 2FA code:", err),
+      );
+    }, 60000);
+    return res.status(200).json({ message: "2FA code resent successfully" });
+  } catch (error: unknown) {
+    console.error("Error in resend 2FA login code:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };

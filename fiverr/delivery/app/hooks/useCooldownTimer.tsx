@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useRef, useCallback, useEffect } from "react";
 
 type UseCooldownTimerReturn = {
@@ -7,8 +8,8 @@ type UseCooldownTimerReturn = {
 };
 
 const useCooldownTimer = (
-  cooldownDuration: number = 60000,
-  storageKey: string = "cooldown-timer",
+  cooldownDuration: number,
+  storageKey: string,
 ): UseCooldownTimerReturn => {
   const [timeLeft, setTimeLeft] = useState<number>(0);
 
