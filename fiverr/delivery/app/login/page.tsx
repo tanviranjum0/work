@@ -298,6 +298,7 @@ export default function LoginPage(): JSX.Element {
       setVerificationLoading(false);
       return;
     }
+
     router.push("/home");
     setVerificationLoading(false);
   };
