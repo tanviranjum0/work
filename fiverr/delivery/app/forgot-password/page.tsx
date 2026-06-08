@@ -477,7 +477,7 @@ function StepVerify({
   );
 }
 
-// ─── Step 3 – New Password ────────────────────────────────────────────────────
+// ─── Step 3 – New Password ──────────────────────────────────────────────────
 
 function StepReset({
   form,
