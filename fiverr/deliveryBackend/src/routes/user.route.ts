@@ -5,6 +5,7 @@ import {
   login,
   logout,
   send2FASignupCode,
+  resetPassword,
   resend2FALoginCode,
 } from "../controllers/auth.controller";
 
@@ -22,4 +23,5 @@ router.post("/logout", logout);
 
 //for got password
 router.post("/send-email-forgot-password", resend2FALoginCode);
+router.post("/reset-password", resetPassword);
 export default router;

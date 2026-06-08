@@ -316,3 +316,51 @@ export const login2FAVerification = async (
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const resetPassword = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
+  const { email, code, password } = req.body as {
+    email: string;
+    code: number;
+    password: string;
+  };
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+  if (!code) {
+    return res.status(400).json({ message: "2FA code is required" });
+  }
+  if (!password) {
+    return res.status(400).json({ message: "2FA code is required" });
+  }
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(400).json({ message: "Invalid user" });
+  }
+
+  if (user.twoFaCode != parseInt(code)) {
+    return res.status(400).json({ message: "Invalid 2FA code" });
+  }
+  const updatedUser = await User.findByIdAndUpdate(
+    user._id,
+    {
+      password,
+    },
+    { returnDocument: "after" },
+  );
+
+  if (!updatedUser) {
+    return res.status(400).json({ message: "Failed to reset password" });
+  }
+
+  generateToken(updatedUser, res);
+
+  res.status(201).json({
+    message: "Password reset successful",
+    _id: updatedUser._id,
+    fullName: updatedUser.fullName,
+    email: updatedUser.email,
+  });
+};

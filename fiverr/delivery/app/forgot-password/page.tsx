@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-
+import useCooldownTimer from "../hooks/useCooldownTimer";
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type Step = 1 | 2 | 3 | 4; // email → verify → reset → success
@@ -118,10 +118,12 @@ function Stepper({ current }: { current: Step }) {
 // ─── Step 1 – Email Entry ─────────────────────────────────────────────────────
 
 function StepEmail({
+  startCooldown,
   form,
   setForm,
   onNext,
 }: {
+  startCooldown: () => void;
   form: FormState;
   setForm: React.Dispatch<React.SetStateAction<FormState>>;
   onNext: () => void;
@@ -152,6 +154,7 @@ function StepEmail({
       setLoading(false);
       return setError(data.message);
     }
+    startCooldown();
     onNext();
     setLoading(false);
   };
@@ -270,12 +273,18 @@ function StepEmail({
 // ─── Step 2 – 2FA Code Verification ──────────────────────────────────────────
 
 function StepVerify({
+  isActive,
+  timeLeft,
   form,
   setForm,
+  otpError,
   onNext,
   onBack,
 }: {
+  isActive: boolean;
+  timeLeft: number;
   form: FormState;
+  otpError: string;
   setForm: React.Dispatch<React.SetStateAction<FormState>>;
   onNext: () => void;
   onBack: () => void;
@@ -283,7 +292,7 @@ function StepVerify({
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [resendTimer, setResendTimer] = useState(30);
+  const [resendTimer, setResendTimer] = useState(60);
   const [resending, setResending] = useState(false);
 
   // Countdown timer
@@ -356,7 +365,6 @@ function StepVerify({
     } else {
       onNext();
     }
-    console.log(form);
     setLoading(true);
   };
 
@@ -437,22 +445,17 @@ function StepVerify({
         </p>
       )}
 
-      <p className="otp-hint">
-        {resendTimer > 0 ? (
-          <>
-            Resend code in <strong>{resendTimer}s</strong>
-          </>
-        ) : (
-          <button
-            className="link btn-link"
-            onClick={handleResend}
-            disabled={resending}
-          >
-            {resending ? "Sending…" : "Resend code"}
-          </button>
-        )}
-      </p>
+      {otpError && (
+        <p className="field-error" style={{ marginTop: 10 }}>
+          {otpError}
+        </p>
+      )}
 
+      {isActive && (
+        <p className="otp-hint">
+          <strong>{timeLeft}</strong> seconds remaining
+        </p>
+      )}
       <button
         className={`btn-primary full ${loading ? "loading" : ""}`}
         onClick={handleVerify}
@@ -481,11 +484,13 @@ function StepVerify({
 
 function StepReset({
   form,
+  setOtpError,
   setForm,
   onNext,
   onBack,
 }: {
   form: FormState;
+  setOtpError: React.Dispatch<React.SetStateAction<string>>;
   setForm: React.Dispatch<React.SetStateAction<FormState>>;
   onNext: () => void;
   onBack: () => void;
@@ -502,25 +507,39 @@ function StepReset({
   const canSubmit = pwValid && cfValid;
 
   const handleSubmit = async () => {
+    setOtpError("");
     setTouched({ pw: true, cf: true });
     if (!canSubmit) return;
     setLoading(true);
-    console.log(form);
     if (form.password !== form.confirm) {
       alert("Password did not matched");
     }
 
     const code = Number(form.code.join(""));
-    console.log(code);
-    // const res = await fetch(
-    //   process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/forgot-password",
-    //   {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     credentials: "include",
-    //     body: JSON.stringify({ form }),
-    //   },
-    // );
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/reset-password",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ ...form, code }),
+      },
+    );
+    const data = await res.json();
+
+    if (data.message == "Invalid 2FA code") {
+      setOtpError("Invalid 2FA code");
+      setLoading(false);
+      onBack();
+      return;
+    }
+
+    if (data.message == "Password reset successful") {
+      setLoading(false);
+      onNext();
+      return;
+    }
+    setLoading(false);
     // setTimeout(() => {
     //   setLoading(false);
     //   onNext();
@@ -857,9 +876,13 @@ function EyeOff() {
 // ─── Root ─────────────────────────────────────────────────────────────────────
 
 export default function ForgotPassword() {
+  const { timeLeft, isActive, startCooldown } = useCooldownTimer(
+    60000,
+    "forgot-password-2fa-cooldown",
+  );
   const [step, setStep] = useState<Step>(1);
   const [form, setForm] = useState<FormState>(DEFAULT_FORM);
-
+  const [otpError, setOtpError] = useState<string>("");
   const next = () => setStep((s) => Math.min(s + 1, 4) as Step);
   const back = () => setStep((s) => Math.max(s - 1, 1) as Step);
   const reset = () => {
@@ -944,11 +967,19 @@ export default function ForgotPassword() {
         <div className="form-panel">
           <div className="form-inner">
             {step === 1 && (
-              <StepEmail form={form} setForm={setForm} onNext={next} />
+              <StepEmail
+                startCooldown={startCooldown}
+                form={form}
+                setForm={setForm}
+                onNext={next}
+              />
             )}
             {step === 2 && (
               <StepVerify
+                isActive={isActive}
+                timeLeft={timeLeft}
                 form={form}
+                otpError={otpError}
                 setForm={setForm}
                 onNext={next}
                 onBack={back}
@@ -956,6 +987,7 @@ export default function ForgotPassword() {
             )}
             {step === 3 && (
               <StepReset
+                setOtpError={setOtpError}
                 form={form}
                 setForm={setForm}
                 onNext={next}
