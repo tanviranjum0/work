@@ -4,13 +4,15 @@ import { useRouter } from "next/navigation";
 
 const Page = () => {
   const router = useRouter();
-  const isAlreadyLoggedIn: boolean = false;
 
   useEffect(() => {
-    if (!isAlreadyLoggedIn) {
+    const cachedUser = localStorage.getItem("user");
+    if (!cachedUser) {
       router.push("/login");
+    } else {
+      router.push("/home");
     }
-  }, [isAlreadyLoggedIn, router]);
+  }, [router]);
 
   return <div>page</div>;
 };

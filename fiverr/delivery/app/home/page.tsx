@@ -3,6 +3,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type IconName =
   | "box"
@@ -111,7 +113,8 @@ function Icon({ name }: { name: IconName }) {
   );
 }
 
-export default function ShipSwiftDashboardPage() {
+export default function FeitsmaVerhuizingenDashboardPage() {
+  const router = useRouter();
   const [user, setUser] = useState<{
     _id: string;
     fullName: string;
@@ -121,21 +124,42 @@ export default function ShipSwiftDashboardPage() {
     const cachedUser = localStorage.getItem("user");
     if (cachedUser) {
       setUser(JSON.parse(cachedUser));
+    } else {
+      router.push("/login");
     }
-  }, []);
+  }, [router]);
 
+  const handleLogout = async () => {
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/logout",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: user?.email }),
+      },
+    );
+    const data = await res.json();
+    if (data.message == "Logged out successfully") {
+      setUser(null);
+      localStorage.clear();
+      router.push("/login");
+    }
+  };
   return (
     <main className="ship-shell">
       <style>{dashboardStyles}</style>
 
-      <section className="ship-dashboard" aria-label="ShipSwift dashboard">
+      <section
+        className="ship-dashboard"
+        aria-label="Feitsma Verhuizingen dashboard"
+      >
         <aside className="ship-sidebar">
-          <a className="ship-brand" href="#">
+          <Link className="ship-brand" href={"/"}>
             <span className="ship-brand-mark">
               <Icon name="box" />
             </span>
-            <span>ShipSwift</span>
-          </a>
+            <span>Feitsma Verhuizingen</span>
+          </Link>
 
           <nav className="ship-nav" aria-label="Main navigation">
             {navItems.map((item) => (
@@ -150,10 +174,10 @@ export default function ShipSwiftDashboardPage() {
             ))}
           </nav>
 
-          <a className="ship-logout" href="#">
+          <div onClick={handleLogout} className="cursor-pointer ship-logout">
             <Icon name="logout" />
             <span>Logout</span>
-          </a>
+          </div>
         </aside>
 
         <div className="ship-content">

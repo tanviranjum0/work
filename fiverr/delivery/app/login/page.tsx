@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, FormEvent, ChangeEvent, JSX } from "react";
 import useCooldownTimer from "../hooks/useCooldownTimer";
+import Link from "next/link";
 
 /* ─── Types ─────────────────────────────────────────────────────────────── */
 
@@ -20,7 +21,7 @@ interface InputFieldProps {
 
 /* ─── Icons ─────────────────────────────────────────────────────────────── */
 
-function ShipSwiftLogo(): JSX.Element {
+function FeitsmaVerhuizingenLogo(): JSX.Element {
   return (
     <svg
       width={34}
@@ -229,10 +230,6 @@ export default function LoginPage(): JSX.Element {
     e.preventDefault();
     setLoading(true);
 
-    console.log("Login Data:", {
-      email,
-      password,
-    });
     setError("");
     const res = await fetch(
       process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/login",
@@ -244,6 +241,7 @@ export default function LoginPage(): JSX.Element {
       },
     );
     const data = await res.json();
+    // console.log(data);
     if (!res.ok) {
       if (data.message == "Please verify your email before logging in") {
         const data = await fetch(
@@ -266,11 +264,19 @@ export default function LoginPage(): JSX.Element {
         }
       }
       setError(data.message);
-      return;
+    } else if (data.message == "Logged in succesfully!") {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          _id: data._id,
+          fullName: data.fullName,
+          email: data.email,
+        }),
+      );
+      router.push("/home");
     }
 
     setLoading(false);
-    router.push("/home");
   };
 
   const handleVerificationSubmit = async (
@@ -293,13 +299,23 @@ export default function LoginPage(): JSX.Element {
       },
     );
     const data = await res.json();
+    console.log(data);
     if (!res.ok) {
       setVerificationError(data.message);
       setVerificationLoading(false);
       return;
+    } else if (data.message == "User created successfully") {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          _id: data._id,
+          fullName: data.fullName,
+          email: data.email,
+        }),
+      );
+      router.push("/home");
     }
 
-    router.push("/home");
     setVerificationLoading(false);
   };
 
@@ -531,13 +547,13 @@ export default function LoginPage(): JSX.Element {
           {/* ── Form Side ── */}
           <div className="ss-form-side">
             {/* Logo */}
-            <div className="ss-logo">
-              <ShipSwiftLogo />
+            <Link href={"/"} className="ss-logo">
+              <FeitsmaVerhuizingenLogo />
               <div className="ss-logo-text">
-                <span className="ss-logo-name">ShipSwift</span>
+                <span className="ss-logo-name">Feitsma Verhuizingen</span>
                 <span className="ss-logo-tag">Delivering Reliability</span>
               </div>
-            </div>
+            </Link>
 
             {/* Heading */}
             <h1 className="ss-h1">Welcome Back</h1>
@@ -584,9 +600,9 @@ export default function LoginPage(): JSX.Element {
 
                 {/* Forgot password */}
                 <div className="ss-forgot-row">
-                  <a href="#" className="ss-forgot">
+                  <Link href="forgot-password" className="ss-forgot">
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
                 <div className="text-center font-semibold text-red-500 ">
                   {error}

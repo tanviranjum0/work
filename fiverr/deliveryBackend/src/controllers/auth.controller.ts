@@ -171,6 +171,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
     generateToken(user, res);
 
     return res.status(200).json({
+      message: "Logged in succesfully!",
       _id: user._id.toString(),
       fullName: user.fullName,
       email: user.email,

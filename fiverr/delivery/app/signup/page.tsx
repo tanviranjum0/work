@@ -61,7 +61,7 @@ function getStrength(pw: string): PasswordStrength {
 
 /* ─── Icons ─────────────────────────────────────────────────────────────── */
 
-function ShipSwiftLogo(): JSX.Element {
+function FeitsmaVerhuizingentLogo(): JSX.Element {
   return (
     <svg width={34} height={34} viewBox="0 0 34 34" fill="none">
       <rect width={34} height={34} rx={8} fill="#1B3FAB" />
@@ -882,13 +882,13 @@ export default function SignUpPage(): JSX.Element {
           {/* ── Form side ── */}
           <div className="ss-form-side">
             {/* Logo */}
-            <div className="ss-logo">
-              <ShipSwiftLogo />
+            <Link href={"/"} className="ss-logo">
+              <FeitsmaVerhuizingentLogo />
               <div>
-                <span className="ss-logo-name">ShipSwift</span>
+                <span className="ss-logo-name">Feitsma Verhuizingen</span>
                 <span className="ss-logo-tag">Delivering Reliability</span>
               </div>
-            </div>
+            </Link>
 
             {done ? (
               /* ── Success ── */
@@ -909,7 +909,8 @@ export default function SignUpPage(): JSX.Element {
                 </div>
                 <h2 className="ss-success-title">Account Created!</h2>
                 <p className="ss-success-sub">
-                  Welcome to ShipSwift, {fullName.split(" ")[0] || "there"}!
+                  Welcome to Feitsma Verhuizingen,{" "}
+                  {fullName.split(" ")[0] || "there"}!
                   <br />
                   Check your email to verify your address and get started.
                 </p>
@@ -1035,7 +1036,9 @@ export default function SignUpPage(): JSX.Element {
                           </button>
                         }
                       />
-                      <div className="bg-red-500">{step1Error}</div>
+                      <div className="text-center text-red-500">
+                        {step1Error}
+                      </div>
                       <button
                         disabled={loading}
                         type="submit"
@@ -1129,7 +1132,7 @@ export default function SignUpPage(): JSX.Element {
                           required
                         />
                         <label htmlFor="agree">
-                          I agree to ShipSwift&apos;s{" "}
+                          I agree to Feitsma Verhuizingen&apos;s{" "}
                           <a href="#">Terms of Service</a> and{" "}
                           <a href="#">Privacy Policy</a>
                         </label>

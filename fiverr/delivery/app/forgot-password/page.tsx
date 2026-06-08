@@ -70,7 +70,7 @@ function passwordStrength(pw: string): {
 // ─── Stepper ──────────────────────────────────────────────────────────────────
 
 const STEPS = [
-  { num: 1 as Step, label: "Email" },
+  { num: 1 as Step, label: "Verify Email" },
   { num: 2 as Step, label: "Verify" },
   { num: 3 as Step, label: "Reset" },
 ];
@@ -129,17 +129,31 @@ function StepEmail({
   const [loading, setLoading] = useState(false);
   const [touched, setTouched] = useState(false);
   const valid = isValidEmail(form.email);
-  const showError = touched && !valid && form.email.length > 0;
-
-  const handleSubmit = () => {
+  const [error, setError] = useState("");
+  const handleSendVerificationEmail = async () => {
+    setError("");
     setTouched(true);
-    if (!valid) return;
+    if (!valid) return setError("Please enter a valid Email");
     setLoading(true);
     // Simulate API call
-    setTimeout(() => {
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL +
+        "/api/users/send-email-forgot-password",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email: form.email }),
+      },
+    );
+
+    const data = await res.json();
+    if (data.message == "Invalid user") {
       setLoading(false);
-      onNext();
-    }, 1200);
+      return setError(data.message);
+    }
+    onNext();
+    setLoading(false);
   };
 
   return (
@@ -178,7 +192,7 @@ function StepEmail({
           Email Address
         </label>
         <div
-          className={`input-wrap ${showError ? "input-error" : touched && valid ? "input-success" : ""}`}
+          className={`input-wrap ${touched && valid ? "input-success" : ""}`}
         >
           <svg className="input-icon" viewBox="0 0 20 20" fill="none">
             <path
@@ -204,7 +218,9 @@ function StepEmail({
             value={form.email}
             onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
             onBlur={() => setTouched(true)}
-            onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+            onKeyDown={(e) =>
+              e.key === "Enter" && handleSendVerificationEmail()
+            }
             autoComplete="email"
           />
           {touched && valid && (
@@ -224,14 +240,13 @@ function StepEmail({
             </svg>
           )}
         </div>
-        {showError && (
-          <p className="field-error">Please enter a valid email address.</p>
-        )}
+
+        {error && <p className="field-error text-center">{error}</p>}
       </div>
 
       <button
         className={`btn-primary full ${loading ? "loading" : ""}`}
-        onClick={handleSubmit}
+        onClick={handleSendVerificationEmail}
         disabled={loading}
       >
         {loading ? (
@@ -244,11 +259,7 @@ function StepEmail({
       </button>
 
       <p className="back-link">
-        <Link
-          href="/login"
-          className="link"
-          onClick={(e) => e.preventDefault()}
-        >
+        <Link href="/login" className="link">
           ← Back to Log In
         </Link>
       </p>
@@ -335,18 +346,18 @@ function StepVerify({
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      // Simulate wrong code once for demo — in production verify against API
-      const joined = form.code.join("");
-      if (joined === "000000") {
-        setError("Invalid code. Please try again.");
-        setForm((f) => ({ ...f, code: ["", "", "", "", "", ""] }));
-        inputRefs.current[0]?.focus();
-      } else {
-        onNext();
-      }
-    }, 1000);
+    setLoading(false);
+    // Simulate wrong code once for demo — in production verify against API
+    const joined = form.code.join("");
+    if (joined === "000000") {
+      setError("Invalid code. Please try again.");
+      setForm((f) => ({ ...f, code: ["", "", "", "", "", ""] }));
+      inputRefs.current[0]?.focus();
+    } else {
+      onNext();
+    }
+    console.log(form);
+    setLoading(true);
   };
 
   const handleResend = () => {
@@ -490,14 +501,30 @@ function StepReset({
   const cfValid = cf === pw && cf.length > 0;
   const canSubmit = pwValid && cfValid;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setTouched({ pw: true, cf: true });
     if (!canSubmit) return;
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      onNext();
-    }, 1200);
+    console.log(form);
+    if (form.password !== form.confirm) {
+      alert("Password did not matched");
+    }
+
+    const code = Number(form.code.join(""));
+    console.log(code);
+    // const res = await fetch(
+    //   process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/forgot-password",
+    //   {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     credentials: "include",
+    //     body: JSON.stringify({ form }),
+    //   },
+    // );
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   onNext();
+    // }, 1200);
   };
 
   return (
@@ -849,23 +876,57 @@ export default function ForgotPassword() {
           <div className="deco-content">
             <div className="deco-logo">
               <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-                <rect width="36" height="36" rx="10" fill="white" fillOpacity=".15"/>
-                <path d="M10 18h16M18 10v16" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
-                <circle cx="18" cy="18" r="6" stroke="white" strokeWidth="2" strokeOpacity=".5"/>
+                <rect
+                  width="36"
+                  height="36"
+                  rx="10"
+                  fill="white"
+                  fillOpacity=".15"
+                />
+                <path
+                  d="M10 18h16M18 10v16"
+                  stroke="white"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+                <circle
+                  cx="18"
+                  cy="18"
+                  r="6"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeOpacity=".5"
+                />
               </svg>
               <span className="deco-brand">ShipTrack</span>
             </div>
             <h1 className="deco-headline">Account Security</h1>
             <p className="deco-sub">
-              We use 2-factor email verification to make sure only you can reset your password.
+              We use 2-factor email verification to make sure only you can reset
+              your password.
             </p>
             <div className="deco-steps">
               {[
-                { icon: "📧", t: "Request reset", d: "Enter your account email address" },
-                { icon: "🔐", t: "Verify identity", d: "Enter the 6-digit code we email you" },
-                { icon: "🔑", t: "Set new password", d: "Create a strong, unique password" },
+                {
+                  icon: "📧",
+                  t: "Request reset",
+                  d: "Enter your account email address",
+                },
+                {
+                  icon: "🔐",
+                  t: "Verify identity",
+                  d: "Enter the 6-digit code we email you",
+                },
+                {
+                  icon: "🔑",
+                  t: "Set new password",
+                  d: "Create a strong, unique password",
+                },
               ].map((s, i) => (
-                <div key={i} className={`deco-step ${step > i ? "deco-done" : step === i + 1 ? "deco-active" : ""}`}>
+                <div
+                  key={i}
+                  className={`deco-step ${step > i ? "deco-done" : step === i + 1 ? "deco-active" : ""}`}
+                >
                   <span className="deco-step-icon">{s.icon}</span>
                   <div>
                     <strong>{s.t}</strong>

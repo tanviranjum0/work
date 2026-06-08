@@ -3,6 +3,7 @@ import {
   signup,
   login2FAVerification,
   login,
+  logout,
   send2FASignupCode,
   resend2FALoginCode,
 } from "../controllers/auth.controller";
@@ -15,4 +16,10 @@ router.post("/resend-2fa-code", resend2FALoginCode);
 //login
 router.post("/login", login);
 router.post("/login-verify-2fa", login2FAVerification);
+
+//log HiOutlineBars3BottomRight
+router.post("/logout", logout);
+
+//for got password
+router.post("/send-email-forgot-password", resend2FALoginCode);
 export default router;
