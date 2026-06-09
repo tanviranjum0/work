@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/use-memo */
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { debounce } from "lodash";
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type Step = 1 | 2 | 3 | 4;
@@ -156,9 +157,33 @@ function AddressInput({
   const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const getSuggestions = useCallback(
+    debounce(async (inputValue: string) => {
+      if (inputValue.length >= 3) {
+        try {
+          const response: object = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/map/get-suggestions?input=${inputValue}`,
+            {
+              method: "GET",
+              headers: {
+                token: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API,
+              },
+            },
+          );
+
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }, 700),
+    [],
+  );
 
   useEffect(() => {
     const results = getMockSuggestions(value);
+    console.log(results);
+    getSuggestions(value);
     setSuggestions(results);
     setOpen(results.length > 0 && value.length > 0);
   }, [value]);
@@ -248,10 +273,13 @@ function StepPickup({
         label="Enter pickup address"
         placeholder="e.g. 123 Main St…"
         value={form.pickupAddress}
-        onChange={(v) =>
-          setForm((f) => ({ ...f, pickupAddress: v, pickupSelected: null }))
-        }
-        onSelect={(s) => setForm((f) => ({ ...f, pickupSelected: s }))}
+        onChange={(v) => {
+          setForm((f) => ({ ...f, pickupAddress: v, pickupSelected: null }));
+        }}
+        onSelect={(s) => {
+          console.log("Selecting");
+          setForm((f) => ({ ...f, pickupSelected: s }));
+        }}
       />
       <div className="btn-row single">
         <button

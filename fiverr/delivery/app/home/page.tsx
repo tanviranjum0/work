@@ -20,15 +20,20 @@ type IconName =
   | "calendar"
   | "trend";
 
-const navItems: { label: string; icon: IconName; active?: boolean }[] = [
-  { label: "Dashboard", icon: "grid", active: true },
-  { label: "Shipments", icon: "ship" },
-  { label: "Create Shipment", icon: "plus" },
-  { label: "Warehouses", icon: "warehouse" },
-  { label: "Vehicles", icon: "truck" },
-  { label: "Drivers", icon: "users" },
-  { label: "Reports", icon: "report" },
-  { label: "Settings", icon: "settings" },
+const navItems: {
+  label: string;
+  icon: IconName;
+  active?: boolean;
+  link: string;
+}[] = [
+  { label: "Dashboard", icon: "grid", active: true, link: "/" },
+  { label: "Shipments", icon: "ship", link: "/" },
+  { label: "Create Shipment", icon: "plus", link: "/new-shipment" },
+  { label: "Warehouses", icon: "warehouse", link: "/" },
+  { label: "Vehicles", icon: "truck", link: "/" },
+  { label: "Drivers", icon: "users", link: "/" },
+  { label: "Reports", icon: "report", link: "/" },
+  { label: "Settings", icon: "settings", link: "/" },
 ];
 
 const stats = [
@@ -158,19 +163,21 @@ export default function FeitsmaVerhuizingenDashboardPage() {
             <span className="ship-brand-mark">
               <Icon name="box" />
             </span>
-            <span>Feitsma Verhuizingen</span>
+            <span>
+              Feitsma <div className="text-blue-600">Verhuizingen</div>{" "}
+            </span>
           </Link>
 
           <nav className="ship-nav" aria-label="Main navigation">
             {navItems.map((item) => (
-              <a
+              <Link
                 className={`ship-nav-item ${item.active ? "is-active" : ""}`}
-                href="#"
+                href={item.link}
                 key={item.label}
               >
                 <Icon name={item.icon} />
                 <span>{item.label}</span>
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -258,7 +265,7 @@ export default function FeitsmaVerhuizingenDashboardPage() {
               <article className="ship-panel">
                 <h2>Quick Actions</h2>
                 <div className="ship-actions">
-                  <button type="button">Create Shipment</button>
+                  <Link href={"/new-shipment"}>Create Shipment</Link>
                   <button type="button">Add Vehicle</button>
                 </div>
               </article>

@@ -11,6 +11,7 @@ import connectDB from "./config/db";
 import dns from "node:dns";
 import checkLogin from "./utils/checkLogin.js";
 import { NextFunction } from "express";
+import { getAutoCompleteSuggestionsForVisitors } from "./controllers/map.controller.js";
 dotenv.config();
 dns.setServers(["8.8.8.8", "8.8.4.4", "1.1.1.1"]);
 const app: Application = express();
@@ -49,9 +50,12 @@ app.get("/", (req: Request, res: Response) => {
 });
 app.get(
   "/api/test",
-  checkLogin,
-  (req: Request, res: Response, next: NextFunction) => {
-    res.json({ message: "You are authenticated and can access this route!" });
+  (
+    req: Request<{}, {}, {}, { input: string }>,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    getAutoCompleteSuggestionsForVisitors(req, res);
   },
 );
 // User Routes

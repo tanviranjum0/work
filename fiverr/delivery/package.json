@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-google-maps/api": "^2.20.8",
+    "lodash": "^4.18.1",
     "next": "16.2.7",
     "react": "19.2.4",
     "react-dom": "19.2.4"
@@ -23,5 +24,8 @@
     "eslint-config-next": "16.2.7",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "allowScripts": {
+    "lodash@4.18.1": true
   }
 }
