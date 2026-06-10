@@ -69,7 +69,7 @@ export const getDistanceTime = async (
 /**
  * Get Autocomplete Suggestions
  */
-export const getAutoCompleteSuggestions = async (
+export const getAutoCompleteSuggestionsService = async (
   input: string,
 ): Promise<string[]> => {
   if (!input) {
@@ -77,18 +77,29 @@ export const getAutoCompleteSuggestions = async (
   }
 
   const apiKey = process.env.GOOGLE_MAPS_API as string;
-  console.log(apiKey);
   const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(
     input,
   )}&key=${apiKey}`;
 
   try {
-    const response = await axios.get(url);
-
-    if (response.data.status === "OK") {
-      return response.data.predictions
-        .map((prediction: any) => prediction.description)
+    const result = await fetch(url);
+    const response = await result.json();
+    // console.log(response);
+    if (response.status === "OK") {
+      // return response;
+      return response.predictions
+        .map((prediction: any, index: number) => {
+          const data = {
+            id: index,
+            display: prediction.structured_formatting.main_text,
+            secondary: prediction.structured_formatting.secondary_text,
+          };
+          return data;
+        })
         .filter((value: string) => value);
+      // return response.predictions
+      //   .map((prediction: any) => prediction.description)
+      //   .filter((value: string) => value);
     } else {
       throw new Error("Unable to fetch suggestions");
     }

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import mapService from "../services/map.service";
+import { getAutoCompleteSuggestionsService } from "../services/map.service";
 
 /**
  * Extend Request Query Types
@@ -66,26 +66,7 @@ export const getAutoCompleteSuggestions = async (
   try {
     const { input } = req.query;
 
-    const suggestions = await mapService.getAutoCompleteSuggestions(input);
-
-    return res.status(200).json(suggestions);
-  } catch (err: unknown) {
-    console.error(err);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-/**
- * Get Autocomplete Suggestions for Visitors
- */
-export const getAutoCompleteSuggestionsForVisitors = async (
-  req: Request<{}, {}, {}, AutoCompleteQuery>,
-  res: Response,
-): Promise<Response | void> => {
-  try {
-    const { input } = req.query;
-
-    const suggestions = await mapService.getAutoCompleteSuggestions(input);
+    const suggestions = await getAutoCompleteSuggestionsService(input);
 
     return res.status(200).json(suggestions);
   } catch (err: unknown) {

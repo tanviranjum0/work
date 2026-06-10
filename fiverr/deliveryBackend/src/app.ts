@@ -9,9 +9,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/user.route.js";
 import connectDB from "./config/db";
 import dns from "node:dns";
-import checkLogin from "./utils/checkLogin.js";
-import { NextFunction } from "express";
-import { getAutoCompleteSuggestionsForVisitors } from "./controllers/map.controller.js";
+import mapRoutes from "./routes/maps.route.js";
 dotenv.config();
 dns.setServers(["8.8.8.8", "8.8.4.4", "1.1.1.1"]);
 const app: Application = express();
@@ -48,18 +46,21 @@ app.use(limiter);
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Welcome to Express with TypeScript!" });
 });
-app.get(
-  "/api/test",
-  (
-    req: Request<{}, {}, {}, { input: string }>,
-    res: Response,
-    next: NextFunction,
-  ) => {
-    getAutoCompleteSuggestionsForVisitors(req, res);
-  },
-);
+app.get("/api/test", async (req: Request, res: Response) => {
+  const { input } = req.query;
+
+  const apiKey = process.env.GOOGLE_MAPS_API as string;
+
+  console.log(apiKey);
+  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
+
+  const response = await fetch(url);
+  const data = await response.json();
+  res.json(data);
+});
 // User Routes
 app.use("/api/users", userRoutes);
+app.use("/api/maps", mapRoutes);
 
 // Start Server
 app.listen(PORT, () => {

@@ -64,30 +64,6 @@ const VEHICLES: Vehicle[] = [
   },
 ];
 
-function getMockSuggestions(query: string): AddressSuggestion[] {
-  if (!query || query.length < 2) return [];
-  const pool: AddressSuggestion[] = [
-    { id: "1", display: `${query} Main St`, secondary: "New York, NY, USA" },
-    {
-      id: "2",
-      display: `${query} Market St`,
-      secondary: "San Francisco, CA, USA",
-    },
-    {
-      id: "3",
-      display: `${query} Madison Ave`,
-      secondary: "New York, NY, USA",
-    },
-    {
-      id: "4",
-      display: `${query} Magnolia Ave`,
-      secondary: "Los Angeles, CA, USA",
-    },
-    { id: "5", display: `${query} Mahogany Rd`, secondary: "Austin, TX, USA" },
-  ];
-  return pool.slice(0, 5);
-}
-
 // ─── Stepper ──────────────────────────────────────────────────────────────────
 
 function Stepper({ current }: { current: Step }) {
@@ -159,19 +135,17 @@ function AddressInput({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const getSuggestions = useCallback(
     debounce(async (inputValue: string) => {
+      console.log(value, value.length);
+      setOpen(false);
       if (inputValue.length >= 3) {
         try {
-          const response: object = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/map/get-suggestions?input=${inputValue}`,
-            {
-              method: "GET",
-              headers: {
-                token: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API,
-              },
-            },
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/maps/get-suggestions?input=${inputValue}`,
           );
-
-          console.log(response.data);
+          const data = await response.json();
+          // console.log(data);
+          setSuggestions(data);
+          setOpen(data.length > 0 && data.length > 0);
         } catch (error) {
           console.error(error);
         }
@@ -181,11 +155,7 @@ function AddressInput({
   );
 
   useEffect(() => {
-    const results = getMockSuggestions(value);
-    console.log(results);
     getSuggestions(value);
-    setSuggestions(results);
-    setOpen(results.length > 0 && value.length > 0);
   }, [value]);
 
   useEffect(() => {
@@ -307,6 +277,7 @@ function StepDelivery({
   onBack: () => void;
   onNext: () => void;
 }) {
+  // console.log(form);
   return (
     <div className="card">
       <div className="card-header">
