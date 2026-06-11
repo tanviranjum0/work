@@ -35,30 +35,30 @@ interface FormState {
 
 const VEHICLES: Vehicle[] = [
   {
-    id: "small-van",
-    label: "Small Van",
-    capacity: 10,
+    id: "Car",
+    label: "Car",
+    capacity: 240,
     maxLoad: 1000,
     dimensions: "2.5m × 1.8m × 1.8m",
   },
   {
-    id: "medium-truck-box",
-    label: "Medium Truck (Box)",
-    capacity: 60,
+    id: "Larger Car",
+    label: "Larger Car",
+    capacity: 320,
     maxLoad: 10000,
     dimensions: "6.2m × 2.4m × 2.4m",
   },
   {
-    id: "large-truck",
-    label: "Large Truck",
-    capacity: 120,
+    id: "Van",
+    label: "Van",
+    capacity: 450,
     maxLoad: 24000,
     dimensions: "13.6m × 2.4m × 2.7m",
   },
   {
-    id: "flatbed",
-    label: "Flatbed Truck",
-    capacity: 80,
+    id: "Larger Van",
+    label: "Larger Van",
+    capacity: 600,
     maxLoad: 20000,
     dimensions: "12.0m × 2.5m × 0m",
   },
@@ -256,21 +256,24 @@ function StepPickup({
         placeholder="e.g. 123 Main St…"
         value={form.pickupAddress}
         onChange={(v) => {
-          setForm((f) => ({ ...f, pickupAddress: v, pickupSelected: null }));
+          setForm((f) => ({ ...f, pickupAddress: v }));
         }}
         onSelect={(s) => {
           setForm((f) => ({ ...f, pickupSelected: s }));
+          onNext();
         }}
       />
-      <div className="btn-row single">
+      {/* <div className="btn-row single">
         <button
           className="btn-primary"
-          onClick={onNext}
-          disabled={!form.pickupAddress}
+          onClick={() => {
+            onNext();
+          }}
+          disabled={!form.pickupSelected}
         >
           Next
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -289,6 +292,7 @@ function StepDelivery({
   onNext: () => void;
 }) {
   // console.log(form);
+
   return (
     <div className="card">
       <div className="card-header">
@@ -301,22 +305,23 @@ function StepDelivery({
         label="Enter delivery address"
         placeholder="e.g. 456 Oak St…"
         value={form.deliveryAddress}
-        onChange={(v) =>
-          setForm((f) => ({ ...f, deliveryAddress: v, deliverySelected: null }))
-        }
-        onSelect={(s) => setForm((f) => ({ ...f, deliverySelected: s }))}
+        onChange={(v) => setForm((f) => ({ ...f, deliveryAddress: v }))}
+        onSelect={(s) => {
+          setForm((f) => ({ ...f, deliverySelected: s }));
+          onNext();
+        }}
       />
       <div className="btn-row">
         <button className="btn-outline" onClick={onBack}>
           Back
         </button>
-        <button
+        {/* <button
           className="btn-primary"
           onClick={onNext}
           disabled={!form.deliverySelected}
         >
           Next
-        </button>
+        </button> */}
       </div>
     </div>
   );
@@ -396,10 +401,10 @@ function StepVehicle({
               setForm((f) => ({ ...f, capacity: Number(e.target.value) }))
             }
           />
-          <span className="capacity-unit">m³</span>
+          <span className="capacity-unit">Box&apos;s</span>
         </div>
         <p className="capacity-hint">
-          Max for this vehicle: {vehicle.capacity} m³
+          Max for this vehicle: {vehicle.capacity + "  "} Box&apos;s
         </p>
       </div>
 
@@ -418,7 +423,7 @@ function StepVehicle({
         </div>
         <div className="vehicle-details">
           <strong>{vehicle.label}</strong>
-          <span>Capacity: {vehicle.capacity} m³</span>
+          <span>Capacity: {vehicle.capacity + "  "} Box&apos;s</span>
           <span>Max Load: {vehicle.maxLoad.toLocaleString()} kg</span>
           <span>Dimensions: {vehicle.dimensions}</span>
         </div>
@@ -521,7 +526,7 @@ function StepReview({
       <ReviewRow
         icon={<IconBox />}
         label="Capacity"
-        value={`${form.capacity} m³`}
+        value={`${form.capacity} Box's`}
       />
 
       <div className="btn-row">
@@ -599,8 +604,8 @@ const DEFAULT_FORM: FormState = {
   pickupSelected: null,
   deliveryAddress: "",
   deliverySelected: null,
-  vehicleId: "medium-truck-box",
-  capacity: 50,
+  vehicleId: "car",
+  capacity: 240,
 };
 
 export default function CreateShipmentForm() {
