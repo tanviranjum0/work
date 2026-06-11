@@ -2,11 +2,17 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  ChangeEvent,
+} from "react";
 import { debounce } from "lodash";
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type Step = 1 | 2 | 3 | 4;
+type Step = 1 | 2 | 3 | 4 | 5;
 
 interface AddressSuggestion {
   id: string;
@@ -29,6 +35,9 @@ interface FormState {
   deliverySelected: AddressSuggestion | null;
   vehicleId: string;
   capacity: number;
+  clientName: string;
+  clientPhoneNumber: number;
+  deliveryShift: string;
 }
 
 // ─── Static Data ──────────────────────────────────────────────────────────────
@@ -64,6 +73,128 @@ const VEHICLES: Vehicle[] = [
   },
 ];
 
+function ClientForm() {
+  return (
+    <div
+      className="flex items-center justify-center"
+      style={{
+        backgroundColor: "#f0f4f8",
+        padding: "16px",
+      }}
+    >
+      <div
+        className="w-full "
+        style={{
+          backgroundColor: "#ffffff",
+          padding: "24px",
+          borderRadius: "16px",
+          boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "20px",
+            fontWeight: 600,
+            color: "#1e293b",
+            marginBottom: "20px",
+          }}
+        >
+          Client Details
+        </h2>
+
+        {/* Client Name */}
+        <div style={{ marginBottom: "16px" }}>
+          <label
+            style={{
+              display: "block",
+              fontSize: "14px",
+              color: "#475569",
+              marginBottom: "6px",
+              fontWeight: 500,
+            }}
+          >
+            Client Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter client name"
+            style={{
+              width: "100%",
+              padding: "10px 14px",
+              border: "1px solid #cbd5e1",
+              borderRadius: "8px",
+              outline: "none",
+              fontSize: "14px",
+            }}
+          />
+        </div>
+
+        {/* Phone Number */}
+        <div style={{ marginBottom: "16px" }}>
+          <label
+            style={{
+              display: "block",
+              fontSize: "14px",
+              color: "#475569",
+              marginBottom: "6px",
+              fontWeight: 500,
+            }}
+          >
+            Phone Number (Netherlands)
+          </label>
+          <input
+            type="tel"
+            name="phone"
+            style={{
+              width: "100%",
+              padding: "10px 14px",
+              border: "1px solid #cbd5e1",
+              borderRadius: "8px",
+              outline: "none",
+              fontSize: "14px",
+            }}
+          />
+        </div>
+
+        {/* Availability */}
+        <div style={{ marginBottom: "20px" }}>
+          <label
+            style={{
+              display: "block",
+              fontSize: "14px",
+              color: "#475569",
+              marginBottom: "6px",
+              fontWeight: 500,
+            }}
+          >
+            Availability Shift
+          </label>
+
+          <select
+            name="shift"
+            style={{
+              width: "100%",
+              padding: "10px 14px",
+              border: "1px solid #cbd5e1",
+              borderRadius: "8px",
+              backgroundColor: "#ffffff",
+              outline: "none",
+              fontSize: "14px",
+              cursor: "pointer",
+            }}
+          >
+            <option value="">Select shift</option>
+            <option value="morning">Morning (6AM - 12PM)</option>
+            <option value="afternoon">Afternoon (12PM - 6PM)</option>
+            <option value="evening">Evening (6PM - 12AM)</option>
+            <option value="night">Night (12AM - 6AM)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  );
+}
 // ─── Stepper ──────────────────────────────────────────────────────────────────
 
 function Stepper({ current }: { current: Step }) {
@@ -71,7 +202,8 @@ function Stepper({ current }: { current: Step }) {
     { num: 1, label: "Pickup" },
     { num: 2, label: "Delivery" },
     { num: 3, label: "Vehicle" },
-    { num: 4, label: "Review" },
+    { num: 4, label: "Client Detials" },
+    { num: 5, label: "Review" },
   ];
 
   return (
@@ -152,10 +284,6 @@ function AddressInput({
     }, 700),
     [],
   );
-
-  // useEffect(() => {
-  //   getSuggestions(value);
-  // }, [value]);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -441,7 +569,192 @@ function StepVehicle({
   );
 }
 
-// ─── Step 4 – Review ──────────────────────────────────────────────────────────
+//--------- Step 4 - Client Details--------------
+function StepClientDetails({
+  form,
+  setForm,
+  onBack,
+  onNext,
+}: {
+  form: FormState;
+  setForm: React.Dispatch<React.SetStateAction<FormState>>;
+  onBack: () => void;
+  onNext: () => void;
+}) {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const target = e.target as HTMLInputElement | HTMLSelectElement;
+
+    if (target.id === "client-name") {
+      setForm((f) => ({ ...f, clientName: target.value }));
+    } else if (target.id == "client-phone" && isFinite(Number(target.value))) {
+      console.log("Changing Number");
+      setForm((f) => ({
+        ...f,
+        clientPhoneNumber: Number(target.value),
+      }));
+    } else if (target.id == "availability-shift") {
+      setForm((f) => ({ ...f, deliveryShift: target.value }));
+    }
+  };
+  const checkDetails = () => {};
+  return (
+    <div className="">
+      <div className="">
+        <h2 className="card-title">Create New Shipment</h2>
+      </div>
+      <Stepper current={4} />
+      <div className="section-divider" />
+
+      <div
+        className="flex items-center justify-center"
+        style={{
+          backgroundColor: "#f0f4f8",
+          padding: "16px",
+        }}
+      >
+        <div
+          className="w-full "
+          style={{
+            backgroundColor: "#ffffff",
+            padding: "24px",
+            borderRadius: "16px",
+            boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: "20px",
+              fontWeight: 600,
+              color: "#1e293b",
+              marginBottom: "20px",
+            }}
+          >
+            Client Details
+          </h2>
+
+          {/* Client Name */}
+          <div style={{ marginBottom: "16px" }}>
+            <label
+              htmlFor="client-name"
+              style={{
+                display: "block",
+                fontSize: "14px",
+                color: "#475569",
+                marginBottom: "6px",
+                fontWeight: 500,
+              }}
+            >
+              Client Name
+            </label>
+            <input
+              id="client-name"
+              type="text"
+              name="name"
+              value={form.clientName}
+              onChange={handleChange}
+              placeholder="Enter client name"
+              style={{
+                width: "100%",
+                padding: "10px 14px",
+                border: "1px solid #cbd5e1",
+                borderRadius: "8px",
+                outline: "none",
+                fontSize: "14px",
+              }}
+            />
+          </div>
+
+          {/* Phone Number */}
+          <div style={{ marginBottom: "16px" }}>
+            <label
+              htmlFor="client-phone"
+              style={{
+                display: "block",
+                fontSize: "14px",
+                color: "#475569",
+                marginBottom: "6px",
+                fontWeight: 500,
+              }}
+            >
+              Phone Number (Netherlands)
+            </label>
+            <input
+              id="client-phone"
+              type="number"
+              name="phone"
+              value={form.clientPhoneNumber}
+              onChange={handleChange}
+              placeholder="Enter phone number"
+              style={{
+                width: "100%",
+                padding: "10px 14px",
+                border: "1px solid #cbd5e1",
+                borderRadius: "8px",
+                outline: "none",
+                fontSize: "14px",
+              }}
+            />
+          </div>
+
+          {/* Availability */}
+          <div style={{ marginBottom: "20px" }}>
+            <label
+              htmlFor="availability-shift"
+              style={{
+                display: "block",
+                fontSize: "14px",
+                color: "#475569",
+                marginBottom: "6px",
+                fontWeight: 500,
+              }}
+            >
+              Availability Shift
+            </label>
+
+            <select
+              id="availability-shift"
+              name="shift"
+              value={form.deliveryShift}
+              onChange={handleChange}
+              style={{
+                width: "100%",
+                padding: "10px 14px",
+                border: "1px solid #cbd5e1",
+                borderRadius: "8px",
+                backgroundColor: "#ffffff",
+                outline: "none",
+                fontSize: "14px",
+                cursor: "pointer",
+              }}
+            >
+              <option value="">Select shift</option>
+              <option value="morning">Morning (6AM - 12PM)</option>
+              <option value="afternoon">Afternoon (12PM - 6PM)</option>
+              <option value="evening">Evening (6PM - 12AM)</option>
+              <option value="night">Night (12AM - 6AM)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div className="btn-row">
+        <button className="btn-outline" onClick={onBack}>
+          Back
+        </button>
+        <button
+          className="btn-primary"
+          onClick={() => {
+            checkDetails();
+          }}
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+}
+// ─── Step 5 – Review ──────────────────────────────────────────────────────────
 
 function ReviewRow({
   icon,
@@ -606,6 +919,9 @@ const DEFAULT_FORM: FormState = {
   deliverySelected: null,
   vehicleId: "car",
   capacity: 240,
+  clientName: "",
+  clientPhoneNumber: +31,
+  deliveryShift: "",
 };
 
 export default function CreateShipmentForm() {
@@ -613,7 +929,7 @@ export default function CreateShipmentForm() {
   const [confirmed, setConfirmed] = useState(false);
   const [form, setForm] = useState<FormState>(DEFAULT_FORM);
 
-  const next = () => setStep((s) => Math.min(s + 1, 4) as Step);
+  const next = () => setStep((s) => Math.min(s + 1, 5) as Step);
   const back = () => setStep((s) => Math.max(s - 1, 1) as Step);
 
   const reset = () => {
@@ -651,6 +967,14 @@ export default function CreateShipmentForm() {
                 />
               )}
               {step === 4 && (
+                <StepClientDetails
+                  form={form}
+                  onBack={back}
+                  onNext={next}
+                  setForm={setForm}
+                />
+              )}
+              {step === 5 && (
                 <StepReview
                   form={form}
                   onBack={back}
