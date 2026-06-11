@@ -646,7 +646,7 @@ function StepClientDetails({
                 fontWeight: 500,
               }}
             >
-              Client Name
+              Client
             </label>
             <input
               id="client-name"
