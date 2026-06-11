@@ -275,7 +275,7 @@ function StepPickup({
   );
 }
 
-// ─── Step 2 – Delivery ────────────────────────────────────────────────────────
+// ─── Step 2 – Delivery ─────────────────────────────────────────────────────
 
 function StepDelivery({
   form,
