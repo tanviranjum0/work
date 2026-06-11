@@ -36,7 +36,7 @@ interface FormState {
   vehicleId: string;
   capacity: number;
   clientName: string;
-  clientPhoneNumber: number;
+  clientPhoneNumber: number | null | string;
   deliveryShift: string;
 }
 
@@ -51,7 +51,7 @@ const VEHICLES: Vehicle[] = [
     dimensions: "2.5m × 1.8m × 1.8m",
   },
   {
-    id: "Larger Car",
+    id: "Larger-Car",
     label: "Larger Car",
     capacity: 320,
     maxLoad: 10000,
@@ -65,7 +65,7 @@ const VEHICLES: Vehicle[] = [
     dimensions: "13.6m × 2.4m × 2.7m",
   },
   {
-    id: "Larger Van",
+    id: "Larger-Van",
     label: "Larger Van",
     capacity: 600,
     maxLoad: 20000,
@@ -73,128 +73,6 @@ const VEHICLES: Vehicle[] = [
   },
 ];
 
-function ClientForm() {
-  return (
-    <div
-      className="flex items-center justify-center"
-      style={{
-        backgroundColor: "#f0f4f8",
-        padding: "16px",
-      }}
-    >
-      <div
-        className="w-full "
-        style={{
-          backgroundColor: "#ffffff",
-          padding: "24px",
-          borderRadius: "16px",
-          boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "20px",
-            fontWeight: 600,
-            color: "#1e293b",
-            marginBottom: "20px",
-          }}
-        >
-          Client Details
-        </h2>
-
-        {/* Client Name */}
-        <div style={{ marginBottom: "16px" }}>
-          <label
-            style={{
-              display: "block",
-              fontSize: "14px",
-              color: "#475569",
-              marginBottom: "6px",
-              fontWeight: 500,
-            }}
-          >
-            Client Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Enter client name"
-            style={{
-              width: "100%",
-              padding: "10px 14px",
-              border: "1px solid #cbd5e1",
-              borderRadius: "8px",
-              outline: "none",
-              fontSize: "14px",
-            }}
-          />
-        </div>
-
-        {/* Phone Number */}
-        <div style={{ marginBottom: "16px" }}>
-          <label
-            style={{
-              display: "block",
-              fontSize: "14px",
-              color: "#475569",
-              marginBottom: "6px",
-              fontWeight: 500,
-            }}
-          >
-            Phone Number (Netherlands)
-          </label>
-          <input
-            type="tel"
-            name="phone"
-            style={{
-              width: "100%",
-              padding: "10px 14px",
-              border: "1px solid #cbd5e1",
-              borderRadius: "8px",
-              outline: "none",
-              fontSize: "14px",
-            }}
-          />
-        </div>
-
-        {/* Availability */}
-        <div style={{ marginBottom: "20px" }}>
-          <label
-            style={{
-              display: "block",
-              fontSize: "14px",
-              color: "#475569",
-              marginBottom: "6px",
-              fontWeight: 500,
-            }}
-          >
-            Availability Shift
-          </label>
-
-          <select
-            name="shift"
-            style={{
-              width: "100%",
-              padding: "10px 14px",
-              border: "1px solid #cbd5e1",
-              borderRadius: "8px",
-              backgroundColor: "#ffffff",
-              outline: "none",
-              fontSize: "14px",
-              cursor: "pointer",
-            }}
-          >
-            <option value="">Select shift</option>
-            <option value="morning">Morning (6AM - 12PM)</option>
-            <option value="afternoon">Afternoon (12PM - 6PM)</option>
-            <option value="evening">Evening (6PM - 12AM)</option>
-            <option value="night">Night (12AM - 6AM)</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  );
-}
 // ─── Stepper ──────────────────────────────────────────────────────────────────
 
 function Stepper({ current }: { current: Step }) {
@@ -391,17 +269,6 @@ function StepPickup({
           onNext();
         }}
       />
-      {/* <div className="btn-row single">
-        <button
-          className="btn-primary"
-          onClick={() => {
-            onNext();
-          }}
-          disabled={!form.pickupSelected}
-        >
-          Next
-        </button>
-      </div> */}
     </div>
   );
 }
@@ -443,13 +310,6 @@ function StepDelivery({
         <button className="btn-outline" onClick={onBack}>
           Back
         </button>
-        {/* <button
-          className="btn-primary"
-          onClick={onNext}
-          disabled={!form.deliverySelected}
-        >
-          Next
-        </button> */}
       </div>
     </div>
   );
@@ -581,6 +441,7 @@ function StepClientDetails({
   onBack: () => void;
   onNext: () => void;
 }) {
+  const [error, setError] = useState("");
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
@@ -588,8 +449,7 @@ function StepClientDetails({
 
     if (target.id === "client-name") {
       setForm((f) => ({ ...f, clientName: target.value }));
-    } else if (target.id == "client-phone" && isFinite(Number(target.value))) {
-      console.log("Changing Number");
+    } else if (target.id == "client-phone") {
       setForm((f) => ({
         ...f,
         clientPhoneNumber: Number(target.value),
@@ -598,7 +458,21 @@ function StepClientDetails({
       setForm((f) => ({ ...f, deliveryShift: target.value }));
     }
   };
-  const checkDetails = () => {};
+  const checkDetails = () => {
+    setError("");
+    if (!form.clientName || !form.deliveryShift || !form.clientPhoneNumber) {
+      console.log("All Fields are required");
+      setError("All Fields are required");
+    } else if (
+      String(form.clientPhoneNumber).length > 9 ||
+      String(form.clientPhoneNumber).length < 9
+    ) {
+      console.log("Phone not valid");
+      setError("Put a valid phone number");
+    } else {
+      onNext();
+    }
+  };
   return (
     <div className="">
       <div className="">
@@ -680,16 +554,20 @@ function StepClientDetails({
             >
               Phone Number (Netherlands)
             </label>
+
             <input
               id="client-phone"
-              type="number"
+              type="tel"
+              pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+              required
+              maxLength={9}
               name="phone"
               value={form.clientPhoneNumber}
               onChange={handleChange}
               placeholder="Enter phone number"
               style={{
                 width: "100%",
-                padding: "10px 14px",
+                padding: "10px 14px ",
                 border: "1px solid #cbd5e1",
                 borderRadius: "8px",
                 outline: "none",
@@ -714,6 +592,7 @@ function StepClientDetails({
             </label>
 
             <select
+              defaultValue={"morning"}
               id="availability-shift"
               name="shift"
               value={form.deliveryShift}
@@ -729,13 +608,13 @@ function StepClientDetails({
                 cursor: "pointer",
               }}
             >
-              <option value="">Select shift</option>
               <option value="morning">Morning (6AM - 12PM)</option>
               <option value="afternoon">Afternoon (12PM - 6PM)</option>
               <option value="evening">Evening (6PM - 12AM)</option>
               <option value="night">Night (12AM - 6AM)</option>
             </select>
           </div>
+          <div className="text-red-400 text-center">{error}</div>
         </div>
       </div>
       <div className="btn-row">
@@ -760,17 +639,30 @@ function ReviewRow({
   icon,
   label,
   value,
+  client,
 }: {
   icon: React.ReactNode;
   label: string;
-  value: string;
+  value: string | object;
+  client?: boolean;
 }) {
   return (
     <div className="review-row">
       <div className="review-icon">{icon}</div>
       <div className="review-content">
         <div className="review-label">{label}</div>
-        <div className="review-value">{value}</div>
+        {!client && (
+          <>
+            <div className="review-value">{value}</div>
+          </>
+        )}
+        {client && (
+          <>
+            <div className="review-value">Client Name: {value.name}</div>
+            <div className="review-value">Phone Number: {value.phone}</div>
+            <div className="review-value">Availability: {value.shift}</div>
+          </>
+        )}
       </div>
     </div>
   );
@@ -821,6 +713,17 @@ function StepReview({
       </div>
       <Stepper current={4} />
       <div className="section-divider" />
+      <ReviewRow
+        icon={<IconPin />}
+        label="Client Details"
+        value={{
+          name: form.clientName,
+          phone: form.clientPhoneNumber,
+          shift: form.deliveryShift,
+        }}
+        client={true}
+      />
+      <div className="review-divider" />
 
       <ReviewRow
         icon={<IconPin />}
@@ -920,8 +823,8 @@ const DEFAULT_FORM: FormState = {
   vehicleId: "car",
   capacity: 240,
   clientName: "",
-  clientPhoneNumber: +31,
-  deliveryShift: "",
+  clientPhoneNumber: "",
+  deliveryShift: "morning",
 };
 
 export default function CreateShipmentForm() {
