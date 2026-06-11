@@ -135,7 +135,6 @@ function AddressInput({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const getSuggestions = useCallback(
     debounce(async (inputValue: string) => {
-      console.log(value, value.length);
       setOpen(false);
       if (inputValue.length >= 3) {
         try {
@@ -143,7 +142,7 @@ function AddressInput({
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/maps/get-suggestions?input=${inputValue}`,
           );
           const data = await response.json();
-          // console.log(data);
+
           setSuggestions(data);
           setOpen(data.length > 0 && data.length > 0);
         } catch (error) {
@@ -154,9 +153,9 @@ function AddressInput({
     [],
   );
 
-  useEffect(() => {
-    getSuggestions(value);
-  }, [value]);
+  // useEffect(() => {
+  //   getSuggestions(value);
+  // }, [value]);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -175,7 +174,10 @@ function AddressInput({
         className="address-input"
         placeholder={placeholder}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => {
+          getSuggestions(e.target.value);
+          onChange(e.target.value);
+        }}
         onFocus={() => suggestions.length > 0 && setOpen(true)}
         autoComplete="off"
       />
@@ -185,7 +187,7 @@ function AddressInput({
             <li
               key={s.id}
               className="suggestion-item"
-              onMouseDown={() => {
+              onClick={() => {
                 onSelect(s);
                 onChange(`${s.display}, ${s.secondary}`);
                 setOpen(false);
@@ -198,8 +200,18 @@ function AddressInput({
                 />
               </svg>
               <span className="suggestion-text">
-                <strong>{s.display}</strong>
-                <span className="suggestion-secondary">, {s.secondary}</span>
+                <strong>
+                  {s.display}
+                  {",  "}
+                </strong>
+                <span
+                  style={{
+                    paddingLeft: "5px",
+                  }}
+                  className="suggestion-secondary "
+                >
+                  {s.secondary}
+                </span>
               </span>
             </li>
           ))}
@@ -247,7 +259,6 @@ function StepPickup({
           setForm((f) => ({ ...f, pickupAddress: v, pickupSelected: null }));
         }}
         onSelect={(s) => {
-          console.log("Selecting");
           setForm((f) => ({ ...f, pickupSelected: s }));
         }}
       />
@@ -302,7 +313,7 @@ function StepDelivery({
         <button
           className="btn-primary"
           onClick={onNext}
-          disabled={!form.deliveryAddress}
+          disabled={!form.deliverySelected}
         >
           Next
         </button>

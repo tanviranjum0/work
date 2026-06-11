@@ -9,6 +9,7 @@
       {
         "autocomplete-valid": "off"
       }
-    ]
+    ],
+    "button-type": "off"
   }
 }
