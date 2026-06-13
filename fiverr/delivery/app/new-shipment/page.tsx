@@ -331,7 +331,7 @@ function StepVehicle({
   const vehicle = VEHICLES.find((v) => v.id === form.vehicleId) ?? VEHICLES[1];
 
   return (
-    <div className="">
+    <div className="card">
       <div className="card-header">
         <h2 className="card-title">Vehicle &amp; Capacity</h2>
       </div>
