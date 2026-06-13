@@ -1,10 +1,10 @@
 import express from "express";
 import { getAutoCompleteSuggestions } from "../controllers/map.controller";
+import checkLogin from "../utils/checkLogin";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  console.log("holla");
+router.get("/", checkLogin, (req, res) => {
   res.json({ data: "Good" });
 });
 

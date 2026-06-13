@@ -10,6 +10,7 @@ import React, {
   ChangeEvent,
 } from "react";
 import { debounce } from "lodash";
+import { useRouter } from "next/navigation";
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -20,58 +21,58 @@ interface AddressSuggestion {
   secondary: string;
 }
 
-interface Vehicle {
-  id: string;
-  label: string;
-  capacity: number;
-  maxLoad: number;
-  dimensions: string;
-}
+// interface Vehicle {
+//   id: string;
+//   label: string;
+//   capacity: number;
+//   maxLoad: number;
+//   dimensions: string;
+// }
 
 interface FormState {
   pickupAddress: string;
   pickupSelected: AddressSuggestion | null;
   deliveryAddress: string;
   deliverySelected: AddressSuggestion | null;
-  vehicleId: string;
-  capacity: number;
+  boxQuantity: number;
   clientName: string;
   clientPhoneNumber: number | null | string;
   deliveryShift: string;
+  shipmentType: string;
 }
 
 // ─── Static Data ──────────────────────────────────────────────────────────────
 
-const VEHICLES: Vehicle[] = [
-  {
-    id: "Car",
-    label: "Car",
-    capacity: 240,
-    maxLoad: 1000,
-    dimensions: "2.5m × 1.8m × 1.8m",
-  },
-  {
-    id: "Larger-Car",
-    label: "Larger Car",
-    capacity: 320,
-    maxLoad: 10000,
-    dimensions: "6.2m × 2.4m × 2.4m",
-  },
-  {
-    id: "Van",
-    label: "Van",
-    capacity: 450,
-    maxLoad: 24000,
-    dimensions: "13.6m × 2.4m × 2.7m",
-  },
-  {
-    id: "Larger-Van",
-    label: "Larger Van",
-    capacity: 600,
-    maxLoad: 20000,
-    dimensions: "12.0m × 2.5m × 0m",
-  },
-];
+// const VEHICLES: Vehicle[] = [
+//   {
+//     id: "Car",
+//     label: "Car",
+//     capacity: 240,
+//     maxLoad: 1000,
+//     dimensions: "2.5m × 1.8m × 1.8m",
+//   },
+//   {
+//     id: "Larger-Car",
+//     label: "Larger Car",
+//     capacity: 320,
+//     maxLoad: 10000,
+//     dimensions: "6.2m × 2.4m × 2.4m",
+//   },
+//   {
+//     id: "Van",
+//     label: "Van",
+//     capacity: 450,
+//     maxLoad: 24000,
+//     dimensions: "13.6m × 2.4m × 2.7m",
+//   },
+//   {
+//     id: "Larger-Van",
+//     label: "Larger Van",
+//     capacity: 600,
+//     maxLoad: 20000,
+//     dimensions: "12.0m × 2.5m × 0m",
+//   },
+// ];
 
 // ─── Stepper ──────────────────────────────────────────────────────────────────
 
@@ -79,7 +80,7 @@ function Stepper({ current }: { current: Step }) {
   const steps: { num: Step; label: string }[] = [
     { num: 1, label: "Pickup" },
     { num: 2, label: "Delivery" },
-    { num: 3, label: "Vehicle" },
+    { num: 3, label: "Shipment Info" },
     { num: 4, label: "Client Detials" },
     { num: 5, label: "Review" },
   ];
@@ -241,10 +242,12 @@ function AddressInput({
 // ─── Step 1 – Pickup ──────────────────────────────────────────────────────────
 
 function StepPickup({
+  error,
   form,
   setForm,
   onNext,
 }: {
+  error: string;
   form: FormState;
   setForm: React.Dispatch<React.SetStateAction<FormState>>;
   onNext: () => void;
@@ -269,6 +272,7 @@ function StepPickup({
           onNext();
         }}
       />
+      <div className="text-red-500 text-center">{error}</div>
     </div>
   );
 }
@@ -276,11 +280,13 @@ function StepPickup({
 // ─── Step 2 – Delivery ─────────────────────────────────────────────────────
 
 function StepDelivery({
+  error,
   form,
   setForm,
   onBack,
   onNext,
 }: {
+  error: string;
   form: FormState;
   setForm: React.Dispatch<React.SetStateAction<FormState>>;
   onBack: () => void;
@@ -306,6 +312,7 @@ function StepDelivery({
           onNext();
         }}
       />
+      <div className="text-red-500 text-center">{error}</div>
       <div className="btn-row">
         <button className="btn-outline" onClick={onBack}>
           Back
@@ -317,23 +324,25 @@ function StepDelivery({
 
 // ─── Step 3 – Vehicle ─────────────────────────────────────────────────────────
 
-function StepVehicle({
+function StepOderInfo({
+  error,
   form,
   setForm,
   onBack,
   onNext,
 }: {
+  error: string;
   form: FormState;
   setForm: React.Dispatch<React.SetStateAction<FormState>>;
   onBack: () => void;
   onNext: () => void;
 }) {
-  const vehicle = VEHICLES.find((v) => v.id === form.vehicleId) ?? VEHICLES[1];
+  // const vehicle = VEHICLES.find((v) => v.id === form.vehicleId) ?? VEHICLES[0];
 
   return (
     <div className="card">
       <div className="card-header">
-        <h2 className="card-title">Vehicle &amp; Capacity</h2>
+        <h2 className="card-title">Shipment &amp; Info</h2>
       </div>
       <Stepper current={3} />
       <div className="section-divider" />
@@ -346,22 +355,16 @@ function StepVehicle({
           <select
             id="vehicle-select"
             className="select-input"
-            value={form.vehicleId}
+            value={form.shipmentType}
             onChange={(e) =>
               setForm((f) => ({
                 ...f,
-                vehicleId: e.target.value,
-                capacity:
-                  VEHICLES.find((v) => v.id === e.target.value)?.capacity ??
-                  f.capacity,
+                shipmentType: e.target.value,
               }))
             }
           >
-            {VEHICLES.map((v) => (
-              <option key={v.id} value={v.id}>
-                {v.label}
-              </option>
-            ))}
+            <option value={"collection"}>Collection</option>
+            <option value={"delivery"}>Delivery</option>
           </select>
           <svg className="select-chevron" viewBox="0 0 20 20" fill="none">
             <path
@@ -376,8 +379,22 @@ function StepVehicle({
       </div>
 
       <div className="field-group" style={{ marginTop: 18 }}>
-        <label className="field-label">Capacity</label>
+        <label className="field-label">Quantity</label>
         <div className="capacity-input-wrap">
+          <input
+            placeholder="Enter Vehicle capacity"
+            type="number"
+            className="capacity-input"
+            min={1}
+            max={10000}
+            onChange={(e) =>
+              setForm((f) => ({ ...f, boxQuantity: Number(e.target.value) }))
+            }
+          />
+          <span className="capacity-unit">Box&apos;s</span>
+        </div>
+      </div>
+      {/* <div className="capacity-input-wrap">
           <input
             placeholder="Enter Vehicle capacity"
             type="number"
@@ -394,9 +411,9 @@ function StepVehicle({
         <p className="capacity-hint">
           Max for this vehicle: {vehicle.capacity + "  "} Box&apos;s
         </p>
-      </div>
+      </div> */}
 
-      <div className="vehicle-info-card">
+      {/* <div className="vehicle-info-card">
         <div className="vehicle-icon-wrap">
           <svg viewBox="0 0 64 40" fill="none" className="truck-svg">
             <rect x="2" y="12" width="40" height="24" rx="3" fill="#cbd5e1" />
@@ -412,11 +429,9 @@ function StepVehicle({
         <div className="vehicle-details">
           <strong>{vehicle.label}</strong>
           <span>Capacity: {vehicle.capacity + "  "} Box&apos;s</span>
-          <span>Max Load: {vehicle.maxLoad.toLocaleString()} kg</span>
-          <span>Dimensions: {vehicle.dimensions}</span>
         </div>
-      </div>
-
+      </div> */}
+      <div className="text-red-500 text-center">{error}</div>
       <div className="btn-row">
         <button className="btn-outline" onClick={onBack}>
           Back
@@ -431,17 +446,19 @@ function StepVehicle({
 
 //--------- Step 4 - Client Details--------------
 function StepClientDetails({
+  error,
   form,
   setForm,
   onBack,
   onNext,
 }: {
+  error: string;
   form: FormState;
   setForm: React.Dispatch<React.SetStateAction<FormState>>;
   onBack: () => void;
   onNext: () => void;
 }) {
-  const [error, setError] = useState("");
+  const [localError, setLocalError] = useState("");
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
@@ -459,16 +476,16 @@ function StepClientDetails({
     }
   };
   const checkDetails = () => {
-    setError("");
+    setLocalError("");
     if (!form.clientName || !form.deliveryShift || !form.clientPhoneNumber) {
       console.log("All Fields are required");
-      setError("All Fields are required");
+      setLocalError("All Fields are required");
     } else if (
       String(form.clientPhoneNumber).length > 9 ||
       String(form.clientPhoneNumber).length < 9
     ) {
       console.log("Phone not valid");
-      setError("Put a valid phone number");
+      setLocalError("Put a valid phone number");
     } else {
       onNext();
     }
@@ -595,7 +612,6 @@ function StepClientDetails({
               defaultValue={"morning"}
               id="availability-shift"
               name="shift"
-              value={form.deliveryShift}
               onChange={handleChange}
               style={{
                 width: "100%",
@@ -614,6 +630,7 @@ function StepClientDetails({
               <option value="night">Night (12AM - 6AM)</option>
             </select>
           </div>
+          <div className="text-red-400 text-center">{localError}</div>
           <div className="text-red-400 text-center">{error}</div>
         </div>
       </div>
@@ -643,7 +660,7 @@ function ReviewRow({
 }: {
   icon: React.ReactNode;
   label: string;
-  value: string | object;
+  value: any;
   client?: boolean;
 }) {
   return (
@@ -704,14 +721,14 @@ function StepReview({
   onBack: () => void;
   onConfirm: () => void;
 }) {
-  const vehicle = VEHICLES.find((v) => v.id === form.vehicleId) ?? VEHICLES[1];
+  // const vehicle = VEHICLES.find((v) => v.id === form.vehicleId) ?? VEHICLES[0];
 
   return (
     <div className="card">
       <div className="card-header">
         <h2 className="card-title">Review &amp; Confirm</h2>
       </div>
-      <Stepper current={4} />
+      <Stepper current={5} />
       <div className="section-divider" />
       <ReviewRow
         icon={<IconPin />}
@@ -736,13 +753,14 @@ function StepReview({
         label="Delivery Location"
         value={form.deliveryAddress}
       />
-      <div className="review-divider" />
-      <ReviewRow icon={<IconTruck />} label="Vehicle" value={vehicle.label} />
+
+      {/* <div className="review-divider" /> */}
+      {/* <ReviewRow icon={<IconTruck />} label="Vehicle" value={vehicle.label} /> */}
       <div className="review-divider" />
       <ReviewRow
         icon={<IconBox />}
-        label="Capacity"
-        value={`${form.capacity} Box's`}
+        label="Shipment Info"
+        value={`${form.boxQuantity} Box's  |  Type : ${form.shipmentType.toUpperCase()}`}
       />
 
       <div className="btn-row">
@@ -795,12 +813,12 @@ function SuccessScreen({
           <span className="success-key">To</span>
           <span className="success-val">{form.deliveryAddress}</span>
         </div>
-        <div className="success-row">
+        {/* <div className="success-row">
           <span className="success-key">Vehicle</span>
           <span className="success-val">
             {VEHICLES.find((v) => v.id === form.vehicleId)?.label}
           </span>
-        </div>
+        </div> */}
       </div>
       <button
         className="btn-primary"
@@ -820,9 +838,9 @@ const DEFAULT_FORM: FormState = {
   pickupSelected: null,
   deliveryAddress: "",
   deliverySelected: null,
-  vehicleId: "car",
-  capacity: 240,
+  boxQuantity: 0,
   clientName: "",
+  shipmentType: "collection",
   clientPhoneNumber: "",
   deliveryShift: "morning",
 };
@@ -831,8 +849,12 @@ export default function CreateShipmentForm() {
   const [step, setStep] = useState<Step>(1);
   const [confirmed, setConfirmed] = useState(false);
   const [form, setForm] = useState<FormState>(DEFAULT_FORM);
-
-  const next = () => setStep((s) => Math.min(s + 1, 5) as Step);
+  const [error, setError] = useState("");
+  const router = useRouter();
+  const next = () => {
+    setError("");
+    setStep((s) => Math.min(s + 1, 6) as Step);
+  };
   const back = () => setStep((s) => Math.max(s - 1, 1) as Step);
 
   const reset = () => {
@@ -841,6 +863,39 @@ export default function CreateShipmentForm() {
     setForm(DEFAULT_FORM);
   };
 
+  const handleSubmit = async () => {
+    if (!form.deliverySelected) {
+      setError("Please provide a valid delivery location.");
+      setStep(2);
+    }
+    if (!form.pickupSelected) {
+      setError("Please provide a valid pickup location.");
+      setStep(1);
+    }
+    if (!form.boxQuantity || !form.shipmentType) {
+      setError("Put valid shipment tyre or quantity");
+      setStep(3);
+    }
+    if (!form.clientName || !form.clientPhoneNumber || !form.deliveryShift) {
+      setError("PLease put all client details correctly");
+      setStep(4);
+    }
+    const result = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/shipments/create",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(form),
+      },
+    );
+    if (!result.ok) {
+      const data = await result.json();
+      setError(data.message);
+    } else {
+      router.push("/home");
+    }
+  };
   return (
     <>
       <GlobalStyles />
@@ -851,10 +906,16 @@ export default function CreateShipmentForm() {
           ) : (
             <>
               {step === 1 && (
-                <StepPickup form={form} setForm={setForm} onNext={next} />
+                <StepPickup
+                  error={error}
+                  form={form}
+                  setForm={setForm}
+                  onNext={next}
+                />
               )}
               {step === 2 && (
                 <StepDelivery
+                  error={error}
                   form={form}
                   setForm={setForm}
                   onBack={back}
@@ -862,7 +923,8 @@ export default function CreateShipmentForm() {
                 />
               )}
               {step === 3 && (
-                <StepVehicle
+                <StepOderInfo
+                  error={error}
                   form={form}
                   setForm={setForm}
                   onBack={back}
@@ -871,6 +933,7 @@ export default function CreateShipmentForm() {
               )}
               {step === 4 && (
                 <StepClientDetails
+                  error={error}
                   form={form}
                   onBack={back}
                   onNext={next}
@@ -879,9 +942,10 @@ export default function CreateShipmentForm() {
               )}
               {step === 5 && (
                 <StepReview
+                  error={error}
                   form={form}
                   onBack={back}
-                  onConfirm={() => setConfirmed(true)}
+                  onConfirm={handleSubmit}
                 />
               )}
             </>

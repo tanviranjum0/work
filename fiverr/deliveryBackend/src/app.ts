@@ -6,10 +6,12 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { xss } from "express-xss-sanitizer";
 import dotenv from "dotenv";
-import userRoutes from "./routes/user.route.js";
+import userRoutes from "./routes/users.route.js";
 import connectDB from "./config/db";
 import dns from "node:dns";
 import mapRoutes from "./routes/maps.route.js";
+import shipmentRoutes from "./routes/shipments.route.js";
+
 dotenv.config();
 dns.setServers(["8.8.8.8", "8.8.4.4", "1.1.1.1"]);
 const app: Application = express();
@@ -61,6 +63,7 @@ app.get("/api/test", async (req: Request, res: Response) => {
 // User Routes
 app.use("/api/users", userRoutes);
 app.use("/api/maps", mapRoutes);
+app.use("/api/shipments", shipmentRoutes);
 
 // Start Server
 app.listen(PORT, () => {

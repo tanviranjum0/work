@@ -3,6 +3,8 @@
 import Link from "next/link";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import useCooldownTimer from "../hooks/useCooldownTimer";
+import router from "../../../deliveryBackend/src/routes/shipments.route";
+import { useRouter } from "next/navigation";
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type Step = 1 | 2 | 3 | 4; // email → verify → reset → success
@@ -885,9 +887,11 @@ export default function ForgotPassword() {
   const [otpError, setOtpError] = useState<string>("");
   const next = () => setStep((s) => Math.min(s + 1, 4) as Step);
   const back = () => setStep((s) => Math.max(s - 1, 1) as Step);
+  const router = useRouter();
   const reset = () => {
     setStep(1);
     setForm(DEFAULT_FORM);
+    router.push("/login");
   };
 
   return (

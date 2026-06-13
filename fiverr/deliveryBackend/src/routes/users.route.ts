@@ -7,7 +7,7 @@ import {
   send2FASignupCode,
   resetPassword,
   resend2FALoginCode,
-} from "../controllers/auth.controller";
+} from "../controllers/user.controller";
 
 const router = express.Router();
 //signup

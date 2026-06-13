@@ -28,7 +28,7 @@ const checkLogin = (
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-    console.log("Decoded JWT:", decoded);
+
     req.userId = (decoded as JwtPayload).userId;
     next(); // ✅ Only called AFTER verification
   } catch (error) {

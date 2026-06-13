@@ -8,10 +8,10 @@ export interface ShipmentDocument {
   clientPhoneNumber: number;
   pickupAddress: string;
   deliveryAddress: string;
-  vehicleType: string;
   boxQuantity: number;
   driverAllocated: boolean;
   deliveryShift: string;
+  shipmentType: string;
 }
 
 const shipmentSchema = new mongoose.Schema<ShipmentDocument>(
@@ -37,9 +37,10 @@ const shipmentSchema = new mongoose.Schema<ShipmentDocument>(
       type: String,
       required: true,
     },
-    vehicleType: {
+    shipmentType: {
       type: String,
-      default: "car",
+      required: true,
+      default: "delivery",
     },
     boxQuantity: {
       type: Number,

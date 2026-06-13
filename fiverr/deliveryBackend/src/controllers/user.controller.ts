@@ -144,7 +144,6 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
     email: string;
     password: string;
   };
-
   try {
     if (!email || !password) {
       return res.status(400).json({
@@ -343,10 +342,11 @@ export const resetPassword = async (
   if (user.twoFaCode != parseInt(code)) {
     return res.status(400).json({ message: "Invalid 2FA code" });
   }
+  const hashedPassword = await bcrypt.hash(password, 10);
   const updatedUser = await User.findByIdAndUpdate(
     user._id,
     {
-      password,
+      password: hashedPassword,
     },
     { returnDocument: "after" },
   );
