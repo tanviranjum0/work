@@ -136,7 +136,7 @@ export default function FeitsmaVerhuizingenDashboardPage() {
     fullName: string;
     email: string;
   } | null>(null);
-
+  // Holla
   const [shipments, setShipments] = useState<Shipment[]>([]);
   const getInitialData = async () => {
     const result = await fetch(
