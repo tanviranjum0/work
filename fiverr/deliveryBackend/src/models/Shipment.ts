@@ -12,6 +12,7 @@ export interface ShipmentDocument {
   driverAllocated: boolean;
   deliveryShift: string;
   shipmentType: string;
+  status: string;
 }
 
 const shipmentSchema = new mongoose.Schema<ShipmentDocument>(
@@ -39,7 +40,7 @@ const shipmentSchema = new mongoose.Schema<ShipmentDocument>(
     },
     shipmentType: {
       type: String,
-      required: true,
+      enum: ["collection", "delivery"],
       default: "delivery",
     },
     boxQuantity: {
@@ -49,6 +50,11 @@ const shipmentSchema = new mongoose.Schema<ShipmentDocument>(
     driverAllocated: {
       type: Boolean,
       default: false,
+    },
+    status: {
+      type: String,
+      enum: ["transit", "pending"],
+      default: "pending",
     },
     deliveryShift: {
       type: String,

@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import Shipment from "../models/Shipment";
-
 interface UserRequest extends Request {
   userId?: string;
 }
@@ -46,5 +45,58 @@ export const handleCreateNewShipment = async (
     console.log(err.message);
     res.status(400).json({ message: "Something went wrong" });
     throw err;
+  }
+};
+
+export const handleInitialHomePageLoad = async (
+  req: UserRequest,
+  res: Response,
+) => {
+  try {
+    const total = await Shipment.countDocuments({ OwnerRef: req.userId });
+    const inTransitCount = await Shipment.countDocuments({
+      OwnerRef: req.userId,
+      status: "transit",
+    });
+    const limit =
+      parseInt(typeof req.query.limit === "string" ? req.query.limit : "") || 9;
+    const startIndex =
+      parseInt(
+        typeof req.query.startIndex === "string" ? req.query.startIndex : "",
+      ) || 0;
+
+    const shipments = await Shipment.find({
+      OwnerRef: req.userId,
+    })
+      .limit(limit)
+      .skip(startIndex)
+      .select("-OwnerRef -__v");
+
+    return res.json({ message: "Success", total, inTransitCount, shipments });
+  } catch (error) {
+    res.status(400).json("There is a problem in shipment fetch");
+  }
+};
+
+export const handleGetSingleShipment = async (
+  req: UserRequest,
+  res: Response,
+) => {
+  try {
+    // console.log(req.params.id, req.userId);
+    const shipment = await Shipment.findById(req.params.id);
+    // console.log("Shipment", shipment);
+    if (!shipment) {
+      return res.status(400).json({ message: "No shipment found." });
+    }
+    if (shipment?.OwnerRef.toString() !== req.userId) {
+      return res
+        .status(400)
+        .json({ message: "You are not authorized to access this shipment." });
+    }
+    shipment.OwnerRef = null;
+    return res.status(200).json(shipment);
+  } catch (error) {
+    res.status(400).json("There is a problem in shipment fetch");
   }
 };

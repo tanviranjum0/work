@@ -1,5 +1,8 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 type RouteStop = {
   id: "A" | "B" | "C";
   label: string;
@@ -7,30 +10,20 @@ type RouteStop = {
   address: string;
   tone: "green" | "blue" | "red";
 };
-
-const stops: RouteStop[] = [
-  {
-    id: "A",
-    label: "Pickup Location",
-    title: "123 Main St, New York, NY",
-    address: "",
-    tone: "green",
-  },
-  {
-    id: "B",
-    label: "Warehouse (Buffer)",
-    title: "Central Warehouse",
-    address: "432 Industrial Rd, Columbus, OH",
-    tone: "blue",
-  },
-  {
-    id: "C",
-    label: "Delivery Location",
-    title: "456 Oak St, Los Angeles, CA",
-    address: "",
-    tone: "red",
-  },
-];
+interface Shipment {
+  _id: string;
+  clientName: string;
+  clientPhoneNumber: number;
+  pickupAddress: string;
+  deliveryAddress: string;
+  shipmentType: string;
+  boxQuantity: number;
+  driverAllocated: boolean;
+  status: string;
+  deliveryShift: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 const summary = [
   { label: "Total Distance", value: "2,789 km" },
@@ -39,11 +32,108 @@ const summary = [
 ];
 
 export default function BestRouteMapView() {
+  const [mapLocation, setMapLocation] = useState(
+    "https://www.google.com/maps?q=Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands to Museumstraat 1, 1071 XX Amsterdam, Netherlands&output=embed",
+  );
+  const params = useParams();
+  const id = params.id;
+  const [shipment, setShipment] = useState<Shipment | undefined>();
+  const loadShipment = async () => {
+    if (typeof window === "undefined") return undefined;
+    const cache = localStorage.getItem("shipment");
+    if (cache) {
+      const parsedCache = JSON.parse(cache);
+      setMapLocation(
+        `https://www.google.com/maps?q=${parsedCache.pickupAddress} to ${parsedCache.deliveryAddress}&output=embed`,
+      );
+      setShipment(parsedCache);
+    } else {
+      const result = await fetch(
+        process.env.NEXT_PUBLIC_BACKEND_URL + `/api/shipments/${id}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        },
+      );
+      const data = await result.json();
+      setMapLocation(
+        `https://www.google.com/maps?q=${data.pickupAddress} to ${data.deliveryAddress}&output=embed`,
+      );
+      setShipment(data);
+      localStorage.setItem("shipment", JSON.stringify(data));
+    }
+  };
+
+  useEffect(() => {
+    loadShipment();
+  }, []);
+
+  const stops: RouteStop[] = [
+    {
+      id: "A",
+      label: "Pickup Location",
+      title: shipment?.pickupAddress || "",
+      address: "",
+      tone: "green",
+    },
+    {
+      id: "B",
+      label: "Warehouse (Buffer)",
+      title: "Izaak Enschedeweg 50, 2031 CS  Haarlem, Netherlands",
+      address: "",
+      tone: "blue",
+    },
+    {
+      id: "C",
+      label: "Delivery Location",
+      title: shipment?.deliveryAddress || "",
+      address: "",
+      tone: "red",
+    },
+  ];
+
+  // useMemo(() => {
+  //   if (shipment) {
+  //     console.log("Shipment", shipment);
+  //     setStops([
+  //       {
+  //         id: "A",
+  //         label: "Pickup Location",
+  //         title: "",
+  //         address: shipment.pickupAddress,
+  //         tone: "green",
+  //       },
+  //       {
+  //         id: "B",
+  //         label: "Warehouse (Buffer)",
+  //         title: "Izaak Enschedeweg 50,",
+  //         address: "2031 CS  Haarlem, Netherlands",
+  //         tone: "blue",
+  //       },
+  //       {
+  //         id: "C",
+  //         label: "Delivery Location",
+  //         title: "",
+  //         address: shipment.deliveryAddress,
+  //         tone: "red",
+  //       },
+  //     ]);
+  //   }
+  // }, [shipment]);
   return (
     <section className="route-shell" aria-label="Best Route Map View">
       <article className="route-card">
-        <div className="map-layer" aria-hidden="true">
-          <MapArtwork />
+        <div
+          style={{
+            height: "100vh",
+            width: "100%",
+            position: "absolute",
+            zIndex: 10,
+          }}
+          aria-hidden="true"
+        >
+          <MapArtwork mapLocation={mapLocation} />
         </div>
 
         <aside className="details-panel">
@@ -396,151 +486,16 @@ export default function BestRouteMapView() {
   );
 }
 
-function MapArtwork() {
+function MapArtwork({ mapLocation }: { mapLocation: string }) {
   return (
-    <svg
-      className="map-art"
-      viewBox="0 0 690 610"
-      role="presentation"
-      focusable="false"
-      style={{ width: "100%", height: "100%", display: "block" }}
-    >
-      <defs>
-        <pattern
-          id="minorRoads"
-          width="54"
-          height="54"
-          patternUnits="userSpaceOnUse"
-        >
-          <path
-            d="M0 22H54M18 0V54"
-            stroke="#cfdfd7"
-            strokeWidth="1"
-            opacity=".42"
-          />
-        </pattern>
-        <linearGradient id="landTone" x1="0" x2="1" y1="0" y2="1">
-          <stop stopColor="#f3f2df" />
-          <stop offset="1" stopColor="#e8f1d8" />
-        </linearGradient>
-        <filter id="pinShadow" x="-40%" y="-40%" width="180%" height="180%">
-          <feDropShadow
-            dx="0"
-            dy="4"
-            stdDeviation="3"
-            floodColor="#0f2345"
-            floodOpacity=".22"
-          />
-        </filter>
-      </defs>
-
-      <rect width="690" height="610" fill="#d8eefc" />
-      <path
-        d="M265 16C323 42 358 72 384 111C427 173 471 181 525 222C579 264 605 317 584 375C561 438 512 477 475 540C451 581 382 595 340 562C300 531 309 468 275 424C247 388 214 370 203 329C191 281 221 238 229 195C240 134 214 84 265 16Z"
-        fill="url(#landTone)"
-      />
-      <path
-        d="M298 2C349 35 378 68 405 118C436 176 489 191 534 226C581 262 608 307 595 356C577 423 521 467 487 523C459 570 400 596 347 574"
-        fill="none"
-        stroke="#d4cdb9"
-        strokeWidth="2"
-        opacity=".55"
-      />
-      <path
-        d="M265 16C323 42 358 72 384 111C427 173 471 181 525 222C579 264 605 317 584 375C561 438 512 477 475 540C451 581 382 595 340 562C300 531 309 468 275 424C247 388 214 370 203 329C191 281 221 238 229 195C240 134 214 84 265 16Z"
-        fill="url(#minorRoads)"
-        opacity=".75"
-      />
-      <path
-        d="M424 26C470 49 488 90 470 132C455 168 402 155 396 113C391 75 395 44 424 26Z"
-        fill="#cfeafb"
-        opacity=".9"
-      />
-      <path
-        d="M519 423C555 420 576 439 570 469C563 502 513 501 501 468C491 441 501 427 519 423Z"
-        fill="#cfeafb"
-        opacity=".75"
-      />
-
-      <g opacity=".36" stroke="#d6cdb8" strokeLinecap="round">
-        <path d="M267 89C332 101 391 139 430 194S515 289 554 326" />
-        <path d="M236 202C305 214 362 243 417 297S501 394 548 423" />
-        <path d="M246 366C312 350 363 349 438 371S536 389 594 377" />
-        <path d="M317 63C326 134 320 198 342 251S371 351 366 468" />
-        <path d="M455 163C431 227 415 272 407 346S391 480 370 557" />
-      </g>
-
-      <g
-        fill="#8b9ab1"
-        fontFamily="Inter, Arial, sans-serif"
-        fontSize="10"
-        fontWeight="700"
-        opacity=".55"
-      >
-        <text x="505" y="160">
-          New York
-        </text>
-        <text x="396" y="344">
-          Columbus
-        </text>
-        <text x="300" y="475">
-          St. Louis
-        </text>
-        <text x="536" y="492">
-          Atlanta
-        </text>
-        <text x="228" y="556">
-          Los Angeles
-        </text>
-      </g>
-
-      <path
-        d="M638 205C612 230 584 238 564 266C542 297 518 306 494 330C473 351 467 381 431 388C395 396 381 421 364 454C347 489 313 500 286 531C267 554 252 565 232 580"
-        fill="none"
-        stroke="#0b58d0"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="7"
-      />
-      <path
-        d="M638 205C612 230 584 238 564 266C542 297 518 306 494 330C473 351 467 381 431 388C395 396 381 421 364 454C347 489 313 500 286 531C267 554 252 565 232 580"
-        fill="none"
-        stroke="#ffffff"
-        strokeDasharray="1 22"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="3"
-      />
-
-      <circle
-        cx="564"
-        cy="266"
-        r="10"
-        fill="#fff"
-        stroke="#0b58d0"
-        strokeWidth="4"
-      />
-      <circle
-        cx="431"
-        cy="388"
-        r="10"
-        fill="#fff"
-        stroke="#0b58d0"
-        strokeWidth="4"
-      />
-      <circle
-        cx="494"
-        cy="330"
-        r="6"
-        fill="#fff"
-        stroke="#0b58d0"
-        strokeWidth="3"
-      />
-
-      <MapPin x={638} y={205} label="A" color="#16a05d" />
-      <MapPin x={431} y={388} label="B" color="#0b58d0" />
-      <MapPin x={232} y={580} label="C" color="#f04438" />
-    </svg>
+    <iframe
+      title="Route map"
+      src={mapLocation}
+      className="absolute map w-full h-screen"
+      allowFullScreen={true}
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+    ></iframe>
   );
 }
 

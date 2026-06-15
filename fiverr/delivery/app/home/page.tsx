@@ -1,11 +1,25 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-/* eslint-disable react-hooks/exhaustive-deps */
+
 "use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+interface Shipment {
+  _id: string;
+  clientName: string;
+  clientPhoneNumber: number;
+  pickupAddress: string;
+  deliveryAddress: string;
+  shipmentType: string;
+  boxQuantity: number;
+  driverAllocated: boolean;
+  status: string;
+  deliveryShift: string;
+  createdAt: string;
+  updatedAt: string;
+}
 type IconName =
   | "box"
   | "grid"
@@ -36,45 +50,38 @@ const navItems: {
   { label: "Settings", icon: "settings", link: "/" },
 ];
 
-const stats = [
-  { label: "Total Shipments", value: "128", tone: "blue" },
-  { label: "In Transit", value: "56", tone: "green" },
-  { label: "Delivered", value: "72", tone: "green" },
-  { label: "Pending", value: "12", tone: "neutral" },
-];
-
-const shipments = [
-  {
-    id: "SHP123456",
-    route: "New York, NY -> Los Angeles, CA",
-    status: "In Transit",
-    tone: "blue",
-  },
-  {
-    id: "SHP123455",
-    route: "Chicago, IL -> Houston, TX",
-    status: "Delivered",
-    tone: "green",
-  },
-  {
-    id: "SHP123454",
-    route: "Miami, FL -> Atlanta, GA",
-    status: "Pending",
-    tone: "neutral",
-  },
-  {
-    id: "SHP123453",
-    route: "Dallas, TX -> Seattle, WA",
-    status: "In Transit",
-    tone: "blue",
-  },
-  {
-    id: "SHP123452",
-    route: "Boston, MA -> Denver, CO",
-    status: "Delivered",
-    tone: "green",
-  },
-];
+// const shipments = [
+//   {
+//     id: "SHP123456",
+//     route: "New York, NY -> Los Angeles, CA",
+//     status: "In Transit",
+//     tone: "blue",
+//   },
+//   {
+//     id: "SHP123455",
+//     route: "Chicago, IL -> Houston, TX",
+//     status: "Delivered",
+//     tone: "green",
+//   },
+//   {
+//     id: "SHP123454",
+//     route: "Miami, FL -> Atlanta, GA",
+//     status: "Pending",
+//     tone: "neutral",
+//   },
+//   {
+//     id: "SHP123453",
+//     route: "Dallas, TX -> Seattle, WA",
+//     status: "In Transit",
+//     tone: "blue",
+//   },
+//   {
+//     id: "SHP123452",
+//     route: "Boston, MA -> Denver, CO",
+//     status: "Delivered",
+//     tone: "green",
+//   },
+// ];
 
 const iconPaths: Record<IconName, string[]> = {
   box: [
@@ -120,14 +127,41 @@ function Icon({ name }: { name: IconName }) {
 
 export default function FeitsmaVerhuizingenDashboardPage() {
   const router = useRouter();
+  const [stats, setStats] = useState([
+    { label: "Total Shipments", value: "0", tone: "blue" },
+    { label: "In Transit", value: "0", tone: "green" },
+  ]);
   const [user, setUser] = useState<{
     _id: string;
     fullName: string;
     email: string;
   } | null>(null);
+
+  const [shipments, setShipments] = useState<Shipment[]>([]);
+  const getInitialData = async () => {
+    const result = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/shipments/home",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      },
+    );
+    const data = await result.json();
+    if (result.ok) {
+      console.log(data);
+      setStats([
+        { label: "Total Shipments", value: data.total, tone: "blue" },
+        { label: "In Transit", value: data.inTransitCount, tone: "green" },
+      ]);
+      setShipments(data.shipments);
+    }
+  };
+
   useEffect(() => {
     const cachedUser = localStorage.getItem("user");
     if (cachedUser) {
+      getInitialData();
       setUser(JSON.parse(cachedUser));
     } else {
       router.push("/login");
@@ -140,6 +174,7 @@ export default function FeitsmaVerhuizingenDashboardPage() {
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ email: user?.email }),
       },
     );
@@ -220,12 +255,25 @@ export default function FeitsmaVerhuizingenDashboardPage() {
 
               <div className="ship-shipment-list">
                 {shipments.map((shipment) => (
-                  <div className="ship-shipment-row" key={shipment.id}>
+                  <div
+                    onClick={() => {
+                      localStorage.setItem(
+                        "shipment",
+                        JSON.stringify(shipment),
+                      );
+                      router.push(`/best-route/${shipment._id}`);
+                    }}
+                    className="ship-shipment-row flex justify-between items-center cursor-pointer px-3 py-1 transition-all duration-300 rounded-md select-none hover:bg-gray-300"
+                    key={shipment._id}
+                  >
                     <div>
-                      <strong>{shipment.id}</strong>
-                      <span>{shipment.route}</span>
+                      <strong>{shipment?._id?.slice(-7)}</strong>
+                      <span>
+                        {shipment.pickupAddress} -&gt;{" "}
+                        {shipment.deliveryAddress}
+                      </span>
                     </div>
-                    <span className={`ship-badge ${shipment.tone}`}>
+                    <span className={`ship-badge ${shipment.status}`}>
                       {shipment.status}
                     </span>
                   </div>
@@ -242,7 +290,7 @@ export default function FeitsmaVerhuizingenDashboardPage() {
                 <h2>Shipment Overview</h2>
                 <div className="ship-chart-wrap">
                   <div className="ship-donut" aria-label="128 shipments">
-                    <span>128</span>
+                    <span>{stats[0].value}</span>
                   </div>
                 </div>
 
@@ -253,11 +301,7 @@ export default function FeitsmaVerhuizingenDashboardPage() {
                   </div>
                   <div>
                     <span className="ship-dot green" />
-                    Delivered
-                  </div>
-                  <div>
-                    <span className="ship-dot neutral" />
-                    Pending
+                    Created
                   </div>
                 </div>
               </article>
@@ -505,8 +549,9 @@ const dashboardStyles = `
 }
 
 .ship-badge {
-  align-self: start;
+  align-self: center;
   padding: 5px 9px;
+  margin-right:5px;
   border-radius: 6px;
   font-size: 11px;
   font-weight: 800;
@@ -600,12 +645,12 @@ const dashboardStyles = `
   background: #004fc8;
 }
 
-.blue {
+.pending {
   background: #eef5ff;
   color: #075ee7;
 }
 
-.green {
+.transit {
   background: #eaf9f2;
   color: #0b9b63;
 }

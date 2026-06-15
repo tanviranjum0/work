@@ -84,9 +84,7 @@ export const getAutoCompleteSuggestionsService = async (
   try {
     const result = await fetch(url);
     const response = await result.json();
-    // console.log(response);
     if (response.status === "OK") {
-      // return response;
       return response.predictions
         .map((prediction: any, index: number) => {
           const data = {

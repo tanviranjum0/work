@@ -1,5 +1,9 @@
 import express from "express";
-import { handleCreateNewShipment } from "../controllers/shipment.controller";
+import {
+  handleCreateNewShipment,
+  handleInitialHomePageLoad,
+  handleGetSingleShipment,
+} from "../controllers/shipment.controller";
 import checkLogin from "../utils/checkLogin";
 
 const router = express.Router();
@@ -10,5 +14,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/create", checkLogin, handleCreateNewShipment);
+router.get("/home", checkLogin, handleInitialHomePageLoad);
+router.get("/:id", checkLogin, handleGetSingleShipment);
 
 export default router;
