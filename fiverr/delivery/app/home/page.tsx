@@ -254,7 +254,7 @@ export default function FeitsmaVerhuizingenDashboardPage() {
               <h2>Recent Shipments</h2>
 
               <div className="ship-shipment-list">
-                {shipments.map((shipment) => (
+                {shipments.toReversed().map((shipment) => (
                   <div
                     onClick={() => {
                       localStorage.setItem(
