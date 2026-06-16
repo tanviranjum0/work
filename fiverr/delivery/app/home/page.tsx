@@ -40,8 +40,8 @@ const navItems: {
   active?: boolean;
   link: string;
 }[] = [
-  { label: "Dashboard", icon: "grid", active: true, link: "/" },
-  { label: "Shipments", icon: "ship", link: "/" },
+  { label: "Dashboard", icon: "grid", active: true, link: "/home" },
+  { label: "Shipments", icon: "ship", link: "/shipments" },
   { label: "Create Shipment", icon: "plus", link: "/new-shipment" },
   { label: "Warehouses", icon: "warehouse", link: "/" },
   { label: "Vehicles", icon: "truck", link: "/" },
@@ -124,7 +124,6 @@ function Icon({ name }: { name: IconName }) {
     </svg>
   );
 }
-
 export default function FeitsmaVerhuizingenDashboardPage() {
   const router = useRouter();
   const [stats, setStats] = useState([
@@ -136,7 +135,6 @@ export default function FeitsmaVerhuizingenDashboardPage() {
     fullName: string;
     email: string;
   } | null>(null);
-  // Holla
   const [shipments, setShipments] = useState<Shipment[]>([]);
   const getInitialData = async () => {
     const result = await fetch(
@@ -186,7 +184,7 @@ export default function FeitsmaVerhuizingenDashboardPage() {
     }
   };
   return (
-    <main className="ship-shell">
+    <main className="ship-shell ">
       <style>{dashboardStyles}</style>
 
       <section
@@ -194,15 +192,6 @@ export default function FeitsmaVerhuizingenDashboardPage() {
         aria-label="Feitsma Verhuizingen dashboard"
       >
         <aside className="ship-sidebar">
-          <Link className="ship-brand" href={"/"}>
-            <span className="ship-brand-mark">
-              <Icon name="box" />
-            </span>
-            <span>
-              Feitsma <div className="text-blue-600">Verhuizingen</div>{" "}
-            </span>
-          </Link>
-
           <nav className="ship-nav" aria-label="Main navigation">
             {navItems.map((item) => (
               <Link
@@ -228,11 +217,11 @@ export default function FeitsmaVerhuizingenDashboardPage() {
               <h1>Dashboard</h1>
               <p>Welcome back, {user?.fullName || "User"}!</p>
             </div>
-
+            {/* 
             <button className="ship-date-button" type="button">
               <Icon name="calendar" />
               <span>May 20 - May 26, 2034</span>
-            </button>
+            </button> */}
           </header>
 
           <section className="ship-stats-grid" aria-label="Shipment metrics">
@@ -280,9 +269,9 @@ export default function FeitsmaVerhuizingenDashboardPage() {
                 ))}
               </div>
 
-              <a className="ship-view-all" href="#">
+              <Link href={"/shipments"} className="ship-view-all">
                 View all
-              </a>
+              </Link>
             </article>
 
             <div className="ship-side-stack">
@@ -309,8 +298,16 @@ export default function FeitsmaVerhuizingenDashboardPage() {
               <article className="ship-panel">
                 <h2>Quick Actions</h2>
                 <div className="ship-actions">
-                  <Link href={"/new-shipment"}>Create Shipment</Link>
-                  <button type="button">Add Vehicle</button>
+                  <button
+                    className="cursor-pointer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      router.push("/new-shipment");
+                    }}
+                  >
+                    Create Shipment
+                  </button>
+                  {/* <button type="button">Add Vehicle</button> */}
                 </div>
               </article>
             </div>
@@ -326,7 +323,6 @@ const dashboardStyles = `
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: 32px;
   background: linear-gradient(135deg, #f8fbff 0%, #eef4fb 100%);
   color: #0f2342;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -338,8 +334,6 @@ const dashboardStyles = `
   display: grid;
   grid-template-columns: 250px minmax(0, 1fr);
   overflow: hidden;
-  border: 1px solid #c6d3e3;
-  border-radius: 10px;
   background: rgba(255, 255, 255, 0.88);
   box-shadow: 0 24px 80px rgba(15, 35, 66, 0.14);
 }
@@ -353,7 +347,6 @@ const dashboardStyles = `
   color: #fff;
 }
 
-.ship-brand,
 .ship-nav-item,
 .ship-logout {
   display: flex;
@@ -363,11 +356,6 @@ const dashboardStyles = `
   text-decoration: none;
 }
 
-.ship-brand {
-  padding: 0 10px;
-  font-size: 18px;
-  font-weight: 800;
-}
 
 .ship-brand-mark {
   width: 28px;
@@ -672,9 +660,9 @@ const dashboardStyles = `
   background: #b7c2d2;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1000px) {
   .ship-shell {
-    padding: 20px;
+    padding: 0;
     place-items: start center;
   }
 
@@ -745,9 +733,7 @@ const dashboardStyles = `
     padding: 18px 14px;
   }
 
-  .ship-brand {
-    padding: 0 2px;
-  }
+  
 
   .ship-nav {
     padding-bottom: 4px;

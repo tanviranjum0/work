@@ -53,12 +53,12 @@ const shipmentSchema = new mongoose.Schema<ShipmentDocument>(
     },
     status: {
       type: String,
-      enum: ["transit", "pending"],
+      enum: ["transit", "pending", "delivered"],
       default: "pending",
     },
     deliveryShift: {
       type: String,
-      enum: ["morning", "afternoon", "evening"],
+      enum: ["morning", "afternoon", "evening", "night"],
       default: "morning",
     },
   },

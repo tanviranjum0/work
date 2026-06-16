@@ -1,4 +1,5 @@
-@import "tailwindcss";
+@import "tailwindcss" important;
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -10,4 +11,29 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
+}
+
+/* 1. Standard properties for Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4a5568 #063b83;
+}
+
+/* 2. Webkit properties for Chrome, Safari, and Edge */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the vertical scrollbar */
+  height: 10px; /* Height of the horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #1a202c; /* Background of the scrollbar track */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a5568; /* Color of the scrollable handle */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5d85c1; /* Color when hovering over the handle */
 }

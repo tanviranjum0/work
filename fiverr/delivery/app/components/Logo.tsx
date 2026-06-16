@@ -9,7 +9,7 @@ function NewIcon() {
     >
       <rect x="25" y="25" width="70" height="70" rx="16" fill="#3A5F8F" />
 
-      <g stroke="white" stroke-width="3" stroke-linejoin="round">
+      <g stroke="white" strokeWidth="3" strokeLinejoin="round">
         <path d="M60 45 L75 52 L60 60 L45 52 Z" />
         <path d="M45 52 L45 68 L60 76 L60 60 Z" />
         <path d="M75 52 L75 68 L60 76 L60 60 Z" />

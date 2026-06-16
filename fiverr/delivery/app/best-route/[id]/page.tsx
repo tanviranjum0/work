@@ -218,7 +218,7 @@ function RouteMapFrame({
       ></iframe>
 
       {/* Legend overlay */}
-      <div className="map-legend">
+      {/* <div className="map-legend">
         {STOPS.map((s) => (
           <div key={s.id} className="legend-item">
             <span className="legend-dot" style={{ background: s.color }} />
@@ -231,7 +231,7 @@ function RouteMapFrame({
             </span>
           </div>
         ))}
-      </div>
+      </div> */}
       {/* Distance badge */}
       <div className="map-distance-badge">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
