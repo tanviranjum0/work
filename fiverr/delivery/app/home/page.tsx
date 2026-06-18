@@ -306,6 +306,15 @@ export default function FeitsmaVerhuizingenDashboardPage() {
                   >
                     Create Shipment
                   </button>
+                  <button
+                    className="cursor-pointer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleLogout();
+                    }}
+                  >
+                    Log Out
+                  </button>
                   {/* <button type="button">Add Vehicle</button> */}
                 </div>
               </article>

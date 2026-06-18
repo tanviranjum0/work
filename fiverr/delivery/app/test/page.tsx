@@ -79,27 +79,34 @@ declare global {
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface Order {
+  _id: string;
   id: number;
+  OwnerRef: string;
   pickupAddress: string;
   deliveryAddress: string;
   deliverySelected: { lat: number; lng: number } | null;
   boxQuantity: number;
   clientName: string;
   shipmentType: string;
-  clientPhoneNumber: string;
+  clientPhoneNumber: string | number;
+  status: string;
+  driverAllocated: boolean;
+  createdAt: string;
+  updatedAt: string;
   deliveryShift: "morning" | "afternoon" | "evening" | "night";
   note: string;
+  __v: number;
 }
 
-type OrderStatus = "pending" | "in_progress" | "completed";
+type OrderStatus = "pending" | "in_transit" | "delivered";
 type OptimizeState = "idle" | "loading" | "done" | "error";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const WAREHOUSE = {
   address: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-  lat: 52.389015197753906,
-  lng: 4.660130023956299,
+  lat: 52.3892183,
+  lng: 4.6606146,
 };
 
 const SHIFT_COLORS: Record<string, string> = {
@@ -113,247 +120,447 @@ const SHIFT_COLORS: Record<string, string> = {
 
 const MOCK_ORDERS: Order[] = [
   {
+    deliverySelected: {
+      lat: 52.41684859999999,
+      lng: 4.822424199999999,
+    },
+    _id: "6a342f20ab4672285ed1b6d3",
     id: 1,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Grote Markt 1, 2011 RD Haarlem, Netherlands",
-    deliverySelected: { lat: 52.3807, lng: 4.6333 },
-    boxQuantity: 3,
-    clientName: "Emma de Vries",
-    shipmentType: "collection",
-    clientPhoneNumber: "+31612345601",
-    deliveryShift: "morning",
-    note: "Ring doorbell twice",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 545545544,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Westhavenweg 120, 1042 BB Amsterdam, Netherlands",
+    shipmentType: "delivery",
+    boxQuantity: 43,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "afternoon",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T17:47:12.474Z",
+    updatedAt: "2026-06-18T17:47:12.474Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 52.3816888,
+      lng: 4.635539,
+    },
+    _id: "6a342f7cab4672285ed1b6d4",
     id: 2,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Zijlweg 40, 2013 SK Haarlem, Netherlands",
-    deliverySelected: { lat: 52.3889, lng: 4.6241 },
-    boxQuantity: 5,
-    clientName: "Lars Bakker",
-    shipmentType: "standard",
-    clientPhoneNumber: "+31612345602",
-    deliveryShift: "morning",
-    note: "",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 315455455,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Grote Markt 1, Haarlem, Netherlands",
+    shipmentType: "collection",
+    boxQuantity: 32,
+    driverAllocated: false,
+    status: "delivered",
+    deliveryShift: "evening",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T17:48:44.011Z",
+    updatedAt: "2026-06-18T17:48:44.011Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 51.9926677,
+      lng: 4.3626214,
+    },
+    _id: "6a342f96ab4672285ed1b6d5",
     id: 3,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Kleverlaan 99, 2023 JB Haarlem, Netherlands",
-    deliverySelected: { lat: 52.3978, lng: 4.6512 },
-    boxQuantity: 1,
-    clientName: "Sofia Jansen",
-    shipmentType: "express",
-    clientPhoneNumber: "+31612345603",
-    deliveryShift: "afternoon",
-    note: "Leave at front door",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "hghgh",
+    clientPhoneNumber: 315455455,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Vulcanusweg 307, 2624 AV Delft, Netherlands",
+    shipmentType: "collection",
+    boxQuantity: 44,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "night",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T17:49:10.885Z",
+    updatedAt: "2026-06-18T17:49:10.885Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 51.92359099999999,
+      lng: 4.4843807,
+    },
+    _id: "6a342facab4672285ed1b6d6",
     id: 4,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Wagenweg 76, 2012 NM Haarlem, Netherlands",
-    deliverySelected: { lat: 52.3852, lng: 4.638 },
-    boxQuantity: 8,
-    clientName: "Daan Mulder",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 545545544,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Binnenrotte 25, 3011 PV Rotterdam, Netherlands",
     shipmentType: "collection",
-    clientPhoneNumber: "+31612345604",
-    deliveryShift: "morning",
-    note: "Heavy package",
+    boxQuantity: 50,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "afternoon",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T17:49:32.641Z",
+    updatedAt: "2026-06-18T17:49:32.641Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 51.4539971,
+      lng: 5.4003882,
+    },
+    _id: "6a342fcfab4672285ed1b6d7",
     id: 5,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Schotersingel 30, 2021 GH Haarlem, Netherlands",
-    deliverySelected: { lat: 52.3943, lng: 4.6455 },
-    boxQuantity: 2,
-    clientName: "Noor van den Berg",
-    shipmentType: "standard",
-    clientPhoneNumber: "+31612345605",
-    deliveryShift: "afternoon",
-    note: "",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "hghgh",
+    clientPhoneNumber: 315455455,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Flight Forum 40, 5657 DB Eindhoven, Netherlands",
+    shipmentType: "collection",
+    boxQuantity: 55,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "morning",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T17:50:07.574Z",
+    updatedAt: "2026-06-18T17:50:07.574Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 51.4393661,
+      lng: 5.4788028,
+    },
+    _id: "6a342fe4ab4672285ed1b6d8",
     id: 6,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Frans Halsstraat 12, 2021 AK Haarlem, Netherlands",
-    deliverySelected: { lat: 52.3862, lng: 4.649 },
-    boxQuantity: 4,
-    clientName: "Tom Visser",
-    shipmentType: "express",
-    clientPhoneNumber: "+31612345606",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 315455455,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Markt 10, 5611 EB Eindhoven, Netherlands",
+    shipmentType: "collection",
+    boxQuantity: 45,
+    driverAllocated: false,
+    status: "pending",
     deliveryShift: "morning",
-    note: "Fragile",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T17:50:28.651Z",
+    updatedAt: "2026-06-18T17:50:28.651Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 52.0801105,
+      lng: 4.3435356,
+    },
+    _id: "6a342ffbab4672285ed1b6d9",
     id: 7,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Rijksstraatweg 14, 2024 EB Haarlem, Netherlands",
-    deliverySelected: { lat: 52.4051, lng: 4.658 },
-    boxQuantity: 6,
-    clientName: "Fleur Smit",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 545545544,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress:
+      "Laan van Nieuw Oost-Indië 300, 2593 CE Den Haag, Netherlands",
     shipmentType: "collection",
-    clientPhoneNumber: "+31612345607",
+    boxQuantity: 65,
+    driverAllocated: false,
+    status: "pending",
     deliveryShift: "afternoon",
-    note: "",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T17:50:51.681Z",
+    updatedAt: "2026-06-18T17:50:51.681Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 52.0781639,
+      lng: 4.3132419,
+    },
+    _id: "6a343014ab4672285ed1b6da",
     id: 8,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Westergracht 30, 2012 HD Haarlem, Netherlands",
-    deliverySelected: { lat: 52.3828, lng: 4.631 },
-    boxQuantity: 2,
-    clientName: "Bas Kuiper",
-    shipmentType: "standard",
-    clientPhoneNumber: "+31612345608",
-    deliveryShift: "morning",
-    note: "Call on arrival",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 545545544,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Spuistraat 70, The Hague, Netherlands",
+    shipmentType: "collection",
+    boxQuantity: 55,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "afternoon",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T17:51:16.779Z",
+    updatedAt: "2026-06-18T17:51:16.779Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 52.1161509,
+      lng: 5.0552452,
+    },
+    _id: "6a343027ab4672285ed1b6db",
     id: 9,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Duinwijcklaan 5, 2015 HA Haarlem, Netherlands",
-    deliverySelected: { lat: 52.3905, lng: 4.596 },
-    boxQuantity: 3,
-    clientName: "Anne Meijer",
-    shipmentType: "express",
-    clientPhoneNumber: "+31612345609",
-    deliveryShift: "afternoon",
-    note: "",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 315455455,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Atoomweg 63, 3542 AA Utrecht, Netherlands",
+    shipmentType: "collection",
+    boxQuantity: 33,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "morning",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T17:51:35.942Z",
+    updatedAt: "2026-06-18T17:51:35.942Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 52.09285879999999,
+      lng: 5.1165487,
+    },
+    _id: "6a34303eab4672285ed1b6dc",
     id: 10,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Tempeliersstraat 22, 2012 EN Haarlem, Netherlands",
-    deliverySelected: { lat: 52.3816, lng: 4.637 },
-    boxQuantity: 7,
-    clientName: "Pieter de Groot",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 545545544,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Oudegracht 99, 3511 AE Utrecht, Netherlands",
     shipmentType: "collection",
-    clientPhoneNumber: "+31612345610",
-    deliveryShift: "evening",
-    note: "No elevator",
+    boxQuantity: 65,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "morning",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T17:51:58.122Z",
+    updatedAt: "2026-06-18T17:51:58.122Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 53.2073066,
+      lng: 6.600050299999999,
+    },
+    _id: "6a343050ab4672285ed1b6dd",
     id: 11,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Nieuwe Groenmarkt 8, 2011 WC Haarlem, Netherlands",
-    deliverySelected: { lat: 52.3813, lng: 4.6361 },
-    boxQuantity: 1,
-    clientName: "Lisa Bos",
-    shipmentType: "standard",
-    clientPhoneNumber: "+31612345611",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 315455455,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Bornholmstraat 50, Groningen, Netherlands",
+    shipmentType: "collection",
+    boxQuantity: 54,
+    driverAllocated: false,
+    status: "pending",
     deliveryShift: "morning",
-    note: "",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T17:52:16.041Z",
+    updatedAt: "2026-06-18T17:52:16.041Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 53.2073066,
+      lng: 6.600050299999999,
+    },
+    _id: "6a343050ab4672285ed1b6de",
     id: 12,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Pijnboomstraat 3, 2023 VK Haarlem, Netherlands",
-    deliverySelected: { lat: 52.396, lng: 4.6527 },
-    boxQuantity: 4,
-    clientName: "Joost Laan",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 315455455,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Bornholmstraat 50, Groningen, Netherlands",
     shipmentType: "collection",
-    clientPhoneNumber: "+31612345612",
-    deliveryShift: "afternoon",
-    note: "Second floor",
+    boxQuantity: 54,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "morning",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T17:52:16.144Z",
+    updatedAt: "2026-06-18T17:52:16.144Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 53.2188849,
+      lng: 6.5658126,
+    },
+    _id: "6a343699ab4672285ed1b6df",
     id: 13,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Planetenlaan 7, 2024 HN Haarlem, Netherlands",
-    deliverySelected: { lat: 52.4078, lng: 4.6612 },
-    boxQuantity: 2,
-    clientName: "Roos van Dijk",
-    shipmentType: "express",
-    clientPhoneNumber: "+31612345613",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 545545544,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Grote Markt 5, 9712 HN Groningen, Netherlands",
+    shipmentType: "collection",
+    boxQuantity: 44,
+    driverAllocated: false,
+    status: "pending",
     deliveryShift: "morning",
-    note: "",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T18:19:05.259Z",
+    updatedAt: "2026-06-18T18:19:05.259Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 51.4332582,
+      lng: 5.431146,
+    },
+    _id: "6a3436b4ab4672285ed1b6e0",
     id: 14,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Heemsteedse Dreef 70, 2102 KR Heemstede, Netherlands",
-    deliverySelected: { lat: 52.3555, lng: 4.6204 },
-    boxQuantity: 9,
-    clientName: "Koen Hendriks",
-    shipmentType: "standard",
-    clientPhoneNumber: "+31612345614",
-    deliveryShift: "afternoon",
-    note: "Bulky items",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 545545544,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Hurksestraat 19, 5652 AH Eindhoven, Netherlands",
+    shipmentType: "collection",
+    boxQuantity: 55,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "morning",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T18:19:32.755Z",
+    updatedAt: "2026-06-18T18:19:32.755Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 51.6903961,
+      lng: 5.2954436,
+    },
+    _id: "6a3436d0ab4672285ed1b6e1",
     id: 15,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Binnenweg 42, 2101 JJ Heemstede, Netherlands",
-    deliverySelected: { lat: 52.353, lng: 4.6172 },
-    boxQuantity: 3,
-    clientName: "Iris Vermeer",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 545545544,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Stationsplein 1, 5211 AP 's-Hertogenbosch, Netherlands",
     shipmentType: "collection",
-    clientPhoneNumber: "+31612345615",
-    deliveryShift: "evening",
-    note: "",
+    boxQuantity: 66,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "morning",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T18:20:00.395Z",
+    updatedAt: "2026-06-18T18:20:00.395Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 52.3056508,
+      lng: 4.9329768,
+    },
+    _id: "6a3436e5ab4672285ed1b6e2",
     id: 16,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Houtplein 18, 2012 DE Haarlem, Netherlands",
-    deliverySelected: { lat: 52.3836, lng: 4.6351 },
-    boxQuantity: 5,
-    clientName: "Sander Prins",
-    shipmentType: "express",
-    clientPhoneNumber: "+31612345616",
-    deliveryShift: "morning",
-    note: "Doorcode 4521",
-  },
-  {
-    id: 17,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Lange Begijnestraat 9, 2011 HM Haarlem, Netherlands",
-    deliverySelected: { lat: 52.3805, lng: 4.6349 },
-    boxQuantity: 2,
-    clientName: "Merel Vliet",
-    shipmentType: "standard",
-    clientPhoneNumber: "+31612345617",
-    deliveryShift: "afternoon",
-    note: "",
-  },
-  {
-    id: 18,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Cronjéstraat 15, 2042 AE Zandvoort, Netherlands",
-    deliverySelected: { lat: 52.3713, lng: 4.5328 },
-    boxQuantity: 6,
-    clientName: "Hugo van Leeuwen",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 315455455,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Keienbergweg 100, 1101 GH Amsterdam, Netherlands",
     shipmentType: "collection",
-    clientPhoneNumber: "+31612345618",
+    boxQuantity: 34,
+    driverAllocated: false,
+    status: "pending",
     deliveryShift: "morning",
-    note: "Coastal delivery",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T18:20:21.791Z",
+    updatedAt: "2026-06-18T18:20:21.791Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 52.0889982,
+      lng: 5.100483,
+    },
+    _id: "6a343703ab4672285ed1b6e3",
+    id: 17,
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 315455455,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Leidseweg 57, Utrecht, Netherlands",
+    shipmentType: "collection",
+    boxQuantity: 77,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "morning",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T18:20:51.597Z",
+    updatedAt: "2026-06-18T18:20:51.597Z",
+    __v: 0,
+  },
+  {
+    deliverySelected: {
+      lat: 52.39080310000001,
+      lng: 4.8349964,
+    },
+    _id: "6a34371aab4672285ed1b6e4",
+    id: 18,
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 315455455,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Radarweg 60, 1043 NT Amsterdam, Netherlands",
+    shipmentType: "collection",
+    boxQuantity: 76,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "morning",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T18:21:14.973Z",
+    updatedAt: "2026-06-18T18:21:14.973Z",
+    __v: 0,
+  },
+  {
+    deliverySelected: {
+      lat: 52.6318715,
+      lng: 4.7506,
+    },
+    _id: "6a343743ab4672285ed1b6e5",
     id: 19,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Zandvoortselaan 33, 2100 AA Heemstede, Netherlands",
-    deliverySelected: { lat: 52.36, lng: 4.589 },
-    boxQuantity: 1,
-    clientName: "Julia Brouwer",
-    shipmentType: "express",
-    clientPhoneNumber: "+31612345619",
-    deliveryShift: "evening",
-    note: "",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "hghgh",
+    clientPhoneNumber: 315455455,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Marktstraat, 1811 JP Alkmaar, Netherlands",
+    shipmentType: "collection",
+    boxQuantity: 66,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "morning",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T18:21:55.283Z",
+    updatedAt: "2026-06-18T18:21:55.283Z",
+    __v: 0,
   },
   {
+    deliverySelected: {
+      lat: 52.169678,
+      lng: 5.349870999999999,
+    },
+    _id: "6a343764ab4672285ed1b6e6",
     id: 20,
-    pickupAddress: WAREHOUSE.address,
-    deliveryAddress: "Oudeweg 60, 2031 CC Haarlem, Netherlands",
-    deliverySelected: { lat: 52.3997, lng: 4.6441 },
-    boxQuantity: 4,
-    clientName: "Mark Dijkstra",
-    shipmentType: "standard",
-    clientPhoneNumber: "+31612345620",
-    deliveryShift: "afternoon",
-    note: "Near the park",
+    OwnerRef: "6a26b5c8681f5eb1913ca53a",
+    clientName: "Tanvir Anjum",
+    clientPhoneNumber: 315455455,
+    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    deliveryAddress: "Neonweg 12, Amersfoort, Netherlands",
+    shipmentType: "collection",
+    boxQuantity: 66,
+    driverAllocated: false,
+    status: "pending",
+    deliveryShift: "morning",
+    note: "This is sample note1",
+    createdAt: "2026-06-18T18:22:28.152Z",
+    updatedAt: "2026-06-18T18:22:28.152Z",
+    __v: 0,
   },
 ];
-
 // ─── Helper: shift label ───────────────────────────────────────────────────────
 
 function shiftLabel(shift: string) {
@@ -413,9 +620,9 @@ function OrderCard({
         <div className="oc-row-top">
           <span className="oc-name">{order.clientName}</span>
           <span className={`oc-status-badge oc-status-${status}`}>
-            {status === "completed"
+            {status === "delivered"
               ? "Done"
-              : status === "in_progress"
+              : status === "in_transit"
                 ? "Active"
                 : "Pending"}
           </span>
@@ -475,7 +682,7 @@ function OrderCard({
         ) : null}
       </div>
 
-      {status === "completed" && (
+      {status === "delivered" && (
         <span className="oc-done-icon">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <circle cx="7" cy="7" r="7" fill="#22c55e" />
@@ -502,9 +709,9 @@ function StatsBar({
   orders: Order[];
   statuses: Record<number, OrderStatus>;
 }) {
-  const completed = orders.filter((o) => statuses[o.id] === "completed").length;
+  const completed = orders.filter((o) => statuses[o.id] === "delivered").length;
   const inProgress = orders.filter(
-    (o) => statuses[o.id] === "in_progress",
+    (o) => statuses[o.id] === "in_transit",
   ).length;
   const totalBoxes = orders.reduce((s, o) => s + o.boxQuantity, 0);
   const pct = Math.round((completed / orders.length) * 100);
@@ -548,9 +755,7 @@ export default function RouteOptimizationPage() {
 
   const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
   const [statuses, setStatuses] = useState<Record<number, OrderStatus>>(() =>
-    Object.fromEntries(
-      MOCK_ORDERS.map((o) => [o.id, "pending" as OrderStatus]),
-    ),
+    Object.fromEntries(MOCK_ORDERS.map((o) => [o.id, o.status as OrderStatus])),
   );
   const [optimizeState, setOptimizeState] = useState<OptimizeState>("idle");
   const [activeOrderId, setActiveOrderId] = useState<number | null>(null);
@@ -675,7 +880,7 @@ export default function RouteOptimizationPage() {
     watchId.current = navigator.geolocation.watchPosition(
       (pos) => {
         // const { latitude: lat, longitude: lng } = pos.coords;
-        console.log(pos.coords);
+
         const lat = 52.389015197753906;
         const lng = 4.660130023956299;
         setDriverPos({ lat, lng });
@@ -700,12 +905,12 @@ export default function RouteOptimizationPage() {
 
   // ── Route Optimisation ─────────────────────────────────────────────────────
 
-  const handleOptimize = useCallback(() => {
+  const handleOptimize = useCallback(async () => {
     if (!window.google || !mapInstance.current || !dirRenderer.current) return;
 
     setOptimizeState("loading");
 
-    const directionsService = new window.google.maps.DirectionsService();
+    const directionsService = await new window.google.maps.DirectionsService();
 
     const waypoints: google.maps.DirectionsWaypoint[] = orders
       .filter((o) => o.deliverySelected)
@@ -714,10 +919,10 @@ export default function RouteOptimizationPage() {
           o.deliverySelected!.lat,
           o.deliverySelected!.lng,
         ),
+
         stopover: true,
       }));
-
-    directionsService.route(
+    await directionsService.route(
       {
         origin: WAREHOUSE.address,
         destination: WAREHOUSE.address,
@@ -736,7 +941,6 @@ export default function RouteOptimizationPage() {
       ) => {
         if (status === window.google.maps.DirectionsStatus.OK && result) {
           dirRenderer.current!.setDirections(result);
-
           // Re-order the sidebar list to match optimised sequence
           const optimisedIndices: number[] = result.routes[0].waypoint_order;
           const reordered = optimisedIndices.map((i) => orders[i]);
@@ -757,8 +961,22 @@ export default function RouteOptimizationPage() {
 
   // ── Mark stop complete / active ────────────────────────────────────────────
 
-  const markComplete = (id: number) => {
-    setStatuses((prev) => ({ ...prev, [id]: "completed" }));
+  const markComplete = async (id: number, mainId: string) => {
+    const result = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + `/api/shipments/${mainId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ status: "delivered" }),
+      },
+    );
+    if (result.ok) {
+      localStorage.setItem("initialShipments", "");
+    }
+    setStatuses((prev) => ({ ...prev, [id]: "delivered" }));
     if (activeOrderId === id) setActiveOrderId(null);
   };
 
@@ -767,9 +985,9 @@ export default function RouteOptimizationPage() {
       const next = { ...prev };
       // Only one active at a time
       Object.keys(next).forEach((k) => {
-        if (next[+k] === "in_progress") next[+k] = "pending";
+        if (next[+k] === "in_transit") next[+k] = "pending";
       });
-      next[id] = "in_progress";
+      next[id] = "in_transit";
       return next;
     });
     setActiveOrderId(id);
@@ -783,7 +1001,7 @@ export default function RouteOptimizationPage() {
   };
 
   const completedCount = Object.values(statuses).filter(
-    (s) => s === "completed",
+    (s) => s === "delivered",
   ).length;
 
   return (
@@ -803,7 +1021,7 @@ export default function RouteOptimizationPage() {
         <aside className="ro-sidebar">
           {/* Header */}
           <div className="sidebar-header">
-            <div className="sidebar-logo">
+            {/* <div className="sidebar-logo">
               <svg viewBox="0 0 28 28" fill="none" width="26" height="26">
                 <rect width="28" height="28" rx="7" fill="#1e40af" />
                 <path
@@ -816,7 +1034,7 @@ export default function RouteOptimizationPage() {
                 <circle cx="20" cy="14" r="3" fill="#60a5fa" />
               </svg>
               <span className="sidebar-logo-text">ShipSwift</span>
-            </div>
+            </div> */}
 
             <div className="sidebar-meta">
               <h1 className="sidebar-title">Today&apos;s Route</h1>
@@ -944,32 +1162,48 @@ export default function RouteOptimizationPage() {
 
                       <div className="order-action-btns">
                         {status === "pending" && (
-                          <button
-                            className="oa-btn oa-start"
-                            onClick={() => startDelivery(order.id)}
-                          >
-                            Start Delivery
-                          </button>
+                          <>
+                            <button
+                              className="oa-btn oa-start"
+                              onClick={() => {
+                                startDelivery(order.id);
+                              }}
+                            >
+                              Start Delivery
+                            </button>
+                            <a
+                              className="oa-btn oa-nav"
+                              href={`https://maps.google.com/maps?daddr=${encodeURIComponent(order.deliveryAddress)}&travelmode=driving`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Navigate
+                            </a>
+                          </>
                         )}
-                        {status === "in_progress" && (
-                          <button
-                            className="oa-btn oa-complete"
-                            onClick={() => markComplete(order.id)}
-                          >
-                            Mark Complete
-                          </button>
+                        {status === "in_transit" && (
+                          <>
+                            <button
+                              className="oa-btn oa-complete"
+                              onClick={() => {
+                                markComplete(order.id, order._id);
+                              }}
+                            >
+                              Mark Complete
+                            </button>
+                            <a
+                              className="oa-btn oa-nav"
+                              href={`https://maps.google.com/maps?daddr=${encodeURIComponent(order.deliveryAddress)}&travelmode=driving`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Navigate
+                            </a>
+                          </>
                         )}
-                        {status === "completed" && (
+                        {status === "delivered" && (
                           <span className="oa-completed-msg">✓ Delivered</span>
                         )}
-                        <a
-                          className="oa-btn oa-nav"
-                          href={`https://maps.google.com/maps?daddr=${encodeURIComponent(order.deliveryAddress)}&travelmode=driving`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Navigate
-                        </a>
                       </div>
                     </div>
                   )}
@@ -1265,7 +1499,7 @@ function PageStyles() {
       .order-card:hover { border-color: #cbd5e1; background: var(--surface); }
       .order-card-active { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-ring); background: var(--brand-lt); }
       .order-card.status-completed { opacity: 0.6; }
-      .order-card.status-in_progress { border-color: #f97316; background: #fff7ed; }
+      .order-card.status-in_transit { border-color: #f97316; background: #fff7ed; }
 
       .oc-seq-col {
         display: flex;
@@ -1288,7 +1522,7 @@ function PageStyles() {
       }
 
       .order-card.status-completed .oc-seq { background: var(--green); }
-      .order-card.status-in_progress .oc-seq { background: var(--orange); }
+      .order-card.status-in_transit .oc-seq { background: var(--orange); }
 
       .oc-shift-pip {
         width: 6px; height: 6px;
@@ -1317,7 +1551,7 @@ function PageStyles() {
         white-space: nowrap;
       }
       .oc-status-pending    { background: #fef3c7; color: #b45309; }
-      .oc-status-in_progress{ background: #fff7ed; color: #c2410c; }
+      .oc-status-in_transit{ background: #fff7ed; color: #c2410c; }
       .oc-status-completed  { background: var(--green-lt); color: var(--green); }
 
       .oc-address {
@@ -1594,7 +1828,7 @@ function PageStyles() {
         .ro-sidebar { background: var(--card); }
         .sidebar-header, .order-card { background: var(--card); }
         .order-card:hover, .order-card-active { background: var(--surface); }
-        .order-card.status-in_progress { background: rgba(249,115,22,0.08); }
+        .order-card.status-in_transit { background: rgba(249,115,22,0.08); }
         .order-actions { background: var(--surface); }
         .stats-bar { background: var(--surface); }
         .oa-nav { background: var(--card); color: var(--t2); border-color: var(--border); }

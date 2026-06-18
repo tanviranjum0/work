@@ -10,7 +10,9 @@ import userRoutes from "./routes/users.route.js";
 import connectDB from "./config/db.js";
 import dns from "node:dns";
 import mapRoutes from "./routes/maps.route.js";
+import optimizedRoutes from "./routes/optimizedRoute.route.js";
 import shipmentRoutes from "./routes/shipments.route.js";
+import { getAddressCoordinate } from "./services/map.service.js";
 
 dotenv.config();
 dns.setServers(["8.8.8.8", "8.8.4.4", "1.1.1.1"]);
@@ -47,28 +49,14 @@ app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Welcome to Express with TypeScript!" });
 });
 app.get("/api/test", async (req: Request, res: Response) => {
-  const inputParam = req.query.input;
-  const input = Array.isArray(inputParam) ? inputParam[0] : inputParam;
-
-  if (typeof input !== "string") {
-    return res
-      .status(400)
-      .json({ error: "Missing or invalid input query parameter" });
-  }
-
-  const apiKey = process.env.GOOGLE_MAPS_API as string;
-
-  console.log(apiKey);
-  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
-
-  const response = await fetch(url);
-  const data = await response.json();
-  res.json(data);
+  const coords = await getAddressCoordinate(req.body.address);
+  res.json(coords);
 });
 // User Routes
 app.use("/api/users", userRoutes);
 app.use("/api/maps", mapRoutes);
 app.use("/api/shipments", shipmentRoutes);
+app.use("/api/routes", optimizedRoutes);
 
 // Start Server
 const PORT = Number(process.env.PORT) || 4000;

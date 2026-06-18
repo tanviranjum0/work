@@ -5,13 +5,12 @@ import axios from "axios";
  */
 export const getAddressCoordinate = async (
   address: string,
-): Promise<{ ltd: number; lng: number }> => {
+): Promise<{ lat: number; lng: number }> => {
   const apiKey = process.env.GOOGLE_MAPS_API as string;
 
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
     address,
   )}&key=${apiKey}`;
-
   try {
     const response = await axios.get(url);
 
@@ -19,7 +18,7 @@ export const getAddressCoordinate = async (
       const location = response.data.results[0].geometry.location;
 
       return {
-        ltd: location.lat,
+        lat: location.lat,
         lng: location.lng,
       };
     } else {
@@ -91,6 +90,7 @@ export const getAutoCompleteSuggestionsService = async (
             id: index,
             display: prediction.structured_formatting.main_text,
             secondary: prediction.structured_formatting.secondary_text,
+            message: prediction,
           };
           return data;
         })

@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
-
+interface PositionLatLng {
+  lat: number;
+  lng: number;
+}
 export interface ShipmentDocument {
   _id: mongoose.Types.ObjectId;
   save?: any;
@@ -8,6 +11,7 @@ export interface ShipmentDocument {
   clientPhoneNumber: number;
   pickupAddress: string;
   deliveryAddress: string;
+  deliverySelected: PositionLatLng;
   boxQuantity: number;
   driverAllocated: boolean;
   deliveryShift: string;
@@ -39,6 +43,16 @@ const shipmentSchema = new mongoose.Schema<ShipmentDocument>(
       type: String,
       required: true,
     },
+    deliverySelected: {
+      lat: {
+        type: Number,
+        required: true,
+      },
+      lng: {
+        type: Number,
+        required: true,
+      },
+    },
     shipmentType: {
       type: String,
       enum: ["collection", "delivery"],
@@ -54,7 +68,7 @@ const shipmentSchema = new mongoose.Schema<ShipmentDocument>(
     },
     status: {
       type: String,
-      enum: ["transit", "pending", "delivered"],
+      enum: ["transit", "pending", "delivered", "collected", "completed"],
       default: "pending",
     },
     deliveryShift: {

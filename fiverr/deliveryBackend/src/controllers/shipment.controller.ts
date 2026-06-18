@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Shipment from "../models/Shipment.js";
+import { getAddressCoordinate } from "../services/map.service.js";
 interface UserRequest extends Request {
   userId?: string;
 }
@@ -11,7 +12,6 @@ export const handleCreateNewShipment = async (
   try {
     const {
       deliveryAddress,
-      deliverySelected,
       boxQuantity,
       clientName,
       shipmentType,
@@ -22,7 +22,6 @@ export const handleCreateNewShipment = async (
 
     if (
       !deliveryAddress ||
-      !deliverySelected ||
       boxQuantity === undefined ||
       boxQuantity === null ||
       !clientName ||
@@ -35,11 +34,13 @@ export const handleCreateNewShipment = async (
         message: "All informations are required",
       });
     }
+    const deliverySelected = await getAddressCoordinate(deliveryAddress);
 
     req.body.OwnerRef = req.userId;
     const shipment = await Shipment.create({
       ...req.body,
       OwnerRef: req.userId,
+      deliverySelected,
     });
     return res.status(201).json({ message: "Success", shipment });
   } catch (err: any) {
@@ -235,6 +236,7 @@ export const handleShipmentUpdate = async (req: UserRequest, res: Response) => {
         $set: {
           pickupAddress: req.body.pickupAddress,
           deliveryAddress: req.body.deliveryAddress,
+          deliverySelected: req.body.deliverySelected,
           boxQuantity: req.body.boxQuantity,
           clientName: req.body.clientName,
           clientPhoneNumber: req.body.cellPhoneNumber,
