@@ -3,6 +3,7 @@ interface PositionLatLng {
   lat: number;
   lng: number;
 }
+
 export interface ShipmentDocument {
   _id: mongoose.Types.ObjectId;
   save?: any;
