@@ -1,6 +1,6 @@
 import express from "express";
-import { getAutoCompleteSuggestions } from "../controllers/map.controller";
-import checkLogin from "../utils/checkLogin";
+import { getAutoCompleteSuggestions } from "../controllers/map.controller.js";
+import checkLogin from "../utils/checkLogin.js";
 
 const router = express.Router();
 

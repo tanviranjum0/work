@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { get2FATemplate } from "./emailTemplates";
+import { get2FATemplate } from "./emailTemplates.js";
 
 export const send2FAEmail = async (to: string, code: string): Promise<void> => {
   const transporter = nodemailer.createTransport({
@@ -12,7 +12,7 @@ export const send2FAEmail = async (to: string, code: string): Promise<void> => {
   });
 
   await transporter.sendMail({
-    from: `"ShipSwift Security" <${process.env.EMAIL_USER}>`,
+    from: `"Feitsma Verhuizingen Security" <${process.env.EMAIL_USER}>`,
     to,
     subject: "Your Verification Code",
     text: `Your verification code is ${code}. It expires in 1 minute.`,

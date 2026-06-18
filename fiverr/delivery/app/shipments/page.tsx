@@ -479,7 +479,7 @@ function ShipmentRow({
   // const [confirmOpen, setConfirmOpen] = useState(false);
   const router = useRouter();
   return (
-    <div className={`row ${isUpdating ? "row-updating" : ""}  cursor-pointer`}>
+    <div className={`row ${isUpdating ? "row-updating" : ""} `}>
       {/* Tracking + route (mobile combines into card header) */}
       <div className="cell cell-id">
         <div className="id-icon">
@@ -490,6 +490,7 @@ function ShipmentRow({
             localStorage.setItem("shipment", JSON.stringify(shipment));
             router.push(`/best-route/${shipment._id}`);
           }}
+          className="cursor-pointer"
         >
           <div className="tracking-id">{shipment?._id?.slice(-7)}</div>
           <div className="client-name">{shipment.clientName}</div>
@@ -646,6 +647,7 @@ export default function ShipmentsList() {
   const [search, setSearch] = useState("");
   const [updatingIds, setUpdatingIds] = useState<Set<string>>(new Set());
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const [isMoreShipmentAvailable, setIsMoreShipmentAvailable] = useState(true);
   const router = useRouter();
   const getInitialData = async () => {
     const result = await fetch(
@@ -658,7 +660,7 @@ export default function ShipmentsList() {
     );
     const data = await result.json();
     if (result.ok) {
-      console.log(data);
+      localStorage.setItem("initialShipments", JSON.stringify(data.shipments));
       setShipments(data.shipments);
     }
   };
@@ -666,7 +668,16 @@ export default function ShipmentsList() {
   useEffect(() => {
     const cachedUser = localStorage.getItem("user");
     if (cachedUser) {
-      getInitialData();
+      const initialShipments = localStorage.getItem("initialShipments");
+      if (
+        initialShipments &&
+        initialShipments !== "" &&
+        initialShipments !== undefined
+      ) {
+        setShipments(JSON.parse(initialShipments));
+      } else {
+        getInitialData();
+      }
     } else {
       router.push("/login");
     }
@@ -749,6 +760,26 @@ export default function ShipmentsList() {
     }
   };
 
+  const handleLoadMoreShipments = async () => {
+    const result = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL +
+        `/api/shipments/more?limit=10&startIndex=${shipments.length}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      },
+    );
+    const data = await result.json();
+    if (result.ok) {
+      if (data.shipments.length < 10) {
+        setIsMoreShipmentAvailable(false);
+      }
+      const newShipments = [...shipments, ...data.shipments];
+      localStorage.setItem("initialShipments", JSON.stringify(newShipments));
+      setShipments(newShipments);
+    }
+  };
   // const handleDelete = (id: string) => {
   //   const shipment = shipments.find((s) => s._id === id);
   //   runUpdate(
@@ -763,7 +794,9 @@ export default function ShipmentsList() {
 
   const handleEdit = (id: string) => {
     const shipment = shipments.find((s) => s._id === id);
+    localStorage.setItem("shipmentForUpdate", JSON.stringify(shipment));
     pushToast("info", `Opening editor for ${shipment?._id}…`);
+    router.push("/update-shipment");
   };
 
   // ── Derived data ──
@@ -892,7 +925,7 @@ export default function ShipmentsList() {
               </div>
             ) : (
               <div>
-                {filtered.map((s, i) => {
+                {filtered.toReversed().map((s, i) => {
                   return (
                     <ShipmentRow
                       key={i + "shipmentrow"}
@@ -908,8 +941,19 @@ export default function ShipmentsList() {
               </div>
             )}
           </div>
-          <div className="w-full flex items-center justify-center">
-            <button className="btn-new ">Load More Shipment </button>
+          <div className={`w-full  flex items-center justify-center `}>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleLoadMoreShipments();
+              }}
+              className={`btn-new`}
+              disabled={!isMoreShipmentAvailable}
+            >
+              {!isMoreShipmentAvailable
+                ? "No Shipments Available"
+                : "Load More Shipment"}
+            </button>
           </div>
         </div>
       </div>

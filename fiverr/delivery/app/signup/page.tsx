@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Link from "next/link";
@@ -507,7 +508,6 @@ export default function SignUpPage(): JSX.Element {
     e.preventDefault();
     if (!canSubmit) return;
     setLoading(true);
-    console.log("Submitting Step 2 with:", { email, twofacode });
     const data = await fetch(
       process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/signup-verify-2fa-code",
       {
@@ -520,7 +520,6 @@ export default function SignUpPage(): JSX.Element {
       },
     );
     const result = await data.json();
-    // console.log("Verification result:", result);
     if (result.message === "User created successfully") {
       // router.push("/home");
       localStorage.setItem(
@@ -533,7 +532,6 @@ export default function SignUpPage(): JSX.Element {
       );
       setDone(true);
     } else {
-      // console.error("Signup failed:", result);
       setStep2Error(result.message || "Signup failed. Please try again.");
     }
     setLoading(false);
@@ -1055,7 +1053,7 @@ export default function SignUpPage(): JSX.Element {
                       </button>
                     </form>
 
-                    <div className="ss-divider">
+                    {/* <div className="ss-divider">
                       <div className="ss-divider-line" />
                       <span className="ss-divider-text">or sign up with</span>
                       <div className="ss-divider-line" />
@@ -1065,10 +1063,7 @@ export default function SignUpPage(): JSX.Element {
                       <button type="button" className="ss-btn-social">
                         <GoogleIcon /> Google
                       </button>
-                      {/* <button type="button" className="ss-btn-social">
-                        <MicrosoftIcon /> Microsoft
-                      </button> */}
-                    </div>
+                    </div> */}
 
                     <p className="ss-login-row">
                       Already have an account? <Link href="/login">Log in</Link>

@@ -5,7 +5,7 @@ export const get2FATemplate = (code: string): string => {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Verification Code</title>
+    <title>Feitsma Verhuizingen Verification Code</title>
   </head>
   <body style="margin:0; padding:0; font-family:Arial, sans-serif; background:#f4f6f8;">
     
@@ -52,7 +52,7 @@ export const get2FATemplate = (code: string): string => {
 
             <tr>
               <td style="padding-top:20px; text-align:center; font-size:12px; color:#aaa;">
-                © ${new Date().getFullYear()} Delivery APP. All rights reserved.
+                © ${new Date().getFullYear()} Feitsma Verhuizingen. All rights reserved.
               </td>
             </tr>
 

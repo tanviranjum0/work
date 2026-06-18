@@ -13,6 +13,7 @@ export interface ShipmentDocument {
   deliveryShift: string;
   shipmentType: string;
   status: string;
+  note: string;
 }
 
 const shipmentSchema = new mongoose.Schema<ShipmentDocument>(
@@ -32,7 +33,7 @@ const shipmentSchema = new mongoose.Schema<ShipmentDocument>(
     },
     pickupAddress: {
       type: String,
-      required: true,
+      default: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
     },
     deliveryAddress: {
       type: String,
@@ -60,6 +61,9 @@ const shipmentSchema = new mongoose.Schema<ShipmentDocument>(
       type: String,
       enum: ["morning", "afternoon", "evening", "night"],
       default: "morning",
+    },
+    note: {
+      type: String,
     },
   },
   { timestamps: true },

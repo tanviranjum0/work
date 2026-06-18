@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
@@ -28,6 +30,7 @@ interface Shipment {
   deliveryShift: string;
   createdAt: string;
   updatedAt: string;
+  note: string;
 }
 
 interface RouteSummaryItem {
@@ -39,7 +42,6 @@ interface RouteSummaryItem {
 
 const SUMMARY: RouteSummaryItem[] = [
   { label: "Total Distance", value: "2,789 km" },
-  { label: "Total Time", value: "32 h 45 min" },
 ];
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
@@ -166,7 +168,7 @@ function RouteMapFrame({
   onLoad,
   loaded,
 }: {
-  shipment: Shipment;
+  shipment?: Shipment;
   STOPS: RouteStop[];
   onLoad: () => void;
   loaded: boolean;
@@ -183,15 +185,14 @@ function RouteMapFrame({
     // return `https://maps.google.com/maps?saddr=${encodeURIComponent(origin)}&daddr=${daddr}&output=embed`;
 
     return `https://www.google.com/maps/embed/v1/directions?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&waypoints=${encodeURIComponent(waypoint)}&key=AIzaSyB1aG-PTEi0s9wtwmVlEuH9UmgnTVmPZ1M`;
-  }, [shipment]);
-  console.log(mapSrc);
+  }, [STOPS]);
   // External "open in Google Maps" link
   const externalHref = useMemo(() => {
     const origin = encodeURIComponent(STOPS[0].address);
     const destination = encodeURIComponent(STOPS[2].address);
     const waypoints = encodeURIComponent(STOPS[1].address);
     return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&waypoints=${waypoints}&travelmode=driving`;
-  }, [shipment]);
+  }, [STOPS]);
 
   return (
     <div className="map-frame-wrap">
@@ -211,7 +212,6 @@ function RouteMapFrame({
         title="Best route map from pickup to delivery"
         loading="lazy"
         onLoad={() => {
-          console.log("Loaded");
           onLoad();
         }}
         referrerPolicy="no-referrer-when-downgrade"
@@ -298,9 +298,7 @@ export default function BestRouteMap() {
   useEffect(() => {
     loadShipment();
   }, []);
-  useEffect(() => {
-    console.log("Stops", STOPS);
-  }, [shipment]);
+  useEffect(() => {}, [shipment]);
   const STOPS: RouteStop[] = [
     {
       id: "A",
@@ -394,16 +392,24 @@ export default function BestRouteMap() {
                   {SUMMARY.map((item) => (
                     <SummaryRow key={item.label} item={item} />
                   ))}
+                  <div className="border-2 rounded text-gray-700 p-2">
+                    <span className="italic bold text-black">Note: </span>
+                    <div className="text-sm">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Vel magni sunt hic dolorem iste commodi tempore quasi
+                      maxime at
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <div className="panel-divider" />
 
               {/* CTA */}
-              <button className="btn-turn-by-turn">
+              {/* <button className="btn-turn-by-turn">
                 <IconRoute />
                 View Turn-by-Turn
-              </button>
+              </button> */}
             </div>
 
             {/* RIGHT: Map */}
@@ -1028,7 +1034,7 @@ function GlobalStyles() {
 
         .stop-body { padding-bottom: 14px; }
 
-        .summary-list { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+     
 
         .btn-turn-by-turn { margin-top: 18px; }
 

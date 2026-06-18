@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Shipment from "../models/Shipment";
+import Shipment from "../models/Shipment.js";
 interface UserRequest extends Request {
   userId?: string;
 }
@@ -10,8 +10,6 @@ export const handleCreateNewShipment = async (
 ) => {
   try {
     const {
-      pickupAddress,
-      pickupSelected,
       deliveryAddress,
       deliverySelected,
       boxQuantity,
@@ -19,32 +17,34 @@ export const handleCreateNewShipment = async (
       shipmentType,
       clientPhoneNumber,
       deliveryShift,
+      note,
     } = req.body;
 
     if (
-      !pickupAddress ||
-      !pickupSelected ||
       !deliveryAddress ||
       !deliverySelected ||
-      !boxQuantity ||
+      boxQuantity === undefined ||
+      boxQuantity === null ||
       !clientName ||
       !shipmentType ||
       !clientPhoneNumber ||
-      !deliveryShift
+      !deliveryShift ||
+      !note
     ) {
-      res.status(404).json({
-        data: "All informations are required",
+      return res.status(400).json({
+        message: "All informations are required",
       });
-      return;
     }
 
     req.body.OwnerRef = req.userId;
-    const shipment = await Shipment.create(req.body);
-    return res.status(201).json(shipment);
+    const shipment = await Shipment.create({
+      ...req.body,
+      OwnerRef: req.userId,
+    });
+    return res.status(201).json({ message: "Success", shipment });
   } catch (err: any) {
     console.log(err.message);
     res.status(400).json({ message: "Something went wrong" });
-    throw err;
   }
 };
 
@@ -83,9 +83,7 @@ export const handleGetSingleShipment = async (
   res: Response,
 ) => {
   try {
-    // console.log(req.params.id, req.userId);
     const shipment = await Shipment.findById(req.params.id);
-    // console.log("Shipment", shipment);
     if (!shipment) {
       return res.status(400).json({ message: "No shipment found." });
     }
@@ -94,14 +92,17 @@ export const handleGetSingleShipment = async (
         .status(400)
         .json({ message: "You are not authorized to access this shipment." });
     }
-    shipment.OwnerRef = null;
-    return res.status(200).json(shipment);
+    const { OwnerRef, ...shipmentResponse } = shipment.toObject();
+    return res.status(200).json(shipmentResponse);
   } catch (error) {
     res.status(400).json("There is a problem in shipment fetch");
   }
 };
 
-export const handleGetShipments = async (req: UserRequest, res: Response) => {
+export const handleGetInitialShipments = async (
+  req: UserRequest,
+  res: Response,
+) => {
   try {
     const total = await Shipment.countDocuments({ OwnerRef: req.userId });
     const inTransitCount = await Shipment.countDocuments({
@@ -131,10 +132,7 @@ export const handleDeleteOneShipment = async (
   req: UserRequest,
   res: Response,
 ) => {
-  console.log("Deleting");
-
   try {
-    console.log(req.userId, req.params.id);
     const shipmentId =
       typeof req.params.id === "string" ? req.params.id : undefined;
 
@@ -142,18 +140,25 @@ export const handleDeleteOneShipment = async (
       return res.status(400).json({ message: "Shipment id is required." });
     }
 
-    await Shipment.deleteOne({
+    const result = await Shipment.deleteOne({
       OwnerRef: req.userId,
       _id: shipmentId,
     });
-    return res.status(200).json({ message: "Success" });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Shipment not found" });
+    } else {
+      return res.status(400).json({ message: "No shipment found" });
+    }
   } catch (error) {
     res.status(400).json("There is a in deleting shipment");
   }
 };
 
-export const handleShipmentUpdate = async (req: UserRequest, res: Response) => {
-  console.log("Updating");
+export const handleShipmentStatusUpdate = async (
+  req: UserRequest,
+  res: Response,
+) => {
   try {
     const shipmentId =
       typeof req.params.id === "string" ? req.params.id : undefined;
@@ -176,6 +181,68 @@ export const handleShipmentUpdate = async (req: UserRequest, res: Response) => {
     const updatedShipment = await Shipment.findByIdAndUpdate(
       shipment._id,
       { $set: { status: req.body.status } },
+      { returnDocument: "after", runValidators: true },
+    );
+    if (!updatedShipment)
+      return res.status(200).json({ message: "Something went wrong" });
+
+    return res.status(200).json({ message: "Success", ...updatedShipment });
+  } catch (error) {
+    res.status(400).json("Theres is a in deleting shipment");
+  }
+};
+
+export const handleLoadMoreShipments = async (
+  req: UserRequest,
+  res: Response,
+) => {
+  try {
+    const limit =
+      parseInt(typeof req.query.limit === "string" ? req.query.limit : "") || 9;
+    const startIndex =
+      parseInt(
+        typeof req.query.startIndex === "string" ? req.query.startIndex : "",
+      ) || 0;
+
+    const shipments = await Shipment.find({
+      OwnerRef: req.userId,
+    })
+      .limit(limit)
+      .skip(startIndex)
+      .select("-OwnerRef -__v");
+    return res.status(200).json({ message: "Success", shipments });
+  } catch (error) {
+    res.status(400).json("There is a problem in shipment fetch");
+  }
+};
+
+export const handleShipmentUpdate = async (req: UserRequest, res: Response) => {
+  try {
+    const shipment = await Shipment.findById(req.body._id);
+    if (!shipment) {
+      return res.status(400).json({ message: "Shipment not found." });
+    }
+
+    if (shipment.OwnerRef?.toString() !== req.userId) {
+      return res
+        .status(400)
+        .json({ message: "you are not authorized to update this shipment" });
+    }
+
+    const updatedShipment = await Shipment.findByIdAndUpdate(
+      shipment._id,
+      {
+        $set: {
+          pickupAddress: req.body.pickupAddress,
+          deliveryAddress: req.body.deliveryAddress,
+          boxQuantity: req.body.boxQuantity,
+          clientName: req.body.clientName,
+          clientPhoneNumber: req.body.cellPhoneNumber,
+          deliveryShift: req.body.deliveryShift,
+          shipmentType: req.body.shipmentType,
+          note: req.body.note,
+        },
+      },
       { returnDocument: "after", runValidators: true },
     );
     if (!updatedShipment)

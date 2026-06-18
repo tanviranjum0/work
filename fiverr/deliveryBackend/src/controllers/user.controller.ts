@@ -83,7 +83,7 @@ export const signup = async (
 ): Promise<Response> => {
   const { email, code } = req.body as {
     email: string;
-    code: number;
+    code: string;
   };
 
   try {
@@ -192,39 +192,39 @@ export const logout = (_: Request, res: Response): Response => {
 /**
  * UPDATE PROFILE
  */
-export const updateProfile = async (
-  req: AuthRequest,
-  res: Response,
-): Promise<Response> => {
-  try {
-    const { profilePic } = req.body as { profilePic: string };
+// export const updateProfile = async (
+//   req: AuthRequest,
+//   res: Response,
+// ): Promise<Response> => {
+//   try {
+//     const { profilePic } = req.body as { profilePic: string };
 
-    if (!profilePic) {
-      return res.status(400).json({
-        message: "Profile pic is required",
-      });
-    }
+//     if (!profilePic) {
+//       return res.status(400).json({
+//         message: "Profile pic is required",
+//       });
+//     }
 
-    if (!req.user) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
+//     if (!req.user) {
+//       return res.status(401).json({ message: "Unauthorized" });
+//     }
 
-    const uploadResponse: {
-      secure_url: string;
-    } = await cloudinary.uploader.upload(profilePic);
+//     const uploadResponse: {
+//       secure_url: string;
+//     } = await cloudinary.uploader.upload(profilePic);
 
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user._id,
-      { profilePic: uploadResponse.secure_url },
-      { new: true },
-    );
+//     const updatedUser = await User.findByIdAndUpdate(
+//       req.user._id,
+//       { profilePic: uploadResponse.secure_url },
+//       { new: true },
+//     );
 
-    return res.status(200).json(updatedUser);
-  } catch (error: unknown) {
-    console.error("Error in update profile:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
+//     return res.status(200).json(updatedUser);
+//   } catch (error: unknown) {
+//     console.error("Error in update profile:", error);
+//     return res.status(500).json({ message: "Internal server error" });
+//   }
+// };
 
 export const resend2FALoginCode = async (
   req: Request,
@@ -278,7 +278,7 @@ export const login2FAVerification = async (
       return res.status(400).json({ message: "Invalid user" });
     }
 
-    if (user.twoFaCode != parseInt(code)) {
+    if (user.twoFaCode != code) {
       return res.status(400).json({ message: "Invalid 2FA code" });
     }
     // 🔥 Convert ObjectId → string
@@ -339,7 +339,7 @@ export const resetPassword = async (
     return res.status(400).json({ message: "Invalid user" });
   }
 
-  if (user.twoFaCode != parseInt(code)) {
+  if (user.twoFaCode != parseInt(String(code), 10)) {
     return res.status(400).json({ message: "Invalid 2FA code" });
   }
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -357,7 +357,7 @@ export const resetPassword = async (
 
   generateToken(updatedUser, res);
 
-  res.status(201).json({
+  return res.status(201).json({
     message: "Password reset successful",
     _id: updatedUser._id,
     fullName: updatedUser.fullName,

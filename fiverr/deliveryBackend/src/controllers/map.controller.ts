@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
-import { getAutoCompleteSuggestionsService } from "../services/map.service";
-
+import {
+  getAutoCompleteSuggestionsService,
+  getAddressCoordinate,
+  getDistanceTime as getDistanceTimeService,
+} from "../services/map.service.js";
 /**
  * Extend Request Query Types
  */
@@ -27,7 +30,7 @@ export const getCoordinates = async (
   const { address } = req.query;
 
   try {
-    const coordinates = await mapService.getAddressCoordinate(address);
+    const coordinates = await getAddressCoordinate(address);
     return res.status(200).json(coordinates);
   } catch (error: unknown) {
     return res.status(404).json({
@@ -47,7 +50,7 @@ export const getDistanceTime = async (
   try {
     const { origin, destination } = req.query;
 
-    const distanceTime = await mapService.getDistanceTime(origin, destination);
+    const distanceTime = await getDistanceTimeService(origin, destination);
 
     return res.status(200).json(distanceTime);
   } catch (err: unknown) {

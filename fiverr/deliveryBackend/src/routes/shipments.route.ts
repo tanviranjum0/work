@@ -3,18 +3,26 @@ import {
   handleCreateNewShipment,
   handleInitialHomePageLoad,
   handleGetSingleShipment,
-  handleGetShipments,
+  handleGetInitialShipments,
+  handleLoadMoreShipments,
   handleDeleteOneShipment,
+  handleShipmentStatusUpdate,
   handleShipmentUpdate,
-} from "../controllers/shipment.controller";
-import checkLogin from "../utils/checkLogin";
+} from "../controllers/shipment.controller.js";
+import checkLogin from "../utils/checkLogin.js";
 
 const router = express.Router();
 
-router.post("/create", checkLogin, handleCreateNewShipment);
-router.get("/", checkLogin, handleGetShipments);
+router.get("/more", checkLogin, handleLoadMoreShipments);
 router.get("/home", checkLogin, handleInitialHomePageLoad);
 router.get("/:id", checkLogin, handleGetSingleShipment);
+router.get("/", checkLogin, handleGetInitialShipments);
+
+router.post("/create", checkLogin, handleCreateNewShipment);
+router.post("/update", checkLogin, handleShipmentUpdate);
+
+router.patch("/:id", checkLogin, handleShipmentStatusUpdate);
+
 router.delete("/:id", checkLogin, handleDeleteOneShipment);
-router.patch("/:id", checkLogin, handleShipmentUpdate);
+
 export default router;

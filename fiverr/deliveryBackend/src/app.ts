@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 import { xss } from "express-xss-sanitizer";
 import dotenv from "dotenv";
 import userRoutes from "./routes/users.route.js";
-import connectDB from "./config/db";
+import connectDB from "./config/db.js";
 import dns from "node:dns";
 import mapRoutes from "./routes/maps.route.js";
 import shipmentRoutes from "./routes/shipments.route.js";
@@ -15,14 +15,12 @@ import shipmentRoutes from "./routes/shipments.route.js";
 dotenv.config();
 dns.setServers(["8.8.8.8", "8.8.4.4", "1.1.1.1"]);
 const app: Application = express();
-const PORT = process.env.PORT || 4000;
 const MONGO_URL = process.env.MONGO_URL;
-// console.log("MongoDB URL:", MONGO_URL);
 connectDB(MONGO_URL || "mongodb://localhost:27017/deliveryApp");
 // Body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.set("trust proxy", 1);
 // Use Helmet to set secure HTTP headers
 app.use(helmet());
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -49,7 +47,14 @@ app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Welcome to Express with TypeScript!" });
 });
 app.get("/api/test", async (req: Request, res: Response) => {
-  const { input } = req.query;
+  const inputParam = req.query.input;
+  const input = Array.isArray(inputParam) ? inputParam[0] : inputParam;
+
+  if (typeof input !== "string") {
+    return res
+      .status(400)
+      .json({ error: "Missing or invalid input query parameter" });
+  }
 
   const apiKey = process.env.GOOGLE_MAPS_API as string;
 
@@ -66,6 +71,7 @@ app.use("/api/maps", mapRoutes);
 app.use("/api/shipments", shipmentRoutes);
 
 // Start Server
+const PORT = Number(process.env.PORT) || 4000;
 app.listen(PORT, () => {
   console.log(`Server is safely running on port: ${PORT}`);
 });

@@ -20,7 +20,6 @@ const checkLogin = (
   if (req.signedCookies?.jwt) {
     token = req.signedCookies.jwt;
   }
-
   if (!token) {
     res.status(401).json({ message: "Unauthorized: No token provided" });
     return;
@@ -28,7 +27,7 @@ const checkLogin = (
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-
+    // console.log(req.body);
     req.userId = (decoded as JwtPayload).userId;
     next(); // ✅ Only called AFTER verification
   } catch (error) {

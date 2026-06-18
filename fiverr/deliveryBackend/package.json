@@ -4,7 +4,7 @@
   "description": "",
   "license": "ISC",
   "author": "",
-  "type": "commonjs",
+  "type": "module",
   "main": "app.js",
   "scripts": {
     "dev": "tsx watch src/app.ts",
@@ -42,6 +42,6 @@
   },
   "allowScripts": {
     "bcrypt@6.0.0": true,
-    "esbuild@0.28.0": true
+    "esbuild@0.28.1": true
   }
 }

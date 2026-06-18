@@ -121,17 +121,6 @@ function GoogleIcon(): JSX.Element {
   );
 }
 
-function MicrosoftIcon(): JSX.Element {
-  return (
-    <svg width={18} height={18} viewBox="0 0 21 21">
-      <rect x={0} y={0} width={10} height={10} fill="#F25022" />
-      <rect x={11} y={0} width={10} height={10} fill="#7FBA00" />
-      <rect x={0} y={11} width={10} height={10} fill="#00A4EF" />
-      <rect x={11} y={11} width={10} height={10} fill="#FFB900" />
-    </svg>
-  );
-}
-
 /* ─── InputField ─────────────────────────────────────────────────────────── */
 
 function InputField({
@@ -241,7 +230,6 @@ export default function LoginPage(): JSX.Element {
       },
     );
     const data = await res.json();
-    // console.log(data);
     if (!res.ok) {
       if (data.message == "Please verify your email before logging in") {
         const data = await fetch(
@@ -286,10 +274,6 @@ export default function LoginPage(): JSX.Element {
     startCooldown();
     setVerificationLoading(true);
     setVerificationError("");
-    console.log("Verification Data:", {
-      email,
-      code: verificationCode,
-    });
     const res = await fetch(
       process.env.NEXT_PUBLIC_BACKEND_URL + "/api/users/login-verify-2fa",
       {
@@ -299,7 +283,6 @@ export default function LoginPage(): JSX.Element {
       },
     );
     const data = await res.json();
-    console.log(data);
     if (!res.ok) {
       setVerificationError(data.message);
       setVerificationLoading(false);
@@ -656,22 +639,19 @@ export default function LoginPage(): JSX.Element {
                 </form>
               </>
             )}
-            {/* Divider */}
-            <div className="ss-divider">
+            {/* <div className="ss-divider">
               <div className="ss-divider-line" />
               <span className="ss-divider-text">or continue with</span>
               <div className="ss-divider-line" />
             </div>
 
-            {/* Social */}
+            
             <div className="ss-social-row">
               <button type="button" className="ss-btn-social">
                 <GoogleIcon /> Google
               </button>
-              {/* <button type="button" className="ss-btn-social">
-                <MicrosoftIcon /> Microsoft
-              </button> */}
-            </div>
+           
+            </div> */}
 
             {/* Sign up */}
             <p className="ss-signup-row">

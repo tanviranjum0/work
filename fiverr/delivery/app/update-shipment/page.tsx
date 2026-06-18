@@ -32,6 +32,7 @@ interface AddressSuggestion {
 
 interface FormState {
   pickupAddress: string;
+  pickupSelected: AddressSuggestion | null;
   deliveryAddress: string;
   deliverySelected: AddressSuggestion | null;
   boxQuantity: number;
@@ -79,11 +80,11 @@ interface FormState {
 
 function Stepper({ current }: { current: Step }) {
   const steps: { num: Step; label: string }[] = [
-    // { num: 1, label: "Pickup" },
-    { num: 1, label: "Delivery" },
-    { num: 2, label: "Shipment Info" },
-    { num: 3, label: "Client Detials" },
-    { num: 4, label: "Review" },
+    { num: 1, label: "Pickup" },
+    { num: 2, label: "Delivery" },
+    { num: 3, label: "Shipment Info" },
+    { num: 4, label: "Client Detials" },
+    { num: 5, label: "Review" },
   ];
 
   return (
@@ -242,43 +243,43 @@ function AddressInput({
 
 // ─── Step 1 – Pickup ──────────────────────────────────────────────────────────
 
-// function StepPickup({
-//   error,
-//   form,
-//   setForm,
-//   onNext,
-// }: {
-//   error: string;
-//   form: FormState;
-//   setForm: React.Dispatch<React.SetStateAction<FormState>>;
-//   onNext: () => void;
-// }) {
-//   return (
-//     <div className="card">
-//       <div className="card-header">
-//         <h2 className="card-title">Create New Shipment</h2>
-//       </div>
-//       <Stepper current={1} />
-//       <div className="section-divider" />
-//       <h3 className="section-heading">Pickup Location</h3>
-//       <AddressInput
-//         label="Enter pickup address"
-//         placeholder="e.g. 123 Main St…"
-//         value={form.pickupAddress}
-//         onChange={(v) => {
-//           setForm((f) => ({ ...f, pickupAddress: v }));
-//         }}
-//         onSelect={(s) => {
-//           setForm((f) => ({ ...f, pickupSelected: s }));
-//           onNext();
-//         }}
-//       />
-//       <div className="text-red-500 text-center">{error}</div>
-//     </div>
-//   );
-// }
+function StepPickup({
+  error,
+  form,
+  setForm,
+  onNext,
+}: {
+  error: string;
+  form: FormState;
+  setForm: React.Dispatch<React.SetStateAction<FormState>>;
+  onNext: () => void;
+}) {
+  return (
+    <div className="card">
+      <div className="card-header">
+        <h2 className="card-title">Create New Shipment</h2>
+      </div>
+      <Stepper current={1} />
+      <div className="section-divider" />
+      <h3 className="section-heading">Pickup Location</h3>
+      <AddressInput
+        label="Enter pickup address"
+        placeholder="e.g. 123 Main St…"
+        value={form.pickupAddress}
+        onChange={(v) => {
+          setForm((f) => ({ ...f, pickupAddress: v }));
+        }}
+        onSelect={(s) => {
+          setForm((f) => ({ ...f, pickupSelected: s }));
+          onNext();
+        }}
+      />
+      <div className="text-red-500 text-center">{error}</div>
+    </div>
+  );
+}
 
-// ─── Step 1 – Delivery ─────────────────────────────────────────────────────
+// ─── Step 2 – Delivery ─────────────────────────────────────────────────────
 
 function StepDelivery({
   error,
@@ -298,7 +299,7 @@ function StepDelivery({
       <div className="card-header">
         <h2 className="card-title">Create New Shipment</h2>
       </div>
-      <Stepper current={1} />
+      <Stepper current={2} />
       <div className="section-divider" />
       <h3 className="section-heading">Delivery Location</h3>
       <AddressInput
@@ -321,7 +322,7 @@ function StepDelivery({
   );
 }
 
-// ─── Step 2 – Vehicle ─────────────────────────────────────────────────────────
+// ─── Step 3 – Vehicle ─────────────────────────────────────────────────────────
 
 function StepOderInfo({
   error,
@@ -343,7 +344,7 @@ function StepOderInfo({
       <div className="card-header">
         <h2 className="card-title">Shipment &amp; Info</h2>
       </div>
-      <Stepper current={2} />
+      <Stepper current={3} />
       <div className="section-divider" />
 
       <div className="field-group">
@@ -383,6 +384,7 @@ function StepOderInfo({
           <input
             placeholder="Enter Box quantity"
             type="number"
+            value={form.boxQuantity}
             className="capacity-input"
             min={1}
             max={10000}
@@ -443,7 +445,7 @@ function StepOderInfo({
   );
 }
 
-//--------- Step 3 - Client Details--------------
+//--------- Step 4 - Client Details--------------
 function StepClientDetails({
   error,
   form,
@@ -499,7 +501,7 @@ function StepClientDetails({
       <div className="">
         <h2 className="card-title">Create New Shipment</h2>
       </div>
-      <Stepper current={3} />
+      <Stepper current={4} />
       <div className="section-divider" />
 
       <div
@@ -685,7 +687,7 @@ function StepClientDetails({
     </div>
   );
 }
-// ─── Step 4 – Review ──────────────────────────────────────────────────────────
+// ─── Step 5 – Review ──────────────────────────────────────────────────────────
 
 function ReviewRow({
   icon,
@@ -695,8 +697,7 @@ function ReviewRow({
 }: {
   icon: React.ReactNode;
   label: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value: any;
+  value: string | number | { name: string; phone: string; shift: string };
   client?: boolean;
 }) {
   return (
@@ -706,14 +707,23 @@ function ReviewRow({
         <div className="review-label">{label}</div>
         {!client && (
           <>
-            <div className="review-value">{value}</div>
+            <div className="review-value">{value as string | number}</div>
           </>
         )}
         {client && (
           <>
-            <div className="review-value">Client Name: {value.name}</div>
-            <div className="review-value">Phone Number: {value.phone}</div>
-            <div className="review-value">Availability: {value.shift}</div>
+            <div className="review-value">
+              Client Name:{" "}
+              {(value as { name: string; phone: string; shift: string }).name}
+            </div>
+            <div className="review-value">
+              Phone Number:{" "}
+              {(value as { name: string; phone: string; shift: string }).phone}
+            </div>
+            <div className="review-value">
+              Availability:{" "}
+              {(value as { name: string; phone: string; shift: string }).shift}
+            </div>
           </>
         )}
       </div>
@@ -740,12 +750,10 @@ const IconBox = () => (
 );
 
 function StepReview({
-  error,
   form,
   onBack,
   onConfirm,
 }: {
-  error: string;
   form: FormState;
   onBack: () => void;
   onConfirm: () => void;
@@ -757,14 +765,14 @@ function StepReview({
       <div className="card-header">
         <h2 className="card-title">Review &amp; Confirm</h2>
       </div>
-      <Stepper current={4} />
+      <Stepper current={5} />
       <div className="section-divider" />
       <ReviewRow
         icon={<IconPin />}
         label="Client Details"
         value={{
           name: form.clientName,
-          phone: form.clientPhoneNumber,
+          phone: `${form.clientPhoneNumber ?? ""}`,
           shift: form.deliveryShift,
         }}
         client={true}
@@ -791,14 +799,7 @@ function StepReview({
         label="Shipment Info"
         value={`${form.boxQuantity} Box's  |  Type : ${form.shipmentType.toUpperCase()}`}
       />
-      {error && (
-        <div
-          className="text-red-500 text-center"
-          style={{ marginTop: 16, marginBottom: 4 }}
-        >
-          {error}
-        </div>
-      )}
+
       <div className="btn-row">
         <button className="btn-outline" onClick={onBack}>
           Back
@@ -869,19 +870,37 @@ function SuccessScreen({
 
 // ─── Root Component ───────────────────────────────────────────────────────────
 
-const DEFAULT_FORM: FormState = {
-  pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-  deliveryAddress: "",
-  deliverySelected: null,
-  boxQuantity: 0,
-  clientName: "",
-  shipmentType: "collection",
-  clientPhoneNumber: "",
-  deliveryShift: "morning",
-  note: "",
-};
+// const DEFAULT_FORM: FormState = {
+//   pickupAddress: "",
+//   pickupSelected: null,
+//   deliveryAddress: "",
+//   deliverySelected: null,
+//   boxQuantity: 0,
+//   clientName: "",
+//   shipmentType: "collection",
+//   clientPhoneNumber: "",
+//   deliveryShift: "morning",
+//   note: "",
+// };
 
 export default function CreateShipmentForm() {
+  let DEFAULT_FORM: FormState = {
+    pickupAddress: "",
+    pickupSelected: null,
+    deliveryAddress: "",
+    deliverySelected: null,
+    boxQuantity: 0,
+    clientName: "",
+    clientPhoneNumber: "",
+    deliveryShift: "morning",
+    shipmentType: "collection",
+    note: "",
+  };
+  if (typeof window !== "undefined") {
+    const localForm = localStorage.getItem("shipmentForUpdate");
+
+    DEFAULT_FORM = localForm ? JSON.parse(localForm) : DEFAULT_FORM;
+  }
   const [step, setStep] = useState<Step>(1);
   const [confirmed, setConfirmed] = useState(false);
   const [form, setForm] = useState<FormState>(DEFAULT_FORM);
@@ -898,26 +917,26 @@ export default function CreateShipmentForm() {
     setStep(1);
     setForm(DEFAULT_FORM);
   };
-
   const handleSubmit = async () => {
     if (!form.deliverySelected) {
       setError("Please provide a valid delivery location.");
+      setStep(2);
+    }
+    if (!form.pickupSelected) {
+      setError("Please provide a valid pickup location.");
       setStep(1);
     }
-    // if (!form.pickupSelected) {
-    //   setError("Please provide a valid pickup location.");
-    //   setStep(1);
-    // }
     if (!form.boxQuantity || !form.shipmentType) {
       setError("Put valid shipment tyre or quantity");
-      setStep(2);
+      setStep(3);
     }
     if (!form.clientName || !form.clientPhoneNumber || !form.deliveryShift) {
       setError("PLease put all client details correctly");
-      setStep(3);
+      setStep(4);
     }
+
     const result = await fetch(
-      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/shipments/create",
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/shipments/update",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -941,15 +960,15 @@ export default function CreateShipmentForm() {
             <SuccessScreen form={form} onReset={reset} />
           ) : (
             <>
-              {/* {step === 1 && (
+              {step === 1 && (
                 <StepPickup
                   error={error}
                   form={form}
                   setForm={setForm}
                   onNext={next}
                 />
-              )} */}
-              {step === 1 && (
+              )}
+              {step === 2 && (
                 <StepDelivery
                   error={error}
                   form={form}
@@ -958,7 +977,7 @@ export default function CreateShipmentForm() {
                   onNext={next}
                 />
               )}
-              {step === 2 && (
+              {step === 3 && (
                 <StepOderInfo
                   error={error}
                   form={form}
@@ -967,7 +986,7 @@ export default function CreateShipmentForm() {
                   onNext={next}
                 />
               )}
-              {step === 3 && (
+              {step === 4 && (
                 <StepClientDetails
                   error={error}
                   form={form}
@@ -976,9 +995,8 @@ export default function CreateShipmentForm() {
                   setForm={setForm}
                 />
               )}
-              {step === 4 && (
+              {step === 5 && (
                 <StepReview
-                  error={error}
                   form={form}
                   onBack={back}
                   onConfirm={handleSubmit}

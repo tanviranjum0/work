@@ -43,11 +43,11 @@ const navItems: {
   { label: "Dashboard", icon: "grid", active: true, link: "/home" },
   { label: "Shipments", icon: "ship", link: "/shipments" },
   { label: "Create Shipment", icon: "plus", link: "/new-shipment" },
-  { label: "Warehouses", icon: "warehouse", link: "/" },
-  { label: "Vehicles", icon: "truck", link: "/" },
-  { label: "Drivers", icon: "users", link: "/" },
-  { label: "Reports", icon: "report", link: "/" },
-  { label: "Settings", icon: "settings", link: "/" },
+  // { label: "Warehouses", icon: "warehouse", link: "/" },
+  // { label: "Vehicles", icon: "truck", link: "/" },
+  // { label: "Drivers", icon: "users", link: "/" },
+  // { label: "Reports", icon: "report", link: "/" },
+  // { label: "Settings", icon: "settings", link: "/" },
 ];
 
 // const shipments = [
@@ -147,7 +147,6 @@ export default function FeitsmaVerhuizingenDashboardPage() {
     );
     const data = await result.json();
     if (result.ok) {
-      console.log(data);
       setStats([
         { label: "Total Shipments", value: data.total, tone: "blue" },
         { label: "In Transit", value: data.inTransitCount, tone: "green" },

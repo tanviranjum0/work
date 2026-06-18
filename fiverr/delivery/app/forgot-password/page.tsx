@@ -3,7 +3,6 @@
 import Link from "next/link";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import useCooldownTimer from "../hooks/useCooldownTimer";
-import router from "../../../deliveryBackend/src/routes/shipments.route";
 import { useRouter } from "next/navigation";
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -185,8 +184,8 @@ function StepEmail({
 
       <h2 className="card-title">Forgot Password?</h2>
       <p className="card-sub">
-        Enter your account email and we'll send a 6-digit verification code to
-        reset your password.
+        Enter your account email and we&apos;ll send a 6-digit verification code
+        to reset your password.
       </p>
 
       <Stepper current={1} />
@@ -295,7 +294,6 @@ function StepVerify({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [resendTimer, setResendTimer] = useState(60);
-  const [resending, setResending] = useState(false);
 
   // Countdown timer
   useEffect(() => {
@@ -368,16 +366,6 @@ function StepVerify({
       onNext();
     }
     setLoading(true);
-  };
-
-  const handleResend = () => {
-    setResending(true);
-    setTimeout(() => {
-      setResending(false);
-      setResendTimer(30);
-      setForm((f) => ({ ...f, code: ["", "", "", "", "", ""] }));
-      inputRefs.current[0]?.focus();
-    }, 800);
   };
 
   return (
