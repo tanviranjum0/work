@@ -44,8 +44,8 @@ export default function RootLayout({
               <Link href="/shipments" className="nav-link">
                 Shipments
               </Link>
-              <Link href="/routes" className="nav-link">
-                Routes
+              <Link href="/get-route" className="nav-link">
+                Get Route
               </Link>
               <Link href="/new-shipment" className="nav-link">
                 New Shipment

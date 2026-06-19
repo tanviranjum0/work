@@ -1,1841 +1,1357 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-/* eslint-disable @typescript-eslint/no-namespace */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import Script from "next/script";
-
-// ─── Google Maps type augmentation ────────────────────────────────────────────
-
-declare namespace google {
-  namespace maps {
-    interface MapOptions {
-      center: { lat: number; lng: number };
-      zoom: number;
-      mapTypeId: string;
-      disableDefaultUI: boolean;
-      styles: any[];
-    }
-
-    class Map {
-      constructor(element: Element, options: MapOptions);
-      panTo(latLng: { lat: number; lng: number }): void;
-      setZoom(zoom: number): void;
-      fitBounds(bounds: any): void;
-    }
-
-    class DirectionsRenderer {
-      constructor(options: any);
-      setDirections(result: any): void;
-    }
-
-    class Marker {
-      constructor(options: any);
-      setPosition(position: { lat: number; lng: number }): void;
-      addListener(event: string, handler: () => void): void;
-    }
-
-    class InfoWindow {
-      constructor(options: any);
-      open(map: Map, anchor?: Marker | null): void;
-    }
-
-    class DirectionsService {
-      route(request: any, callback: (result: any, status: any) => void): void;
-    }
-
-    class LatLng {
-      constructor(lat: number, lng: number);
-    }
-
-    enum TravelMode {
-      DRIVING = "DRIVING",
-    }
-
-    enum DirectionsStatus {
-      OK = "OK",
-    }
-
-    type DirectionsWaypoint = {
-      location: LatLng | string;
-      stopover: boolean;
-    };
-
-    const SymbolPath: {
-      CIRCLE: number;
-      FORWARD_CLOSED_ARROW: number;
-    };
-  }
-}
-
-declare global {
-  interface Window {
-    google: any;
-    initMap?: () => void;
-  }
-}
+import { useEffect, useState, useMemo, useCallback } from "react";
+import { useRouter } from "next/navigation";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
+type ShipmentType = "collection" | "delivery";
+type DeliveryShift = "morning" | "afternoon" | "evening" | "night";
+
 interface Order {
-  _id: string;
-  id: number;
-  OwnerRef: string;
   pickupAddress: string;
   deliveryAddress: string;
   deliverySelected: { lat: number; lng: number } | null;
   boxQuantity: number;
   clientName: string;
-  shipmentType: string;
-  clientPhoneNumber: string | number;
-  status: string;
-  driverAllocated: boolean;
-  createdAt: string;
-  updatedAt: string;
-  deliveryShift: "morning" | "afternoon" | "evening" | "night";
+  shipmentType: ShipmentType;
+  clientPhoneNumber: string;
+  deliveryShift: DeliveryShift;
   note: string;
-  __v: number;
 }
 
-type OrderStatus = "pending" | "in_transit" | "delivered";
-type OptimizeState = "idle" | "loading" | "done" | "error";
+interface FormState {
+  shipmentType: ShipmentType;
+  capacity: string;
+  shift: DeliveryShift;
+}
+
+type SubmitPhase = "idle" | "calculating" | "done";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const WAREHOUSE = {
-  address: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-  lat: 52.3892183,
-  lng: 4.6606146,
+const WAREHOUSE = "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands";
+
+const SHIFT_CONFIG: Record<
+  DeliveryShift,
+  {
+    label: string;
+    hours: string;
+    emoji: string;
+    color: string;
+    bg: string;
+    border: string;
+  }
+> = {
+  morning: {
+    label: "Morning",
+    hours: "06:00AM – 12:00PM",
+    emoji: "🌅",
+    color: "text-amber-700",
+    bg: "bg-amber-50",
+    border: "border-amber-200",
+  },
+  afternoon: {
+    label: "Afternoon",
+    hours: "12:00PM – 18:00PM",
+    emoji: "☀️",
+    color: "text-orange-700",
+    bg: "bg-orange-50",
+    border: "border-orange-200",
+  },
+  evening: {
+    label: "Evening",
+    hours: "18:00PM – 12:00AM",
+    emoji: "🌆",
+    color: "text-purple-700",
+    bg: "bg-purple-50",
+    border: "border-purple-200",
+  },
+  night: {
+    label: "Night",
+    hours: "12:00AM – 06:00AM",
+    emoji: "🌙",
+    color: "text-slate-700",
+    bg: "bg-slate-100",
+    border: "border-slate-300",
+  },
 };
 
-const SHIFT_COLORS: Record<string, string> = {
-  morning: "#f59e0b",
-  afternoon: "#3b82f6",
-  evening: "#8b5cf6",
-  night: "#64748b",
-};
+// ─── Smart default shift ──────────────────────────────────────────────────────
 
-// ─── Mock Orders ──────────────────────────────────────────────────────────────
-
-const MOCK_ORDERS: Order[] = [
-  {
-    deliverySelected: {
-      lat: 52.41684859999999,
-      lng: 4.822424199999999,
-    },
-    _id: "6a342f20ab4672285ed1b6d3",
-    id: 1,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 545545544,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Westhavenweg 120, 1042 BB Amsterdam, Netherlands",
-    shipmentType: "delivery",
-    boxQuantity: 43,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "afternoon",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T17:47:12.474Z",
-    updatedAt: "2026-06-18T17:47:12.474Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 52.3816888,
-      lng: 4.635539,
-    },
-    _id: "6a342f7cab4672285ed1b6d4",
-    id: 2,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 315455455,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Grote Markt 1, Haarlem, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 32,
-    driverAllocated: false,
-    status: "delivered",
-    deliveryShift: "evening",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T17:48:44.011Z",
-    updatedAt: "2026-06-18T17:48:44.011Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 51.9926677,
-      lng: 4.3626214,
-    },
-    _id: "6a342f96ab4672285ed1b6d5",
-    id: 3,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "hghgh",
-    clientPhoneNumber: 315455455,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Vulcanusweg 307, 2624 AV Delft, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 44,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "night",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T17:49:10.885Z",
-    updatedAt: "2026-06-18T17:49:10.885Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 51.92359099999999,
-      lng: 4.4843807,
-    },
-    _id: "6a342facab4672285ed1b6d6",
-    id: 4,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 545545544,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Binnenrotte 25, 3011 PV Rotterdam, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 50,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "afternoon",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T17:49:32.641Z",
-    updatedAt: "2026-06-18T17:49:32.641Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 51.4539971,
-      lng: 5.4003882,
-    },
-    _id: "6a342fcfab4672285ed1b6d7",
-    id: 5,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "hghgh",
-    clientPhoneNumber: 315455455,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Flight Forum 40, 5657 DB Eindhoven, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 55,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T17:50:07.574Z",
-    updatedAt: "2026-06-18T17:50:07.574Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 51.4393661,
-      lng: 5.4788028,
-    },
-    _id: "6a342fe4ab4672285ed1b6d8",
-    id: 6,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 315455455,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Markt 10, 5611 EB Eindhoven, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 45,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T17:50:28.651Z",
-    updatedAt: "2026-06-18T17:50:28.651Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 52.0801105,
-      lng: 4.3435356,
-    },
-    _id: "6a342ffbab4672285ed1b6d9",
-    id: 7,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 545545544,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress:
-      "Laan van Nieuw Oost-Indië 300, 2593 CE Den Haag, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 65,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "afternoon",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T17:50:51.681Z",
-    updatedAt: "2026-06-18T17:50:51.681Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 52.0781639,
-      lng: 4.3132419,
-    },
-    _id: "6a343014ab4672285ed1b6da",
-    id: 8,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 545545544,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Spuistraat 70, The Hague, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 55,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "afternoon",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T17:51:16.779Z",
-    updatedAt: "2026-06-18T17:51:16.779Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 52.1161509,
-      lng: 5.0552452,
-    },
-    _id: "6a343027ab4672285ed1b6db",
-    id: 9,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 315455455,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Atoomweg 63, 3542 AA Utrecht, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 33,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T17:51:35.942Z",
-    updatedAt: "2026-06-18T17:51:35.942Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 52.09285879999999,
-      lng: 5.1165487,
-    },
-    _id: "6a34303eab4672285ed1b6dc",
-    id: 10,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 545545544,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Oudegracht 99, 3511 AE Utrecht, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 65,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T17:51:58.122Z",
-    updatedAt: "2026-06-18T17:51:58.122Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 53.2073066,
-      lng: 6.600050299999999,
-    },
-    _id: "6a343050ab4672285ed1b6dd",
-    id: 11,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 315455455,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Bornholmstraat 50, Groningen, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 54,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T17:52:16.041Z",
-    updatedAt: "2026-06-18T17:52:16.041Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 53.2073066,
-      lng: 6.600050299999999,
-    },
-    _id: "6a343050ab4672285ed1b6de",
-    id: 12,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 315455455,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Bornholmstraat 50, Groningen, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 54,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T17:52:16.144Z",
-    updatedAt: "2026-06-18T17:52:16.144Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 53.2188849,
-      lng: 6.5658126,
-    },
-    _id: "6a343699ab4672285ed1b6df",
-    id: 13,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 545545544,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Grote Markt 5, 9712 HN Groningen, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 44,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T18:19:05.259Z",
-    updatedAt: "2026-06-18T18:19:05.259Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 51.4332582,
-      lng: 5.431146,
-    },
-    _id: "6a3436b4ab4672285ed1b6e0",
-    id: 14,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 545545544,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Hurksestraat 19, 5652 AH Eindhoven, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 55,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T18:19:32.755Z",
-    updatedAt: "2026-06-18T18:19:32.755Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 51.6903961,
-      lng: 5.2954436,
-    },
-    _id: "6a3436d0ab4672285ed1b6e1",
-    id: 15,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 545545544,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Stationsplein 1, 5211 AP 's-Hertogenbosch, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 66,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T18:20:00.395Z",
-    updatedAt: "2026-06-18T18:20:00.395Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 52.3056508,
-      lng: 4.9329768,
-    },
-    _id: "6a3436e5ab4672285ed1b6e2",
-    id: 16,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 315455455,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Keienbergweg 100, 1101 GH Amsterdam, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 34,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T18:20:21.791Z",
-    updatedAt: "2026-06-18T18:20:21.791Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 52.0889982,
-      lng: 5.100483,
-    },
-    _id: "6a343703ab4672285ed1b6e3",
-    id: 17,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 315455455,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Leidseweg 57, Utrecht, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 77,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T18:20:51.597Z",
-    updatedAt: "2026-06-18T18:20:51.597Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 52.39080310000001,
-      lng: 4.8349964,
-    },
-    _id: "6a34371aab4672285ed1b6e4",
-    id: 18,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 315455455,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Radarweg 60, 1043 NT Amsterdam, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 76,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T18:21:14.973Z",
-    updatedAt: "2026-06-18T18:21:14.973Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 52.6318715,
-      lng: 4.7506,
-    },
-    _id: "6a343743ab4672285ed1b6e5",
-    id: 19,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "hghgh",
-    clientPhoneNumber: 315455455,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Marktstraat, 1811 JP Alkmaar, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 66,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T18:21:55.283Z",
-    updatedAt: "2026-06-18T18:21:55.283Z",
-    __v: 0,
-  },
-  {
-    deliverySelected: {
-      lat: 52.169678,
-      lng: 5.349870999999999,
-    },
-    _id: "6a343764ab4672285ed1b6e6",
-    id: 20,
-    OwnerRef: "6a26b5c8681f5eb1913ca53a",
-    clientName: "Tanvir Anjum",
-    clientPhoneNumber: 315455455,
-    pickupAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-    deliveryAddress: "Neonweg 12, Amersfoort, Netherlands",
-    shipmentType: "collection",
-    boxQuantity: 66,
-    driverAllocated: false,
-    status: "pending",
-    deliveryShift: "morning",
-    note: "This is sample note1",
-    createdAt: "2026-06-18T18:22:28.152Z",
-    updatedAt: "2026-06-18T18:22:28.152Z",
-    __v: 0,
-  },
-];
-// ─── Helper: shift label ───────────────────────────────────────────────────────
-
-function shiftLabel(shift: string) {
-  return (
-    {
-      morning: "Morning",
-      afternoon: "Afternoon",
-      evening: "Evening",
-      night: "Night",
-    }[shift] ?? shift
-  );
+function getDefaultShift(): DeliveryShift {
+  const h = new Date().getHours();
+  if (h >= 6 && h < 12) return "morning";
+  if (h >= 12 && h < 18) return "afternoon";
+  if (h >= 18 && h < 24) return "evening";
+  return "night";
 }
 
-// ─── Helper: shift hours ───────────────────────────────────────────────────────
+// ─── Mock Order Pool (40 orders) ──────────────────────────────────────────────
 
-function shiftHours(shift: string) {
-  return (
-    {
-      morning: "06–14h",
-      afternoon: "12–20h",
-      evening: "16–00h",
-      night: "22–06h",
-    }[shift] ?? ""
+// const ORDER_POOl: Order[] = [
+//   /* ─ morning collection ─ */
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Grote Markt 1, 2011 RD Haarlem",
+//     deliverySelected: { lat: 52.3807, lng: 4.6333 },
+//     boxQuantity: 3,
+//     clientName: "Emma de Vries",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345601",
+//     deliveryShift: "morning",
+//     note: "Ring doorbell twice",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Pijnboomstraat 3, 2023 VK Haarlem",
+//     deliverySelected: { lat: 52.396, lng: 4.6527 },
+//     boxQuantity: 2,
+//     clientName: "Joost Laan",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345612",
+//     deliveryShift: "morning",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Planetenlaan 7, 2024 HN Haarlem",
+//     deliverySelected: { lat: 52.4078, lng: 4.6612 },
+//     boxQuantity: 4,
+//     clientName: "Roos van Dijk",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345613",
+//     deliveryShift: "morning",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Nieuwe Groenmarkt 8, 2011 WC Haarlem",
+//     deliverySelected: { lat: 52.3813, lng: 4.6361 },
+//     boxQuantity: 1,
+//     clientName: "Lisa Bos",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345611",
+//     deliveryShift: "morning",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Kinderhuisvest 3, 2011 PL Haarlem",
+//     deliverySelected: { lat: 52.3818, lng: 4.6344 },
+//     boxQuantity: 5,
+//     clientName: "Amber van Beek",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345625",
+//     deliveryShift: "morning",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Spaarndamseweg 100, 2021 BA Haarlem",
+//     deliverySelected: { lat: 52.3941, lng: 4.6278 },
+//     boxQuantity: 2,
+//     clientName: "Lotte Mulder",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345623",
+//     deliveryShift: "morning",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Molenkade 5, 2032 JX Haarlem",
+//     deliverySelected: { lat: 52.401, lng: 4.6395 },
+//     boxQuantity: 3,
+//     clientName: "Ineke Vogel",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345629",
+//     deliveryShift: "morning",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Floris van Adrichemstraat 22, 2021 Haarlem",
+//     deliverySelected: { lat: 52.387, lng: 4.646 },
+//     boxQuantity: 4,
+//     clientName: "Eva Willems",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345621",
+//     deliveryShift: "morning",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Koediefslaan 12, 2015 CJ Haarlem",
+//     deliverySelected: { lat: 52.389, lng: 4.6009 },
+//     boxQuantity: 6,
+//     clientName: "Tim Kuijpers",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345626",
+//     deliveryShift: "morning",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Nassaulaan 25, 2012 JL Haarlem",
+//     deliverySelected: { lat: 52.3845, lng: 4.6302 },
+//     boxQuantity: 3,
+//     clientName: "Jelle Vermeulen",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345634",
+//     deliveryShift: "morning",
+//     note: "Parcel locker available",
+//   },
+//   /* ─ morning delivery ─ */
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Zijlweg 40, 2013 SK Haarlem",
+//     deliverySelected: { lat: 52.3889, lng: 4.6241 },
+//     boxQuantity: 5,
+//     clientName: "Lars Bakker",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345602",
+//     deliveryShift: "morning",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Wagenweg 76, 2012 NM Haarlem",
+//     deliverySelected: { lat: 52.3852, lng: 4.638 },
+//     boxQuantity: 8,
+//     clientName: "Daan Mulder",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345604",
+//     deliveryShift: "morning",
+//     note: "Heavy package",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Frans Halsstraat 12, 2021 AK Haarlem",
+//     deliverySelected: { lat: 52.3862, lng: 4.649 },
+//     boxQuantity: 4,
+//     clientName: "Tom Visser",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345606",
+//     deliveryShift: "morning",
+//     note: "Fragile items",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Westergracht 30, 2012 HD Haarlem",
+//     deliverySelected: { lat: 52.3828, lng: 4.631 },
+//     boxQuantity: 2,
+//     clientName: "Bas Kuiper",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345608",
+//     deliveryShift: "morning",
+//     note: "Call on arrival",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Houtplein 18, 2012 DE Haarlem",
+//     deliverySelected: { lat: 52.3836, lng: 4.6351 },
+//     boxQuantity: 5,
+//     clientName: "Sander Prins",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345616",
+//     deliveryShift: "morning",
+//     note: "Doorcode 4521",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Lange Begijnestraat 9, 2011 HM Haarlem",
+//     deliverySelected: { lat: 52.3805, lng: 4.6349 },
+//     boxQuantity: 2,
+//     clientName: "Merel Vliet",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345617",
+//     deliveryShift: "morning",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Dreef 33, 2012 HR Haarlem",
+//     deliverySelected: { lat: 52.386, lng: 4.634 },
+//     boxQuantity: 3,
+//     clientName: "Westelijk Halfrond",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345632",
+//     deliveryShift: "morning",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Middenweg 55, 2033 RB Haarlem",
+//     deliverySelected: { lat: 52.404, lng: 4.642 },
+//     boxQuantity: 4,
+//     clientName: "Max van Rooij",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345638",
+//     deliveryShift: "morning",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Vondelweg 8, 2023 CD Haarlem",
+//     deliverySelected: { lat: 52.3968, lng: 4.6493 },
+//     boxQuantity: 9,
+//     clientName: "Ben van der Berg",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345640",
+//     deliveryShift: "morning",
+//     note: "Ground floor only",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Kruisweg 3, 2131 CR Hoofddorp",
+//     deliverySelected: { lat: 52.3055, lng: 4.686 },
+//     boxQuantity: 5,
+//     clientName: "Omar Saleh",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345636",
+//     deliveryShift: "morning",
+//     note: "",
+//   },
+//   /* ─ afternoon collection ─ */
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Kleverlaan 99, 2023 JB Haarlem",
+//     deliverySelected: { lat: 52.3978, lng: 4.6512 },
+//     boxQuantity: 2,
+//     clientName: "Sofia Jansen",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345603",
+//     deliveryShift: "afternoon",
+//     note: "Leave at front door",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Schotersingel 30, 2021 GH Haarlem",
+//     deliverySelected: { lat: 52.3943, lng: 4.6455 },
+//     boxQuantity: 4,
+//     clientName: "Noor van den Berg",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345605",
+//     deliveryShift: "afternoon",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Rijksstraatweg 14, 2024 EB Haarlem",
+//     deliverySelected: { lat: 52.4051, lng: 4.658 },
+//     boxQuantity: 1,
+//     clientName: "Fleur Smit",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345607",
+//     deliveryShift: "afternoon",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Duinwijcklaan 5, 2015 HA Haarlem",
+//     deliverySelected: { lat: 52.3905, lng: 4.596 },
+//     boxQuantity: 3,
+//     clientName: "Anne Meijer",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345609",
+//     deliveryShift: "afternoon",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Binnenweg 42, 2101 JJ Heemstede",
+//     deliverySelected: { lat: 52.353, lng: 4.6172 },
+//     boxQuantity: 3,
+//     clientName: "Iris Vermeer",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345615",
+//     deliveryShift: "afternoon",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Zandvoortselaan 33, 2100 AA Heemstede",
+//     deliverySelected: { lat: 52.36, lng: 4.589 },
+//     boxQuantity: 1,
+//     clientName: "Julia Brouwer",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345619",
+//     deliveryShift: "afternoon",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Toolenburgerplas 10, 2132 MN Hoofddorp",
+//     deliverySelected: { lat: 52.2998, lng: 4.698 },
+//     boxQuantity: 3,
+//     clientName: "Layla van der Zee",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345637",
+//     deliveryShift: "afternoon",
+//     note: "Call 30 min before",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Nieuwe Kerksplein 1, 2011 MG Haarlem",
+//     deliverySelected: { lat: 52.3808, lng: 4.6339 },
+//     boxQuantity: 4,
+//     clientName: "Vera Visser",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345633",
+//     deliveryShift: "afternoon",
+//     note: "",
+//   },
+//   /* ─ afternoon delivery ─ */
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Tempeliersstraat 22, 2012 EN Haarlem",
+//     deliverySelected: { lat: 52.3816, lng: 4.637 },
+//     boxQuantity: 7,
+//     clientName: "Pieter de Groot",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345610",
+//     deliveryShift: "afternoon",
+//     note: "No elevator",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Heemsteedse Dreef 70, 2102 KR Heemstede",
+//     deliverySelected: { lat: 52.3555, lng: 4.6204 },
+//     boxQuantity: 6,
+//     clientName: "Koen Hendriks",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345614",
+//     deliveryShift: "afternoon",
+//     note: "Bulky items",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Raaks 1, 2011 LS Haarlem",
+//     deliverySelected: { lat: 52.3811, lng: 4.6348 },
+//     boxQuantity: 6,
+//     clientName: "Robin de Graaf",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345624",
+//     deliveryShift: "afternoon",
+//     note: "Leave with neighbor",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Klokhuisplein 6, 2011 HK Haarlem",
+//     deliverySelected: { lat: 52.381, lng: 4.6358 },
+//     boxQuantity: 5,
+//     clientName: "Niels de Boer",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345622",
+//     deliveryShift: "afternoon",
+//     note: "Signature required",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Cronjéstraat 15, 2042 AE Zandvoort",
+//     deliverySelected: { lat: 52.3713, lng: 4.5328 },
+//     boxQuantity: 7,
+//     clientName: "Hugo van Leeuwen",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345618",
+//     deliveryShift: "afternoon",
+//     note: "Coastal delivery",
+//   },
+//   /* ─ evening collection & delivery ─ */
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Garenkokerskade 18, 2031 EM Haarlem",
+//     deliverySelected: { lat: 52.3999, lng: 4.6437 },
+//     boxQuantity: 7,
+//     clientName: "Dagmar Laan",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345631",
+//     deliveryShift: "evening",
+//     note: "Warehouse entrance round back",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Elswoutslaan 1, 2051 AB Overveen",
+//     deliverySelected: { lat: 52.392, lng: 4.588 },
+//     boxQuantity: 8,
+//     clientName: "Fenna Dekker",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345627",
+//     deliveryShift: "evening",
+//     note: "Through gate on left",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Veerpolder 5, 2031 XA Haarlem",
+//     deliverySelected: { lat: 52.402, lng: 4.6488 },
+//     boxQuantity: 6,
+//     clientName: "Hanna de Wit",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345635",
+//     deliveryShift: "evening",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Bloemendaalseweg 100, 2061 AG Bloemendaal",
+//     deliverySelected: { lat: 52.4002, lng: 4.57 },
+//     boxQuantity: 2,
+//     clientName: "Cas van Vliet",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345628",
+//     deliveryShift: "evening",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Spekstraat 8, 2011 SW Haarlem",
+//     deliverySelected: { lat: 52.3801, lng: 4.6357 },
+//     boxQuantity: 4,
+//     clientName: "Sven Hendriks",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345630",
+//     deliveryShift: "evening",
+//     note: "",
+//   },
+//   /* ─ night collection & delivery ─ */
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Westelijk Halfrond 42, 2033 GG Haarlem",
+//     deliverySelected: { lat: 52.403, lng: 4.6275 },
+//     boxQuantity: 3,
+//     clientName: "Boris Akkerman",
+//     shipmentType: "collection",
+//     clientPhoneNumber: "+31612345632",
+//     deliveryShift: "night",
+//     note: "",
+//   },
+//   {
+//     pickupAddress: WAREHOUSE,
+//     deliveryAddress: "Oudeweg 60, 2031 CC Haarlem",
+//     deliverySelected: { lat: 52.3997, lng: 4.6441 },
+//     boxQuantity: 4,
+//     clientName: "Mark Dijkstra",
+//     shipmentType: "delivery",
+//     clientPhoneNumber: "+31612345620",
+//     deliveryShift: "night",
+//     note: "Near the park",
+//   },
+// ];
+
+// ─── Greedy packing filter ────────────────────────────────────────────────────
+
+function greedyPack(
+  pool: Order[],
+  type: ShipmentType,
+  shift: DeliveryShift,
+  cap: number,
+): Order[] {
+  const candidates = pool.filter(
+    (o) => o.shipmentType === type && o.deliveryShift === shift,
   );
-}
-
-// ─── Order Card ───────────────────────────────────────────────────────────────
-
-function OrderCard({
-  order,
-  seq,
-  status,
-  isActive,
-  onClick,
-}: {
-  order: Order;
-  seq: number;
-  status: OrderStatus;
-  isActive: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      className={`order-card ${isActive ? "order-card-active" : ""} status-${status}`}
-      onClick={onClick}
-    >
-      <div className="oc-seq-col">
-        <span className="oc-seq">{seq}</span>
-        <span
-          className="oc-shift-pip"
-          style={{ background: SHIFT_COLORS[order.deliveryShift] ?? "#94a3b8" }}
-          title={shiftLabel(order.deliveryShift)}
-        />
-      </div>
-
-      <div className="oc-body">
-        <div className="oc-row-top">
-          <span className="oc-name">{order.clientName}</span>
-          <span className={`oc-status-badge oc-status-${status}`}>
-            {status === "delivered"
-              ? "Done"
-              : status === "in_transit"
-                ? "Active"
-                : "Pending"}
-          </span>
-        </div>
-
-        <p className="oc-address">{order.deliveryAddress}</p>
-
-        <div className="oc-chips">
-          <span className="oc-chip oc-chip-box">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M21 8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16V8z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M12 22V12M3.27 6.96L12 12l8.73-5.04"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-            </svg>
-            {order.boxQuantity} {order.boxQuantity === 1 ? "box" : "boxes"}
-          </span>
-          <span
-            className="oc-chip oc-chip-shift"
-            style={{
-              borderColor: SHIFT_COLORS[order.deliveryShift] + "55",
-              color: SHIFT_COLORS[order.deliveryShift],
-            }}
-          >
-            {shiftLabel(order.deliveryShift)} ·{" "}
-            {shiftHours(order.deliveryShift)}
-          </span>
-          <span className="oc-chip">{order.shipmentType}</span>
-        </div>
-
-        {order.note ? (
-          <p className="oc-note">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M12 8v4l3 3"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-              />
-              <circle
-                cx="12"
-                cy="12"
-                r="9"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-            </svg>
-            {order.note}
-          </p>
-        ) : null}
-      </div>
-
-      {status === "delivered" && (
-        <span className="oc-done-icon">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <circle cx="7" cy="7" r="7" fill="#22c55e" />
-            <path
-              d="M3.5 7l2.5 2.5 4.5-5"
-              stroke="#fff"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
-      )}
-    </button>
-  );
-}
-
-// ─── Stats bar ────────────────────────────────────────────────────────────────
-
-function StatsBar({
-  orders,
-  statuses,
-}: {
-  orders: Order[];
-  statuses: Record<number, OrderStatus>;
-}) {
-  const completed = orders.filter((o) => statuses[o.id] === "delivered").length;
-  const inProgress = orders.filter(
-    (o) => statuses[o.id] === "in_transit",
-  ).length;
-  const totalBoxes = orders.reduce((s, o) => s + o.boxQuantity, 0);
-  const pct = Math.round((completed / orders.length) * 100);
-
-  return (
-    <div className="stats-bar">
-      <div className="stat">
-        <span className="stat-val">
-          {completed}/{orders.length}
-        </span>
-        <span className="stat-lbl">Delivered</span>
-      </div>
-      <div className="stat-sep" />
-      <div className="stat">
-        <span className="stat-val">{inProgress}</span>
-        <span className="stat-lbl">En Route</span>
-      </div>
-      <div className="stat-sep" />
-      <div className="stat">
-        <span className="stat-val">{totalBoxes}</span>
-        <span className="stat-lbl">Total Boxes</span>
-      </div>
-      <div className="stat-progress">
-        <div className="stat-progress-fill" style={{ width: `${pct}%` }} />
-      </div>
-      <span className="stat-pct">{pct}%</span>
-    </div>
-  );
-}
-
-// ─── Main Page ────────────────────────────────────────────────────────────────
-
-export default function RouteOptimizationPage() {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstance = useRef<google.maps.Map | null>(null);
-  const dirRenderer = useRef<google.maps.DirectionsRenderer | null>(null);
-  const driverMarker = useRef<google.maps.Marker | null>(null);
-  const warehouseMarker = useRef<google.maps.Marker | null>(null);
-  const watchId = useRef<number | null>(null);
-  const mapsLoaded = useRef(false);
-
-  const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
-  const [statuses, setStatuses] = useState<Record<number, OrderStatus>>(() =>
-    Object.fromEntries(MOCK_ORDERS.map((o) => [o.id, o.status as OrderStatus])),
-  );
-  const [optimizeState, setOptimizeState] = useState<OptimizeState>("idle");
-  const [activeOrderId, setActiveOrderId] = useState<number | null>(null);
-  const [driverPos, setDriverPos] = useState<{
-    lat: number;
-    lng: number;
-  } | null>(null);
-  const [geoError, setGeoError] = useState<string>("");
-  const [selectedId, setSelectedId] = useState<number | null>(null);
-
-  // ── Initialise map after Google Maps script loads ──────────────────────────
-
-  const initMap = useCallback(() => {
-    if (!mapRef.current || !window.google || mapsLoaded.current) return;
-    mapsLoaded.current = true;
-
-    const map = new window.google.maps.Map(mapRef.current, {
-      center: { lat: WAREHOUSE.lat, lng: WAREHOUSE.lng },
-      zoom: 12,
-      mapTypeId: "roadmap",
-      disableDefaultUI: false,
-      styles: [
-        {
-          featureType: "poi",
-          elementType: "labels",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "transit",
-          elementType: "labels",
-          stylers: [{ visibility: "off" }],
-        },
-      ],
-    });
-
-    mapInstance.current = map;
-
-    // Warehouse marker
-    warehouseMarker.current = new window.google.maps.Marker({
-      position: { lat: WAREHOUSE.lat, lng: WAREHOUSE.lng },
-      map,
-      title: "Warehouse — " + WAREHOUSE.address,
-      icon: {
-        path: window.google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-        scale: 7,
-        fillColor: "#1e40af",
-        fillOpacity: 1,
-        strokeColor: "#fff",
-        strokeWeight: 2,
-        rotation: 0,
-      },
-      zIndex: 200,
-    });
-
-    const iw = new window.google.maps.InfoWindow({
-      content: `<div style="font:600 13px 'DM Sans',sans-serif;color:#0f172a;padding:4px 2px">
-        🏭 Warehouse<br/><span style="font-weight:400;font-size:11px;color:#64748b">${WAREHOUSE.address}</span>
-      </div>`,
-    });
-
-    const warehouseMarkerInstance = warehouseMarker.current!;
-    warehouseMarkerInstance.addListener("click", () =>
-      iw.open(map, warehouseMarkerInstance),
-    );
-
-    // Directions renderer
-    dirRenderer.current = new window.google.maps.DirectionsRenderer({
-      map,
-      suppressMarkers: false,
-      polylineOptions: {
-        strokeColor: "#1e40af",
-        strokeWeight: 4,
-        strokeOpacity: 0.85,
-      },
-    });
-  }, []);
-
-  // ── Driver marker ──────────────────────────────────────────────────────────
-
-  const updateDriverMarker = useCallback((lat: number, lng: number) => {
-    if (!mapInstance.current || !window.google) return;
-
-    const pos = { lat, lng };
-
-    if (!driverMarker.current) {
-      const marker = new window.google.maps.Marker({
-        position: pos,
-        map: mapInstance.current,
-        title: "Your location",
-        icon: {
-          path: window.google.maps.SymbolPath.CIRCLE,
-          scale: 10,
-          fillColor: "#2563eb",
-          fillOpacity: 1,
-          strokeColor: "#fff",
-          strokeWeight: 3,
-        },
-        zIndex: 300,
-      });
-
-      driverMarker.current = marker;
-
-      const driverIw = new window.google.maps.InfoWindow({
-        content: `<div style="font:600 13px 'DM Sans',sans-serif;color:#1e40af">🚚 You are here</div>`,
-      });
-      marker.addListener("click", () =>
-        driverIw.open(mapInstance.current, marker),
-      );
-    } else {
-      driverMarker.current.setPosition(pos);
+  const result: Order[] = [];
+  let used = 0;
+  for (const o of candidates) {
+    if (used + o.boxQuantity <= cap) {
+      result.push(o);
+      used += o.boxQuantity;
     }
+  }
+  return result;
+}
+
+// ─── Tiny icons ───────────────────────────────────────────────────────────────
+
+const IcoTruck = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M3 17V7a1 1 0 011-1h10a1 1 0 011 1v10M3 17h12M3 17a2 2 0 104 0M15 17a2 2 0 104 0M15 10h3l3 3v4h-2"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+const IcoBox = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M21 8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16V8z"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M12 22V12M3.27 6.96L12 12l8.73-5.04"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    />
+  </svg>
+);
+const IcoClock = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
+    <path
+      d="M12 7v5l3 3"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+const IcoChevron = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path
+      d="M4 6l4 4 4-4"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+const IcoRoute = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M3 12h18M3 6h6M15 6h6M3 18h6M15 18h6"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+const IcoSpin = () => (
+  <svg
+    className="animate-spin"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <circle
+      cx="12"
+      cy="12"
+      r="10"
+      stroke="rgba(255,255,255,.3)"
+      strokeWidth="3"
+    />
+    <path
+      d="M12 2a10 10 0 0110 10"
+      stroke="white"
+      strokeWidth="3"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+const IcoCheck = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path
+      d="M3 8l4 4 6-7"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+const IcoAlert = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+const IcoNav = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M3 11l19-9-9 19-2-8-8-2z"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+// ─── Main component ───────────────────────────────────────────────────────────
+
+export default function GetRoutePage() {
+  const ORDER_POOL: Order[] = [];
+  const [orders, setOrders] = useState(ORDER_POOL);
+  const router = useRouter();
+  const loadInitialOrderData = async () => {
+    const result = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/routes/initial",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      },
+    );
+    const data = await result.json();
+    if (data.length == 0) {
+      router.push("/new-shipment");
+    }
+    if (result.ok) {
+      setOrders(data);
+    } else {
+      alert("Something Went Wrong");
+    }
+  };
+
+  // ── Form state ──────────────────────────────────────────────────────────────
+  const [form, setForm] = useState<FormState>({
+    shipmentType: "delivery",
+    capacity: "240",
+    shift: "morning",
+  });
+  const [capacityErr, setCapacityErr] = useState("");
+
+  // ── Submit state ────────────────────────────────────────────────────────────
+  const [phase, setPhase] = useState<SubmitPhase>("idle");
+  const [results, setResults] = useState<Order[] | null>(null);
+  const [usedBoxes, setUsedBoxes] = useState(0);
+
+  // ── Smart default shift ─────────────────────────────────────────────────────
+  useEffect(() => {
+    loadInitialOrderData();
+    setForm((prev) => ({ ...prev, shift: getDefaultShift() }));
   }, []);
 
-  // ── Geolocation ────────────────────────────────────────────────────────────
+  // ── Derived helpers ─────────────────────────────────────────────────────────
+  const parsedCap = parseInt(form.capacity, 10);
+  const capValid =
+    form.capacity !== "" &&
+    !isNaN(parsedCap) &&
+    parsedCap >= 1 &&
+    parsedCap <= 999;
 
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      setGeoError("Geolocation is not supported by this browser.");
+  const poolStats = useMemo(() => {
+    const m = orders.filter(
+      (o) =>
+        o.shipmentType === form.shipmentType && o.deliveryShift === form.shift,
+    );
+    return {
+      count: m.length,
+      totalBoxes: m.reduce((s, o) => s + o.boxQuantity, 0),
+    };
+  }, [form.shipmentType, form.shift]);
+
+  const currentShift = SHIFT_CONFIG[form.shift];
+
+  // ── Handlers ────────────────────────────────────────────────────────────────
+  const resetResults = useCallback(() => {
+    setPhase("idle");
+    setResults(null);
+    setUsedBoxes(0);
+  }, []);
+
+  const handleCapacity = (v: string) => {
+    setForm((p) => ({ ...p, capacity: v }));
+    resetResults();
+    const n = parseInt(v, 10);
+    if (v === "" || isNaN(n) || n < 1) {
+      setCapacityErr("Enter a number between 1 and 999.");
       return;
     }
+    if (n > 999) {
+      setCapacityErr("Maximum capacity is 999.");
+      return;
+    }
+    setCapacityErr("");
+  };
 
-    watchId.current = navigator.geolocation.watchPosition(
-      (pos) => {
-        // const { latitude: lat, longitude: lng } = pos.coords;
+  const handleSubmit = () => {
+    if (!capValid) {
+      setCapacityErr("Enter a valid capacity first.");
+      return;
+    }
+    setPhase("calculating");
+    setResults(null);
 
-        const lat = 52.389015197753906;
-        const lng = 4.660130023956299;
-        setDriverPos({ lat, lng });
-        setGeoError("");
-        updateDriverMarker(lat, lng);
-      },
-      (err) => {
-        setGeoError(
-          `Location unavailable (${err.message}). Using warehouse as fallback.`,
-        );
-        // Fallback: place driver marker at warehouse
-        updateDriverMarker(WAREHOUSE.lat, WAREHOUSE.lng);
-      },
-      { enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 },
+    const filtered = greedyPack(
+      orders,
+      form.shipmentType,
+      form.shift,
+      parsedCap,
     );
+    const boxes = filtered.reduce((s, o) => s + o.boxQuantity, 0);
+    setResults(filtered);
+    setUsedBoxes(boxes);
+    setPhase("done");
+    // In production:
+    // sessionStorage.setItem("routeOrders", JSON.stringify(filtered));
+    // router.push("/route-optimization");
+  };
 
-    return () => {
-      if (watchId.current !== null)
-        navigator.geolocation.clearWatch(watchId.current);
-    };
-  }, [updateDriverMarker]);
+  // ── Live clock display ──────────────────────────────────────────────────────
+  const [clock, setClock] = useState("");
+  useEffect(() => {
+    const tick = () =>
+      setClock(
+        new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      );
+    tick();
+    const id = setInterval(tick, 10000);
+    return () => clearInterval(id);
+  }, []);
 
-  // ── Route Optimisation ─────────────────────────────────────────────────────
-
-  const handleOptimize = useCallback(async () => {
-    if (!window.google || !mapInstance.current || !dirRenderer.current) return;
-
-    setOptimizeState("loading");
-
-    const directionsService = await new window.google.maps.DirectionsService();
-
-    const waypoints: google.maps.DirectionsWaypoint[] = orders
-      .filter((o) => o.deliverySelected)
-      .map((o) => ({
-        location: new window.google.maps.LatLng(
-          o.deliverySelected!.lat,
-          o.deliverySelected!.lng,
-        ),
-
-        stopover: true,
-      }));
-    await directionsService.route(
-      {
-        origin: WAREHOUSE.address,
-        destination: WAREHOUSE.address,
-        waypoints,
-        optimizeWaypoints: true,
-        travelMode: window.google.maps.TravelMode.DRIVING,
-      },
-      (
-        result: {
-          routes: {
-            [x: string]: number[];
-            bounds: any;
-          }[];
-        },
-        status: any,
-      ) => {
-        if (status === window.google.maps.DirectionsStatus.OK && result) {
-          dirRenderer.current!.setDirections(result);
-          // Re-order the sidebar list to match optimised sequence
-          const optimisedIndices: number[] = result.routes[0].waypoint_order;
-          const reordered = optimisedIndices.map((i) => orders[i]);
-          setOrders(reordered);
-
-          // Fit map to route bounds
-          const bounds = result.routes[0].bounds;
-          mapInstance.current!.fitBounds(bounds);
-
-          setOptimizeState("done");
-        } else {
-          console.error("Directions request failed:", status);
-          setOptimizeState("error");
-        }
-      },
-    );
-  }, [orders]);
-
-  // ── Mark stop complete / active ────────────────────────────────────────────
-
-  const markComplete = async (id: number, mainId: string) => {
+  // ─────────────────────────────────────────────────────────────────────────────
+  const handleGetOptimizedRoute = async () => {
+    console.log(results);
+    localStorage.setItem("OptimizedRouteShipments", "");
     const result = await fetch(
-      process.env.NEXT_PUBLIC_BACKEND_URL + `/api/shipments/${mainId}`,
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/routes/start",
       {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ status: "delivered" }),
+        body: JSON.stringify(results),
       },
     );
     if (result.ok) {
-      localStorage.setItem("initialShipments", "");
-    }
-    setStatuses((prev) => ({ ...prev, [id]: "delivered" }));
-    if (activeOrderId === id) setActiveOrderId(null);
-  };
-
-  const startDelivery = (id: number) => {
-    setStatuses((prev) => {
-      const next = { ...prev };
-      // Only one active at a time
-      Object.keys(next).forEach((k) => {
-        if (next[+k] === "in_transit") next[+k] = "pending";
-      });
-      next[id] = "in_transit";
-      return next;
-    });
-    setActiveOrderId(id);
-
-    // Pan map to this order's location
-    const order = orders.find((o) => o.id === id);
-    if (order?.deliverySelected && mapInstance.current) {
-      mapInstance.current.panTo(order.deliverySelected);
-      mapInstance.current.setZoom(15);
+      router.push("/optimized-route");
     }
   };
-
-  const completedCount = Object.values(statuses).filter(
-    (s) => s === "delivered",
-  ).length;
-
   return (
-    <>
-      <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API}`}
-        strategy="afterInteractive"
-        onLoad={initMap}
-      />
-
-      <PageStyles />
-
-      <div className="ro-root">
-        {/* ═══════════════════════════════════════
-            SIDEBAR
-        ═══════════════════════════════════════ */}
-        <aside className="ro-sidebar">
-          {/* Header */}
-          <div className="sidebar-header">
-            {/* <div className="sidebar-logo">
-              <svg viewBox="0 0 28 28" fill="none" width="26" height="26">
-                <rect width="28" height="28" rx="7" fill="#1e40af" />
+    <div className="min-h-screen bg-[#0b1220] flex flex-col">
+      {/* ── Sticky nav ─────────────────────────────────────────────────────── */}
+      <header className="sticky top-0 z-30  backdrop-blur-md border-b border-slate-200">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+          {/* Logo */}
+          {/* <a
+            href="/"
+            className="flex items-center gap-2.5 group outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg"
+          >
+            <div className="w-[30px] h-[30px] rounded-[8px] bg-blue-700 flex items-center justify-center shadow-sm shadow-blue-900/30 group-hover:shadow-md transition-shadow">
+              <svg viewBox="0 0 28 28" fill="none" width="17" height="17">
                 <path
-                  d="M6 14h10M12 10l4 4-4 4"
+                  d="M5 14h11M11 10l4 4-4 4"
                   stroke="#fff"
-                  strokeWidth="2"
+                  strokeWidth="2.2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-                <circle cx="20" cy="14" r="3" fill="#60a5fa" />
+                <circle cx="20" cy="14" r="3" fill="#93c5fd" />
               </svg>
-              <span className="sidebar-logo-text">ShipSwift</span>
-            </div> */}
-
-            <div className="sidebar-meta">
-              <h1 className="sidebar-title">Today&apos;s Route</h1>
-              <p className="sidebar-subtitle">
-                {orders.length} stops · Haarlem area
-              </p>
             </div>
+            <span className="text-[17px] font-[800] tracking-tight text-slate-900 leading-none">
+              ShipSwift
+            </span>
+          </a> */}
 
-            {/* Geo status */}
-            <div
-              className={`geo-status ${geoError ? "geo-err" : driverPos ? "geo-ok" : "geo-loading"}`}
-            >
-              <span className="geo-pip" />
-              <span className="geo-text">
-                {geoError
-                  ? "Location unavailable"
-                  : driverPos
-                    ? `GPS active · ${driverPos.lat.toFixed(4)}, ${driverPos.lng.toFixed(4)}`
-                    : "Acquiring GPS…"}
+          {/* Live context pills */}
+          {/* <div className="flex items-center gap-2 text-xs font-semibold select-none"> */}
+          <span className="hidden sm:flex items-center gap-1 text-slate-400">
+            <IcoClock /> {clock}
+          </span>
+          <span className="hidden sm:block text-slate-200">·</span>
+          <span
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border ${currentShift.color} ${currentShift.bg} ${currentShift.border}`}
+          >
+            <span
+              className={`w-1.5 h-1.5 rounded-full bg-current ${phase === "idle" ? "animate-pulse" : ""}`}
+            />
+            {currentShift.emoji} {currentShift.label}
+          </span>
+          {/* </div> */}
+        </div>
+      </header>
+
+      {/* ── Page body ──────────────────────────────────────────────────────── */}
+      <main className="flex-1 flex flex-col items-center px-4 sm:px-6 py-10 sm:py-14 gap-6">
+        <div className="w-full max-w-xl">
+          {/* Page heading */}
+          <div className="mb-7">
+            <p className="text-[11px] font-bold tracking-[0.12em] text-blue-600 uppercase mb-2 select-none">
+              Route Configuration
+            </p>
+            <h1 className="text-2xl sm:text-[28px] font-extrabold text-slate-300 tracking-tight leading-tight">
+              Configure your run
+            </h1>
+            <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+              Set your vehicle&apos;s capacity and target shift. ShipSwift packs
+              the best possible order list and routes your day.
+            </p>
+          </div>
+
+          {/* ════════════════ FORM CARD ════════════════ */}
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            {/* Card header */}
+            <div className="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between gap-3 flex-wrap">
+              <div className="flex items-center gap-2 text-sm font-semibold text-slate-600">
+                <IcoTruck /> Vehicle &amp; Shift
+              </div>
+              <span className="text-xs text-slate-400 font-medium">
+                {orders.length} orders in pool
               </span>
             </div>
 
-            {/* Optimize button */}
-            <button
-              className={`btn-optimize ${optimizeState === "loading" ? "btn-loading" : ""} ${optimizeState === "done" ? "btn-done" : ""}`}
-              onClick={handleOptimize}
-              disabled={optimizeState === "loading"}
-            >
-              {optimizeState === "loading" ? (
-                <>
-                  <svg
-                    className="spin-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    width="16"
-                    height="16"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="rgba(255,255,255,0.35)"
-                      strokeWidth="3"
-                    />
-                    <path
-                      d="M12 2a10 10 0 0110 10"
-                      stroke="#fff"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  Optimizing…
-                </>
-              ) : optimizeState === "done" ? (
-                <>
-                  <svg viewBox="0 0 16 16" fill="none" width="16" height="16">
-                    <path
-                      d="M3 8l3.5 3.5 6.5-7"
-                      stroke="#fff"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  Route Optimized
-                </>
-              ) : (
-                <>
-                  <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
-                    <path
-                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                      stroke="#fff"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  Optimize &amp; Start Route
-                </>
-              )}
-            </button>
-
-            {optimizeState === "error" && (
-              <p className="optimize-error">
-                ⚠ Route request failed. Check your API key and quota.
-              </p>
-            )}
-
-            {/* Stats */}
-            <StatsBar orders={orders} statuses={statuses} />
-          </div>
-
-          {/* Scrollable order list */}
-          <div className="order-list">
-            {orders.map((order, idx) => {
-              const status = statuses[order.id];
-              return (
-                <div key={order.id} className="order-list-item">
-                  <OrderCard
-                    order={order}
-                    seq={idx + 1}
-                    status={status}
-                    isActive={selectedId === order.id}
-                    onClick={() =>
-                      setSelectedId(order.id === selectedId ? null : order.id)
-                    }
-                  />
-
-                  {/* Expanded actions */}
-                  {selectedId === order.id && (
-                    <div className="order-actions">
-                      <div className="order-detail-row">
-                        <span className="od-icon">📞</span>
-                        <a
-                          href={`tel:${order.clientPhoneNumber}`}
-                          className="od-link"
+            <div className="p-6 sm:p-7 space-y-7">
+              {/* ── Shipment Type ─────────────────────────── */}
+              <fieldset>
+                <legend className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-3">
+                  <span className="text-blue-600">
+                    <IcoTruck />
+                  </span>
+                  Shipment type
+                </legend>
+                <div className="grid grid-cols-2 gap-3" role="radiogroup">
+                  {(["delivery", "collection"] as ShipmentType[]).map(
+                    (type) => {
+                      const active = form.shipmentType === type;
+                      return (
+                        <button
+                          key={type}
+                          type="button"
+                          role="radio"
+                          aria-checked={active}
+                          onClick={() => {
+                            setForm((p) => ({ ...p, shipmentType: type }));
+                            resetResults();
+                          }}
+                          className={[
+                            "relative flex flex-col items-center gap-2.5 py-5 px-4 rounded-xl border-[1.5px]",
+                            "text-sm font-semibold transition-all duration-150 cursor-pointer select-none",
+                            "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1",
+                            active
+                              ? "border-blue-600 bg-blue-700 text-white shadow-md shadow-blue-800/20"
+                              : "border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:bg-slate-50",
+                          ].join(" ")}
                         >
-                          {order.clientPhoneNumber}
-                        </a>
-                      </div>
-                      <div className="order-detail-row">
-                        <span className="od-icon">📍</span>
-                        <span className="od-text">{order.deliveryAddress}</span>
-                      </div>
-
-                      <div className="order-action-btns">
-                        {status === "pending" && (
-                          <>
-                            <button
-                              className="oa-btn oa-start"
-                              onClick={() => {
-                                startDelivery(order.id);
-                              }}
-                            >
-                              Start Delivery
-                            </button>
-                            <a
-                              className="oa-btn oa-nav"
-                              href={`https://maps.google.com/maps?daddr=${encodeURIComponent(order.deliveryAddress)}&travelmode=driving`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              Navigate
-                            </a>
-                          </>
-                        )}
-                        {status === "in_transit" && (
-                          <>
-                            <button
-                              className="oa-btn oa-complete"
-                              onClick={() => {
-                                markComplete(order.id, order._id);
-                              }}
-                            >
-                              Mark Complete
-                            </button>
-                            <a
-                              className="oa-btn oa-nav"
-                              href={`https://maps.google.com/maps?daddr=${encodeURIComponent(order.deliveryAddress)}&travelmode=driving`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              Navigate
-                            </a>
-                          </>
-                        )}
-                        {status === "delivered" && (
-                          <span className="oa-completed-msg">✓ Delivered</span>
-                        )}
-                      </div>
-                    </div>
+                          <span
+                            className={
+                              active ? "text-blue-200" : "text-slate-300"
+                            }
+                          >
+                            {type === "delivery" ? (
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                              >
+                                <path
+                                  d="M3 17V7a1 1 0 011-1h10a1 1 0 011 1v10M3 17h12M3 17a2 2 0 104 0M15 17a2 2 0 104 0M15 10h3l3 3v4h-2"
+                                  stroke="currentColor"
+                                  strokeWidth="1.8"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </svg>
+                            ) : (
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                              >
+                                <path
+                                  d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"
+                                  stroke="currentColor"
+                                  strokeWidth="1.8"
+                                  strokeLinecap="round"
+                                />
+                              </svg>
+                            )}
+                          </span>
+                          <span className="capitalize leading-none">
+                            {type}
+                          </span>
+                          {active && (
+                            <span className="absolute top-2 right-2 text-white/60">
+                              <IcoCheck />
+                            </span>
+                          )}
+                        </button>
+                      );
+                    },
                   )}
                 </div>
-              );
-            })}
+              </fieldset>
 
-            {completedCount === orders.length && orders.length > 0 && (
-              <div className="all-done-banner">
-                <span className="adb-emoji">🎉</span>
-                <strong>All deliveries complete!</strong>
-                <span>Great work today.</span>
+              {/* ── Vehicle Capacity ──────────────────────── */}
+              <div>
+                <label
+                  htmlFor="capacity"
+                  className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-1.5 select-none"
+                >
+                  <span className="text-blue-600">
+                    <IcoBox />
+                  </span>
+                  Vehicle box capacity
+                </label>
+                <p className="text-xs text-slate-400 mb-2.5">
+                  Max boxes your vehicle can carry per run.
+                </p>
+                <div className="relative">
+                  <input
+                    id="capacity"
+                    type="number"
+                    min={1}
+                    max={999}
+                    inputMode="numeric"
+                    placeholder="e.g. 20"
+                    value={form.capacity}
+                    onChange={(e) => handleCapacity(e.target.value)}
+                    className={[
+                      "w-full h-12 rounded-xl border-[1.5px] px-4 pr-14 text-base font-semibold text-slate-800",
+                      "placeholder:text-slate-300 bg-white outline-none transition-all duration-150",
+                      "focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+                      capacityErr
+                        ? "border-red-400 bg-red-50 focus:ring-red-400 focus:border-red-400"
+                        : "border-slate-200 hover:border-slate-300",
+                    ].join(" ")}
+                  />
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400 pointer-events-none">
+                    boxes
+                  </span>
+                </div>
+
+                {/* Validation error */}
+                {capacityErr && (
+                  <p
+                    className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-red-600"
+                    role="alert"
+                  >
+                    <IcoAlert /> {capacityErr}
+                  </p>
+                )}
+
+                {/* Live hint */}
+                {!capacityErr && capValid && poolStats.count > 0 && (
+                  <p className="mt-1.5 text-xs text-slate-400">
+                    <span className="font-semibold text-slate-500">
+                      {poolStats.count}
+                    </span>{" "}
+                    matching orders ·{" "}
+                    <span className="font-semibold text-slate-500">
+                      {poolStats.totalBoxes}
+                    </span>{" "}
+                    total boxes.{" "}
+                    {parsedCap >= poolStats.totalBoxes ? (
+                      <span className="text-green-600 font-semibold">
+                        Vehicle fits the full load.
+                      </span>
+                    ) : (
+                      <span className="text-amber-600 font-semibold">
+                        Greedy-pack up to {parsedCap} boxes.
+                      </span>
+                    )}
+                  </p>
+                )}
+                {!capacityErr && capValid && poolStats.count === 0 && (
+                  <p className="mt-1.5 text-xs text-amber-600 font-semibold flex items-center gap-1.5">
+                    <IcoAlert /> No orders match this shift &amp; type.
+                  </p>
+                )}
               </div>
-            )}
+
+              {/* ── Shift selector ────────────────────────── */}
+              <div>
+                <label
+                  htmlFor="shift"
+                  className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-1.5 select-none"
+                >
+                  <span className="text-blue-600">
+                    <IcoClock />
+                  </span>
+                  Client availability shift
+                </label>
+                <p className="text-xs text-slate-400 mb-2.5">
+                  Auto-detected from current time ({clock}). Change if needed.
+                </p>
+                <div className="relative">
+                  <select
+                    id="shift"
+                    value={form.shift}
+                    onChange={(e) => {
+                      setForm((p) => ({
+                        ...p,
+                        shift: e.target.value as DeliveryShift,
+                      }));
+                      resetResults();
+                    }}
+                    className="w-full h-12 rounded-xl border-[1.5px] border-slate-200 hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 px-4 pr-10 text-sm font-semibold text-slate-800 bg-white appearance-none outline-none transition-all duration-150 cursor-pointer"
+                  >
+                    {(Object.keys(SHIFT_CONFIG) as DeliveryShift[]).map((s) => {
+                      const c = SHIFT_CONFIG[s];
+                      return (
+                        <option key={s} value={s}>
+                          {c.emoji} {c.label} — {c.hours}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400">
+                    <IcoChevron />
+                  </span>
+                </div>
+
+                {/* Shift chip preview */}
+                <div className="mt-2.5 flex flex-wrap gap-2">
+                  {(Object.keys(SHIFT_CONFIG) as DeliveryShift[]).map((s) => {
+                    const c = SHIFT_CONFIG[s];
+                    const count = orders.filter(
+                      (o) =>
+                        o.deliveryShift === s &&
+                        o.shipmentType === form.shipmentType,
+                    ).length;
+                    return (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => {
+                          setForm((p) => ({ ...p, shift: s }));
+                          resetResults();
+                        }}
+                        className={[
+                          "flex items-center gap-1 px-2 py-1 rounded-full text-[11px] font-semibold border transition-all duration-100 cursor-pointer select-none",
+                          form.shift === s
+                            ? `${c.color} ${c.bg} ${c.border} shadow-sm`
+                            : "text-slate-400 bg-slate-50 border-slate-200 hover:border-slate-300",
+                        ].join(" ")}
+                      >
+                        {c.emoji} {c.label}
+                        <span className="ml-0.5 opacity-60">({count})</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* ── Submit button ─────────────────────────── */}
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={phase === "calculating" || !capValid}
+                className={[
+                  "w-full h-13 rounded-xl flex items-center justify-center gap-2.5 text-sm font-bold",
+                  "transition-all duration-150 select-none focus:outline-none",
+                  "focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+                  phase === "calculating"
+                    ? "bg-blue-500 text-white cursor-not-allowed opacity-80"
+                    : phase === "done" && results !== null
+                      ? "bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-900/20 active:scale-[.98]"
+                      : !capValid
+                        ? "bg-slate-100 text-slate-400 cursor-not-allowed"
+                        : "bg-blue-700 hover:bg-blue-800 text-white shadow-md shadow-blue-900/25 hover:shadow-lg hover:shadow-blue-900/30 active:scale-[.98]",
+                ].join(" ")}
+              >
+                {phase === "calculating" ? (
+                  <>
+                    <IcoSpin /> Calculating optimal route…
+                  </>
+                ) : phase === "done" && results !== null ? (
+                  <>
+                    <span className="text-emerald-200">
+                      <IcoCheck />
+                    </span>{" "}
+                    Route ready — {results.length} stops
+                  </>
+                ) : (
+                  <>
+                    <IcoRoute /> Generate route
+                  </>
+                )}
+              </button>
+
+              {phase === "done" && (
+                <button
+                  type="button"
+                  onClick={resetResults}
+                  className="w-full text-xs font-semibold text-slate-400 hover:text-slate-600 underline underline-offset-2 transition-colors"
+                >
+                  ← Reconfigure
+                </button>
+              )}
+            </div>
           </div>
-        </aside>
 
-        {/* ═══════════════════════════════════════
-            MAP PANEL
-        ═══════════════════════════════════════ */}
-        <main className="ro-map-panel">
-          <div ref={mapRef} className="ro-map" />
-
-          {/* Map overlays */}
-          <div className="map-legend">
-            <div className="ml-item">
-              <span className="ml-dot" style={{ background: "#1e40af" }} />{" "}
-              Warehouse
-            </div>
-            <div className="ml-item">
-              <span
-                className="ml-dot"
-                style={{ background: "#2563eb", border: "2px solid #fff" }}
-              />{" "}
-              You
-            </div>
-            <div className="ml-item">
-              <span className="ml-dot" style={{ background: "#f97316" }} /> Stop
-            </div>
-          </div>
-
-          {optimizeState === "idle" && (
-            <div className="map-prompt">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13V7m0 13l6-3m-6-10l6-3m0 0l5.447 2.724A1 1 0 0121 7.618v10.764a1 1 0 01-1.447.894L15 17m0-13v13"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              Press <strong>Optimize &amp; Start Route</strong> to calculate the
-              fastest path
+          {/* ════════════════ LOADING STATE ════════════════ */}
+          {phase === "calculating" && (
+            <div className="mt-5 bg-white rounded-2xl border border-slate-200 shadow-sm p-8 flex flex-col items-center gap-4 text-center">
+              <div className="relative w-14 h-14">
+                <div className="absolute inset-0 rounded-full border-4 border-blue-100" />
+                <div className="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin" />
+                <div className="absolute inset-1.5 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+                  <IcoTruck />
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-bold text-slate-800">
+                  Packing your route…
+                </p>
+                <p className="text-xs text-slate-400 mt-1">
+                  {form.shipmentType} · {SHIFT_CONFIG[form.shift].label} shift ·{" "}
+                  up to {form.capacity} boxes
+                </p>
+              </div>
+              <div className="flex gap-1.5">
+                {[0, 0.15, 0.3].map((d, i) => (
+                  <span
+                    key={i}
+                    className="w-2 h-2 rounded-full bg-blue-400 animate-bounce"
+                    style={{ animationDelay: `${d}s` }}
+                  />
+                ))}
+              </div>
             </div>
           )}
-        </main>
-      </div>
-    </>
-  );
-}
 
-// ─── Styles ───────────────────────────────────────────────────────────────────
-
-function PageStyles() {
-  return (
-    <style>{`
-      @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap');
-
-      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-      :root {
-        --brand:       #1e40af;
-        --brand-h:     #1d3a9e;
-        --brand-lt:    #eff6ff;
-        --brand-ring:  rgba(30,64,175,0.13);
-        --green:       #16a34a;
-        --green-lt:    #dcfce7;
-        --orange:      #f97316;
-        --red:         #ef4444;
-        --t1: #0f172a; --t2: #475569; --t3: #94a3b8;
-        --border:  #e2e8f0;
-        --surface: #f8fafc;
-        --card:    #ffffff;
-        --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 18px;
-        --sh: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-        --font: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      }
-
-      html, body { height: 100%; overflow: hidden; font-family: var(--font); }
-
-      /* ── Root layout ── */
-      .ro-root {
-        display: flex;
-        height: 100vh;
-        background: #f1f5f9;
-        overflow: hidden;
-      }
-
-      /* ═══════ SIDEBAR ═══════ */
-      .ro-sidebar {
-        width: 35%;
-        min-width: 300px;
-        max-width: 480px;
-        display: flex;
-        flex-direction: column;
-        background: var(--card);
-        border-right: 1px solid var(--border);
-        overflow: hidden;
-        flex-shrink: 0;
-      }
-
-      .sidebar-header {
-        padding: 18px 18px 12px;
-        border-bottom: 1px solid var(--border);
-        background: #fff;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        flex-shrink: 0;
-      }
-
-      .sidebar-logo {
-        display: flex;
-        align-items: center;
-        gap: 9px;
-      }
-
-      .sidebar-logo-text {
-        font-size: 17px;
-        font-weight: 800;
-        color: var(--t1);
-        letter-spacing: -0.4px;
-      }
-
-      .sidebar-meta {}
-
-      .sidebar-title {
-        font-size: clamp(18px, 2.5vw, 22px);
-        font-weight: 800;
-        color: var(--t1);
-        letter-spacing: -0.5px;
-      }
-
-      .sidebar-subtitle {
-        font-size: 12px;
-        color: var(--t3);
-        margin-top: 2px;
-      }
-
-      /* Geo status */
-      .geo-status {
-        display: flex;
-        align-items: center;
-        gap: 7px;
-        padding: 7px 11px;
-        border-radius: var(--r-md);
-        font-size: 11px;
-        font-weight: 600;
-      }
-      .geo-ok      { background: var(--green-lt);  color: var(--green); }
-      .geo-err     { background: #fef2f2;           color: var(--red);   }
-      .geo-loading { background: var(--surface);    color: var(--t3);    }
-
-      .geo-pip {
-        width: 8px; height: 8px;
-        border-radius: 50%;
-        flex-shrink: 0;
-        animation: pip 1.8s ease-in-out infinite;
-      }
-      .geo-ok      .geo-pip { background: var(--green); }
-      .geo-err     .geo-pip { background: var(--red); animation: none; }
-      .geo-loading .geo-pip { background: var(--t3); }
-
-      @keyframes pip {
-        0%, 100% { opacity: 1; }
-        50%       { opacity: 0.4; }
-      }
-
-      .geo-text { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-      /* Optimize button */
-      .btn-optimize {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        width: 100%;
-        height: 46px;
-        background: var(--brand);
-        color: #fff;
-        border: none;
-        border-radius: var(--r-md);
-        font-size: 14px;
-        font-weight: 700;
-        font-family: var(--font);
-        cursor: pointer;
-        transition: background 0.18s, box-shadow 0.18s, transform 0.1s;
-        box-shadow: 0 2px 8px rgba(30,64,175,0.28);
-        -webkit-tap-highlight-color: transparent;
-      }
-      .btn-optimize:hover:not(:disabled) { background: var(--brand-h); box-shadow: 0 4px 14px rgba(30,64,175,0.38); }
-      .btn-optimize:active:not(:disabled) { transform: scale(0.98); }
-      .btn-optimize:disabled { opacity: 0.7; cursor: not-allowed; }
-      .btn-optimize.btn-done { background: var(--green); box-shadow: 0 2px 8px rgba(22,163,74,0.3); }
-      .btn-optimize.btn-done:hover { background: #15803d; }
-
-      .spin-icon { animation: spin 0.7s linear infinite; }
-      @keyframes spin { to { transform: rotate(360deg); } }
-
-      .optimize-error {
-        font-size: 11px;
-        color: var(--red);
-        background: #fef2f2;
-        border-radius: var(--r-sm);
-        padding: 7px 10px;
-      }
-
-      /* Stats bar */
-      .stats-bar {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        background: var(--surface);
-        border-radius: var(--r-md);
-        padding: 9px 12px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .stat { display: flex; flex-direction: column; align-items: center; flex: 1; }
-      .stat-val { font-size: 16px; font-weight: 800; color: var(--t1); line-height: 1; }
-      .stat-lbl { font-size: 10px; color: var(--t3); margin-top: 2px; font-weight: 500; }
-      .stat-sep  { width: 1px; height: 28px; background: var(--border); }
-
-      .stat-progress {
-        position: absolute;
-        bottom: 0; left: 0; right: 0;
-        height: 3px;
-        background: var(--border);
-      }
-
-      .stat-progress-fill {
-        height: 100%;
-        background: linear-gradient(90deg, var(--brand), #60a5fa);
-        border-radius: 99px;
-        transition: width 0.6s ease;
-      }
-
-      .stat-pct {
-        font-size: 11px;
-        font-weight: 700;
-        color: var(--brand);
-        margin-left: 4px;
-      }
-
-      /* ── Order list ── */
-      .order-list {
-        flex: 1;
-        overflow-y: auto;
-        padding: 12px 12px 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        scrollbar-width: thin;
-        scrollbar-color: var(--border) transparent;
-      }
-
-      .order-list::-webkit-scrollbar { width: 4px; }
-      .order-list::-webkit-scrollbar-track { background: transparent; }
-      .order-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
-
-      .order-list-item { display: flex; flex-direction: column; }
-
-      /* Order card */
-      .order-card {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        width: 100%;
-        text-align: left;
-        background: #fff;
-        border: 1.5px solid var(--border);
-        border-radius: var(--r-lg);
-        padding: 12px;
-        cursor: pointer;
-        font-family: var(--font);
-        transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
-        position: relative;
-        -webkit-tap-highlight-color: transparent;
-      }
-
-      .order-card:hover { border-color: #cbd5e1; background: var(--surface); }
-      .order-card-active { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-ring); background: var(--brand-lt); }
-      .order-card.status-completed { opacity: 0.6; }
-      .order-card.status-in_transit { border-color: #f97316; background: #fff7ed; }
-
-      .oc-seq-col {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 6px;
-        flex-shrink: 0;
-        padding-top: 2px;
-      }
-
-      .oc-seq {
-        width: 26px; height: 26px;
-        border-radius: 50%;
-        background: var(--brand);
-        color: #fff;
-        font-size: 12px;
-        font-weight: 800;
-        display: flex; align-items: center; justify-content: center;
-        flex-shrink: 0;
-      }
-
-      .order-card.status-completed .oc-seq { background: var(--green); }
-      .order-card.status-in_transit .oc-seq { background: var(--orange); }
-
-      .oc-shift-pip {
-        width: 6px; height: 6px;
-        border-radius: 50%;
-        flex-shrink: 0;
-      }
-
-      .oc-body { flex: 1; min-width: 0; }
-
-      .oc-row-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        margin-bottom: 3px;
-      }
-
-      .oc-name { font-size: 13px; font-weight: 700; color: var(--t1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-      .oc-status-badge {
-        font-size: 10px;
-        font-weight: 700;
-        padding: 2px 7px;
-        border-radius: 99px;
-        flex-shrink: 0;
-        white-space: nowrap;
-      }
-      .oc-status-pending    { background: #fef3c7; color: #b45309; }
-      .oc-status-in_transit{ background: #fff7ed; color: #c2410c; }
-      .oc-status-completed  { background: var(--green-lt); color: var(--green); }
-
-      .oc-address {
-        font-size: 11px;
-        color: var(--t2);
-        line-height: 1.4;
-        margin-bottom: 6px;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-      }
-
-      .oc-chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-      }
-
-      .oc-chip {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 10px;
-        font-weight: 600;
-        color: var(--t3);
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 99px;
-        padding: 2px 7px;
-        white-space: nowrap;
-      }
-
-      .oc-chip-box { color: var(--t2); }
-
-      .oc-note {
-        display: flex;
-        align-items: flex-start;
-        gap: 5px;
-        font-size: 10px;
-        color: var(--t3);
-        margin-top: 6px;
-        font-style: italic;
-        line-height: 1.4;
-      }
-      .oc-note svg { flex-shrink: 0; margin-top: 1px; }
-
-      .oc-done-icon {
-        position: absolute;
-        top: 8px; right: 8px;
-      }
-
-      /* ── Expanded order actions ── */
-      .order-actions {
-        background: var(--surface);
-        border: 1.5px solid var(--border);
-        border-top: none;
-        border-radius: 0 0 var(--r-lg) var(--r-lg);
-        padding: 10px 12px 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        animation: expandDown 0.18s ease both;
-      }
-
-      @keyframes expandDown {
-        from { opacity: 0; transform: translateY(-6px); }
-        to   { opacity: 1; transform: translateY(0); }
-      }
-
-      .order-detail-row {
-        display: flex;
-        align-items: flex-start;
-        gap: 8px;
-        font-size: 12px;
-        color: var(--t2);
-      }
-      .od-icon { flex-shrink: 0; }
-      .od-link { color: var(--brand); font-weight: 600; text-decoration: none; }
-      .od-link:hover { text-decoration: underline; }
-      .od-text { line-height: 1.4; }
-
-      .order-action-btns {
-        display: flex;
-        gap: 8px;
-        margin-top: 4px;
-      }
-
-      .oa-btn {
-        flex: 1;
-        height: 36px;
-        border-radius: var(--r-md);
-        font-size: 12px;
-        font-weight: 700;
-        font-family: var(--font);
-        cursor: pointer;
-        transition: background 0.15s, transform 0.1s;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        -webkit-tap-highlight-color: transparent;
-      }
-
-      .oa-start    { background: var(--brand); color: #fff; border: none; }
-      .oa-start:hover { background: var(--brand-h); }
-
-      .oa-complete { background: var(--green); color: #fff; border: none; }
-      .oa-complete:hover { background: #15803d; }
-
-      .oa-nav { background: #fff; color: var(--t2); border: 1.5px solid var(--border); }
-      .oa-nav:hover { background: var(--surface); }
-
-      .oa-completed-msg {
-        flex: 1;
-        font-size: 12px;
-        font-weight: 700;
-        color: var(--green);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .oa-btn:active { transform: scale(0.97); }
-
-      /* ── All done ── */
-      .all-done-banner {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 4px;
-        padding: 24px 16px;
-        background: var(--green-lt);
-        border-radius: var(--r-xl);
-        text-align: center;
-        margin-top: 8px;
-      }
-      .adb-emoji { font-size: 32px; }
-      .all-done-banner strong { font-size: 15px; color: var(--green); }
-      .all-done-banner span   { font-size: 12px; color: #4ade80; }
-
-      /* ═══════ MAP PANEL ═══════ */
-      .ro-map-panel {
-        flex: 1;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .ro-map {
-        width: 100%;
-        height: 100%;
-        background: #d4e9f7;
-      }
-
-      /* Map overlays */
-      .map-legend {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        background: rgba(255,255,255,0.92);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255,255,255,0.8);
-        border-radius: var(--r-md);
-        padding: 8px 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-        z-index: 5;
-        pointer-events: none;
-      }
-
-      .ml-item {
-        display: flex; align-items: center; gap: 7px;
-        font-size: 11px; font-weight: 600; color: #475569;
-        font-family: var(--font);
-      }
-
-      .ml-dot {
-        width: 10px; height: 10px;
-        border-radius: 50%;
-        flex-shrink: 0;
-      }
-
-      .map-prompt {
-        position: absolute;
-        bottom: 24px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(15,23,42,0.88);
-        backdrop-filter: blur(8px);
-        color: #f1f5f9;
-        font-size: 13px;
-        font-weight: 500;
-        font-family: var(--font);
-        padding: 10px 20px;
-        border-radius: 99px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        pointer-events: none;
-        white-space: nowrap;
-        z-index: 5;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-      }
-
-      .map-prompt strong { font-weight: 700; color: #93c5fd; }
-
-      /* ═══════════════════════════
-         RESPONSIVE
-      ═══════════════════════════ */
-
-      /* Tablet portrait — stack vertically */
-      @media (max-width: 768px) {
-        html, body { overflow: auto; }
-        .ro-root {
-          flex-direction: column;
-          height: auto;
-          min-height: 100vh;
-          overflow: auto;
-        }
-        .ro-sidebar {
-          width: 100%;
-          max-width: 100%;
-          border-right: none;
-          border-bottom: 1px solid var(--border);
-          overflow: visible;
-        }
-        .order-list {
-          max-height: 40vh;
-          overflow-y: auto;
-        }
-        .ro-map-panel {
-          height: 55vh;
-          flex: none;
-        }
-        .ro-map { height: 100%; }
-        .map-prompt { font-size: 11px; padding: 8px 14px; bottom: 14px; }
-      }
-
-      @media (max-width: 420px) {
-        .sidebar-header { padding: 14px 14px 10px; }
-        .stat-val { font-size: 14px; }
-        .ro-map-panel { height: 48vh; }
-        .order-action-btns { flex-wrap: wrap; }
-        .oa-btn { flex: 1 1 calc(50% - 4px); }
-        .map-prompt { display: none; }
-      }
-
-      /* Touch targets */
-      @media (hover: none) and (pointer: coarse) {
-        .btn-optimize, .oa-btn { min-height: 48px; }
-        .order-card { padding: 14px; }
-      }
-
-      /* Reduced motion */
-      @media (prefers-reduced-motion: reduce) {
-        .spin-icon    { animation: none; }
-        .geo-pip      { animation: none; }
-        .order-actions { animation: none; }
-        .stat-progress-fill { transition: none; }
-        * { transition-duration: 0.01ms !important; }
-      }
-
-      /* Dark mode */
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --t1: #f1f5f9; --t2: #94a3b8; --t3: #64748b;
-          --border:  #2a3a52; --surface: #1c2940; --card: #111d35;
-          --brand: #3b82f6; --brand-h: #2563eb; --brand-lt: rgba(59,130,246,0.14);
-        }
-        body { background: #0b1220; }
-        .ro-sidebar { background: var(--card); }
-        .sidebar-header, .order-card { background: var(--card); }
-        .order-card:hover, .order-card-active { background: var(--surface); }
-        .order-card.status-in_transit { background: rgba(249,115,22,0.08); }
-        .order-actions { background: var(--surface); }
-        .stats-bar { background: var(--surface); }
-        .oa-nav { background: var(--card); color: var(--t2); border-color: var(--border); }
-        .all-done-banner { background: rgba(22,163,74,0.12); }
-        .map-legend { background: rgba(17,29,53,0.92); border-color: rgba(42,58,82,0.8); }
-        .ml-item { color: #94a3b8; }
-      }
-    `}</style>
+          {/* ════════════════ RESULTS PANEL ════════════════ */}
+          {phase === "done" && results !== null && (
+            <div className="mt-5 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+              {/* Results header */}
+              <div className="px-6 py-4 bg-slate-50 border-b border-slate-100">
+                <div className="flex items-start justify-between gap-3 flex-wrap">
+                  <div>
+                    <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase mb-0.5">
+                      Result
+                    </p>
+                    <h2 className="text-base font-bold text-slate-800">
+                      {results.length > 0
+                        ? `${results.length} stops selected`
+                        : "No orders found"}
+                    </h2>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+                      {usedBoxes}/{form.capacity} boxes
+                    </span>
+                    <span
+                      className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${currentShift.color} ${currentShift.bg} ${currentShift.border}`}
+                    >
+                      {currentShift.emoji} {currentShift.label}
+                    </span>
+                    <span
+                      className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${
+                        form.shipmentType === "delivery"
+                          ? "bg-indigo-50 text-indigo-700 border-indigo-200"
+                          : "bg-teal-50 text-teal-700 border-teal-200"
+                      }`}
+                    >
+                      {form.shipmentType}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Empty state */}
+              {results.length === 0 ? (
+                <div className="px-6 py-10 flex flex-col items-center gap-3 text-center">
+                  <div className="w-11 h-11 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600">
+                    <IcoAlert />
+                  </div>
+                  <p className="text-sm font-bold text-slate-700">
+                    No orders match your criteria
+                  </p>
+                  <p className="text-xs text-slate-400 max-w-xs">
+                    No <strong>{form.shipmentType}</strong> orders exist for the{" "}
+                    <strong>{SHIFT_CONFIG[form.shift].label}</strong> shift, or
+                    the capacity is too low for any single order.
+                  </p>
+                </div>
+              ) : (
+                <>
+                  {/* Capacity bar */}
+                  <div className="px-6 pt-5">
+                    <div className="flex justify-between text-xs font-semibold text-slate-400 mb-1.5">
+                      <span>Capacity used</span>
+                      <span
+                        className={
+                          usedBoxes >= parsedCap
+                            ? "text-orange-600 font-bold"
+                            : ""
+                        }
+                      >
+                        {usedBoxes} / {parsedCap} boxes
+                        {usedBoxes >= parsedCap ? " · full" : ""}
+                      </span>
+                    </div>
+                    <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-linear-to-r from-blue-700 to-blue-400 transition-all duration-700 ease-out"
+                        style={{
+                          width: `${Math.min((usedBoxes / parsedCap) * 100, 100)}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Stop list */}
+                  <ul className="px-6 py-4 divide-y divide-slate-100">
+                    {results.map((o, i) => (
+                      <li
+                        key={`${o.clientName}-${i}`}
+                        className="py-3 flex items-start gap-3 group"
+                      >
+                        <span className="mt-0.5 w-6 h-6 rounded-full bg-blue-700 text-white text-[11px] font-bold flex items-center justify-center shrink-0">
+                          {i + 1}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-slate-800 leading-tight">
+                            {o.clientName}
+                          </p>
+                          <p className="text-xs text-slate-400 mt-0.5 truncate">
+                            {o.deliveryAddress}
+                          </p>
+                          {o.note && (
+                            <p className="text-xs text-amber-700 italic mt-0.5">
+                              ↳ {o.note}
+                            </p>
+                          )}
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            {o.clientPhoneNumber}
+                          </p>
+                        </div>
+                        <span className="shrink-0 bg-slate-100 text-slate-500 text-xs font-semibold px-2 py-0.5 rounded-full whitespace-nowrap self-start mt-0.5">
+                          {o.boxQuantity}{" "}
+                          {o.boxQuantity === 1 ? "box" : "boxes"}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Skipped orders note */}
+                  {(() => {
+                    const skipped = poolStats.count - results.length;
+                    return skipped > 0 ? (
+                      <div className="px-6 py-3 border-t border-slate-100 text-xs text-slate-400 text-center">
+                        {skipped} order{skipped !== 1 ? "s" : ""} from this
+                        shift skipped due to capacity.
+                      </div>
+                    ) : null;
+                  })()}
+
+                  {/* Navigate CTA */}
+                  <div className="px-6 pb-6 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleGetOptimizedRoute();
+                      }}
+                      className="w-full h-12 rounded-xl bg-blue-700 hover:bg-blue-800 active:scale-[.98] text-white text-sm font-bold flex items-center justify-center gap-2 transition-all duration-150 shadow-md shadow-blue-900/20 hover:shadow-lg hover:shadow-blue-900/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    >
+                      <IcoNav />
+                      Open route map · {results.length} stops
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+      </main>
+    </div>
   );
 }

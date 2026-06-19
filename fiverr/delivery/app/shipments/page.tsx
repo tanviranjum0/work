@@ -317,75 +317,18 @@ const IconBox = () => (
 
 // ─── Status Dropdown ──────────────────────────────────────────────────────────
 
-function StatusDropdown({
-  status,
-  onChange,
-  disabled,
-}: {
-  status: ShipmentStatus;
-  onChange: (s: ShipmentStatus) => void;
-  disabled?: boolean;
-}) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+function StatusDropdown({ status }: { status: ShipmentStatus }) {
   const meta = STATUS_META[status];
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node))
-        setOpen(false);
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
 
   return (
-    <div className="status-dd" ref={ref}>
-      <button
-        type="button"
+    <div className="status-dd">
+      <div
         className="status-badge status-badge-btn"
         style={{ color: meta.color, background: meta.bg }}
-        onClick={() => !disabled && setOpen((v) => !v)}
-        disabled={disabled}
-        aria-expanded={open}
       >
         <span className="status-dot" style={{ background: meta.dot }} />
         {meta.label}
-        {!disabled && (
-          <span
-            className={`status-chevron ${open ? "status-chevron-open" : ""}`}
-          >
-            <IconChevron />
-          </span>
-        )}
-      </button>
-
-      {open && (
-        <ul className="status-menu" role="listbox">
-          {STATUS_ORDER.map((s) => {
-            const m = STATUS_META[s];
-            return (
-              <li
-                key={s}
-                role="option"
-                aria-selected={s === status}
-                className={`status-menu-item ${s === status ? "status-menu-item-active" : ""}`}
-                onMouseDown={() => {
-                  onChange(s);
-                  setOpen(false);
-                }}
-              >
-                <span className="status-dot" style={{ background: m.dot }} />
-                {m.label}
-                {s === status && (
-                  <span className="status-menu-check">
-                    <IconCheck />
-                  </span>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-      )}
+      </div>
     </div>
   );
 }
@@ -487,7 +430,7 @@ function ShipmentRow({
         </div>
         <div
           onClick={() => {
-            localStorage.setItem("shipment", JSON.stringify(shipment));
+            localStorage.setItem("shipment", "");
             router.push(`/best-route/${shipment._id}`);
           }}
           className="cursor-pointer"
@@ -514,16 +457,13 @@ function ShipmentRow({
           <IconCalendar /> ETA {shipment?.updatedAt?.split("T")[0]}
         </span>
         <span className="meta-chip">
-          <IconLogo /> {shipment.boxQuantity}
+          <IconLogo /> {shipment.boxQuantity} |{" "}
+          {shipment.deliveryShift.toUpperCase()}
         </span>
       </div>
 
       <div className="cell cell-status">
-        <StatusDropdown
-          status={shipment.status}
-          onChange={(s) => onStatusChange(shipment._id, s)}
-          disabled={isUpdating}
-        />
+        <StatusDropdown status={shipment.status} />
       </div>
 
       <div className="cell cell-actions">
@@ -534,8 +474,8 @@ function ShipmentRow({
           title="Mark as delivered"
           aria-label="Mark as delivered"
         >
-          <IconFlag />
-          <span className="action-label">Complete</span>
+          <IconTrash />
+          <span className="action-label">Delete</span>
         </button>
 
         <button
@@ -749,9 +689,7 @@ export default function ShipmentsList() {
           },
         );
         if (result.ok) {
-          setShipments((list) =>
-            list.map((s) => (s._id === id ? { ...s, status: "deleted" } : s)),
-          );
+          setShipments((list) => list.filter((s) => s._id !== id));
           pushToast("success", `Successfully deleted shipment id: ${id}`);
         }
       });

@@ -12,7 +12,10 @@ import dns from "node:dns";
 import mapRoutes from "./routes/maps.route.js";
 import optimizedRoutes from "./routes/optimizedRoute.route.js";
 import shipmentRoutes from "./routes/shipments.route.js";
-import { getAddressCoordinate } from "./services/map.service.js";
+import {
+  getAddressCoordinate,
+  getDistanceTime,
+} from "./services/map.service.js";
 
 dotenv.config();
 dns.setServers(["8.8.8.8", "8.8.4.4", "1.1.1.1"]);
@@ -49,7 +52,10 @@ app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Welcome to Express with TypeScript!" });
 });
 app.get("/api/test", async (req: Request, res: Response) => {
-  const coords = await getAddressCoordinate(req.body.address);
+  const coords = await getDistanceTime(
+    "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+    "Westhavenweg 120, 1042 BB Amsterdam, Netherlands",
+  );
   res.json(coords);
 });
 // User Routes

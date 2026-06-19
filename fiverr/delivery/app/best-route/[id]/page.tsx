@@ -18,6 +18,12 @@ interface RouteStop {
 }
 
 interface Shipment {
+  distanceData: {
+    distance: {
+      text: string;
+    };
+    duration: object;
+  };
   _id: string;
   clientName: string;
   clientPhoneNumber: number;
@@ -150,12 +156,20 @@ function StopItem({ stop, isLast }: { stop: RouteStop; isLast: boolean }) {
 
 // ─── Summary Row ──────────────────────────────────────────────────────────────
 
-function SummaryRow({ item }: { item: RouteSummaryItem }) {
+function SummaryRow({
+  item,
+  shipment,
+}: {
+  item: RouteSummaryItem;
+  shipment?: Shipment;
+}) {
   return (
     <div className="summary-row">
       <div className="summary-icon-wrap">{ICONS[item.label]}</div>
       <span className="summary-label">{item.label}</span>
-      <span className="summary-value">{item.value}</span>
+      <span className="summary-value">
+        {shipment?.distanceData.distance.text ?? "Loading…"}
+      </span>
     </div>
   );
 }
@@ -277,7 +291,6 @@ export default function BestRouteMap() {
     const cache = localStorage.getItem("shipment");
     if (cache) {
       const parsedCache = JSON.parse(cache);
-
       setShipment(parsedCache);
     } else {
       const result = await fetch(
@@ -289,7 +302,7 @@ export default function BestRouteMap() {
         },
       );
       const data = await result.json();
-
+      console.log(data);
       setShipment(data);
       localStorage.setItem("shipment", JSON.stringify(data));
     }
@@ -390,15 +403,15 @@ export default function BestRouteMap() {
                 <h3 className="summary-heading">Route Summary</h3>
                 <div className="summary-list">
                   {SUMMARY.map((item) => (
-                    <SummaryRow key={item.label} item={item} />
+                    <SummaryRow
+                      shipment={shipment}
+                      key={item.label}
+                      item={item}
+                    />
                   ))}
                   <div className="border-2 rounded text-gray-700 p-2">
                     <span className="italic bold text-black">Note: </span>
-                    <div className="text-sm">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Vel magni sunt hic dolorem iste commodi tempore quasi
-                      maxime at
-                    </div>
+                    <div className="text-sm">{shipment?.note}</div>
                   </div>
                 </div>
               </div>

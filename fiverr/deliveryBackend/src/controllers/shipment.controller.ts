@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import Shipment from "../models/Shipment.js";
-import { getAddressCoordinate } from "../services/map.service.js";
+import {
+  getAddressCoordinate,
+  getDistanceTime,
+} from "../services/map.service.js";
 interface UserRequest extends Request {
   userId?: string;
 }
@@ -93,8 +96,13 @@ export const handleGetSingleShipment = async (
         .status(400)
         .json({ message: "You are not authorized to access this shipment." });
     }
+
+    const distanceData = await getDistanceTime(
+      "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+      shipment.deliveryAddress,
+    );
     const { OwnerRef, ...shipmentResponse } = shipment.toObject();
-    return res.status(200).json(shipmentResponse);
+    return res.status(200).json({ ...shipmentResponse, distanceData });
   } catch (error) {
     res.status(400).json("There is a problem in shipment fetch");
   }
@@ -145,11 +153,10 @@ export const handleDeleteOneShipment = async (
       OwnerRef: req.userId,
       _id: shipmentId,
     });
-
     if (result.deletedCount === 0) {
       return res.status(404).json({ message: "Shipment not found" });
     } else {
-      return res.status(400).json({ message: "No shipment found" });
+      return res.status(200).json({ message: "Success" });
     }
   } catch (error) {
     res.status(400).json("There is a in deleting shipment");
