@@ -767,7 +767,7 @@ export default function RouteOptimizationPage() {
   const [geoError, setGeoError] = useState<string>("");
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  // ── Initialise map after Google Maps script loads ──────────────────────────
+  // ── Initialise map after Google Maps script loads ────────────────────────
   const handleInitialLoad = () => {
     const rawData = localStorage.getItem("OptimizedRouteShipments");
     const data = rawData ? JSON.parse(rawData) : [];
