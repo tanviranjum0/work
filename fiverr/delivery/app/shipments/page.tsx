@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 import { useRouter } from "next/navigation";
@@ -430,7 +431,6 @@ function ShipmentRow({
         </div>
         <div
           onClick={() => {
-            localStorage.setItem("shipment", "");
             router.push(`/best-route/${shipment._id}`);
           }}
           className="cursor-pointer"
@@ -600,7 +600,6 @@ export default function ShipmentsList() {
     );
     const data = await result.json();
     if (result.ok) {
-      localStorage.setItem("initialShipments", JSON.stringify(data.shipments));
       setShipments(data.shipments);
     }
   };
@@ -608,16 +607,7 @@ export default function ShipmentsList() {
   useEffect(() => {
     const cachedUser = localStorage.getItem("user");
     if (cachedUser) {
-      const initialShipments = localStorage.getItem("initialShipments");
-      if (
-        initialShipments &&
-        initialShipments !== "" &&
-        initialShipments !== undefined
-      ) {
-        setShipments(JSON.parse(initialShipments));
-      } else {
-        getInitialData();
-      }
+      getInitialData();
     } else {
       router.push("/login");
     }
@@ -714,7 +704,6 @@ export default function ShipmentsList() {
         setIsMoreShipmentAvailable(false);
       }
       const newShipments = [...shipments, ...data.shipments];
-      localStorage.setItem("initialShipments", JSON.stringify(newShipments));
       setShipments(newShipments);
     }
   };
@@ -863,7 +852,7 @@ export default function ShipmentsList() {
               </div>
             ) : (
               <div>
-                {filtered.toReversed().map((s, i) => {
+                {filtered.map((s, i) => {
                   return (
                     <ShipmentRow
                       key={i + "shipmentrow"}

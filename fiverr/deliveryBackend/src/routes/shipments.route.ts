@@ -21,7 +21,7 @@ router.get("/", checkLogin, handleGetInitialShipments);
 router.post("/create", checkLogin, handleCreateNewShipment);
 router.post("/update", checkLogin, handleShipmentUpdate);
 
-router.patch("/:id", checkLogin, handleShipmentStatusUpdate);
+router.patch("/status", checkLogin, handleShipmentStatusUpdate);
 
 router.delete("/:id", checkLogin, handleDeleteOneShipment);
 

@@ -193,19 +193,21 @@ function RouteMapFrame({
   // https://www.google.com/maps/embed/v1/directions?origin=...&destination=...&waypoints=...&key=YOUR_API_KEY
   const mapSrc = useMemo(() => {
     const origin = STOPS[0].address;
-    const waypoint = STOPS[1].address;
-    const destination = STOPS[2].address;
+    // const waypoint = STOPS[1].address;
+    const destination = STOPS[1].address;
     // const daddr = `${encodeURIComponent(waypoint)}+to:${encodeURIComponent(destination)}`;
     // return `https://maps.google.com/maps?saddr=${encodeURIComponent(origin)}&daddr=${daddr}&output=embed`;
 
-    return `https://www.google.com/maps/embed/v1/directions?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&waypoints=${encodeURIComponent(waypoint)}&key=AIzaSyB1aG-PTEi0s9wtwmVlEuH9UmgnTVmPZ1M`;
+    return `https://www.google.com/maps/embed/v1/directions?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&key=AIzaSyB1aG-PTEi0s9wtwmVlEuH9UmgnTVmPZ1M`;
+    // return `https://www.google.com/maps/embed/v1/directions?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&waypoints=${encodeURIComponent(waypoint)}&key=AIzaSyB1aG-PTEi0s9wtwmVlEuH9UmgnTVmPZ1M`;
   }, [STOPS]);
   // External "open in Google Maps" link
   const externalHref = useMemo(() => {
     const origin = encodeURIComponent(STOPS[0].address);
-    const destination = encodeURIComponent(STOPS[2].address);
-    const waypoints = encodeURIComponent(STOPS[1].address);
-    return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&waypoints=${waypoints}&travelmode=driving`;
+    const destination = encodeURIComponent(STOPS[1].address);
+    // const waypoints = encodeURIComponent(STOPS[1].address);
+    return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=driving`;
+    // return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&waypoints=${waypoints}&travelmode=driving`;
   }, [STOPS]);
 
   return (
@@ -315,13 +317,6 @@ export default function BestRouteMap() {
   const STOPS: RouteStop[] = [
     {
       id: "A",
-      label: "Pickup Location",
-      address: shipment?.pickupAddress || "",
-      color: "#16a34a",
-      bg: "#dcfce7",
-    },
-    {
-      id: "B",
       label: "Warehouse (Buffer)",
       sublabel: "Central Warehouse",
       address: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
@@ -329,7 +324,7 @@ export default function BestRouteMap() {
       bg: "#dbeafe",
     },
     {
-      id: "C",
+      id: "B",
       label: "Delivery Location",
       address: shipment?.deliveryAddress || "",
       color: "#dc2626",

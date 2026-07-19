@@ -242,10 +242,9 @@ export default function FeitsmaVerhuizingenDashboardPage() {
               <h2>Recent Shipments</h2>
 
               <div className="ship-shipment-list">
-                {shipments.toReversed().map((shipment) => (
+                {shipments.map((shipment) => (
                   <div
                     onClick={() => {
-                      localStorage.setItem("shipment", "");
                       router.push(`/best-route/${shipment._id}`);
                     }}
                     className="ship-shipment-row flex justify-between items-center cursor-pointer px-3 py-1 transition-all duration-300 rounded-md select-none hover:bg-gray-300"

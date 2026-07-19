@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable @typescript-eslint/no-namespace */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -5,6 +6,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import Script from "next/script";
+import { useParams } from "next/navigation";
 
 // ─── Google Maps type augmentation ────────────────────────────────────────────
 
@@ -752,7 +754,8 @@ export default function RouteOptimizationPage() {
   const warehouseMarker = useRef<google.maps.Marker | null>(null);
   const watchId = useRef<number | null>(null);
   const mapsLoaded = useRef(false);
-
+  const params = useParams<{ category: string; id: string }>();
+  // console.log(params);
   const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
   const [statuses, setStatuses] = useState<Record<number, OrderStatus>>(() =>
     Object.fromEntries(orders.map((o) => [o.id, o.status as OrderStatus])),
@@ -768,11 +771,22 @@ export default function RouteOptimizationPage() {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   // ── Initialise map after Google Maps script loads ────────────────────────
-  const handleInitialLoad = () => {
-    const rawData = localStorage.getItem("OptimizedRouteShipments");
-    const data = rawData ? JSON.parse(rawData) : [];
+
+  const handleInitialLoad = async () => {
+    const result = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + `/api/routes/${params.id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      },
+    );
+
+    const data = await result.json();
     const mock: Order[] = [];
-    data.map((order: Order, idx: number) =>
+    data.shipments.map((order: Order, idx: number) =>
       mock.push({ ...order, id: idx + 1 }),
     );
     setStatuses(() =>
@@ -781,8 +795,11 @@ export default function RouteOptimizationPage() {
     setOrders(mock);
   };
 
-  const initMap = useCallback(() => {
+  useEffect(() => {
     handleInitialLoad();
+  }, [params]);
+
+  const initMap = useCallback(() => {
     if (!mapRef.current || !window.google || mapsLoaded.current) return;
     mapsLoaded.current = true;
 
@@ -845,7 +862,7 @@ export default function RouteOptimizationPage() {
         strokeOpacity: 0.85,
       },
     });
-  }, []);
+  }, [orders]);
 
   // ── Driver marker ──────────────────────────────────────────────────────────
 
@@ -977,19 +994,21 @@ export default function RouteOptimizationPage() {
 
   const markComplete = async (id: number, mainId: string) => {
     const result = await fetch(
-      process.env.NEXT_PUBLIC_BACKEND_URL + `/api/shipments/${mainId}`,
+      process.env.NEXT_PUBLIC_BACKEND_URL + `/api/shipments/status`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ status: "delivered" }),
+        body: JSON.stringify({
+          shipmentId: mainId,
+          routeId: params.id,
+          status: "delivered",
+        }),
       },
     );
-    if (result.ok) {
-      localStorage.setItem("initialShipments", "");
-    }
+
     setStatuses((prev) => ({ ...prev, [id]: "delivered" }));
     if (activeOrderId === id) setActiveOrderId(null);
   };
@@ -1052,9 +1071,7 @@ export default function RouteOptimizationPage() {
 
             <div className="sidebar-meta">
               <h1 className="sidebar-title">Today&apos;s Route</h1>
-              <p className="sidebar-subtitle">
-                {orders.length} stops · Haarlem area
-              </p>
+              <p className="sidebar-subtitle">{orders.length} stops</p>
             </div>
 
             {/* Geo status */}

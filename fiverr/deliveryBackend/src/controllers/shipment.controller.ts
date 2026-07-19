@@ -4,6 +4,7 @@ import {
   getAddressCoordinate,
   getDistanceTime,
 } from "../services/map.service.js";
+import Route from "../models/Route.js";
 interface UserRequest extends Request {
   userId?: string;
 }
@@ -73,6 +74,7 @@ export const handleInitialHomePageLoad = async (
       OwnerRef: req.userId,
     })
       .limit(limit)
+      .sort({ _id: 1 })
       .skip(startIndex)
       .select("-OwnerRef -__v");
 
@@ -129,6 +131,7 @@ export const handleGetInitialShipments = async (
       OwnerRef: req.userId,
     })
       .limit(limit)
+      .sort({ _id: -1 })
       .skip(startIndex)
       .select("-OwnerRef -__v");
     return res.json({ message: "Success", total, inTransitCount, shipments });
@@ -168,31 +171,53 @@ export const handleShipmentStatusUpdate = async (
   res: Response,
 ) => {
   try {
-    const shipmentId =
-      typeof req.params.id === "string" ? req.params.id : undefined;
-
+    const shipmentId = req.body.shipmentId;
+    const routeId = req.body.routeId;
     if (!shipmentId) {
       return res.status(400).json({ message: "Shipment id is required." });
+    }
+    if (!routeId) {
+      return res.status(400).json({ message: "Route id is required." });
     }
 
     const shipment = await Shipment.findById(shipmentId);
     if (!shipment) {
       return res.status(400).json({ message: "Shipment not found." });
     }
-
+    const route = (await Route.findById(routeId)) as any;
+    if (!route) {
+      return res.status(400).json({ message: "Route not found." });
+    }
     if (shipment.OwnerRef?.toString() !== req.userId) {
       return res
         .status(400)
-        .json({ message: "you are not authorized to update this shipment" });
+        .json({ message: "You are not authorized to update this shipment" });
+    }
+    console.log(route.OwnerRef?.toString(), req.userId);
+    if (route.OwnerRef?.toString() !== req.userId) {
+      return res
+        .status(400)
+        .json({ message: "You are not authorized to update this route" });
     }
 
-    const updatedShipment = await Shipment.findByIdAndUpdate(
-      shipment._id,
-      { $set: { status: req.body.status } },
-      { returnDocument: "after", runValidators: true },
-    );
-    if (!updatedShipment)
-      return res.status(200).json({ message: "Something went wrong" });
+    const updatedShipment = await Shipment.findByIdAndUpdate(shipment._id, {
+      $set: { status: req.body.status },
+    });
+    if (!updatedShipment) {
+      return res.status(400).json({ message: "Something went wrong" });
+    }
+    route.shipments.map((s: any) => {
+      if (s._id == shipment._id) {
+        s.status = "delivered";
+      }
+    });
+    delete (route as any).createdAt;
+    delete (route as any).updatedAt;
+    delete (route as any)._id;
+    const updatedRoute = await Route.findByIdAndUpdate(routeId, route);
+    if (!updatedRoute) {
+      return res.status(400).json({ message: "Something went wrong" });
+    }
 
     return res.status(200).json({ message: "Success", ...updatedShipment });
   } catch (error) {
@@ -216,6 +241,7 @@ export const handleLoadMoreShipments = async (
       OwnerRef: req.userId,
     })
       .limit(limit)
+      .sort({ _id: -1 })
       .skip(startIndex)
       .select("-OwnerRef -__v");
     return res.status(200).json({ message: "Success", shipments });

@@ -5,6 +5,8 @@ interface PositionLatLng {
 }
 
 export interface ShipmentDocument {
+  updatedAt: any;
+  createdAt: any;
   _id: mongoose.Types.ObjectId;
   save?: any;
   OwnerRef: mongoose.Types.ObjectId;
@@ -21,7 +23,7 @@ export interface ShipmentDocument {
   note: string;
 }
 
-const shipmentSchema = new mongoose.Schema<ShipmentDocument>(
+export const shipmentSchema = new mongoose.Schema<ShipmentDocument>(
   {
     OwnerRef: {
       type: mongoose.Schema.Types.ObjectId,
