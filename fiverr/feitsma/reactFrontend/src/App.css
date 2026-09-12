@@ -1,0 +1,81 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* 1. Standard properties for Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4a5568 #063b83;
+}
+
+/* 2. Webkit properties for Chrome, Safari, and Edge */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the vertical scrollbar */
+  height: 10px; /* Height of the horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #1a202c; /* Background of the scrollbar track */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a5568; /* Color of the scrollable handle */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5d85c1; /* Color when hovering over the handle */
+}
+
+/* Base wrapper styling */
+input[type="date"] {
+  background-color: #f8fafc;
+  color: #0f172a;
+  padding: 3px 4px;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Change input border on focus */
+input[type="date"]:focus {
+  border-color: #3b82f6;
+  background-color: #ffffff;
+}
+
+/* Style the internal text fields */
+input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  padding: 2px;
+}
+
+/* Style the text splitters (slashes/dashes) */
+input[type="date"]::-webkit-datetime-edit-text {
+  color: #64748b;
+  padding: 0 4px;
+}
+
+/* Customize the native calendar icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: #e2e8f0;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Icon hover effect */
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  background-color: #cbd5e1;
+}
