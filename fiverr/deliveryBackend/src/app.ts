@@ -47,13 +47,6 @@ app.use(limiter);
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Welcome to Express with TypeScript!" });
 });
-// app.get("/api/test", async (req: Request, res: Response) => {
-//   const coords = await getDistanceTime(
-//     "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
-//     "Westhavenweg 120, 1042 BB Amsterdam, Netherlands",
-//   );
-//   res.json(coords);
-// });
 // User Routes
 app.use("/api/users", userRoutes);
 app.use("/api/maps", mapRoutes);
