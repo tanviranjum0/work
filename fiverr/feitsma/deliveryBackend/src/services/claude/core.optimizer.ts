@@ -54,6 +54,14 @@ const SAFETY_ITERATION_FLOOR = 20;
  * bounded local-search improvement → final feasibility validation. No
  * permutation search, no recursion — everything here is polynomial in the
  * number of shipments.
+ *
+ * Urgent shipments (isUrgent: true) are an absolute priority: every
+ * candidate the loop considers is drawn exclusively from whatever urgent
+ * shipments remain until none are left, and warehouse visits triggered
+ * while urgent shipments remain are sized/targeted only at unblocking
+ * those. improveRoute's local-search pass is separately guarded (see
+ * improvement.service.ts) so it can never reorder a non-urgent stop ahead
+ * of an urgent one afterward.
  */
 export const constructRoute = ({
   mode,
@@ -111,11 +119,22 @@ export const constructRoute = ({
       iterations += 1;
 
       const remainingList = Array.from(remaining.values());
-      const shipmentCandidates = buildShipmentCandidates(remainingList);
+
+      // Urgent shipments are an absolute priority, not just a scoring
+      // boost: as long as any urgent shipment is still incomplete, every
+      // candidate-generation, scoring, and warehouse-targeting step below
+      // only considers urgent shipments — non-urgent ones are invisible to
+      // the optimizer until every urgent shipment has been delivered or
+      // collected. Only once none remain does it fall back to the normal
+      // full pool.
+      const hasUrgentRemaining = remainingList.some((s) => s.isUrgent);
+      const priorityPool = hasUrgentRemaining ? remainingList.filter((s) => s.isUrgent) : remainingList;
+
+      const shipmentCandidates = buildShipmentCandidates(priorityPool);
       const scoredShipments = scoreCandidates(
         shipmentCandidates,
         vehicleState,
-        remainingList,
+        priorityPool,
         vehicleCapacity,
         distanceCalc,
         now,
@@ -146,21 +165,24 @@ export const constructRoute = ({
         }
       }
 
-      // Nothing directly executable — see whether a depot visit unblocks anything.
+      // Nothing directly executable — see whether a depot visit unblocks
+      // anything. Sized/targeted against the same priorityPool, so a
+      // warehouse visit triggered while urgent shipments remain is aimed
+      // at unblocking those, not at batching in non-urgent demand.
       const projected = projectUpcomingOrder(
-        remainingList,
+        priorityPool,
         vehicleState.currentLocation,
       );
       const refillCandidate = maybeBuildRefillCandidate(
         vehicleState,
-        remainingList,
+        priorityPool,
         projected,
         vehicleCapacity,
         warehouseShipment,
       );
       const unloadCandidate = maybeBuildUnloadCandidate(
         vehicleState,
-        remainingList,
+        priorityPool,
         projected,
         vehicleCapacity,
         warehouseShipment,
@@ -173,7 +195,7 @@ export const constructRoute = ({
         const scoredWarehouse = scoreCandidates(
           warehouseCandidates,
           vehicleState,
-          remainingList,
+          priorityPool,
           vehicleCapacity,
           distanceCalc,
           now,

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Shipment from "../models/Shipment.js";
 import Route from "../models/Route.js";
-import { createOptimizedRouteHandler } from "../services/efficientRoute.service.js";
+// import { createOptimizedRouteHandler } from "../services/efficientRoute.service.js";
 import { UserRequest } from "./shipment.controller.js";
 import { createOptimizedRoute } from "../services/claude/route.handler.js";
 
@@ -65,7 +65,7 @@ export const handleStartOptimizeRoute = async (
       ids.push(s._id);
     });
     const data = await Shipment.updateMany(
-      { _id: { $in: ids }, OwnerRef: req.userId },
+      { _id: { $in: ids.map((id: any) => id) }, OwnerRef: req.userId },
       { $set: { status: "transit" } },
     );
     res.status(200).json({ message: "Success" });
@@ -74,10 +74,14 @@ export const handleStartOptimizeRoute = async (
   }
 };
 
-export const handleCreateNewOptimizedRoute = (req: Request, res: Response) => {
+export const handleCreateNewOptimizedRoute = (
+  req: Request,
+  res: Response,
+  next: () => void,
+) => {
   try {
     // createOptimizedRouteHandler(req, res);
-    createOptimizedRoute(req, res);
+    createOptimizedRoute(req, res, next);
   } catch (err) {
     res.status(500).json({ Error: err });
   }
@@ -210,7 +214,8 @@ export const handleDeleteRoute = async (req: UserRequest, res: Response) => {
     const shipmentIds = route[0].shipments.map((s: any) => s._id);
     if (route[0].status === "completed") {
       await Shipment.deleteMany({
-        _id: { $in: shipmentIds },
+        _id: { $in: shipmentIds.map((id: any) => id) },
+
         OwnerRef: req.userId,
       });
       await Route.findByIdAndDelete(id);
@@ -220,7 +225,8 @@ export const handleDeleteRoute = async (req: UserRequest, res: Response) => {
       });
     } else {
       await Shipment.deleteMany({
-        _id: { $in: shipmentIds },
+        _id: { $in: shipmentIds.map((id: any) => id) },
+
         status: "delivered",
         OwnerRef: req.userId,
       });
@@ -229,12 +235,15 @@ export const handleDeleteRoute = async (req: UserRequest, res: Response) => {
       // but left as-is here since removing it last time was likely
       // part of what broke things.
       await Shipment.deleteMany({
-        _id: { $in: shipmentIds },
-        deliveryAddress: "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands",
+        _id: { $in: shipmentIds.map((id: any) => id) },
+        isWarehouse: true,
         OwnerRef: req.userId,
       });
       await Shipment.updateMany(
-        { _id: { $in: shipmentIds }, OwnerRef: req.userId },
+        {
+          _id: { $in: shipmentIds.map((id: any) => id) },
+          OwnerRef: req.userId,
+        },
         { $set: { status: "pending" } },
       );
       await Route.findByIdAndDelete(id);

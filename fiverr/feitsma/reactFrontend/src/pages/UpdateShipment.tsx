@@ -806,11 +806,13 @@ function StepReview({
   form,
   onBack,
   onConfirm,
+  loading,
 }: {
   error: string;
   form: FormState;
   onBack: () => void;
   onConfirm: () => void;
+  loading: boolean;
 }) {
   return (
     <div className="card">
@@ -866,8 +868,12 @@ function StepReview({
         <button className="btn-outline" onClick={onBack}>
           Back
         </button>
-        <button className="btn-primary confirm-btn" onClick={onConfirm}>
-          Confirm Shipment
+        <button
+          disabled={loading}
+          className="btn-primary confirm-btn"
+          onClick={onConfirm}
+        >
+          {loading ? "Processing..." : "Confirm Shipment"}
         </button>
       </div>
     </div>
@@ -933,7 +939,7 @@ function SuccessScreen({
 export default function UpdateShipment() {
   const [step, setStep] = useState<Step>(1);
   const [confirmed, setConfirmed] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const localForm =
     typeof window !== "undefined"
       ? localStorage.getItem("shipmentForUpdate")
@@ -975,8 +981,11 @@ export default function UpdateShipment() {
     }
   };
   const handleSubmit = async () => {
+    setLoading(true);
     if (!form.deliverySelected) {
       setError("Please provide a valid delivery location.");
+      setLoading(false);
+
       setStep(1);
       return;
     }
@@ -984,10 +993,14 @@ export default function UpdateShipment() {
     if (!form.boxQuantity || !form.shipmentType) {
       setError("Put valid shipment tyre or quantity");
       setStep(3);
+      setLoading(false);
+
       return;
     }
     if (!form.clientName || !form.clientPhoneNumber || !form.deliveryShift) {
       setError("PLease put all client details correctly");
+      setLoading(false);
+
       setStep(2);
       return;
     }
@@ -1007,6 +1020,8 @@ export default function UpdateShipment() {
     });
     const data = await result.json();
     if (!result.ok) {
+      setLoading(false);
+
       if (data.message == "Unauthorized: Invalid token") {
         router("/login");
       }
@@ -1014,6 +1029,7 @@ export default function UpdateShipment() {
     } else {
       router("/shipments");
     }
+    setLoading(false);
   };
   useEffect(() => {
     const cachedUser = localStorage.getItem("user");
@@ -1064,6 +1080,7 @@ export default function UpdateShipment() {
                   form={form}
                   onBack={back}
                   onConfirm={handleSubmit}
+                  loading={loading}
                 />
               )}
             </>

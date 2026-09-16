@@ -513,7 +513,6 @@ export default function Home() {
       credentials: "include",
     });
     const data = await result.json();
-    // console.log(data);
     if (result.ok) {
       setKpis([
         {

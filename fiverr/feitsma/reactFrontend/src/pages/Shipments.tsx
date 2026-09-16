@@ -485,8 +485,9 @@ export default function Shipments() {
           router("/login");
         }
         if (result.ok) {
-          setShipments((list) => list.filter((s) => s._id !== id));
+          // setShipments((list) => list.filter((s) => s._id !== id));
           pushToast("success", `Successfully deleted shipment id: ${id}`);
+          window.location.reload();
         }
       });
     } else {

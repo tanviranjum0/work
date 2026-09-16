@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 
 // Adjust these two imports to match where your Shipment and Route models
 // actually live in the project.
-import Shipment, { shipmentSchema } from "../../models/Shipment.js";
+import Shipment from "../../models/Shipment.js";
 import Route from "../../models/Route.js";
 
 import {
@@ -19,17 +19,43 @@ import {
   ShipmentDocument,
 } from "./types.js";
 
-const sendFailure = (
-  res: Response,
-  status: number,
-  message: string,
-): Response => res.status(status).json({ success: false, message });
+export type RequestWithRouteOptions = Request & {
+  userId?: string;
+  /** Set this to true (before calling createOptimizedRoute, or in an
+   * earlier middleware) to build and save the route without sending an
+   * HTTP response. The handler still validates, builds, and persists the
+   * route exactly as normal — it just hands the result to `next()` on
+   * `req.routeCreationResult` instead of writing to `res`, so a
+   * downstream handler in the same middleware chain can pick up from
+   * there and send its own response once it's done its own work. */
+  doNotReturn?: boolean;
+  routeCreationResult?: RouteCreationResult;
+};
+
+export interface RouteCreationResult {
+  success: boolean;
+  status: number;
+  message: string;
+  route?: unknown; // the created Mongoose Route document — only present when success is true
+}
 
 const NUMBERED_ROUTE_STATUS = "scheduled";
 const MIXED_ROUTE_STATUS = "scheduled"; // single-pass mixed routes are complete as soon as they're built — adjust to match your actual status enum
 const SHIPMENT_STATUS = "pending";
+
+const fail = (status: number, message: string): RouteCreationResult => ({
+  success: false,
+  status,
+  message,
+});
+
 /**
- * Thin Express handler:
+ * All the actual route-building work, decoupled from Express's res: every
+ * exit path returns a RouteCreationResult instead of writing to a
+ * response. createOptimizedRoute below is the only place that decides
+ * whether that result becomes an HTTP response or a handoff to next().
+ *
+ * Pipeline:
  *   validate request
  *   → determine/generate route number
  *   → load candidate shipments
@@ -38,17 +64,12 @@ const SHIPMENT_STATUS = "pending";
  *   → materialize a real Shipment for each mid-route depot visit (initial
  *     load excluded — that's plain Route metadata, not a stop)
  *   → save Route with the exact ordered shipment documents
- *   → return response
- *
- * All the actual routing logic lives alongside this file in
- * services/routeOptimizer/.
  */
-export const createOptimizedRoute = async (
-  req: Request & { userId?: string },
-  res: Response,
-): Promise<Response> => {
+const buildRoute = async (
+  req: RequestWithRouteOptions,
+): Promise<RouteCreationResult> => {
   if (!req.userId) {
-    return sendFailure(res, 401, "Not authenticated");
+    return fail(401, "Not authenticated");
   }
 
   const body = req.body as Partial<RouteRequestBody>;
@@ -57,11 +78,7 @@ export const createOptimizedRoute = async (
   // 1. validate request --------------------------------------------------
   const requestValidation = validateRequestBody(body);
   if (!requestValidation.valid) {
-    return sendFailure(
-      res,
-      400,
-      requestValidation.errors[0] ?? "Invalid request",
-    );
+    return fail(400, requestValidation.errors[0] ?? "Invalid request");
   }
 
   const { vehicleCapacity, deliveryShift, routeType, userId } =
@@ -91,7 +108,6 @@ export const createOptimizedRoute = async (
         : {
             OwnerRef: ownerId,
             status: "pending",
-            deliveryShift,
             routeNumber,
             isWarehouse: { $ne: true },
           };
@@ -101,11 +117,7 @@ export const createOptimizedRoute = async (
     ).lean()) as unknown as ShipmentDocument[];
 
     if (candidateShipments.length === 0) {
-      return sendFailure(
-        res,
-        422,
-        "No eligible shipments were found for this request",
-      );
+      return fail(422, "No eligible shipments were found for this request");
     }
 
     const shipmentErrors = candidateShipments.flatMap(
@@ -116,7 +128,7 @@ export const createOptimizedRoute = async (
         "Route generation: invalid candidate shipments",
         shipmentErrors,
       );
-      return sendFailure(res, 422, "Unable to create a feasible route");
+      return fail(422, "Unable to create a feasible route");
     }
 
     // 4. select optimizer + 5. receive optimized route ---------------------
@@ -141,7 +153,7 @@ export const createOptimizedRoute = async (
         routeNumber,
         unassignedShipmentIds: result.unassignedShipmentIds,
       });
-      return sendFailure(res, 422, "Unable to create a feasible route");
+      return fail(422, "Unable to create a feasible route");
     }
 
     const routeStatus =
@@ -179,7 +191,7 @@ export const createOptimizedRoute = async (
         "Route generation: failed to create warehouse visit shipments",
         warehouseError,
       );
-      return sendFailure(res, 500, "Unable to create a feasible route");
+      return fail(500, "Unable to create a feasible route");
     }
 
     // 7. assemble the exact, ordered shipment documents for the Route -------
@@ -213,13 +225,7 @@ export const createOptimizedRoute = async (
     const totalBoxes = candidateShipments
       .filter((s) => assignedCustomerShipmentIds.includes(s._id.toString()))
       .reduce((sum, s) => sum + s.boxQuantity, 0);
-    await Shipment.updateMany(
-      { _id: { $in: candidateShipments.map((s) => s._id) } },
-      { $set: { status: "transit" } },
-    );
-    orderedShipments.map((s) => {
-      s.status = "transit";
-    });
+
     // 8. save Route -----------------------------------------------------------
     let route;
     try {
@@ -256,17 +262,65 @@ export const createOptimizedRoute = async (
       }
       throw routeError;
     }
-
+    await Shipment.updateMany(
+      { _id: { $in: assignedCustomerShipmentIds.map((s) => s) } },
+      { $set: { status: "transit" } },
+    );
     // Keep customer shipment assignments consistent with the route number
     // (section 34) — mixed routes pull from the unassigned pool, so tag
     // whichever ones were actually used.
+    if (routeType === "mixed" && assignedCustomerShipmentIds.length > 0) {
+      await Shipment.updateMany(
+        {
+          _id: {
+            $in: assignedCustomerShipmentIds.map(
+              (id) => new mongoose.Types.ObjectId(id),
+            ),
+          },
+        },
+        { $set: { routeNumber } },
+      );
+    }
 
-    // 9. return response -------------------------------------------------
-    return res
-      .status(201)
-      .json({ success: true, message: "Route created successfully", route });
+    // 9. return the result --------------------------------------------------
+    return {
+      success: true,
+      status: 201,
+      message: "Route created successfully",
+      route,
+    };
   } catch (error) {
     console.error("Route generation failed", error);
-    return sendFailure(res, 500, "Unable to create a feasible route");
+    return fail(500, "Unable to create a feasible route");
   }
+};
+
+/**
+ * Thin Express handler. Runs buildRoute above, then either:
+ *   - sends the normal HTTP response (the default — nothing changes for
+ *     any existing caller), or
+ *   - if req.doNotReturn is true, skips res entirely: stashes the result
+ *     on req.routeCreationResult and calls next(), so this can sit in the
+ *     middle of a middleware chain and let a later handler take it from
+ *     there and send its own response once it's finished its own work.
+ */
+export const createOptimizedRoute = async (
+  req: RequestWithRouteOptions,
+  res: Response,
+  next: NextFunction,
+): Promise<Response | void> => {
+  const result = await buildRoute(req);
+
+  if (req.doNotReturn) {
+    req.routeCreationResult = result;
+    return next();
+  }
+
+  return result.success
+    ? res
+        .status(result.status)
+        .json({ success: true, message: result.message, route: result.route })
+    : res
+        .status(result.status)
+        .json({ success: false, message: result.message });
 };

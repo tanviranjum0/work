@@ -6,8 +6,8 @@ import {
   getDistanceTime,
 } from "../services/map.service.js";
 import Route from "../models/Route.js";
-import { createOptimizedRouteHandler } from "../services/efficientRoute.service.js";
 import { handleDeleteRoute } from "./optimizedRoute.controller.js";
+import { createOptimizedRoute } from "../services/claude/route.handler.js";
 export interface UserRequest extends Request {
   userId: string;
   routeNumber?: string;
@@ -15,6 +15,7 @@ export interface UserRequest extends Request {
   deliveryShift?: string;
   vehicleCapacity?: number;
   routeType?: string;
+  doNotReturn?: boolean;
   routeToBeDeleted?: mongoose.Types.ObjectId;
 }
 const DEPOT = {
@@ -25,6 +26,7 @@ const DEPOT = {
 export const handleCreateNewShipment = async (
   req: UserRequest,
   res: Response,
+  next: () => void,
 ) => {
   try {
     const {
@@ -66,6 +68,8 @@ export const handleCreateNewShipment = async (
       });
       if (existingRoute) {
         req.body = {};
+        delete req.params.id;
+
         req.routeToBeDeleted = existingRoute._id;
         req.onlyDelete = true;
         await handleDeleteRoute(req, res);
@@ -73,13 +77,11 @@ export const handleCreateNewShipment = async (
         req.body.vehicleCapacity = existingRoute.vehicleCapacity.toString();
         req.body.routeType = "number";
         req.body.routeNumber = existingRoute.routeNumber;
-        return createOptimizedRouteHandler(req, res);
-      } else {
-        return res.status(201).json({ message: "Success", shipment });
+        req.doNotReturn = true;
+        await createOptimizedRoute(req, res, next);
       }
-    } else {
-      return res.status(201).json({ message: "Success", shipment });
     }
+    return res.status(201).json({ message: "Success", shipment });
   } catch (err: any) {
     console.log(err.message);
     res.status(400).json({ message: "Something went wrong" });
@@ -91,7 +93,6 @@ export const handleInitialHomePageLoad = async (
   res: Response,
 ) => {
   try {
-    // console.log(req.userId);
     const total = await Shipment.countDocuments({ OwnerRef: req.userId });
     const pendingCount = await Shipment.countDocuments({
       OwnerRef: req.userId,
@@ -192,6 +193,7 @@ export const handleGetInitialShipments = async (
 export const handleDeleteOneShipment = async (
   req: UserRequest,
   res: Response,
+  next: () => void,
 ) => {
   try {
     const shipmentId =
@@ -200,14 +202,38 @@ export const handleDeleteOneShipment = async (
     if (!shipmentId) {
       return res.status(400).json({ message: "Shipment id is required." });
     }
+    const shipment = await Shipment.findById(shipmentId).lean().exec();
+    if (!shipment) {
+      return res.status(400).json({ message: "Shipment not found." });
+    }
 
     const result = await Shipment.deleteOne({
       OwnerRef: req.userId,
       _id: shipmentId,
     });
+
     if (result.deletedCount === 0) {
       return res.status(404).json({ message: "Shipment not found" });
     } else {
+      if (shipment.routeNumber) {
+        const existingRoute = await Route.findOne({
+          routeNumber: shipment.routeNumber,
+          OwnerRef: req.userId,
+        });
+        if (existingRoute) {
+          delete req.params.id;
+          req.body = {};
+          req.routeToBeDeleted = existingRoute._id;
+          req.onlyDelete = true;
+          await handleDeleteRoute(req, res);
+          req.body.deliveryShift = existingRoute.deliveryShift;
+          req.body.vehicleCapacity = existingRoute.vehicleCapacity.toString();
+          req.body.routeType = "number";
+          req.body.routeNumber = existingRoute.routeNumber;
+          req.doNotReturn = true;
+          await createOptimizedRoute(req, res, next);
+        }
+      }
       return res.status(200).json({ message: "Success" });
     }
   } catch (error) {
@@ -302,7 +328,11 @@ export const handleLoadMoreShipments = async (
   }
 };
 
-export const handleShipmentUpdate = async (req: UserRequest, res: Response) => {
+export const handleShipmentUpdate = async (
+  req: UserRequest,
+  res: Response,
+  next: () => void,
+) => {
   try {
     const shipment = await Shipment.findById(req.body._id).lean().exec();
     if (!shipment) {
@@ -322,11 +352,13 @@ export const handleShipmentUpdate = async (req: UserRequest, res: Response) => {
       deliverySelected,
       boxQuantity: req.body.boxQuantity,
       clientName: req.body.clientName,
+      isUrgent: req.body.isUrgent,
       clientPhoneNumber: req.body.cellPhoneNumber,
       deliveryShift: req.body.deliveryShift,
       shipmentType: req.body.shipmentType,
       note: req.body.note,
     };
+
     if (req.body.routeNumber) {
       updated.routeNumber = req.body.routeNumber;
     }
@@ -336,7 +368,25 @@ export const handleShipmentUpdate = async (req: UserRequest, res: Response) => {
     if (!updatedShipment) {
       return res.status(200).json({ message: "Something went wrong" });
     }
-
+    if (req.body.routeNumber) {
+      const existingRoute = await Route.findOne({
+        routeNumber: req.body.routeNumber,
+        OwnerRef: req.userId,
+      });
+      if (existingRoute) {
+        req.body = {};
+        delete req.params.id;
+        req.routeToBeDeleted = existingRoute._id;
+        req.onlyDelete = true;
+        await handleDeleteRoute(req, res);
+        req.body.deliveryShift = existingRoute.deliveryShift;
+        req.body.vehicleCapacity = existingRoute.vehicleCapacity.toString();
+        req.body.routeType = "number";
+        req.body.routeNumber = existingRoute.routeNumber;
+        req.doNotReturn = true;
+        await createOptimizedRoute(req, res, next);
+      }
+    }
     return res
       .status(200)
       .json({ message: "Success", shipment: updatedShipment });

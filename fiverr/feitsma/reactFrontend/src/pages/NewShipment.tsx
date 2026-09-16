@@ -767,11 +767,13 @@ function StepReview({
   form,
   onBack,
   onConfirm,
+  loading,
 }: {
   error: string;
   form: FormState;
   onBack: () => void;
   onConfirm: () => void;
+  loading: boolean;
 }) {
   return (
     <div className="card">
@@ -828,8 +830,12 @@ function StepReview({
         <button className="btn-outline" onClick={onBack}>
           Back
         </button>
-        <button className="btn-primary confirm-btn" onClick={onConfirm}>
-          Confirm Shipment
+        <button
+          disabled={loading}
+          className="btn-primary confirm-btn"
+          onClick={onConfirm}
+        >
+          {loading ? "Processing..." : "Confirm Shipment"}
         </button>
       </div>
     </div>
@@ -1024,6 +1030,7 @@ export default function NewShipment() {
                   form={form}
                   onBack={back}
                   onConfirm={handleSubmit}
+                  loading={loading}
                 />
               )}
             </>

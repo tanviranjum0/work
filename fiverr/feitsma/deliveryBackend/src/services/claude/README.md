@@ -1,7 +1,60 @@
-# Route optimizer — integration notes (v6)
+# Route optimizer — integration notes (v7)
 
 Type-checked with `tsc --strict --noUnusedLocals --noUnusedParameters` against
 real `mongoose`/`express` type packages before delivery — no compiler errors.
+
+## What changed in v7 — urgent shipments are now an absolute priority
+
+Two files changed: `core.optimizer.ts` (numbered routes) and
+`improvement.service.ts` (shared by both route types). `mixedRoute.optimizer.ts`
+didn't need construction-phase changes — its ranking already gave urgent
+shipments an overwhelming boost — but it inherits the `improvement.service.ts`
+fix automatically since it calls the same function.
+
+Previously, `isUrgent: true` only added a heavy scoring bonus (+500) —
+strong, but not absolute: a shipment far enough away could still lose to a
+very close non-urgent one on total score. And even when an urgent shipment
+was picked first, the post-construction 2-opt/relocate distance-cleanup
+pass had no concept of urgency at all, so it could freely reorder a
+closer non-urgent stop ahead of it.
+
+Two changes close both gaps:
+
+- **`core.optimizer.ts`**: as long as any urgent shipment remains
+  incomplete, every candidate-generation, scoring, and warehouse-sizing
+  step in that iteration only sees urgent shipments — non-urgent ones are
+  invisible until every urgent one is done. Only then does it fall back
+  to the normal full pool.
+- **`improvement.service.ts`**: added `preservesUrgencyOrder`, checked
+  alongside the existing capacity check before accepting any 2-opt or
+  relocate move. A reordering that would put a non-urgent stop ahead of
+  an urgent one is simply rejected, full stop. Since both
+  `core.optimizer.ts` and `mixedRoute.optimizer.ts` call this same
+  `improveRoute`, this one fix covers both route types.
+
+Verified with a scenario built to break the old behavior: one urgent
+shipment far from the depot, three close non-urgent ones. Both route
+types now deliver the urgent one first despite the distance — previously
+the close ones would have won.
+
+## Two things worth flagging, since this interacts with earlier rules
+
+- **Mixed routes are still capped at 3 and still never touch the
+  warehouse** (from the last round) — urgency now decides *which* 3 (or
+  fewer) get the seats and guarantees their order, but if there are more
+  than 3 urgent shipments, or an urgent one would only fit with a
+  warehouse stop, it can still be left out. If you want urgent shipments
+  to override either of those limits, that's a further change, not
+  something this fix does on its own.
+- **Batching efficiency tradeoff for numbered routes**: when a warehouse
+  visit is needed while urgent shipments remain, it's now sized only
+  against remaining urgent demand, not blended with upcoming non-urgent
+  demand the way batching normally works. That can mean one extra
+  warehouse visit split across the urgent/non-urgent boundary, in
+  exchange for guaranteeing urgent shipments never wait on a refill sized
+  for something else.
+
+
 
 ## What changed in v6 — mixed routes are now a separate, simpler algorithm
 
@@ -21,7 +74,7 @@ algorithm:
   the depot, staleness as a tiebreaker), and the walk keeps at most 3.
 - **Single pass, no backtracking.** Each candidate is tried once, in rank
   order. A candidate is kept only if the route stays capacity-feasible for
-  _some_ initial load between 0 and `vehicleCapacity` with it included —
+  *some* initial load between 0 and `vehicleCapacity` with it included —
   checked via the same running-trough/peak math used for exact refill
   sizing on the numbered-route side, just with no refill available to fall
   back on. If it doesn't fit, it's skipped and the walk moves to the next
@@ -34,8 +87,8 @@ algorithm:
 Distance still gets the same 2-opt/relocate polish pass as before (safe
 here too, for the same reason it's safe elsewhere: reordering a fixed set
 of shipments never changes the entry/exit load, only whether the
-_specific_ new order stays feasible, which is checked before accepting
-it) — "single pass" refers to the _selection_ not backtracking, not to
+*specific* new order stays feasible, which is checked before accepting
+it) — "single pass" refers to the *selection* not backtracking, not to
 skipping the cheap distance cleanup afterward.
 
 Verified two ways: a run against 12 real candidate shipments (capped at
@@ -48,6 +101,8 @@ calls it anymore — but it's left in place rather than removed, since
 `routeType="number"` was explicitly called out as working and not to be
 risked. Worth pruning later if you're sure you won't want the old
 warehouse-aware mixed-route behavior back.
+
+
 
 ## What changed in v5 — no shipment for the initial load
 
@@ -72,11 +127,13 @@ filtering logic: the persisted stop list now starts with the first
 customer shipment, and no stop with `reason: "initial-load"` appears in
 it.
 
+
+
 ## What changed in v4 — refill sizing was over-counting
 
 Only `depot.service.ts` changed this round, fixing a real bug in the v3
 batching logic: `maybeBuildRefillCandidate` projected total future demand
-correctly, but then used that _total_ directly as the refill quantity
+correctly, but then used that *total* directly as the refill quantity
 instead of subtracting the load already on the truck. Concretely: 25 boxes
 on board, two deliveries ahead needing 115 + 120 = 235 → it refilled by
 235 (capped to 215 by headroom) instead of the correct 235 − 25 = 210.
@@ -88,7 +145,6 @@ amount, mirroring the pattern `maybeBuildUnloadCandidate` already used
 correctly (track absolute load, compare against capacity at the peak).
 
 Verified two ways:
-
 - A direct unit test of your exact reported numbers (25 on board, 115 +
   120 ahead): refill quantity is now **210**, not 215, and the truck lands
   at exactly 0 after both deliveries.
@@ -96,6 +152,8 @@ Verified two ways:
   bug at its second refill point (75 instead of the correct 10), leaving
   65 unused boxes on the truck at the end of the route. Same fix, same
   route/distance, but it now finishes at exactly 0.
+
+
 
 ## What changed from v1
 
@@ -112,7 +170,7 @@ shipment documents — matching what you'd already fixed by hand.
 `core.optimizer.ts`, `depot.service.ts`, `capacity.service.ts`,
 `scoring.service.ts`, `candidate.service.ts`, `improvement.service.ts`,
 `distance.service.ts`, `mixedRoute.optimizer.ts`, `numberedRoute.optimizer.ts`,
-and `types.ts` needed **no changes** — they only ever needed _a_
+and `types.ts` needed **no changes** — they only ever needed *a*
 `ShipmentDocument`-shaped object to represent the depot during construction,
 not specifically a persisted one. So the optimizer now gets a throwaway,
 never-saved template (`buildWarehouseTemplate`); the real per-visit records
@@ -153,12 +211,7 @@ second warehouse stop of any route. Use a plain (non-unique) index instead,
 just for the candidate-query exclusion filter:
 
 ```ts
-shipmentSchema.index({
-  OwnerRef: 1,
-  routeNumber: 1,
-  deliveryShift: 1,
-  isWarehouse: 1,
-});
+shipmentSchema.index({ OwnerRef: 1, routeNumber: 1, deliveryShift: 1, isWarehouse: 1 });
 shipmentSchema.index({ OwnerRef: 1, deliveryShift: 1, status: 1 });
 ```
 
@@ -189,7 +242,7 @@ the request body.
 - **`Route.shipments`** is now populated with the actual shipment documents
   (plain objects with `_id`), in exact route order — not bare `ObjectId`
   refs. This works whether your schema field is `[{ type: ObjectId, ref:
-'Shipment' }]` (Mongoose reads `_id` off each object) or an embedded
+  'Shipment' }]` (Mongoose reads `_id` off each object) or an embedded
   subdocument array — but if it's something else, adjust the
   `orderedShipments` assembly in `route.handler.ts` accordingly.
 - **Warehouse-visit shipment fields** (`clientPhoneNumber`, `pickupAddress`,
@@ -222,6 +275,6 @@ termination rule differ) — duplicating it would've meant keeping two
 
 Every place a warehouse operation size is computed
 (`maybeBuildRefillCandidate` / `maybeBuildUnloadCandidate` in
-`depot.service.ts`) anchors on _remaining_ capacity (`vehicleCapacity -
+`depot.service.ts`) anchors on *remaining* capacity (`vehicleCapacity -
 currentLoad`), not full `vehicleCapacity` — so this shouldn't reproduce the
 capping bug from the Distance-Matrix version of `efficientRoute.service.ts`.

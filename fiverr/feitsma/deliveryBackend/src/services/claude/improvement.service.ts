@@ -86,6 +86,26 @@ const isReorderFeasible = (
   return true;
 };
 
+/**
+ * Urgent shipments must stay ahead of every non-urgent one — not just
+ * scored higher, but never reordered behind one. A candidate reordering
+ * is rejected here the moment any stop appears after a non-urgent stop
+ * while itself being urgent, i.e. the moment the urgent stops stop being
+ * a clean prefix of the segment.
+ */
+const preservesUrgencyOrder = (stops: GeneratedRouteStop[]): boolean => {
+  let seenNonUrgent = false;
+
+  for (const stop of stops) {
+    const isUrgent = stop.shipment?.isUrgent === true;
+
+    if (isUrgent && seenNonUrgent) return false;
+    if (!isUrgent) seenNonUrgent = true;
+  }
+
+  return true;
+};
+
 const recomputeStops = (
   entryLoad: number,
   stops: GeneratedRouteStop[],
@@ -161,7 +181,8 @@ const run2Opt = (
 
         if (
           candidateDistance < bestDistance - EPSILON &&
-          isReorderFeasible(entryLoad, candidate, vehicleCapacity)
+          isReorderFeasible(entryLoad, candidate, vehicleCapacity) &&
+          preservesUrgencyOrder(candidate)
         ) {
           current = candidate;
           bestDistance = candidateDistance;
@@ -211,7 +232,8 @@ const runRelocate = (
 
         if (
           candidateDistance < bestDistance - EPSILON &&
-          isReorderFeasible(entryLoad, candidate, vehicleCapacity)
+          isReorderFeasible(entryLoad, candidate, vehicleCapacity) &&
+          preservesUrgencyOrder(candidate)
         ) {
           current = candidate;
           bestDistance = candidateDistance;
@@ -230,8 +252,11 @@ const runRelocate = (
  * Runs the local-improvement pass (2-opt then relocate) over every
  * depot-bounded segment of the route (section 29) and returns the improved
  * stop list plus the recomputed total distance. Never changes which
- * shipments are included, never reorders across a depot stop, and never
- * touches depot stops themselves.
+ * shipments are included, never reorders across a depot stop, never
+ * touches depot stops themselves, and never moves a non-urgent stop ahead
+ * of an urgent one — see preservesUrgencyOrder above. This is what keeps
+ * urgent-first intact after construction for both route types, since both
+ * mixedRoute.optimizer.ts and core.optimizer.ts call this same function.
  */
 export const improveRoute = (
   stops: GeneratedRouteStop[],
