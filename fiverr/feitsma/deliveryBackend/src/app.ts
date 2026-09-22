@@ -20,9 +20,12 @@ dns.setServers(["8.8.8.8", "8.8.4.4", "1.1.1.1"]);
 const app: Application = express();
 const MONGO_URL = process.env.MONGO_URL;
 
-// Connect to Database
-connectDB(MONGO_URL || "mongodb://localhost:27017/deliveryDB");
+if (!MONGO_URL) {
+  throw new Error("MONGO_URL environment variable is required");
+}
 
+// Connect to Database
+connectDB(MONGO_URL);
 
 // 1. Trust proxy (must be early)
 app.set("trust proxy", 1);
@@ -59,11 +62,11 @@ app.use(
 );
 
 // 3. CORS (single configuration)
-const allowedOrigins =[process.env.FRONTEND_URL || "http://localhost:4000"];
+// const allowedOrigins = [process.env.FRONTEND_URL];
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: process.env.FRONTEND_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
