@@ -1,0 +1,630 @@
+import { useNavigate } from "react-router-dom";
+import { useState, type FormEvent, type ChangeEvent, type JSX } from "react";
+import useCooldownTimer from "../hooks/useCooldownTimer";
+import { Link } from "react-router-dom";
+
+/* ─── Types ─────────────────────────────────────────────────────────────── */
+
+interface InputFieldProps {
+  id: string;
+  label: string;
+  type: string;
+  placeholder: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  autoComplete?: string;
+  required?: boolean;
+  rightSlot?: JSX.Element;
+}
+
+/* ─── Icons ─────────────────────────────────────────────────────────────── */
+
+function FeitsmaVerhuizingenLogo(): JSX.Element {
+  return (
+    <svg
+      width={34}
+      height={34}
+      viewBox="0 0 34 34"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width={34} height={34} rx={8} fill="#1B3FAB" />
+      {/* box body */}
+      <rect
+        x={7}
+        y={13}
+        width={20}
+        height={13}
+        rx={1.5}
+        fill="#fff"
+        fillOpacity={0.95}
+      />
+      {/* box flap */}
+      <path d="M7 16h20" stroke="#1B3FAB" strokeWidth={1.2} />
+      <path
+        d="M14 13v3M20 13v3"
+        stroke="#1B3FAB"
+        strokeWidth={1.2}
+        strokeLinecap="round"
+      />
+      {/* arrow */}
+      <path
+        d="M12 20h10M18 17.5l2.5 2.5L18 22.5"
+        stroke="#1B3FAB"
+        strokeWidth={1.3}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function EyeIcon(): JSX.Element {
+  return (
+    <svg
+      width={16}
+      height={16}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+      <circle cx={12} cy={12} r={3} />
+    </svg>
+  );
+}
+
+function EyeOffIcon(): JSX.Element {
+  return (
+    <svg
+      width={16}
+      height={16}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94" />
+      <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19" />
+      <line x1={1} y1={1} x2={23} y2={23} />
+    </svg>
+  );
+}
+
+/* ─── InputField ─────────────────────────────────────────────────────────── */
+
+function InputField({
+  id,
+  label,
+  type,
+  placeholder,
+  value,
+  onChange,
+  autoComplete,
+  required,
+  rightSlot,
+}: InputFieldProps): JSX.Element {
+  return (
+    <div style={{ marginBottom: 14 }}>
+      <label
+        htmlFor={id}
+        style={{
+          display: "block",
+          fontSize: 13,
+          fontWeight: 500,
+          color: "#111827",
+          marginBottom: 5,
+        }}
+      >
+        {label}
+      </label>
+      <div style={{ position: "relative" }}>
+        <input
+          id={id}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          autoComplete={autoComplete}
+          required={required}
+          style={{
+            width: "100%",
+            height: 42,
+            border: "1px solid #D1D5DB",
+            borderRadius: 6,
+            padding: rightSlot ? "0 40px 0 12px" : "0 12px",
+            fontSize: 13.5,
+            color: "#111827",
+            backgroundColor: "#fff",
+            outline: "none",
+            boxSizing: "border-box",
+            fontFamily: "inherit",
+          }}
+          onFocus={(e) => {
+            e.currentTarget.style.borderColor = "#2563EB";
+            e.currentTarget.style.boxShadow = "0 0 0 3px rgba(37,99,235,0.12)";
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.borderColor = "#D1D5DB";
+            e.currentTarget.style.boxShadow = "none";
+          }}
+        />
+        {rightSlot && (
+          <div
+            style={{
+              position: "absolute",
+              right: 11,
+              top: "50%",
+              transform: "translateY(-50%)",
+            }}
+          >
+            {rightSlot}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Main Component ─────────────────────────────────────────────────────── */
+
+export default function LoginPage(): JSX.Element {
+  const { timeLeft, isActive, startCooldown } = useCooldownTimer(
+    60000,
+    "login-2fa-cooldown",
+  );
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [showPass, setShowPass] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [verificationRequired, setVerificationRequired] =
+    useState<boolean>(false);
+  const [verificationLoading, setVerificationLoading] =
+    useState<boolean>(false);
+  const [verificationError, setVerificationError] = useState<string>("");
+  const [verificationCode, setVerificationCode] = useState<string>("");
+  const router = useNavigate();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    setLoading(true);
+
+    setError("");
+    const res = await fetch("/api/users/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ email: email.toLowerCase(), password }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      if (data.message == "Please verify your email before logging in") {
+        const data = await fetch("/api/users/resend-2fa-code", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          credentials: "include",
+          body: JSON.stringify({ email: email.toLowerCase() }),
+        });
+        const result = await data.json();
+        if (result.message === "2FA code sent successfully") {
+          startCooldown();
+          setVerificationRequired(true);
+        } else {
+          console.error("Failed to resend 2FA code:", result);
+        }
+      }
+      setError(data.message);
+    } else if (data.message == "Logged in succesfully!") {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          _id: data._id,
+          fullName: data.fullName,
+          email: data.email.toLowerCase(),
+        }),
+      );
+      router("/home");
+    }
+
+    setLoading(false);
+  };
+
+  const handleVerificationSubmit = async (
+    e: FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
+    e.preventDefault();
+    startCooldown();
+    setVerificationLoading(true);
+    setVerificationError("");
+    const res = await fetch("/api/users/login-verify-2fa", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email.toLowerCase(),
+        code: verificationCode,
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setVerificationError(data.message);
+      setVerificationLoading(false);
+      return;
+    } else if (data.message == "User created successfully") {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          _id: data._id,
+          fullName: data.fullName,
+          email: data.email.toLowerCase(),
+        }),
+      );
+      router("/home");
+    }
+
+    setVerificationLoading(false);
+  };
+
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          background: #E8EDF5;
+          min-height: 100vh;
+        }
+
+        .ss-page {
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px 16px;
+          background: #E8EDF5;
+        }
+
+        /* ── Card ── */
+        .ss-card {
+          display: flex;
+          width: 100%;
+          max-width: 780px;
+          background: #fff;
+          border-radius: 18px;
+          overflow: hidden;
+          box-shadow: 0 2px 24px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+        }
+
+        /* ── Form side ── */
+        .ss-form-side {
+          flex: 1;
+          min-width: 0;
+          padding: 36px 36px 32px;
+          display: flex;
+          flex-direction: column;
+        }
+
+        /* Logo row */
+        .ss-logo {
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          margin-bottom: 30px;
+        }
+        .ss-logo-text { display: flex; flex-direction: column; gap: 0; }
+        .ss-logo-name {
+          font-size: 17px;
+          font-weight: 700;
+          color: #1B3FAB;
+          line-height: 1.1;
+          letter-spacing: -0.2px;
+        }
+        .ss-logo-tag {
+          font-size: 10.5px;
+          font-weight: 500;
+          color: #2563EB;
+          letter-spacing: 0.1px;
+        }
+
+        /* Headings */
+        .ss-h1 {
+          font-size: 26px;
+          font-weight: 700;
+          color: #0F172A;
+          letter-spacing: -0.4px;
+          margin-bottom: 4px;
+        }
+        .ss-sub {
+          font-size: 13.5px;
+          color: #6B7280;
+          font-weight: 400;
+          margin-bottom: 24px;
+        }
+
+        /* Forgot */
+        .ss-forgot-row {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: -6px;
+          margin-bottom: 18px;
+        }
+        .ss-forgot {
+          font-size: 12.5px;
+          color: #2563EB;
+          font-weight: 500;
+          text-decoration: none;
+        }
+        .ss-forgot:hover { text-decoration: underline; }
+
+        /* Login button */
+        .ss-btn-login {
+          width: 100%;
+          height: 44px;
+          background: #1B3FAB;
+          color: #fff;
+          border: none;
+          border-radius: 8px;
+          font-size: 15px;
+          font-weight: 600;
+          font-family: inherit;
+          cursor: pointer;
+          letter-spacing: 0.1px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.18s;
+          margin-bottom: 18px;
+        }
+        .ss-btn-login:hover:not(:disabled) { background: #1632A0; }
+        .ss-btn-login:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        .ss-spinner {
+          width: 18px; height: 18px;
+          border: 2.5px solid rgba(255,255,255,0.35);
+          border-top-color: #fff;
+          border-radius: 50%;
+          animation: ss-spin 0.7s linear infinite;
+          display: inline-block;
+        }
+        @keyframes ss-spin { to { transform: rotate(360deg); } }
+
+        /* Divider */
+        .ss-divider {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 14px;
+        }
+        .ss-divider-line {
+          flex: 1;
+          height: 1px;
+          background: #E5E7EB;
+        }
+        .ss-divider-text {
+          font-size: 12px;
+          color: #9CA3AF;
+          white-space: nowrap;
+        }
+
+        /* Social buttons */
+        .ss-social-row {
+          display: flex;
+          gap: 10px;
+          margin-bottom: 22px;
+        }
+        .ss-btn-social {
+          flex: 1;
+          height: 40px;
+          border: 1px solid #D1D5DB;
+          border-radius: 7px;
+          background: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          font-size: 13px;
+          font-weight: 500;
+          color: #374151;
+          cursor: pointer;
+          font-family: inherit;
+          transition: background 0.15s, border-color 0.15s;
+        }
+        .ss-btn-social:hover { background: #F9FAFB; border-color: #9CA3AF; }
+
+        /* Sign up row */
+        .ss-signup-row {
+          text-align: center;
+          font-size: 13px;
+          color: #6B7280;
+        }
+        .ss-signup-row a {
+          color: #2563EB;
+          font-weight: 600;
+          text-decoration: none;
+        }
+        .ss-signup-row a:hover { text-decoration: underline; }
+
+        /* Eye button */
+        .ss-eye-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #9CA3AF;
+          display: flex;
+          align-items: center;
+          padding: 0;
+          line-height: 0;
+          transition: color 0.15s;
+        }
+        .ss-eye-btn:hover { color: #374151; }
+
+        /* ── Image side ── */
+        .ss-img-side {
+          width: 300px;
+          flex-shrink: 0;
+          position: relative;
+          overflow: hidden;
+        }
+        .ss-img-side img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          display: block;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 700px) {
+          .ss-img-side { display: none; }
+          .ss-card { max-width: 440px; }
+        }
+        @media (max-width: 480px) {
+          .ss-page { padding: 0; align-items: flex-end; }
+          .ss-card { border-radius: 20px 20px 0 0; max-width: 100%; }
+          .ss-form-side { padding: 28px 22px 32px; }
+        }
+      `}</style>
+
+      <div className="ss-page">
+        <div className="ss-card">
+          {/* ── Form Side ── */}
+          <div className="ss-form-side">
+            {/* Logo */}
+            <Link to={"/"} className="ss-logo">
+              <FeitsmaVerhuizingenLogo />
+              <div className="ss-logo-text">
+                <span className="ss-logo-name">Feitsma Verhuizingen</span>
+                <span className="ss-logo-tag">Delivering Reliability</span>
+              </div>
+            </Link>
+
+            {/* Heading */}
+            <h1 className="ss-h1">Welcome Back</h1>
+            <p className="ss-sub">Login to your account</p>
+
+            {/* Form */}
+            {!verificationRequired && (
+              <form onSubmit={handleSubmit}>
+                <InputField
+                  id="email"
+                  label="Email address"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setEmail(e.target.value)
+                  }
+                  autoComplete="email"
+                  required
+                />
+
+                <InputField
+                  id="password"
+                  label="Password"
+                  type={showPass ? "text" : "password"}
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setPassword(e.target.value)
+                  }
+                  autoComplete="current-password"
+                  required
+                  rightSlot={
+                    <button
+                      type="button"
+                      className="ss-eye-btn"
+                      onClick={() => setShowPass((p) => !p)}
+                      aria-label={showPass ? "Hide password" : "Show password"}
+                    >
+                      {showPass ? <EyeOffIcon /> : <EyeIcon />}
+                    </button>
+                  }
+                />
+
+                {/* Forgot password */}
+                <div className="ss-forgot-row">
+                  <Link to="forgot-password" className="ss-forgot">
+                    Forgot password?
+                  </Link>
+                </div>
+                <div className="text-center font-semibold text-red-500 ">
+                  {error}
+                </div>
+                {/* Login button */}
+                <button
+                  type="submit"
+                  className="ss-btn-login"
+                  disabled={loading}
+                >
+                  {loading ? <span className="ss-spinner" /> : "Login"}
+                </button>
+              </form>
+            )}
+            {verificationRequired && (
+              <>
+                <form onSubmit={handleVerificationSubmit}>
+                  <InputField
+                    id="verification-code-login"
+                    label="Verification Code"
+                    type="text"
+                    placeholder="Enter the code from your email"
+                    value={verificationCode}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setVerificationCode(e.target.value)
+                    }
+                    autoComplete="one-time-code"
+                    required
+                  />
+                  {isActive && (
+                    <div className="text-center text-gray-600">
+                      {timeLeft} seconds left
+                    </div>
+                  )}
+
+                  <div className="text-center font-semibold text-red-500 ">
+                    {verificationError}
+                  </div>
+                  {/* Login button */}
+                  <button
+                    type="submit"
+                    className="ss-btn-login"
+                    disabled={verificationLoading}
+                  >
+                    {verificationLoading ? (
+                      <span className="ss-spinner" />
+                    ) : (
+                      "Submit 2FA Code"
+                    )}
+                  </button>
+                </form>
+              </>
+            )}
+
+            {/* Sign up */}
+            <p className="ss-signup-row">
+              Don&apos;t have an account? <Link to="/signup">Sign up</Link>
+            </p>
+          </div>
+
+          {/* ── Image Side ── */}
+          <div className="ss-img-side">
+            <img
+              src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&q=85&auto=format&fit=crop"
+              alt="Blue freight truck on a highway through mountain valley"
+            />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
