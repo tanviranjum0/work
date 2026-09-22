@@ -212,7 +212,6 @@ function AddressInput({
   );
 }
 
-// ─── Step 1 – Pickup ──────────────────────────────────────────────────────────
 
 // ─── Step 2 – Delivery ─────────────────────────────────────────────────────
 
@@ -231,7 +230,7 @@ function StepDelivery({
   return (
     <div className="card">
       <div className="card-header">
-        <h2 className="card-title">Create New Shipment</h2>
+        <h2 className="card-title">Update Shipment</h2>
       </div>
       <Stepper current={1} />
       <div className="section-divider" />
@@ -246,6 +245,11 @@ function StepDelivery({
           onNext();
         }}
       />
+      <div className="btn-row">
+        <button className="btn-primary" onClick={onNext}>
+          Next
+        </button>
+      </div>
       <div className="text-red-500 text-center">{error}</div>
     </div>
   );
@@ -298,20 +302,14 @@ function StepClientDetails({
     }
   };
   return (
-    <div className="text-gray-800">
-      <div className="">
-        <h2 className="card-title">Create New Shipment</h2>
+    <div className="card text-gray-800">
+      <div className="card-header">
+        <h2 className="card-title">Update Shipment</h2>
       </div>
       <Stepper current={2} />
       <div className="section-divider" />
 
-      <div
-        className="flex items-center justify-center"
-        style={{
-          backgroundColor: "#f0f4f8",
-          padding: "16px",
-        }}
-      >
+      <div className="flex items-center justify-center">
         <div
           className="w-full "
           style={{

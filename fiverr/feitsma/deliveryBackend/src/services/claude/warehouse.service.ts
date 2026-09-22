@@ -10,7 +10,7 @@ import { validateWarehouseVisitShipment } from "./validation.service.js";
 
 const WAREHOUSE_LOAD_CLIENT_NAME = "Warehouse — Load";
 const WAREHOUSE_UNLOAD_CLIENT_NAME = "Warehouse — Unload";
-const WAREHOUSE_PHONE = 1234556789;
+const WAREHOUSE_PHONE = 11111111;
 const WAREHOUSE_ADDRESS = "Izaäk Enschedéweg 50, 2031 CS Haarlem, Netherlands";
 
 export interface WarehouseVisitContext {
