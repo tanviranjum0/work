@@ -188,6 +188,20 @@ const IconCalendar = () => (
   </svg>
 );
 
+const IconRoute = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+    <circle cx="6" cy="19" r="2.5" stroke="currentColor" strokeWidth="2" />
+    <circle cx="18" cy="5" r="2.5" stroke="currentColor" strokeWidth="2" />
+    <path
+      d="M8.5 19H17a3.5 3.5 0 000-7H7a3.5 3.5 0 010-7h8.5"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 const IconBox = () => (
   <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
     <path
@@ -270,6 +284,7 @@ function ShipmentRow({
 }) {
   // const [confirmOpen, setConfirmOpen] = useState(false);
   const router = useNavigate();
+  const hasRoute = Boolean(shipment.routeNumber);
   return (
     <div className={`row ${isUpdating ? "row-updating" : ""} `}>
       {/* Tracking + route (mobile combines into card header) */}
@@ -281,7 +296,7 @@ function ShipmentRow({
           onClick={() => {
             router(`/best-route/${shipment._id}`);
           }}
-          className="cursor-pointer"
+          className="cursor-pointer id-body"
         >
           <div className="flex  items-center">
             {shipment.isUrgent && (
@@ -292,6 +307,17 @@ function ShipmentRow({
             </div>
           </div>
           <div className="client-name">{shipment.clientName}</div>
+          <div
+            className={`route-badge ${hasRoute ? "" : "route-badge-empty"}`}
+            title={
+              hasRoute ? `Route ${shipment.routeNumber}` : "No route assigned"
+            }
+          >
+            <IconRoute />
+            <span className="route-badge-text">
+              {hasRoute ? `Route ${shipment.routeNumber}` : "No route"}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -1001,6 +1027,39 @@ function GlobalStyles() {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+      }
+
+      /* Lets long client names / route numbers truncate instead of overflowing */
+      .id-body { min-width: 0; }
+
+      .route-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        max-width: 100%;
+        margin-top: 6px;
+        padding: 2px 8px;
+        border-radius: 99px;
+        background: var(--brand-light);
+        color: var(--brand);
+        font-size: var(--tx-xs);
+        font-weight: 700;
+        line-height: 1.5;
+      }
+
+      .route-badge svg { flex-shrink: 0; }
+
+      .route-badge-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .route-badge-empty {
+        background: var(--surface);
+        color: var(--text-secondary);
+        border: 1px dashed var(--border);
+        font-weight: 600;
       }
 
       /* Route */
