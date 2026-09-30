@@ -225,7 +225,7 @@ const buildRoute = async (
     const totalBoxes = candidateShipments
       .filter((s) => assignedCustomerShipmentIds.includes(s._id.toString()))
       .reduce((sum, s) => sum + s.boxQuantity, 0);
-
+orderedShipments.map((s) => (s.status = "transit"));
     // 8. save Route -----------------------------------------------------------
     let route;
     try {

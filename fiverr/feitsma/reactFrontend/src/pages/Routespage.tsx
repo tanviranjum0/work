@@ -645,7 +645,7 @@ function MobileRouteCard({
             </span>
             <span className="text-xs text-slate-400">·</span>
             <span className="text-xs text-slate-500">
-              {route.shipments.length} stops · {route.totalBoxes} boxes
+              {route.shipments.length} stops · {route.initialLoad} boxes
             </span>
           </div>
         </div>

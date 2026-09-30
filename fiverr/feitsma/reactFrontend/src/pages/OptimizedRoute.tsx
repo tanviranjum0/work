@@ -117,6 +117,9 @@ interface Order {
   createdAt: string;
   updatedAt: string;
   deliveryShift: "morning" | "afternoon" | "evening" | "night" | "fullday";
+  /** e.g. "Collection" or "DeliveryCollection" — shown on the printed route
+   *  sheet in place of status. */
+  deliveryType: string;
   reachingTime?: string;
   note: string;
   __v: number;
@@ -156,6 +159,7 @@ const MOCK_ORDERS: Order[] = [
     pickupAddress: "Loading...",
     deliveryAddress: "Loading...",
     shipmentType: "delivery",
+    deliveryType: "Loading...",
     boxQuantity: 43,
     driverAllocated: false,
     status: "pending",
@@ -192,6 +196,36 @@ function shiftHours(shift: string) {
       fullday: "00:00-23:59",
     }[shift] ?? ""
   );
+}
+
+// ─── Helper: "HH:MM" input value → today's Date ───────────────────────────────
+
+function parseTimeInputToDate(value: string): Date {
+  const [hours, minutes] = value.split(":").map(Number);
+  const date = new Date();
+  date.setHours(
+    Number.isFinite(hours) ? hours : 0,
+    Number.isFinite(minutes) ? minutes : 0,
+    0,
+    0,
+  );
+  return date;
+}
+
+function currentTimeInputValue(): string {
+  const now = new Date();
+  return `${String(now.getHours()).padStart(2, "0")}:${String(
+    now.getMinutes(),
+  ).padStart(2, "0")}`;
+}
+
+/** "14:05" → "2:05 PM" — for display only (the stored value stays 24-hour). */
+function formatTimeInput12h(value: string): string {
+  const [h24, m] = value.split(":").map(Number);
+  if (!Number.isFinite(h24) || !Number.isFinite(m)) return value;
+  const isPM = h24 >= 12;
+  const h12 = h24 % 12 || 12;
+  return `${h12}:${String(m).padStart(2, "0")} ${isPM ? "PM" : "AM"}`;
 }
 
 // ─── Order Card ───────────────────────────────────────────────────────────────
@@ -273,8 +307,24 @@ function OrderCard({
           <span className="oc-chip">{order.shipmentType}</span>
         </div>
         {order.reachingTime && (
-          <div className="text-gray-300 text-xs py-2">
-            ETA : {order.reachingTime}
+          <div className="oc-eta">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+              <circle
+                cx="12"
+                cy="12"
+                r="9"
+                stroke="currentColor"
+                strokeWidth="1.8"
+              />
+              <path
+                d="M12 7v5l3.5 2"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            ETA {order.reachingTime}
           </div>
         )}
         {order.note ? (
@@ -317,18 +367,238 @@ function OrderCard({
   );
 }
 
+// ─── Time Picker ────────────────────────────────────────────────────────────
+
+function TimePickerField({
+  value,
+  onChange,
+}: {
+  value: string; // "HH:MM", 24-hour
+  onChange: (value: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const [h24raw, mRaw] = value.split(":").map(Number);
+  const h24 = Number.isFinite(h24raw) ? h24raw : 0;
+  const m = Number.isFinite(mRaw) ? mRaw : 0;
+  const isPM = h24 >= 12;
+  const h12 = h24 % 12 || 12;
+
+  const commit = (nextH12: number, nextM: number, nextIsPM: boolean) => {
+    const clampedH12 = Math.min(12, Math.max(1, nextH12));
+    const clampedM = Math.min(59, Math.max(0, nextM));
+    let nextH24 = clampedH12 % 12;
+    if (nextIsPM) nextH24 += 12;
+    onChange(
+      `${String(nextH24).padStart(2, "0")}:${String(clampedM).padStart(2, "0")}`,
+    );
+  };
+
+  const applyPreset = (minutesFromNow: number) => {
+    const d = new Date(Date.now() + minutesFromNow * 60000);
+    onChange(
+      `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`,
+    );
+  };
+
+  const presets: { label: string; minutes: number }[] = [
+    { label: "Now", minutes: 0 },
+    { label: "+15m", minutes: 15 },
+    { label: "+30m", minutes: 30 },
+    { label: "+1h", minutes: 60 },
+  ];
+
+  return (
+    <div className="time-picker" ref={rootRef}>
+      <button
+        type="button"
+        className={`time-picker-trigger ${open ? "time-picker-trigger-open" : ""}`}
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="true"
+        aria-expanded={open}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <circle
+            cx="12"
+            cy="12"
+            r="9"
+            stroke="currentColor"
+            strokeWidth="1.8"
+          />
+          <path
+            d="M12 7v5l3.5 2"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <span className="tp-trigger-time">
+          {h12}:{String(m).padStart(2, "0")}{" "}
+          <span className="tp-trigger-ampm">{isPM ? "PM" : "AM"}</span>
+        </span>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          className={`tp-chevron ${open ? "tp-chevron-open" : ""}`}
+        >
+          <path
+            d="M2.5 4.5L6 8l3.5-3.5"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
+
+      {open && (
+        <div
+          className="time-picker-panel"
+          role="dialog"
+          aria-label="Choose start time"
+        >
+          <div className="tp-presets">
+            {presets.map((p) => (
+              <button
+                key={p.label}
+                type="button"
+                className="tp-preset"
+                onClick={() => applyPreset(p.minutes)}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="tp-steppers">
+            <div className="tp-stepper-col">
+              <button
+                type="button"
+                className="tp-step-btn"
+                aria-label="Increase hour"
+                onClick={() => commit(h12 === 12 ? 1 : h12 + 1, m, isPM)}
+              >
+                ▲
+              </button>
+              <input
+                type="number"
+                inputMode="numeric"
+                className="tp-num-input"
+                value={h12}
+                min={1}
+                max={12}
+                onChange={(e) => {
+                  const v = Number(e.target.value);
+                  if (Number.isFinite(v)) commit(v, m, isPM);
+                }}
+                aria-label="Hour"
+              />
+              <button
+                type="button"
+                className="tp-step-btn"
+                aria-label="Decrease hour"
+                onClick={() => commit(h12 === 1 ? 12 : h12 - 1, m, isPM)}
+              >
+                ▼
+              </button>
+              <span className="tp-stepper-label">Hour</span>
+            </div>
+
+            <span className="tp-colon">:</span>
+
+            <div className="tp-stepper-col">
+              <button
+                type="button"
+                className="tp-step-btn"
+                aria-label="Increase minute"
+                onClick={() => commit(h12, (m + 1) % 60, isPM)}
+              >
+                ▲
+              </button>
+              <input
+                type="number"
+                inputMode="numeric"
+                className="tp-num-input"
+                value={String(m).padStart(2, "0")}
+                min={0}
+                max={59}
+                onChange={(e) => {
+                  const v = Number(e.target.value);
+                  if (Number.isFinite(v)) commit(h12, v, isPM);
+                }}
+                aria-label="Minute"
+              />
+              <button
+                type="button"
+                className="tp-step-btn"
+                aria-label="Decrease minute"
+                onClick={() => commit(h12, m === 0 ? 59 : m - 1, isPM)}
+              >
+                ▼
+              </button>
+              <span className="tp-stepper-label">Min</span>
+            </div>
+
+            <div className="tp-ampm-toggle">
+              <button
+                type="button"
+                className={`tp-ampm-btn ${!isPM ? "tp-ampm-active" : ""}`}
+                onClick={() => commit(h12, m, false)}
+              >
+                AM
+              </button>
+              <button
+                type="button"
+                className={`tp-ampm-btn ${isPM ? "tp-ampm-active" : ""}`}
+                onClick={() => commit(h12, m, true)}
+              >
+                PM
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Stats bar ────────────────────────────────────────────────────────────────
 
 function StatsBar({
   orders,
   statuses,
+  initialBoxesRequired,
 }: {
   orders: Order[];
   statuses: Record<number, OrderStatus>;
+  initialBoxesRequired: number;
 }) {
+  console.log(initialBoxesRequired);
   const completed = orders.filter((o) => statuses[o.id] === "delivered").length;
   const inProgress = orders.filter((o) => statuses[o.id] === "transit").length;
-  const totalBoxes = orders.reduce((s, o) => s + o.boxQuantity, 0);
+  // const totalBoxes = orders.reduce((s, o) => s + o.boxQuantity, 0);
   const pct = Math.round((completed / orders.length) * 100);
 
   return (
@@ -346,8 +616,8 @@ function StatsBar({
       </div>
       <div className="stat-sep" />
       <div className="stat">
-        <span className="stat-val">{totalBoxes}</span>
-        <span className="stat-lbl">Total Boxes</span>
+        <span className="stat-val">{initialBoxesRequired}</span>
+        <span className="stat-lbl">Initial Boxes</span>
       </div>
       <div className="stat-progress">
         <div className="stat-progress-fill" style={{ width: `${pct}%` }} />
@@ -361,6 +631,7 @@ function StatsBar({
 
 export default function OptimizedRoutesPage() {
   const router = useNavigate();
+  const [initialBoxesRequired, setInitialBoxesRequired] = useState<number>(0);
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<google.maps.Map | null>(null);
   const dirRenderer = useRef<google.maps.DirectionsRenderer | null>(null);
@@ -382,11 +653,26 @@ export default function OptimizedRoutesPage() {
   } | null>(null);
   const [geoError, setGeoError] = useState<string>("");
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const handleUpdateTimes = async () => {
+  const [startTimeInput, setStartTimeInput] = useState<string>(
+    currentTimeInputValue,
+  );
+  const [userInfo, setUserInfo] = useState<{ name?: string; email?: string }>(
+    {},
+  );
+  const [routeMeta, setRouteMeta] = useState<{
+    legsCalculated: number;
+    serviceBufferMinutesPerStop: number;
+  } | null>(null);
+  const [detailsCollapsed, setDetailsCollapsed] = useState(false);
+  const handleUpdateTimes = async (
+    ordersOverride?: Order[],
+    startTimeOverride?: Date,
+  ) => {
     const DEPOT = {
       lat: 52.389285,
       lng: 4.660226,
     };
+    const list = ordersOverride ?? orders;
     const result = await fetch(`/api/routes/times`, {
       method: "POST",
       headers: {
@@ -397,31 +683,42 @@ export default function OptimizedRoutesPage() {
           deliverySelected: DEPOT,
           status: "transit",
         },
-        ...orders,
+        ...list,
       ]),
       credentials: "include",
     });
     const data = await result.json();
+    // console.log(data)
     if (result.ok) {
-      let currentTime = new Date();
+      let currentTime = startTimeOverride ?? new Date();
       const newShipments = data.shipments.map(
         (shipment: {
           travelTimeFromPreviousMinutes?: number;
           status: string;
         }) => {
-          // Completed shipments do not participate in timing calculation
-          if (shipment.status != "transit") {
+          // Every leg's travel time must count toward the running clock,
+          // no matter the shipment's status — otherwise every stop after
+          // the first "pending" one loses its ETA entirely.
+          //
+          // travelTimeFromPreviousMinutes already includes the 10-minute
+          // loading/unloading buffer added server-side (raw driving time +
+          // buffer, computed together so the two numbers can't drift out
+          // of sync). So for three 30-minute legs starting at 12:00 AM:
+          //   stop 1: 12:00 + (30 + 10) = 12:40 AM
+          //   stop 2: 12:40 + (30 + 10) = 1:20 AM
+          //   stop 3: 1:20  + (30 + 10) = 2:00 AM
+          const travelMinutes = shipment.travelTimeFromPreviousMinutes || 0;
+          currentTime = new Date(
+            currentTime.getTime() + travelMinutes * 60 * 1000,
+          );
+
+          // Delivered shipments already happened — no projected ETA needed.
+          if (shipment.status === "delivered") {
             return {
               ...shipment,
               reachingTime: undefined,
             };
           }
-
-          const travelMinutes = shipment.travelTimeFromPreviousMinutes || 0;
-
-          currentTime = new Date(
-            currentTime.getTime() + travelMinutes * 60 * 1000,
-          );
 
           return {
             ...shipment,
@@ -435,6 +732,13 @@ export default function OptimizedRoutesPage() {
       );
       newShipments.splice(0, 1);
       setOrders(newShipments);
+      if (data.meta) {
+        setRouteMeta({
+          legsCalculated: data.meta.legsCalculated ?? 0,
+          serviceBufferMinutesPerStop:
+            data.meta.serviceBufferMinutesPerStop ?? 10,
+        });
+      }
     }
   };
   // ── Initialise map after Google Maps script loads ────────────────────────
@@ -461,6 +765,9 @@ export default function OptimizedRoutesPage() {
       }
     }
     const mock: Order[] = [];
+    setInitialBoxesRequired(data[0].initialLoad);
+    console.log(data[0].initialLoad);
+
     data[0].shipments.map((order: Order, idx: number) =>
       mock.push({ ...order, id: idx + 1 }),
     );
@@ -607,11 +914,12 @@ export default function OptimizedRoutesPage() {
 
   // ── Route Optimisation ─────────────────────────────────────────────────────
 
-  const handleOptimize = useCallback(async () => {
-    if (!window.google || !mapInstance.current || !dirRenderer.current) return;
+  const handleOptimize = useCallback(async (): Promise<Order[] | null> => {
+    if (!window.google || !mapInstance.current || !dirRenderer.current)
+      return null;
 
-    setOptimizeState("loading");
-    const directionsService = await new window.google.maps.DirectionsService();
+    // setOptimizeState("loading");
+    const directionsService = new window.google.maps.DirectionsService();
 
     const waypoints: google.maps.DirectionsWaypoint[] = orders
       .filter((o) => o.deliverySelected)
@@ -623,39 +931,46 @@ export default function OptimizedRoutesPage() {
 
         stopover: true,
       }));
-    await directionsService.route(
-      {
-        origin: WAREHOUSE.address,
-        destination: WAREHOUSE.address,
-        waypoints,
-        travelMode: window.google.maps.TravelMode.DRIVING,
-      },
-      (
-        result: {
-          routes: {
-            [x: string]: number[];
-            bounds: any;
-          }[];
-        },
-        status: any,
-      ) => {
-        if (status === window.google.maps.DirectionsStatus.OK && result) {
-          dirRenderer.current!.setDirections(result);
-          // Re-order the sidebar list to match optimised sequence
-          const optimisedIndices: number[] = result.routes[0].waypoint_order;
-          const reordered = optimisedIndices.map((i) => orders[i]);
-          setOrders(reordered);
-          // Fit map to route bounds
-          const bounds = result.routes[0].bounds;
-          mapInstance.current!.fitBounds(bounds);
 
-          setOptimizeState("done");
-        } else {
-          console.error("Directions request failed:", status);
-          setOptimizeState("error");
-        }
-      },
-    );
+    // route() is callback-based, not Promise-based — wrap it so callers can
+    // genuinely await the result instead of racing the callback.
+    return new Promise<Order[] | null>((resolve) => {
+      directionsService.route(
+        {
+          origin: WAREHOUSE.address,
+          destination: WAREHOUSE.address,
+          waypoints,
+          travelMode: window.google.maps.TravelMode.DRIVING,
+        },
+        (
+          result: {
+            routes: {
+              [x: string]: number[];
+              bounds: any;
+            }[];
+          },
+          status: any,
+        ) => {
+          if (status === window.google.maps.DirectionsStatus.OK && result) {
+            dirRenderer.current!.setDirections(result);
+            // Re-order the sidebar list to match optimised sequence
+            const optimisedIndices: number[] = result.routes[0].waypoint_order;
+            const reordered = optimisedIndices.map((i) => orders[i]);
+            setOrders(reordered);
+            // Fit map to route bounds
+            const bounds = result.routes[0].bounds;
+            mapInstance.current!.fitBounds(bounds);
+
+            // setOptimizeState("done");
+            resolve(reordered);
+          } else {
+            console.error("Directions request failed:", status);
+            setOptimizeState("error");
+            resolve(null);
+          }
+        },
+      );
+    });
   }, [orders]);
 
   // ── Mark stop complete / active ────────────────────────────────────────────
@@ -679,6 +994,20 @@ export default function OptimizedRoutesPage() {
     }
     setStatuses((prev) => ({ ...prev, [id]: "delivered" }));
     if (activeOrderId === id) setActiveOrderId(null);
+  };
+
+  const handleOptimizeAndTime = async () => {
+    setOptimizeState("loading");
+
+    const reordered = await handleOptimize();
+    if (reordered) {
+      await handleUpdateTimes(reordered, parseTimeInputToDate(startTimeInput));
+    }
+    setOptimizeState("done");
+  };
+
+  const handlePrint = () => {
+    window.print();
   };
 
   const startDelivery = (id: number) => {
@@ -726,6 +1055,12 @@ export default function OptimizedRoutesPage() {
   useEffect(() => {
     const cachedUser = localStorage.getItem("user");
     if (cachedUser) {
+      try {
+        const parsedUser = JSON.parse(cachedUser);
+        setUserInfo({ name: parsedUser?.name, email: parsedUser?.email });
+      } catch {
+        // Malformed cache — print sheet just omits driver name/email.
+      }
       initMap();
       handleInitialLoad();
     } else {
@@ -743,96 +1078,201 @@ export default function OptimizedRoutesPage() {
         <aside className="ro-sidebar">
           {/* Header */}
           <div className="sidebar-header">
-            <div className="sidebar-meta">
-              <h1 className="sidebar-title">Today&apos;s Route</h1>
-              <p className="sidebar-subtitle">{orders.length} stops</p>
+            <div className="sidebar-top-row">
+              <div className="sidebar-meta">
+                <h1 className="sidebar-title">Today&apos;s Route</h1>
+                <p className="sidebar-subtitle">{orders.length} stops</p>
+              </div>
+              <button
+                type="button"
+                className="details-toggle"
+                onClick={() => setDetailsCollapsed((v) => !v)}
+                aria-expanded={!detailsCollapsed}
+              >
+                {detailsCollapsed ? "Show details" : "Hide details"}
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  className={`details-chevron ${detailsCollapsed ? "" : "details-chevron-open"}`}
+                >
+                  <path
+                    d="M2.5 4.5L6 8l3.5-3.5"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
             </div>
 
-            {/* Geo status */}
-            <div
-              className={`geo-status ${geoError ? "geo-err" : driverPos ? "geo-ok" : "geo-loading"}`}
-            >
-              <span className="geo-pip" />
-              <span className="geo-text">
-                {geoError
-                  ? "Location unavailable"
-                  : driverPos
-                    ? `GPS active · ${driverPos.lat.toFixed(4)}, ${driverPos.lng.toFixed(4)}`
-                    : "Acquiring GPS…"}
-              </span>
-            </div>
+            {!detailsCollapsed && (
+              <>
+                {/* Geo status */}
+                <div
+                  className={`geo-status ${geoError ? "geo-err" : driverPos ? "geo-ok" : "geo-loading"}`}
+                >
+                  <span className="geo-pip" />
+                  <span className="geo-text">
+                    {geoError
+                      ? "Location unavailable"
+                      : driverPos
+                        ? `GPS active · ${driverPos.lat.toFixed(4)}, ${driverPos.lng.toFixed(4)}`
+                        : "Acquiring GPS…"}
+                  </span>
+                </div>
 
-            {/* Optimize button */}
-            <button
-              className={`btn-optimize ${optimizeState === "loading" ? "btn-loading" : ""} ${optimizeState === "done" ? "btn-done" : ""}`}
-              onClick={async () => {
-                await handleOptimize();
-                await handleUpdateTimes();
-              }}
-              disabled={optimizeState === "loading"}
-            >
-              {optimizeState === "loading" ? (
-                <>
-                  <svg
-                    className="spin-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    width="16"
-                    height="16"
+                {/* Custom start time */}
+                <div className="start-time-row">
+                  <span className="start-time-label">Calculate ETAs from</span>
+                  <TimePickerField
+                    value={startTimeInput}
+                    onChange={setStartTimeInput}
+                  />
+                </div>
+
+                {/* Optimize + Print buttons */}
+                <div className="header-actions">
+                  <button
+                    className={`btn-optimize ${optimizeState === "loading" ? "btn-loading" : ""} ${optimizeState === "done" ? "btn-done" : ""}`}
+                    onClick={handleOptimizeAndTime}
+                    disabled={optimizeState === "loading"}
                   >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="rgba(255,255,255,0.35)"
-                      strokeWidth="3"
-                    />
-                    <path
-                      d="M12 2a10 10 0 0110 10"
-                      stroke="#fff"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  Optimizing…
-                </>
-              ) : optimizeState === "done" ? (
-                <>
-                  <svg viewBox="0 0 16 16" fill="none" width="16" height="16">
-                    <path
-                      d="M3 8l3.5 3.5 6.5-7"
-                      stroke="#fff"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  Route Optimized
-                </>
-              ) : (
-                <>
-                  <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
-                    <path
-                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                      stroke="#fff"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  Optimize &amp; Start Route
-                </>
-              )}
-            </button>
+                    {optimizeState === "loading" ? (
+                      <>
+                        <svg
+                          className="spin-icon"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          width="16"
+                          height="16"
+                        >
+                          <circle
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="rgba(255,255,255,0.35)"
+                            strokeWidth="3"
+                          />
+                          <path
+                            d="M12 2a10 10 0 0110 10"
+                            stroke="#fff"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                        Optimizing…
+                      </>
+                    ) : optimizeState === "done" ? (
+                      <>
+                        <svg
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          width="16"
+                          height="16"
+                        >
+                          <path
+                            d="M3 8l3.5 3.5 6.5-7"
+                            stroke="#fff"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        Route Optimized
+                      </>
+                    ) : (
+                      <>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          width="16"
+                          height="16"
+                        >
+                          <path
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                            stroke="#fff"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        Optimize &amp; Start Route
+                      </>
+                    )}
+                  </button>
 
-            {optimizeState === "error" && (
-              <p className="optimize-error">
-                ⚠ Route request failed. Check your API key and quota.
-              </p>
+                  <button
+                    className="btn-print"
+                    onClick={handlePrint}
+                    disabled={optimizeState !== "done"}
+                    title={
+                      optimizeState !== "done"
+                        ? "Optimize the route first"
+                        : "Print route sheet"
+                    }
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" width="15" height="15">
+                      <path
+                        d="M6 9V3h12v6M6 18H4a1 1 0 01-1-1v-6a1 1 0 011-1h16a1 1 0 011 1v6a1 1 0 01-1 1h-2M6 14h12v7H6v-7z"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    Print Route
+                  </button>
+                </div>
+
+                {optimizeState === "error" && (
+                  <p className="optimize-error">
+                    ⚠ Route request failed. Check your API key and quota.
+                  </p>
+                )}
+
+                {/* Stats */}
+                <StatsBar
+                  orders={orders}
+                  statuses={statuses}
+                  initialBoxesRequired={initialBoxesRequired}
+                />
+
+                {/* Loading/unloading buffer — already included in every
+                    ETA above; this strip just explains why. */}
+                {routeMeta && (
+                  <div className="buffer-strip">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M21 8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16V8z"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M12 22V12M3.27 6.96L12 12l8.73-5.04"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                      />
+                    </svg>
+                    <span className="buffer-strip-text">
+                      ETAs above already include a{" "}
+                      <strong>
+                        {routeMeta.serviceBufferMinutesPerStop} min
+                      </strong>{" "}
+                      loading/unloading buffer at every stop
+                    </span>
+                    <span className="buffer-strip-total">
+                      {routeMeta.legsCalculated *
+                        routeMeta.serviceBufferMinutesPerStop}{" "}
+                      min built in
+                    </span>
+                  </div>
+                )}
+              </>
             )}
-
-            {/* Stats */}
-            <StatsBar orders={orders} statuses={statuses} />
           </div>
 
           {/* Scrollable order list */}
@@ -970,6 +1410,99 @@ export default function OptimizedRoutesPage() {
           )}
         </main>
       </div>
+
+      {/* ═══════════════════════════════════════
+          PRINT-ONLY ROUTE SHEET
+          Hidden on screen; shown only by the @media print rules below.
+      ═══════════════════════════════════════ */}
+      <div className="print-sheet">
+        <div className="print-letterhead">
+          <div className="print-brand">
+            <span className="print-brand-mark">🚚</span>
+            <span className="print-brand-name">Feitsma Verhuizingen</span>
+          </div>
+          <div className="print-doc-type">Route Sheet</div>
+        </div>
+
+        <div className="print-header">
+          <div className="print-header-main">
+            <h1>Route #{params.id}</h1>
+            <p>
+              {orders.length} {orders.length === 1 ? "stop" : "stops"} ·{" "}
+              {orders.reduce((sum, o) => sum + o.boxQuantity, 0)} boxes
+              {routeMeta &&
+                ` · ${
+                  routeMeta.legsCalculated *
+                  routeMeta.serviceBufferMinutesPerStop
+                } min loading/unloading buffer built into ETAs`}
+            </p>
+          </div>
+          <div className="print-meta">
+            <p>
+              <strong>Generated</strong> {new Date().toLocaleString()}
+            </p>
+            {startTimeInput && (
+              <p>
+                <strong>Calculated from</strong>{" "}
+                {formatTimeInput12h(startTimeInput)}
+              </p>
+            )}
+            {userInfo.name && (
+              <p>
+                <strong>Driver</strong> {userInfo.name}
+              </p>
+            )}
+            {userInfo.email && <p>{userInfo.email}</p>}
+          </div>
+        </div>
+
+        <table className="print-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Client</th>
+              <th>Phone</th>
+              <th>Delivery address</th>
+              <th>Boxes</th>
+              <th>Shift</th>
+              <th>ETA</th>
+              <th>Shipment Type</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order, idx) => {
+              return (
+                <tr key={order.id}>
+                  <td className="print-seq">{alphabet[idx + 1] || idx + 1}</td>
+                  <td>{order.clientName}</td>
+                  <td>{order.clientPhoneNumber}</td>
+                  <td>{order.deliveryAddress}</td>
+                  <td>{order.boxQuantity}</td>
+                  <td>{shiftLabel(order.deliveryShift)}</td>
+                  <td>{order?.reachingTime ?? "—"}</td>
+                  <td>{order?.shipmentType.toUpperCase() || "—"}</td>
+                  <td>{order.note || "—"}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+
+        <div className="print-footer">
+          <div className="print-sign">
+            <div className="print-sign-line" />
+            <span>Driver signature</span>
+          </div>
+          <div className="print-sign">
+            <div className="print-sign-line" />
+            <span>Completed at</span>
+          </div>
+          <div className="print-footer-note">
+            Generated by Feitsma Verhuizingen
+          </div>
+        </div>
+      </div>
     </>
   );
 }
@@ -1049,6 +1582,38 @@ function PageStyles() {
 
       .sidebar-meta {}
 
+      .sidebar-top-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .details-toggle {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        height: 28px;
+        padding: 0 10px;
+        border: 1.5px solid var(--border);
+        border-radius: 99px;
+        background: var(--surface);
+        color: var(--t2);
+        font-family: var(--font);
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .details-toggle:hover { background: var(--brand-lt); border-color: var(--brand); color: var(--brand); }
+      .details-toggle:active { transform: scale(0.96); }
+
+      .details-chevron { transition: transform 0.18s; flex-shrink: 0; }
+      .details-chevron-open { transform: rotate(180deg); }
+
       .sidebar-title {
         font-size: clamp(18px, 2.5vw, 22px);
         font-weight: 800;
@@ -1093,6 +1658,169 @@ function PageStyles() {
 
       .geo-text { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+      /* Custom start time */
+      .start-time-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .start-time-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--t2);
+        white-space: nowrap;
+      }
+
+      .time-picker { position: relative; }
+
+      .time-picker-trigger {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        height: 34px;
+        padding: 0 12px;
+        border: 1.5px solid transparent;
+        border-radius: 99px;
+        background: var(--brand-lt);
+        color: var(--brand);
+        font-family: var(--font);
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s, transform 0.1s;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .time-picker-trigger:hover { background: var(--brand-ring); }
+      .time-picker-trigger:active { transform: scale(0.97); }
+      .time-picker-trigger-open { border-color: var(--brand); background: #fff; }
+
+      .tp-trigger-time { font-size: 13px; font-weight: 800; letter-spacing: -0.2px; }
+      .tp-trigger-ampm { font-size: 10px; font-weight: 700; opacity: 0.75; }
+
+      .tp-chevron { transition: transform 0.18s; opacity: 0.8; }
+      .tp-chevron-open { transform: rotate(180deg); }
+
+      .time-picker-panel {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        width: 232px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--r-lg);
+        box-shadow: 0 14px 36px rgba(15,23,42,0.16);
+        padding: 12px;
+        z-index: 60;
+        animation: tpDropIn 0.15s ease both;
+      }
+
+      @keyframes tpDropIn {
+        from { opacity: 0; transform: translateY(-6px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .tp-presets {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+
+      .tp-preset {
+        height: 28px;
+        border: none;
+        border-radius: var(--r-sm);
+        background: var(--surface);
+        color: var(--t2);
+        font-family: var(--font);
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s, transform 0.1s;
+      }
+      .tp-preset:hover { background: var(--brand-lt); color: var(--brand); }
+      .tp-preset:active { transform: scale(0.94); }
+
+      .tp-steppers {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .tp-stepper-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .tp-step-btn {
+        width: 34px;
+        height: 22px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r-sm);
+        background: var(--surface);
+        color: var(--brand);
+        font-size: 10px;
+        line-height: 1;
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s, transform 0.1s;
+      }
+      .tp-step-btn:hover { background: var(--brand-lt); border-color: var(--brand); }
+      .tp-step-btn:active { transform: scale(0.92); }
+
+      .tp-num-input {
+        width: 44px;
+        height: 40px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r-sm);
+        background: var(--surface);
+        color: var(--t1);
+        font-family: var(--font);
+        font-size: 18px;
+        font-weight: 800;
+        text-align: center;
+        -moz-appearance: textfield;
+      }
+      .tp-num-input::-webkit-outer-spin-button,
+      .tp-num-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+      .tp-num-input:focus { outline: none; border-color: var(--brand); background: var(--brand-lt); box-shadow: 0 0 0 3px var(--brand-ring); }
+
+      .tp-stepper-label { font-size: 9px; font-weight: 700; color: var(--t3); text-transform: uppercase; letter-spacing: 0.4px; }
+
+      .tp-colon { font-size: 18px; font-weight: 800; color: var(--t3); padding-bottom: 18px; }
+
+      .tp-ampm-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 18px;
+      }
+
+      .tp-ampm-btn {
+        width: 40px;
+        height: 24px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r-sm);
+        background: #fff;
+        color: var(--t2);
+        font-family: var(--font);
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+      }
+      .tp-ampm-btn:hover { border-color: var(--brand); }
+      .tp-ampm-active { background: var(--brand); border-color: var(--brand); color: #fff; }
+
+      /* Header action buttons */
+      .header-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
       /* Optimize button */
       .btn-optimize {
         display: flex;
@@ -1118,6 +1846,29 @@ function PageStyles() {
       .btn-optimize:disabled { opacity: 0.7; cursor: not-allowed; }
       .btn-optimize.btn-done { background: var(--green); box-shadow: 0 2px 8px rgba(22,163,74,0.3); }
       .btn-optimize.btn-done:hover { background: #15803d; }
+
+      /* Print button */
+      .btn-print {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        height: 42px;
+        background: #fff;
+        color: var(--t2);
+        border: 1.5px solid var(--border);
+        border-radius: var(--r-md);
+        font-size: 13px;
+        font-weight: 700;
+        font-family: var(--font);
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .btn-print:hover:not(:disabled) { background: var(--surface); border-color: #cbd5e1; color: var(--t1); }
+      .btn-print:active:not(:disabled) { transform: scale(0.98); }
+      .btn-print:disabled { opacity: 0.5; cursor: not-allowed; }
 
       .spin-icon { animation: spin 0.7s linear infinite; }
       @keyframes spin { to { transform: rotate(360deg); } }
@@ -1166,6 +1917,35 @@ function PageStyles() {
         font-weight: 700;
         color: var(--brand);
         margin-left: 4px;
+      }
+
+      /* Loading/unloading buffer strip */
+      .buffer-strip {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 11px;
+        border-radius: var(--r-md);
+        background: #fff7ed;
+        color: #c2410c;
+        border: 1px solid #fed7aa;
+      }
+
+      .buffer-strip svg { flex-shrink: 0; }
+
+      .buffer-strip-text {
+        flex: 1;
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+      .buffer-strip-text strong { font-weight: 800; }
+
+      .buffer-strip-total {
+        font-size: 11px;
+        font-weight: 800;
+        white-space: nowrap;
+        flex-shrink: 0;
       }
 
       /* ── Order list ── */
@@ -1294,6 +2074,20 @@ function PageStyles() {
       }
 
       .oc-chip-box { color: var(--t2); }
+
+      .oc-eta {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 6px;
+        padding: 3px 8px;
+        border-radius: 99px;
+        background: var(--brand-lt);
+        color: var(--brand);
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .oc-eta svg { flex-shrink: 0; }
 
       .oc-note {
         display: flex;
@@ -1512,8 +2306,12 @@ function PageStyles() {
 
       /* Touch targets */
       @media (hover: none) and (pointer: coarse) {
-        .btn-optimize, .oa-btn { min-height: 48px; }
+        .btn-optimize, .btn-print, .oa-btn { min-height: 48px; }
         .order-card { padding: 14px; }
+        .time-picker-trigger { min-height: 40px; }
+        .tp-step-btn { min-height: 30px; }
+        .tp-preset, .tp-ampm-btn { min-height: 34px; }
+        .details-toggle { min-height: 34px; }
       }
 
       /* Reduced motion */
@@ -1523,6 +2321,122 @@ function PageStyles() {
         .order-actions { animation: none; }
         .stat-progress-fill { transition: none; }
         * { transition-duration: 0.01ms !important; }
+      }
+
+      /* ═══════ PRINT-ONLY ROUTE SHEET ═══════ */
+      .print-sheet { display: none; }
+
+      @media print {
+        @page {
+          size: landscape;
+          margin: 14mm 12mm;
+        }
+
+        html, body { overflow: visible; height: auto; }
+        body * { visibility: hidden; }
+        .print-sheet, .print-sheet * { visibility: visible; }
+        .print-sheet {
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          color: #0f172a;
+          font-family: var(--font);
+        }
+
+        /* Letterhead */
+        .print-letterhead {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          border-bottom: 3px solid var(--brand);
+          padding-bottom: 8px;
+          margin-bottom: 14px;
+        }
+        .print-brand {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .print-brand-mark { font-size: 18px; }
+        .print-brand-name {
+          font-size: 17px;
+          font-weight: 800;
+          color: var(--brand);
+          letter-spacing: -0.3px;
+        }
+        .print-doc-type {
+          font-size: 11px;
+          font-weight: 700;
+          color: #64748b;
+          text-transform: uppercase;
+          letter-spacing: 1.2px;
+        }
+
+        /* Header */
+        .print-header {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 16px;
+          margin-bottom: 16px;
+        }
+        .print-header-main h1 { font-size: 20px; font-weight: 800; margin: 0 0 3px; }
+        .print-header-main p { font-size: 11px; color: #475569; margin: 0; }
+        .print-meta { text-align: right; }
+        .print-meta p { font-size: 10px; color: #475569; margin: 0 0 3px; }
+        .print-meta strong { color: #0f172a; font-weight: 700; }
+
+        /* Table */
+        .print-table {
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0;
+          font-size: 10.5px;
+          border: 1px solid #cbd5e1;
+          border-radius: 8px;
+          overflow: hidden;
+        }
+        .print-table th, .print-table td {
+          padding: 7px 9px;
+          text-align: left;
+          vertical-align: top;
+          border-bottom: 1px solid #e2e8f0;
+        }
+        .print-table th {
+          background: #eff6ff;
+          color: #1e40af;
+          font-weight: 700;
+          font-size: 10px;
+          text-transform: uppercase;
+          letter-spacing: 0.4px;
+          border-bottom: 1.5px solid #cbd5e1;
+        }
+        .print-table tbody tr:last-child td { border-bottom: none; }
+        .print-table tbody tr:nth-child(even) { background: #f8fafc; }
+        .print-seq { font-weight: 800; color: #1e40af; }
+
+        /* Footer / sign-off */
+        .print-footer {
+          display: flex;
+          align-items: flex-end;
+          gap: 40px;
+          margin-top: 28px;
+        }
+        .print-sign {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          width: 220px;
+        }
+        .print-sign-line { height: 28px; border-bottom: 1px solid #94a3b8; }
+        .print-sign span { font-size: 10px; color: #64748b; font-weight: 600; }
+        .print-footer-note {
+          margin-left: auto;
+          font-size: 9px;
+          color: #94a3b8;
+        }
       }
 
       /* Dark mode */
@@ -1543,6 +2457,11 @@ function PageStyles() {
         .all-done-banner { background: rgba(22,163,74,0.12); }
         .map-legend { background: rgba(17,29,53,0.92); border-color: rgba(42,58,82,0.8); }
         .ml-item { color: #94a3b8; }
+        .time-picker-trigger-open { background: var(--card); }
+        .time-picker-panel { background: var(--card); border-color: var(--border); }
+        .tp-ampm-btn { background: var(--card); }
+        .btn-print { background: var(--card); border-color: var(--border); }
+        .buffer-strip { background: rgba(249,115,22,0.1); border-color: rgba(249,115,22,0.28); color: #fb923c; }
       }
     `}</style>
   );

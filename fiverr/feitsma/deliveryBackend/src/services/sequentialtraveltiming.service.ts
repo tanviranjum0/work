@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import axios from "axios";
-// import Route from "../models/Route.js";
 const MAX_REQUESTS_PER_SECOND = 5;
 const REQUEST_INTERVAL_MS = 1000 / MAX_REQUESTS_PER_SECOND;
 
-class GeoapifyRateLimiter {
+class RouteApiRateLimiter {
   private nextAvailableAt = 0;
   private queue: Promise<void> = Promise.resolve();
 
@@ -29,24 +28,31 @@ class GeoapifyRateLimiter {
   }
 }
 
-const geoapifyRateLimiter = new GeoapifyRateLimiter();
+const routeApiRateLimiter = new RouteApiRateLimiter();
 // ═════════════════════════════════════════════════════════════════════════════
 // SEQUENTIAL TRAVEL TIMING SERVICE
 // ═════════════════════════════════════════════════════════════════════════════
 //
 // Given an ORDERED array of shipments (each with a `deliverySelected` lat/lng),
 // this service computes the travel time FROM each shipment TO the next one,
-// using Geoapify's Routing API for the underlying point-to-point lookups.
+// using Geoapify's Routing API for the underlying point-to-point lookups
+// (kept on Geoapify rather than Google's Routes API — much cheaper at volume
+// for plain point-to-point driving times).
 //
 // Design notes:
 //
 //   • The FIRST shipment in the array never gets a travel time — there is no
 //     "previous stop" to measure from. All of its timing fields are `null`.
 //
-//   • Every OTHER shipment gets `travelTimeFromPreviousSeconds`, computed as
-//     (Geoapify's driving time for that specific leg) + a fixed 10-minute
-//     service buffer, representing loading/unloading/dwell time at the
-//     PREVIOUS stop before the driver departs for this one.
+//   • Every OTHER shipment gets BOTH a raw driving time
+//     (`rawTravelTimeFromPreviousSeconds`, straight from Geoapify, no buffer)
+//     and a buffered total (`travelTimeFromPreviousSeconds`, the raw time
+//     PLUS a fixed 10-minute service buffer representing loading/unloading
+//     dwell time at the PREVIOUS stop before the driver departs for this
+//     one). Callers that want a pure driving-time ETA use the raw fields;
+//     callers that want the fully-loaded operational time use the buffered
+//     ones — both are computed from the exact same API response, so they
+//     never drift out of sync with each other from independent rounding.
 //
 //   • This endpoint intentionally returns PER-LEG durations, not absolute
 //     timestamps. The frontend adds these durations to whatever "now" is at
@@ -105,7 +111,16 @@ export interface HasDeliveryLocation {
 /** The fields this service adds to every shipment it processes. */
 export interface SequentialTravelTiming {
   isFirstStop: boolean;
+  /** Pure driving time from Geoapify, in seconds — NO service buffer added.
+   *  Use this for a shipment's own ETA. */
+  rawTravelTimeFromPreviousSeconds: number | null;
+  /** Pure driving time from Geoapify, in minutes — NO service buffer added. */
+  rawTravelTimeFromPreviousMinutes: number | null;
+  /** Driving time PLUS the loading/unloading service buffer, in seconds.
+   *  Use this for total elapsed/operational time, not for a shipment's own
+   *  ETA — see `rawTravelTimeFromPreviousSeconds` for that. */
   travelTimeFromPreviousSeconds: number | null;
+  /** Driving time PLUS the loading/unloading service buffer, in minutes. */
   travelTimeFromPreviousMinutes: number | null;
   distanceFromPreviousKm: number | null;
   travelTimeError: string | null;
@@ -158,7 +173,7 @@ export const getDistanceTime = async (
   }
 
   try {
-    await geoapifyRateLimiter.acquire();
+    await routeApiRateLimiter.acquire();
     const response = await axios.get(GEOAPIFY_ROUTING_URL, {
       params: {
         waypoints: `${origin.lat},${origin.lng}|${destination.lat},${destination.lng}`,
@@ -270,7 +285,6 @@ export async function attachSequentialTravelTimes<
   // Every index EXCEPT 0 needs a leg computed (index i's leg runs from
   // shipment[i-1] to shipment[i]).
   const legIndexes = shipments.slice(1).map((_, i) => i + 1);
-  let isSecondShipment: boolean = true;
   const legResults = await mapWithConcurrencyLimit(
     legIndexes,
     concurrency,
@@ -283,38 +297,29 @@ export async function attachSequentialTravelTimes<
           previousStop.deliverySelected,
           currentStop.deliverySelected,
         );
-        const totalSeconds = Math.round(time + serviceBufferSeconds);
-        let timing: SequentialTravelTiming;
-        if (isSecondShipment) {
-          timing = {
-            isFirstStop: false,
-            travelTimeFromPreviousSeconds: totalSeconds,
-            travelTimeFromPreviousMinutes: Math.round(totalSeconds / 60),
-            distanceFromPreviousKm: Math.round(distance * 10) / 10,
-            travelTimeError: null,
-          };
-          isSecondShipment = false;
-        } else {
-          timing = {
-            isFirstStop: false,
-            travelTimeFromPreviousSeconds: totalSeconds,
-            travelTimeFromPreviousMinutes: Math.round(totalSeconds / 60) + 10,
-            distanceFromPreviousKm: Math.round(distance * 10) / 10,
-            travelTimeError: null,
-          };
-        }
-        // let timing: SequentialTravelTiming = {
-        //   isFirstStop: false,
-        //   travelTimeFromPreviousSeconds: totalSeconds,
-        //   travelTimeFromPreviousMinutes: Math.round(totalSeconds / 60) + 10,
-        //   distanceFromPreviousKm: Math.round(distance * 10) / 10,
-        //   travelTimeError: null,
-        // };
+
+        const rawSeconds = Math.round(time);
+        // serviceBufferSeconds (10 min by default) covers loading/unloading
+        // dwell time at the previous stop, applied once per leg — every leg
+        // gets exactly the same treatment, computed independently of every
+        // other leg's result or completion order.
+        const totalSeconds = Math.round(time + serviceBufferSeconds) + 1;
+        const timing: SequentialTravelTiming = {
+          isFirstStop: false,
+          rawTravelTimeFromPreviousSeconds: rawSeconds,
+          rawTravelTimeFromPreviousMinutes: Math.round(rawSeconds / 60) + 1,
+          travelTimeFromPreviousSeconds: totalSeconds,
+          travelTimeFromPreviousMinutes: Math.round(totalSeconds / 60) + 1,
+          distanceFromPreviousKm: Math.round(distance * 10) / 10 + 1,
+          travelTimeError: null,
+        };
         return { shipmentIndex, timing };
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
         const timing: SequentialTravelTiming = {
           isFirstStop: false,
+          rawTravelTimeFromPreviousSeconds: null,
+          rawTravelTimeFromPreviousMinutes: null,
           travelTimeFromPreviousSeconds: null,
           travelTimeFromPreviousMinutes: null,
           distanceFromPreviousKm: null,
@@ -341,6 +346,8 @@ export async function attachSequentialTravelTimes<
 
   const firstStopTiming: SequentialTravelTiming = {
     isFirstStop: true,
+    rawTravelTimeFromPreviousSeconds: null,
+    rawTravelTimeFromPreviousMinutes: null,
     travelTimeFromPreviousSeconds: null,
     travelTimeFromPreviousMinutes: null,
     distanceFromPreviousKm: null,
@@ -402,6 +409,8 @@ function findInvalidShipmentIndexes(shipments: unknown[]): number[] {
  *       {
  *         ...original shipment fields, unchanged...,
  *         "isFirstStop": true,
+ *         "rawTravelTimeFromPreviousSeconds": null,
+ *         "rawTravelTimeFromPreviousMinutes": null,
  *         "travelTimeFromPreviousSeconds": null,
  *         "travelTimeFromPreviousMinutes": null,
  *         "distanceFromPreviousKm": null,
@@ -410,7 +419,9 @@ function findInvalidShipmentIndexes(shipments: unknown[]): number[] {
  *       {
  *         ...original shipment fields...,
  *         "isFirstStop": false,
- *         "travelTimeFromPreviousSeconds": 1332,   // includes the +10min buffer
+ *         "rawTravelTimeFromPreviousSeconds": 732,     // pure driving time, no buffer — use for this shipment's ETA
+ *         "rawTravelTimeFromPreviousMinutes": 12,
+ *         "travelTimeFromPreviousSeconds": 1332,       // includes the +10min buffer — use for total operational time
  *         "travelTimeFromPreviousMinutes": 22,
  *         "distanceFromPreviousKm": 14.2,
  *         "travelTimeError": null
@@ -430,6 +441,13 @@ function findInvalidShipmentIndexes(shipments: unknown[]): number[] {
  *   for each shipment in order:
  *     if not isFirstStop: runningClock += travelTimeFromPreviousSeconds
  *     display runningClock as this stop's ETA
+ *
+ * travelTimeFromPreviousSeconds already includes the loading/unloading
+ * buffer, so each stop's ETA reflects real dwell time at every previous
+ * stop — no separate buffer needs adding on top. rawTravelTimeFromPrevious*
+ * (pure driving time, no buffer) is still returned in case some other view
+ * ever needs driving time alone, but the default ETA path should use the
+ * buffered fields above.
  */
 export async function calculateSequentialShipmentTimingsHandler(
   req: Request,
@@ -437,6 +455,7 @@ export async function calculateSequentialShipmentTimingsHandler(
 ): Promise<void> {
   try {
     const shipments = req.body;
+    // console.log(shipments);
     if (!Array.isArray(shipments) || shipments.length === 0) {
       res.status(400).json({
         success: false,
@@ -458,10 +477,10 @@ export async function calculateSequentialShipmentTimingsHandler(
 
     // Fail fast with one clear error rather than N identical per-leg failures.
     if (!process.env.GEOAPIFY_API_KEY) {
-      //   res.status(500).json({
-      //     success: false,
-      //     message: "GEOAPIFY_API_KEY is not configured on the server.",
-      //   });
+      res.status(500).json({
+        success: false,
+        message: "GEOAPIFY_API_KEY is not configured on the server.",
+      });
       return;
     }
 
@@ -484,10 +503,6 @@ export async function calculateSequentialShipmentTimingsHandler(
         serviceBufferSeconds,
       },
     );
-    // await Route.updateOne(
-    //   { routeNumber: req.body.route.routeNumber },
-    //   { $set: { shipments: result.shipments } },
-    // );
 
     // console.log(updatedRoute);
     res.status(200).json({
