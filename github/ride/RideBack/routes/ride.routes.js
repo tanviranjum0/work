@@ -6,7 +6,7 @@ const authMiddleware = require("../middlewares/auth.middleware");
 const validate = require("../middlewares/validate.middleware");
 const catchAsync = require("../utils/catchAsync");
 
-module.exports = ({ rideCreationLimiter, verificationLimiter }) => {
+module.exports = ({ rideCreationLimiter, verificationLimiter, mapLimiter }) => {
 router.get("/chat-details/:id",
   authMiddleware.authAny,
   param("id").isMongoId(),
@@ -37,6 +37,7 @@ router.post(
 router.get(
   "/get-fare",
   authMiddleware.authUser,
+  mapLimiter,
   query("pickup")
     .isString()
     .trim().isLength({ min: 3, max: 256 })
@@ -50,6 +51,7 @@ router.get(
 );
 router.get(
   "/get-visitor-fare",
+  mapLimiter,
   query("pickup")
     .isString()
     .trim().isLength({ min: 3, max: 256 })

@@ -96,7 +96,7 @@ app.get("/", (req, res) => {
 app.use("/user", userRoutes({ authLimiter, verificationLimiter }));
 app.use("/captain", captainRoutes({ authLimiter, verificationLimiter }));
 app.use("/map", mapLimiter, mapsRoutes);
-app.use("/ride", rideRoutes({ rideCreationLimiter, verificationLimiter }));
+app.use("/ride", rideRoutes({ rideCreationLimiter, verificationLimiter, mapLimiter }));
 app.use("/mail", verificationLimiter, mailRoutes);
 app.post("/auth/refresh", refreshLimiter, require("./controllers/auth.controller").refresh);
 app.use((req, res, next) => next(new (require("./utils/AppError").NotFoundError)("Route not found.")));
