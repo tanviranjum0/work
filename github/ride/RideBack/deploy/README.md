@@ -77,8 +77,7 @@ RideBack and RideFront both live in one GitHub repo (`tanviranjum0/work`), along
    - `EC2_HOST` — the Elastic IP or `api.rideshare.tanvirdev.site`
    - `EC2_USER` — `ubuntu`
    - `EC2_SSH_KEY` — the **private** key from step 1
-   - `GHCR_PAT` — a classic PAT with `read:packages`, long-lived. EC2 uses this once per deploy to `docker login ghcr.io`; `GITHUB_TOKEN` only exists inside the Actions run, so it can't be used from the EC2 side.
-     - Shortcut: skip this secret and the login step entirely by setting the `rideback-api` GHCR package to **public** (package page → Settings → Change visibility) once it exists after the first push.
+   - No `GHCR_PAT` needed: the `rideback-api` package is public, so EC2 pulls it with no `docker login`. If it's ever switched back to private (package page → Settings → Change visibility), add a `GHCR_PAT` secret (classic PAT, `read:packages`) and reinstate a login step in the workflow's deploy job first.
 3. (Optional) Create a `production` environment under Settings → Environments if you want a manual approval click before each deploy.
 
 ## 2. First deploy
