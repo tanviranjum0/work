@@ -1,0 +1,102 @@
+# Production stack for one EC2 t2.micro / t3.micro (1 GiB RAM, 2 GiB swap).
+#
+# The api image is built by GitHub Actions and pushed to GHCR, not built here — a t2.micro
+# is too slow/CPU-throttled to build its own image (see .github/workflows/deploy.yml).
+#
+#   docker compose -f docker-compose.prod.yml --env-file .env.production pull
+#   docker compose -f docker-compose.prod.yml --env-file .env.production up -d
+#
+# First deploy: run `bash deploy/scripts/init-letsencrypt.sh` instead (issues the TLS cert).
+# Full runbook: deploy/README.md
+
+name: rideback
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  api:
+    image: ghcr.io/${GHCR_OWNER:?set GHCR_OWNER in .env.production}/rideback-api:${API_IMAGE_TAG:-latest}
+    pull_policy: always
+    restart: unless-stopped
+    init: true
+    env_file: .env.production
+    environment:
+      # Pinned so a typo in .env.production can't ship a dev-mode server (stack traces in responses).
+      ENVIRONMENT: production
+      NODE_ENV: production
+      PORT: "4000"
+      # Exactly one trusted hop: the nginx container. Without this every client shares nginx's IP
+      # and the per-IP rate limits apply to all users combined.
+      TRUST_PROXY: "1"
+      NODE_OPTIONS: --max-old-space-size=320
+    expose:
+      - "4000"
+    depends_on:
+      redis:
+        condition: service_healthy
+        required: false # redis is skipped when COMPOSE_PROFILES doesn't include local-redis (Upstash mode)
+    mem_limit: 512m
+    logging: *logging
+
+  # Bundled Redis for BullMQ jobs, rate limits and the Socket.IO adapter. Enabled by
+  # COMPOSE_PROFILES=local-redis in .env.production; remove that line to use Upstash instead.
+  redis:
+    image: redis:7.4-alpine
+    profiles: ["local-redis"]
+    restart: unless-stopped
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+      REDISCLI_AUTH: ${REDIS_PASSWORD:-}
+    # AOF persistence keeps queued jobs across restarts; BullMQ requires noeviction.
+    command:
+      - sh
+      - -c
+      - >-
+        test -n "$$REDIS_PASSWORD" || { echo "REDIS_PASSWORD is required" >&2; exit 1; };
+        exec redis-server --requirepass "$$REDIS_PASSWORD" --appendonly yes --save ''
+        --maxmemory 64mb --maxmemory-policy noeviction
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep -q PONG"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    mem_limit: 96m
+    logging: *logging
+
+  nginx:
+    image: nginx:1.28-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - certbot-conf:/etc/letsencrypt:ro
+      - certbot-www:/var/www/certbot:ro
+    depends_on:
+      - api
+    # Reload every 6h so certificates renewed by the certbot service are picked up without downtime.
+    command: ["/bin/sh", "-c", "while :; do sleep 21600 & wait $$!; nginx -s reload; done & exec nginx -g 'daemon off;'"]
+    mem_limit: 64m
+    logging: *logging
+
+  certbot:
+    image: certbot/certbot:latest
+    restart: unless-stopped
+    volumes:
+      - certbot-conf:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
+    entrypoint: ["/bin/sh", "-c", "trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot --quiet; sleep 43200 & wait $$!; done"]
+    mem_limit: 128m
+    logging: *logging
+
+volumes:
+  redis-data:
+  certbot-conf:
+  certbot-www:

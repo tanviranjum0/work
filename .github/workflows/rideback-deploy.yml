@@ -1,0 +1,93 @@
+# Builds the RideBack API image on GitHub's runners (not on the t3.micro — it would
+# throttle or time out), pushes it to GHCR, then SSHes into EC2 to pull and restart just
+# the api service. Compose/nginx/env files aren't in the image, so a change to those still
+# needs a `git pull` on the box (see github/ride/RideBack/deploy/README.md).
+#
+# Lives at the repo root (GitHub only discovers workflows in the root .github/workflows/,
+# never in a subdirectory) and is path-filtered to github/ride/RideBack/** so pushes to
+# the repo's other projects don't trigger it.
+#
+# Required repository secrets (Settings -> Secrets and variables -> Actions):
+#   EC2_HOST     Elastic IP or api.rideshare.tanvirdev.site
+#   EC2_USER     ubuntu
+#   EC2_SSH_KEY  private half of the key pair authorized on the instance
+#   GHCR_PAT     classic PAT, read:packages scope, long-lived — EC2 uses this to pull
+#                the image. (GITHUB_TOKEN only lives inside this workflow run; it can't
+#                be used for a docker login from the EC2 host.) Skip this entirely by
+#                making the ghcr.io package public instead (package Settings -> Change
+#                visibility); then delete the "docker login" line in the deploy step.
+#
+# Also requires a "production" environment (Settings -> Environments) if you want a
+# manual approval gate before deploy; otherwise remove `environment: production` below.
+name: RideBack - build and deploy
+
+on:
+  push:
+    branches: [main]
+    paths: ["github/ride/RideBack/**"]
+  workflow_dispatch: {}
+
+concurrency:
+  group: rideback-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE: ghcr.io/${{ github.repository_owner }}/rideback-api
+  APP_DIR: github/ride/RideBack
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.meta.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: meta
+        run: echo "tag=sha-${GITHUB_SHA:0:12}" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: ${{ env.APP_DIR }}
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:${{ steps.meta.outputs.tag }}
+            ${{ env.IMAGE }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: appleboy/ssh-action@v1
+        env:
+          GHCR_PAT: ${{ secrets.GHCR_PAT }}
+          GHCR_ACTOR: ${{ github.actor }}
+          IMAGE_TAG: ${{ needs.build-and-push.outputs.tag }}
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          envs: GHCR_PAT,GHCR_ACTOR,IMAGE_TAG
+          script: |
+            set -euo pipefail
+            echo "$GHCR_PAT" | docker login ghcr.io -u "$GHCR_ACTOR" --password-stdin
+            cd ~/work/github/ride/RideBack
+            sed -i "s/^API_IMAGE_TAG=.*/API_IMAGE_TAG=$IMAGE_TAG/" .env.production
+            docker compose -f docker-compose.prod.yml --env-file .env.production pull api
+            docker compose -f docker-compose.prod.yml --env-file .env.production up -d --remove-orphans
+            docker image prune -f
