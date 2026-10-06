@@ -32,13 +32,11 @@ function validateRuntimeConfig() {
     throw new Error("JWT_SECRET must be at least 32 characters in production.");
   }
   if (process.env.ENVIRONMENT === "production") {
-    for (const key of [
-      "GOOGLE_MAPS_API",
-      "RESEND_API",
-      "RESEND_EMAIL_FROM",
-      "CLIENT_URL",
-      "OTP_HASH_SECRET",
-    ]) {
+    // GOOGLE_MAPS_API is optional (keyless OSM provider); RESEND_* are optional when
+    // AUTO_VERIFY_EMAIL=true.
+    const required = ["CLIENT_URL", "OTP_HASH_SECRET"];
+    if (process.env.AUTO_VERIFY_EMAIL !== "true") required.push("RESEND_API", "RESEND_EMAIL_FROM");
+    for (const key of required) {
       if (!process.env[key]) throw new Error(`${key} must be configured in production.`);
     }
     if (process.env.OTP_HASH_SECRET.length < 32) {
@@ -66,6 +64,8 @@ if (process.env.TRUST_PROXY) app.set("trust proxy", Number(process.env.TRUST_PRO
 app.use(helmet());
 // Container health probe; registered before request logging and rate limiting.
 app.get("/healthz", (req, res) => {
+  // Public and secret-free: lets the SPA poll it cross-origin while a free instance wakes up.
+  res.set("Access-Control-Allow-Origin", "*");
   const healthy =
     mongoose.connection.readyState === 1 &&
     (!process.env.REDIS_URL || Boolean(getRedisClient()?.isReady));

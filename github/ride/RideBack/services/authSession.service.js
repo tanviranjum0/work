@@ -14,7 +14,11 @@ function cookieOptions(path, maxAge) {
   return {
     httpOnly: true,
     secure: process.env.ENVIRONMENT === "production",
-    sameSite: process.env.ENVIRONMENT === "production" ? "none" : "lax",
+    // "lax" when the SPA proxies the API same-origin (Vercel rewrite); "none" for a
+    // genuinely cross-site API. Override with COOKIE_SAMESITE.
+    sameSite:
+      process.env.COOKIE_SAMESITE ||
+      (process.env.ENVIRONMENT === "production" ? "none" : "lax"),
     path,
     maxAge,
   };

@@ -1,7 +1,18 @@
 const axios = require("axios");
 const captainModel = require("../models/captain.model");
+const osm = require("./osm.service");
+
+// Google is used only when a key is configured; otherwise the keyless OSM provider runs.
+const useGoogle = () => Boolean(process.env.GOOGLE_MAPS_API);
 
 module.exports.getAddressCoordinate = async (address) => {
+  if (!useGoogle()) {
+    try {
+      return await osm.getAddressCoordinate(address);
+    } catch {
+      throw new Error("Unable to fetch coordinates.");
+    }
+  }
   const apiKey = process.env.GOOGLE_MAPS_API;
   if (!apiKey) throw new Error("Maps integration is not configured.");
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
@@ -27,6 +38,14 @@ module.exports.getAddressCoordinate = async (address) => {
 module.exports.getDistanceTime = async (origin, destination) => {
   if (!origin || !destination) {
     throw new Error("Origin and destination are required");
+  }
+  if (!useGoogle()) {
+    try {
+      // Includes from/to/geometry so the client can draw the route without a second lookup.
+      return await osm.getRoute(origin, destination);
+    } catch {
+      throw new Error("Unable to fetch distance and time.");
+    }
   }
   const apiKey = process.env.GOOGLE_MAPS_API;
   if (!apiKey) throw new Error("Maps integration is not configured.");
@@ -55,6 +74,13 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
   if (!input) {
     throw new Error("query is required");
   }
+  if (!useGoogle()) {
+    try {
+      return await osm.getAutoCompleteSuggestions(input);
+    } catch {
+      throw new Error("Unable to fetch suggestions.");
+    }
+  }
 
   const apiKey = process.env.GOOGLE_MAPS_API;
   if (!apiKey) throw new Error("Maps integration is not configured.");
@@ -73,6 +99,22 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
     }
   } catch (err) {
     throw new Error("Unable to fetch suggestions.");
+  }
+};
+
+module.exports.getRoute = async (origin, destination) => {
+  try {
+    return await osm.getRoute(origin, destination);
+  } catch {
+    throw new Error("Unable to fetch route.");
+  }
+};
+
+module.exports.reverseGeocode = async (lat, lng) => {
+  try {
+    return await osm.reverseGeocode(lat, lng);
+  } catch {
+    throw new Error("Unable to look up this location.");
   }
 };
 

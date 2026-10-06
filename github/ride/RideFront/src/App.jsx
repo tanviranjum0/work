@@ -5,6 +5,7 @@ import { ChevronLeft, Trash2 } from "lucide-react";
 import Loading from "./screens/Loading";
 import { logger } from "./utils/logger";
 import { SocketDataContext } from "./contexts/SocketContext";
+import ServerWakeBanner from "./components/ServerWakeBanner";
 
 const SwiftApp = lazy(() => import("./screens/GetStarted/SwiftApp"));
 const UserHomeScreen = lazy(() => import("./screens/UserHomeScreen"));
@@ -47,6 +48,7 @@ function App() {
           </button>
         </div>
 
+        <ServerWakeBanner />
         <BrowserRouter>
           <LoggingWrapper />
           <Suspense fallback={<Loading />}>

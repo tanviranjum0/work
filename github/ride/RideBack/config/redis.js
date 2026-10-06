@@ -28,7 +28,8 @@ function whenRedisReady() {
 async function connectRedis() {
   const redisClient = getRedisClient();
   if (!redisClient) {
-    if (process.env.ENVIRONMENT === "production") {
+    // Single-instance free hosting runs without Redis (in-memory limits, inline jobs).
+    if (process.env.ENVIRONMENT === "production" && process.env.REQUIRE_REDIS === "true") {
       throw new Error("REDIS_URL must be configured in production.");
     }
     return null;

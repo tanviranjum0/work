@@ -7,7 +7,8 @@ export const SocketDataContext = createContext();
 // Exported so screens and the shared API client (utils/api.js) can connect/disconnect
 // this socket directly — on login, logout and session refresh — without needing to be
 // inside the React tree.
-export const socket = io(import.meta.env.VITE_SERVER_URL, {
+// Socket.IO can't ride through the Vercel /api rewrite, so it connects straight to the API host.
+export const socket = io(import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_SERVER_URL, {
   autoConnect: false,
   // A function, not a plain object: socket.io calls it again on every (re)connect
   // attempt, including automatic retries, so it always sends the current token rather

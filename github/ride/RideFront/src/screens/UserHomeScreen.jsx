@@ -2,22 +2,19 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { LocateFixed, MapPin, ShieldCheck } from "lucide-react";
 import { useUser } from "../contexts/UserContext";
-import map from "/map.png";
 import {
   Button,
   LocationSuggestions,
   SelectVehicle,
   RideDetails,
 } from "../components";
-import axios from "axios";
+import TripMap from "../components/TripMap";
+import useMapPadding from "../hooks/useMapPadding";
 import api from "../utils/api";
 import debounce from "lodash.debounce";
 import { SocketDataContext } from "../contexts/SocketContext";
 import Console from "../utils/console";
 import "./UserHomeScreen.css";
-
-const mapsEmbedUrl = (query) =>
-  `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
 
 const getErrorMessage = (error, fallback) =>
   error.response?.data?.message || error.message || fallback;
@@ -32,7 +29,17 @@ function UserHomeScreen() {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedInput, setSelectedInput] = useState("pickup");
   const [locationSuggestion, setLocationSuggestion] = useState([]);
-  const [mapLocation, setMapLocation] = useState("");
+  // Interactive map state: markers keyed by kind, plus the drawn route geometry.
+  const [markers, setMarkers] = useState({});
+  const [route, setRoute] = useState(null);
+  const mapPadding = useMapPadding();
+  const setMarker = (kind, lngLat) =>
+    setMarkers((prev) => {
+      const next = { ...prev };
+      if (lngLat) next[kind] = lngLat;
+      else delete next[kind];
+      return next;
+    });
   const [rideCreated, setRideCreated] = useState(false);
 
   // Ride details
@@ -116,7 +123,12 @@ function UserHomeScreen() {
         params: { pickup, destination },
       });
       setFare(response.data.fare);
-      setMapLocation(mapsEmbedUrl(`${pickup} to ${destination}`));
+      const { geometry, from, to } = response.data.distanceTime || {};
+      setRoute(geometry || null);
+      if (from && to) {
+        setMarker("pickup", [from.lng, from.ltd]);
+        setMarker("destination", [to.lng, to.ltd]);
+      }
 
       setShowFindTripPanel(false);
       setShowSelectVehiclePanel(true);
@@ -202,6 +214,8 @@ function UserHomeScreen() {
   };
   // Set ride details to default values
   const setDefaults = () => {
+    setRoute(null);
+    setMarkers((prev) => (prev.me ? { me: prev.me } : {}));
     setPickupLocation("");
     setDestinationLocation("");
     setSelectedVehicle("car");
@@ -223,21 +237,13 @@ function UserHomeScreen() {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          setMapLocation(mapsEmbedUrl(`${latitude},${longitude}`));
+          setRoute(null);
+          setMarkers({ me: [longitude, latitude] });
           try {
-            const data = await axios.get(
-              "https://maps.googleapis.com/maps/api/geocode/json",
-              {
-                params: {
-                  latlng: `${latitude},${longitude}`,
-                  key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-                },
-              }
-            );
-            const address =
-              data.data.plus_code?.compound_code ||
-              data.data.results?.[0]?.formatted_address;
-            if (address) setPickupLocation(address);
+            const { data } = await api.get("/map/reverse", {
+              params: { lat: latitude, lng: longitude },
+            });
+            if (data.address) setPickupLocation(data.address);
           } catch (error) {
             Console.error(error);
           }
@@ -254,6 +260,19 @@ function UserHomeScreen() {
       );
     } else {
       setErrorMessage("Location isn't available in this browser. Enter your pickup address.");
+    }
+  };
+
+  // Long-press / right-click on the map sets the pickup to that spot.
+  const pickOnMap = async ([lng, lat]) => {
+    if (!showFindTripPanel) return;
+    setMarkers((prev) => ({ ...prev, me: [lng, lat] }));
+    try {
+      const { data } = await api.get("/map/reverse", { params: { lat, lng } });
+      if (data.address) setPickupLocation(data.address);
+    } catch (error) {
+      Console.error(error);
+      setErrorMessage("We couldn't read that spot. Type the pickup address instead.");
     }
   };
 
@@ -285,17 +304,17 @@ function UserHomeScreen() {
       const [longitude, latitude] =
         data.captain?.location?.coordinates || [];
       if (latitude != null && longitude != null) {
-        setMapLocation(
-          mapsEmbedUrl(`${latitude},${longitude} to ${pickupLocationRef.current}`)
-        );
+        setMarker("captain", [longitude, latitude]);
       }
       setConfirmedRideData({ ...data, otp: rideOtpRef.current });
       setErrorMessage("");
     };
 
-    const onRideStarted = (data) => {
-      setMapLocation(mapsEmbedUrl(`${data.pickup} to ${data.destination}`));
+    const onRideStarted = () => {
+      setMarker("captain", null);
     };
+
+    const onCaptainLocation = ({ ltd, lng }) => setMarker("captain", [lng, ltd]);
 
     const onRideEnded = () => {
       setShowRideDetailsPanel(false);
@@ -310,7 +329,9 @@ function UserHomeScreen() {
     socket.on("ride-confirmed", onRideConfirmed);
     socket.on("ride-started", onRideStarted);
     socket.on("ride-ended", onRideEnded);
+    socket.on("captain-location", onCaptainLocation);
     return () => {
+      socket.off("captain-location", onCaptainLocation);
       socket.off("ride-confirmed", onRideConfirmed);
       socket.off("ride-started", onRideStarted);
       socket.off("ride-ended", onRideEnded);
@@ -388,20 +409,13 @@ function UserHomeScreen() {
   }, [socket, confirmedRideData?._id]);
 
   return (
-    <div
-      className="ride-booking-shell relative w-full h-dvh"
-      style={{ backgroundImage: `url(${map})` }}
-    >
-      {mapLocation && (
-        <iframe
-          title="Interactive trip map"
-          src={mapLocation}
-          className="ride-booking-map absolute w-full h-full"
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-      )}
+    <div className="ride-booking-shell relative w-full h-dvh">
+      <TripMap
+        markers={Object.entries(markers).map(([kind, lngLat]) => ({ kind, lngLat }))}
+        route={route}
+        padding={mapPadding}
+        onPick={pickOnMap}
+      />
       <header className="ride-map-header">
         <div className="ride-brand">
           <span className="ride-brand-mark"><MapPin size={19} /></span>

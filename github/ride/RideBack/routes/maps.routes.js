@@ -37,4 +37,22 @@ router.get(
   catchAsync(mapController.getAutoCompleteSuggestionsForVisitors),
 );
 
+router.get(
+  "/route",
+  query("origin").isString().trim().isLength({ min: 3, max: 256 }),
+  query("destination").isString().trim().isLength({ min: 3, max: 256 }),
+  validate,
+  authMiddleware.authAny,
+  catchAsync(mapController.getRoute),
+);
+
+router.get(
+  "/reverse",
+  query("lat").isFloat({ min: -90, max: 90 }),
+  query("lng").isFloat({ min: -180, max: 180 }),
+  validate,
+  authMiddleware.authAny,
+  catchAsync(mapController.reverseGeocode),
+);
+
 module.exports = router;

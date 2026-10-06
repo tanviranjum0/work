@@ -36,6 +36,12 @@ module.exports.registerCaptain = asyncHandler(async (req, res) => {
     vehicle.type
   );
 
+  // Demo/free-tier mode: no transactional email provider, so skip the verification step.
+  if (process.env.AUTO_VERIFY_EMAIL === "true" && !captain.emailVerified) {
+    captain.emailVerified = true;
+    await captain.save();
+  }
+
   const token = await issueSession(captain, "captain", res);
   return res.status(201).json({
     message: "Captain registered successfully",

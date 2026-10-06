@@ -116,6 +116,11 @@ async function initializeSocket(server, allowedOrigins) {
           { $set: { location: { type: "Point", coordinates: [longitude, latitude] } } },
           { runValidators: true },
         );
+        // Relay live position to the rider(s) in any ride room this captain has joined.
+        const rideRooms = [...socket.rooms].filter((room) => /^[a-f\d]{24}$/i.test(room));
+        if (rideRooms.length) {
+          socket.to(rideRooms).emit("captain-location", { ltd: latitude, lng: longitude });
+        }
       } catch (error) {
         logger.error("Driver location update failed", { name: error.name });
         socket.emit("error", { message: "Unable to update location." });

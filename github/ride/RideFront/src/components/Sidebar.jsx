@@ -30,24 +30,33 @@ function Sidebar({ showSidebar, setShowSidebar }) {
   };
   return (
     <>
-      {showSidebar &&
-        <div
-          className="m-3 mt-4 absolute right-0 top-0 z-20 cursor-pointer bg-white p-1 rounded"
-          onClick={() => {
-            setShowSidebar(!showSidebar);
-          }}
-        >
-          <X />
-          {/* {showSidebar ? <X /> : <img src={demo} width={20} height={20} />} */}
-        </div>}
+      {/* Dim backdrop: tap outside the drawer to close (desktop/tablet) */}
+      <div
+        className={`${showSidebar ? "opacity-100" : "opacity-0 pointer-events-none"} sm:bg-black/30 transition-opacity duration-300 absolute inset-0 z-[9]`}
+        onClick={() => setShowSidebar(false)}
+        aria-hidden="true"
+      />
 
       {/* Sidebar Component */}
       <div
-        className={`${showSidebar ? " left-0 " : " -left-[100%] "
-          } z-10 duration-300 absolute w-full h-dvh bottom-0 bg-white p-4 pt-5 flex flex-col justify-between`}
+        role="dialog"
+        aria-label="Profile menu"
+        aria-hidden={!showSidebar}
+        className={`${showSidebar ? " left-0 " : " -left-full "
+          } z-10 duration-300 absolute w-full sm:w-[380px] sm:shadow-2xl h-dvh bottom-0 bg-white p-4 pt-5 flex flex-col justify-between overflow-y-auto`}
       >
         <div className="">
-          <h1 className="relative text-2xl font-semibold ">Profile</h1>
+          <div className="flex items-center justify-between">
+            <h1 className="relative text-2xl font-semibold ">Profile</h1>
+            <button
+              type="button"
+              className="p-2 rounded-lg hover:bg-zinc-100"
+              aria-label="Close menu"
+              onClick={() => setShowSidebar(false)}
+            >
+              <X />
+            </button>
+          </div>
 
           <div className="leading-3 mt-8 mb-4">
             <div className="my-2 rounded-full w-24 h-24 bg-blue-400 mx-auto flex items-center justify-center">

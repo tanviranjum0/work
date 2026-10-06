@@ -32,6 +32,12 @@ module.exports.registerUser = asyncHandler(async (req, res) => {
     phone,
   );
 
+  // Demo/free-tier mode: no transactional email provider, so skip the verification step.
+  if (process.env.AUTO_VERIFY_EMAIL === "true" && !user.emailVerified) {
+    user.emailVerified = true;
+    await user.save();
+  }
+
   const token = await issueSession(user, "user", res);
   return res.status(201).json({
     message: "User registered successfully",

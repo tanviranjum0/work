@@ -1,0 +1,267 @@
+/* Driver dashboard: extends the shared booking-panel look from UserHomeScreen.css. */
+.captain-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.captain-panel .booking-panel-heading {
+  margin-bottom: 4px;
+}
+
+.captain-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 11px;
+  border-radius: 99px;
+  background: #e7f5ef;
+  color: #087c59;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.captain-status span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #13a77c;
+  box-shadow: 0 0 0 4px rgb(19 167 124 / 18%);
+  animation: ride-status-pulse 1.8s ease-in-out infinite;
+}
+
+.captain-profile {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.captain-profile > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.captain-profile strong {
+  font-size: 15px;
+}
+
+.captain-profile span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #77847d;
+  font-size: 12px;
+}
+
+.captain-avatar {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  place-items: center;
+  border: 0;
+  border-radius: 15px;
+  background: #11a77c;
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform .18s ease;
+}
+
+.captain-avatar:hover {
+  transform: scale(1.06);
+}
+
+.captain-earnings,
+.captain-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 9px;
+}
+
+.captain-stats {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.captain-earnings > div,
+.captain-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 13px 14px;
+  border: 1px solid #e8eeeb;
+  border-radius: 15px;
+  background: #f8faf9;
+}
+
+.captain-earnings > div:first-child {
+  border-color: #cfeadf;
+  background: #edf8f2;
+}
+
+.captain-earnings span,
+.captain-stats span {
+  color: #77847d;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.captain-earnings strong {
+  font-family: "Manrope", sans-serif;
+  font-size: 22px;
+  letter-spacing: -.04em;
+}
+
+.captain-stats strong {
+  font-size: 18px;
+}
+
+.captain-vehicle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid #e8eeeb;
+  border-radius: 15px;
+}
+
+.captain-vehicle > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.captain-vehicle strong {
+  font-size: 15px;
+  letter-spacing: .03em;
+}
+
+.captain-vehicle span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #77847d;
+  font-size: 12px;
+}
+
+.captain-vehicle img {
+  height: 54px;
+  object-fit: contain;
+  transform: scaleX(-1);
+}
+
+/* Incoming ride request panel */
+.captain-ride-panel {
+  display: block;
+}
+
+.captain-ride-panel[hidden] {
+  display: none;
+}
+
+.captain-rider {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.captain-rider > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.captain-rider-name {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.captain-rider-name strong {
+  font-size: 15px;
+}
+
+.captain-rider-name span {
+  color: #77847d;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.captain-fare {
+  text-align: right;
+}
+
+.captain-fare strong {
+  display: block;
+  font-family: "Manrope", sans-serif;
+  font-size: 22px;
+  letter-spacing: -.04em;
+}
+
+.captain-fare span {
+  color: #77847d;
+  font-size: 11px;
+}
+
+.captain-otp-input {
+  width: 100%;
+  min-height: 54px;
+  margin-top: 12px;
+  padding: 0 15px;
+  border: 1px solid #e8eeeb;
+  border-radius: 14px;
+  outline: none;
+  background: #f5f7f6;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: .5em;
+  text-align: center;
+}
+
+.captain-otp-input:focus {
+  border-color: #36b18e;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgb(17 167 124 / 11%);
+}
+
+.captain-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.captain-actions .booking-primary-button {
+  margin-top: 0;
+}
+
+.captain-ghost-button {
+  min-height: 53px;
+  border: 1px solid #e5ece8 !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  color: #273b31 !important;
+  font-size: 14px;
+}
+
+.captain-end-button {
+  background: #0f9d72 !important;
+}
+
+@media (max-width: 640px) {
+  .captain-panel {
+    gap: 11px;
+  }
+
+  .captain-earnings strong {
+    font-size: 19px;
+  }
+}

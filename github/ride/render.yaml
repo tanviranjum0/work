@@ -1,0 +1,41 @@
+# Render Blueprint: free web service for the QuickRide API.
+# New > Blueprint > pick this repo, and set the Blueprint path to github/ride/render.yaml.
+services:
+  - type: web
+    name: quickride-api
+    runtime: node
+    plan: free
+    rootDir: github/ride/RideBack
+    buildCommand: npm ci --omit=dev --no-audit --no-fund
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: ENVIRONMENT
+        value: production
+      - key: NODE_ENV
+        value: production
+      # Vercel proxies /api/* to this service, so the request crosses two proxies.
+      - key: TRUST_PROXY
+        value: "2"
+      - key: COOKIE_SAMESITE
+        value: lax
+      # No email provider on the free tier: accounts are verified at sign-up.
+      - key: AUTO_VERIFY_EMAIL
+        value: "true"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: OTP_HASH_SECRET
+        generateValue: true
+      # MongoDB Atlas M0 connection string.
+      - key: MONGODB_PROD_URL
+        sync: false
+      - key: MONGODB_MAX_POOL_SIZE
+        value: "5"
+      # Exact Vercel origin, e.g. https://quickride.vercel.app (no trailing slash).
+      - key: FRONTEND_ORIGINS
+        sync: false
+      - key: CLIENT_URL
+        sync: false
