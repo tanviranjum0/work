@@ -4,47 +4,75 @@ import { createContext, useEffect, useState } from "react";
 export const StoreContext = createContext(null);
 
 const ContextContainer = ({ children }) => {
-  const [userListings, setUserListings] = useState([])
-  const [initialListings, setInitialListings] = useState([])
-  const [isAlreadyLoggedIn, setIsAlreadyLoggedIn] = useState(false)
+  const [userListings, setUserListings] = useState({ data: [], progress: 0 });
+  const [initialListings, setInitialListings] = useState([]);
+  const [initialListingsLoading, setInitialListingsLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isAlreadyLoggedIn, setIsAlreadyLoggedIn] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
 
-  const checkAlreadyLoggenIn = async () => {
-    if (!localStorage.getItem("user")) {
-      setIsAlreadyLoggedIn(false)
-      return
-    }
-    const data = await fetch(`/api/auth/check-login`, {
-      method: "GET",
-      mode: "cors",
-      credentials: "include",
-    })
-    if (data.status == 200) {
-      setIsAlreadyLoggedIn(true)
-    } else {
-      setIsAlreadyLoggedIn(false)
-    }
-
-  }
-  const fetchInitialListings = async () => {
-    const sale = await fetch(
-      `/api/listing/get?limit=9&type=sale`
-    );
-    const rent = await fetch(
-      `/api/listing/get?limit=9&type=rent`
-    );
-    const data = await sale.json();
-    const data2 = await rent.json();
-    setInitialListings([...data, ...data2]);
-  }
   useEffect(() => {
-    fetchInitialListings()
-    checkAlreadyLoggenIn()
-  }, [])
+    const controller = new AbortController();
 
-  const ContextValue = { isAlreadyLoggedIn, setInitialListings, initialListings, userListings, setUserListings, setIsAlreadyLoggedIn };
+    const fetchInitialListings = async () => {
+      setInitialListingsLoading(true);
+      try {
+        const response = await fetch("/api/listing/get?limit=24", { signal: controller.signal });
+        if (!response.ok) throw new Error("Could not load listings");
+        const data = await response.json();
+        setInitialListings(Array.isArray(data) ? data : []);
+      } catch (error) {
+        if (error.name !== "AbortError") setInitialListings([]);
+      } finally {
+        if (!controller.signal.aborted) setInitialListingsLoading(false);
+      }
+    };
+
+    const checkAlreadyLoggedIn = async () => {
+      try {
+        const response = await fetch("/api/auth/check-login", {
+          credentials: "include",
+          signal: controller.signal,
+        });
+        if (!response.ok) throw new Error("Session expired");
+        const data = await response.json();
+        if (data.userObject?.id) {
+          const safeUser = { userObject: data.userObject, avatar: data.avatar || null };
+          setCurrentUser(safeUser);
+          setIsAlreadyLoggedIn(true);
+        } else {
+          throw new Error("No active session");
+        }
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          setCurrentUser(null);
+          setIsAlreadyLoggedIn(false);
+        }
+      } finally {
+        if (!controller.signal.aborted) setAuthLoading(false);
+      }
+    };
+
+    fetchInitialListings();
+    checkAlreadyLoggedIn();
+    return () => controller.abort();
+  }, []);
+
+  const contextValue = {
+    currentUser,
+    setCurrentUser,
+    authLoading,
+    isAlreadyLoggedIn,
+    setIsAlreadyLoggedIn,
+    setInitialListings,
+    initialListings,
+    initialListingsLoading,
+    userListings,
+    setUserListings,
+  };
 
   return (
-    <StoreContext.Provider value={ContextValue}>
+    <StoreContext.Provider value={contextValue}>
       {children}
     </StoreContext.Provider>
   );

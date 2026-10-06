@@ -1,125 +1,120 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import {
-  FaBath,
-  FaBed,
-  FaChair,
-  FaMapMarkerAlt,
-  FaParking,
-} from "react-icons/fa";
-import 'react-lazy-load-image-component/src/effects/blur.css';
-// import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore from "swiper";
-import { Navigation } from "swiper/modules";
-import "swiper/css/bundle";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { FaArrowLeft, FaArrowRight, FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking } from "react-icons/fa";
+import Contact from "../components/Contact";
+import heroHome from "../assets/re/re7-optimized.jpg";
+import { optimizeCloudinaryImage } from "../lib/cloudinary";
 
-function Listing() {
-  SwiperCore.use([Navigation]);
+const Listing = () => {
+  const { id } = useParams();
   const [listing, setListing] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const params = useParams();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [activeImage, setActiveImage] = useState(0);
+  const images = useMemo(
+    () => listing?.imageUrls?.filter((image) => image?.secure_url) || [],
+    [listing]
+  );
+
   useEffect(() => {
+    const controller = new AbortController();
     const fetchListing = async () => {
-      setLoading(true)
-      const listing = await fetch(`/api/listing/get/${params.id}`, {
-        mode: "cors",
-        method: "GET",
-        credentials: "include"
-      })
-      const data = await listing.json()
+      setLoading(true);
+      setError("");
+      try {
+        const response = await fetch("/api/listing/get/" + id, { signal: controller.signal });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "This property could not be found.");
+        setListing(data);
+        setActiveImage(0);
+      } catch (fetchError) {
+        if (fetchError.name !== "AbortError") setError(fetchError.message || "Unable to load this property.");
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    };
+    fetchListing();
+    return () => controller.abort();
+  }, [id]);
 
-      setListing(data)
-      setLoading(false)
-    }
-    fetchListing()
+  const changeImage = (step) => {
+    setActiveImage((index) => (index + step + images.length) % images.length);
+  };
 
-  }, [params.id]);
+  if (loading) return <main className="listing-detail"><p className="profile-status">Loading property...</p></main>;
+  if (error || !listing) {
+    return (
+      <main className="listing-detail">
+        <p className="form-message form-error" role="alert">{error || "This property could not be found."}</p>
+        <Link className="text-link" to="/search">Back to properties <FaArrowRight aria-hidden="true" /></Link>
+      </main>
+    );
+  }
+
+  const price = Number(listing.offer ? listing.discountPrice : listing.regularPrice);
+  const formattedPrice = Number.isFinite(price) ? price.toLocaleString("en-US") : "Contact for price";
+  const currentImage = optimizeCloudinaryImage(images[activeImage]?.secure_url || heroHome, 1800);
 
   return (
-    <main>
-      {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
-      {listing && !loading && (
-        <div>
-          <Swiper navigation>
-            {listing.imageUrls.map((url) => {
-              return (
-                <SwiperSlide key={url.secure_url}>
-                  <div
-                    className="h-[300px] md:h-[550px]"
-                    style={{
-                      background: `url(${url.secure_url}) center no-repeat`,
-                      backgroundSize: "cover",
-                    }}
-                  ></div>
-                </SwiperSlide>
-              )
-            })}
-          </Swiper>
-
-          <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
-            <p className="text-2xl font-semibold">
-              {listing.name} - ${" "}
-              {listing.offer
-                ? listing.discountPrice.toLocaleString("en-US")
-                : listing.regularPrice.toLocaleString("en-US")}
-              {listing.type === "rent" && " / month"}
-            </p>
-            <p className="flex items-center mt-6 gap-2 text-slate-600  text-sm">
-              <FaMapMarkerAlt className="text-green-700" />
-              {listing.address}
-            </p>
-            <div className="flex gap-4">
-              <p className="bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md">
-                {listing.type === "rent" ? "For Rent" : "For Sale"}
-              </p>
-              {listing.offer && (
-                <p className="bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md">
-                  ${+listing.regularPrice - +listing.discountPrice} OFF
-                </p>
-              )}
-            </div>
-            <p className="text-slate-800">
-              <span className="font-semibold text-black">Description - </span>
-              {listing.description}
-            </p>
-            <ul className="text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6">
-              <li className="flex items-center gap-1 whitespace-nowrap ">
-                <FaBed className="text-lg" />
-                {listing.bedrooms > 1
-                  ? `${listing.bedrooms} beds `
-                  : `${listing.bedrooms} bed `}
-              </li>
-              <li className="flex items-center gap-1 whitespace-nowrap ">
-                <FaBath className="text-lg" />
-                {listing.bathrooms > 1
-                  ? `${listing.bathrooms} baths `
-                  : `${listing.bathrooms} bath `}
-              </li>
-              <li className="flex items-center gap-1 whitespace-nowrap ">
-                <FaParking className="text-lg" />
-                {listing.parking ? "Parking spot" : "No Parking"}
-              </li>
-              <li className="flex items-center gap-1 whitespace-nowrap ">
-                <FaChair className="text-lg" />
-                {listing.furnished ? "Furnished" : "Unfurnished"}
-              </li>
-            </ul>
-            <div
-              onClick={() =>
-                alert(
-                  "As this website is for learning purposes, I've disabled the contact form. However, you can validate the other features"
-                )
-              }
-              className="py-2 cursor-pointer bg-slate-500 text-white hover:bg-slate-200 hover:text-black transition-all duration-300 rounded  px-4 border text-center text-2xl"
+    <main className="listing-detail">
+      <div className="listing-detail-topline">
+        <Link className="detail-back-link" to="/search"><FaArrowLeft aria-hidden="true" /> All properties</Link>
+        <span>{listing.type === "rent" ? "For rent" : "For sale"}</span>
+      </div>
+      <section className="listing-gallery" aria-label="Property photographs">
+        <img className="listing-gallery-image" src={currentImage} alt={listing.name + " property"} />
+        {images.length > 1 && (
+          <>
+            <button type="button" className="gallery-control gallery-prev" onClick={() => changeImage(-1)} aria-label="Previous photo"><FaArrowLeft aria-hidden="true" /></button>
+            <button type="button" className="gallery-control gallery-next" onClick={() => changeImage(1)} aria-label="Next photo"><FaArrowRight aria-hidden="true" /></button>
+            <span className="gallery-count">{activeImage + 1} / {images.length}</span>
+          </>
+        )}
+      </section>
+      {images.length > 1 && (
+        <div className="listing-thumbnails" aria-label="Choose a property photograph">
+          {images.map((image, index) => (
+            <button
+              key={image.public_id || image.secure_url}
+              type="button"
+              className={index === activeImage ? "listing-thumbnail is-active" : "listing-thumbnail"}
+              onClick={() => setActiveImage(index)}
+              aria-label={"Show photo " + (index + 1)}
+              aria-pressed={index === activeImage}
             >
-              Contact Owner
-            </div>
-          </div>
+              <img src={optimizeCloudinaryImage(image.secure_url, 240)} alt="" loading="lazy" />
+            </button>
+          ))}
         </div>
       )}
+
+      <div className="listing-detail-grid">
+        <section className="listing-detail-copy">
+          <p className="eyebrow"><span className="eyebrow-line" /> FullEstate property</p>
+          <h1>{listing.name}</h1>
+          <p className="listing-detail-address"><FaMapMarkerAlt aria-hidden="true" />{listing.address}</p>
+          <div className="listing-detail-price">
+            <strong>${formattedPrice}</strong>
+            {listing.type === "rent" && <span> / month</span>}
+            {listing.offer && <span className="detail-offer">Offer</span>}
+          </div>
+          <p className="listing-detail-description">{listing.description}</p>
+          <div className="listing-amenities">
+            <div><FaBed aria-hidden="true" /><strong>{listing.bedrooms}</strong><span>{listing.bedrooms === 1 ? "bedroom" : "bedrooms"}</span></div>
+            <div><FaBath aria-hidden="true" /><strong>{listing.bathrooms}</strong><span>{listing.bathrooms === 1 ? "bathroom" : "bathrooms"}</span></div>
+            <div><FaParking aria-hidden="true" /><strong>{listing.parking ? "Yes" : "No"}</strong><span>parking</span></div>
+            <div><FaChair aria-hidden="true" /><strong>{listing.furnished ? "Yes" : "No"}</strong><span>furnished</span></div>
+          </div>
+        </section>
+        <aside className="listing-contact-card">
+          <p className="eyebrow"><span className="eyebrow-line" /> Interested?</p>
+          <h2>Ask about this place.</h2>
+          <p>Send a note to the property owner to learn more.</p>
+          <Contact listing={listing} />
+        </aside>
+      </div>
     </main>
   );
-}
+};
 
 export default Listing;

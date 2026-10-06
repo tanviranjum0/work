@@ -1,167 +1,156 @@
 const Listing = require("../models/listing");
 const cloudinary = require("cloudinary").v2;
+const { getCloudinaryAsset, validateListing } = require("../utils/validation");
+
+const parseBooleanFilter = (value) => {
+  if (value === "true") return true;
+  return undefined;
+};
+
+const escapeRegex = (value) => value.replace(/[.*+?^$()|[\]{}\\]/g, "\\$&");
+
+const deleteCloudinaryAssets = async (assets) => {
+  const publicIds = assets
+    .map(getCloudinaryAsset)
+    .filter(Boolean)
+    .map((asset) => asset.public_id);
+  if (publicIds.length) await cloudinary.api.delete_resources(publicIds);
+};
 
 const createListing = async (req, res) => {
+  const validated = validateListing(req.body, req.user.id);
+  if (validated.error) return res.status(400).json({ message: validated.error });
   try {
-    req.body.userRef = req.user.id;
-    const listing = await Listing.create(req.body);
+    const listing = await Listing.create({
+      ...validated.data,
+      userRef: req.user.id,
+    });
     return res.status(201).json(listing);
-  } catch (error) {
-    res.status(400).json("no");
+  } catch {
+    return res.status(400).json({ message: "Unable to create this listing." });
   }
-};
-const handleUpload = async (req, res, next) => {
-  const files = req.files;
-  const result = [];
-  files.map((file) => {
-    result.push(file.filename);
-  });
-  res.status(200).json(result);
 };
 
 const deleteListing = async (req, res) => {
-  const listing = await Listing.findById(req.params.id);
-  if (!listing) {
-    return res.status(400).json("Listing not found!");
-  }
-
-  if (req.user.id !== listing.userRef.toString()) {
-    return res.status(400).json("You can only delete your own listings!");
-  }
-
   try {
-    const imageUrls = [];
-    await listing.imageUrls.map((url) => {
-      imageUrls.push(url.public_id);
-    });
-
-    const result = await cloudinary.api.delete_resources(imageUrls);
+    const listing = await Listing.findById(req.params.id);
+    if (!listing) return res.status(404).json({ message: "Listing not found." });
+    if (req.user.id !== listing.userRef.toString()) {
+      return res.status(403).json({ message: "You can only delete your own listings." });
+    }
+    await deleteCloudinaryAssets(listing.imageUrls || []);
     await Listing.findByIdAndDelete(req.params.id);
-    return res.status(200).json("Listing has been deleted!");
-  } catch (error) {
-    return res.status(400).json("There is a problem in listing manupulating");
+    return res.status(200).json({ message: "Listing deleted." });
+  } catch {
+    return res.status(500).json({ message: "Unable to delete this listing right now." });
   }
 };
 
 const updateListing = async (req, res) => {
-  const listing = await Listing.findById(req.params.id);
-  if (!listing) {
-    return res.status(200).json("Listing not found!");
-  }
-
-  if (req.user.id !== listing.userRef.toString()) {
-    return res.status(200).json("You can only update your own listings!");
-  }
-
-  try {
-    const updatedListing = await Listing.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    return res.status(200).json(updatedListing);
-  } catch (error) {
-    return res.status(400).json("There is a problem in listing manupulating");
-  }
-};
-
-const getListing = async (req, res, next) => {
   try {
     const listing = await Listing.findById(req.params.id);
-
-    if (!listing) {
-      res.status(400).json("Listing not found!");
-    } else {
-      res.status(200).json(listing);
+    if (!listing) return res.status(404).json({ message: "Listing not found." });
+    if (req.user.id !== listing.userRef.toString()) {
+      return res.status(403).json({ message: "You can only update your own listings." });
     }
-  } catch (error) {
-    res.status(400).json("There is a problem in listing manupulating");
+    const validated = validateListing(req.body, req.user.id, listing.imageUrls || []);
+    if (validated.error) return res.status(400).json({ message: validated.error });
+
+    const oldAssets = listing.imageUrls || [];
+    const updatedListing = await Listing.findByIdAndUpdate(
+      req.params.id,
+      { $set: validated.data },
+      { new: true, runValidators: true }
+    );
+    const retainedIds = new Set(validated.data.imageUrls.map((asset) => asset.public_id));
+    const removedAssets = oldAssets.filter((asset) => !retainedIds.has(asset.public_id));
+    if (removedAssets.length) {
+      try {
+        await deleteCloudinaryAssets(removedAssets);
+      } catch {
+        console.error("Could not remove superseded listing images.");
+      }
+    }
+    return res.status(200).json(updatedListing);
+  } catch {
+    return res.status(500).json({ message: "Unable to update this listing right now." });
   }
 };
 
-const getListings = async (req, res, next) => {
+const getListing = async (req, res) => {
   try {
-    const limit = parseInt(req.query.limit) || 9;
-    const startIndex = parseInt(req.query.startIndex) || 0;
-    let offer = req.query.offer;
+    const listing = await Listing.findById(req.params.id);
+    if (!listing) return res.status(404).json({ message: "Listing not found." });
+    return res.status(200).json(listing);
+  } catch {
+    return res.status(400).json({ message: "Invalid listing identifier." });
+  }
+};
 
-    if (offer === undefined || offer === "false") {
-      offer = { $in: [false, true] };
-    }
+const getListings = async (req, res) => {
+  const requestedLimit = Number.parseInt(req.query.limit, 10);
+  const requestedStart = Number.parseInt(req.query.startIndex, 10);
+  const limit = Number.isFinite(requestedLimit)
+    ? Math.max(1, Math.min(requestedLimit, 24))
+    : 9;
+  const startIndex = Number.isFinite(requestedStart)
+    ? Math.max(0, Math.min(requestedStart, 10000))
+    : 0;
+  const type = ["sale", "rent"].includes(req.query.type) ? req.query.type : undefined;
+  const offer = parseBooleanFilter(req.query.offer);
+  const furnished = parseBooleanFilter(req.query.furnished);
+  const parking = parseBooleanFilter(req.query.parking);
+  const sortField = ["createdAt", "regularPrice", "name"].includes(req.query.sort)
+    ? req.query.sort
+    : "createdAt";
+  const sortOrder = req.query.order === "asc" ? 1 : -1;
+  const searchTerm = typeof req.query.searchTerm === "string"
+    ? req.query.searchTerm.trim().slice(0, 80)
+    : "";
 
-    let furnished = req.query.furnished;
+  const query = {};
+  if (type) query.type = type;
+  if (offer !== undefined) query.offer = offer;
+  if (furnished !== undefined) query.furnished = furnished;
+  if (parking !== undefined) query.parking = parking;
+  if (searchTerm) {
+    const escapedTerm = escapeRegex(searchTerm);
+    query.$or = [
+      { name: { $regex: escapedTerm, $options: "i" } },
+      { address: { $regex: escapedTerm, $options: "i" } },
+    ];
+  }
 
-    if (furnished === undefined || furnished === "false") {
-      furnished = { $in: [false, true] };
-    }
-
-    let parking = req.query.parking;
-
-    if (parking === undefined || parking === "false") {
-      parking = { $in: [false, true] };
-    }
-
-    let type = req.query.type;
-
-    if (type === undefined || type === "all") {
-      type = { $in: ["sale", "rent"] };
-    }
-
-    const searchTerm = req.query.searchTerm || "";
-
-    const sort = req.query.sort || "createdAt";
-
-    const order = req.query.order || "desc";
-
-    const listings = await Listing.find({
-      name: { $regex: searchTerm, $options: "i" },
-      offer,
-      furnished,
-      parking,
-      type,
-    })
-      .sort({ [sort]: order })
+  try {
+    const listings = await Listing.find(query)
+      .sort({ [sortField]: sortOrder })
       .limit(limit)
-      .skip(startIndex);
-
+      .skip(startIndex)
+      .lean();
     return res.status(200).json(listings);
-  } catch (error) {
-    res.status(400).json("There is a problem in listing Search");
+  } catch {
+    return res.status(500).json({ message: "Unable to load listings." });
   }
 };
 
 const getuserListings = async (req, res) => {
-  const startIndex = parseInt(req.query.startIndex) | 0;
-  if (req.params.id != req.user.id)
-    return res.status(204).json({ error: "Unauthorized" });
+  if (req.params.id !== req.user.id) {
+    return res.status(403).json({ message: "You can only view your own listings." });
+  }
   try {
-    const listings = await Listing.find({ userRef: req.params.id })
+    const startIndex = Math.max(
+      0,
+      Math.min(Number.parseInt(req.query.startIndex, 10) || 0, 10000)
+    );
+    const listings = await Listing.find({ userRef: req.user.id })
       .limit(10)
-      .sort({ createdAt: "desc" })
-      .skip(startIndex);
-    res.status(200).json(listings);
-  } catch (error) {
-    res.status(400).json("There is a problem in listing Search");
+      .sort({ createdAt: -1 })
+      .skip(startIndex)
+      .lean();
+    return res.status(200).json(listings);
+  } catch {
+    return res.status(500).json({ message: "Unable to load account listings." });
   }
-};
-
-const deleteListingImages = async (req, res) => {
-  const listing = await Listing.findById(req.params.id);
-  if (!listing) {
-    return res.status(200).json("Listing not found!");
-  }
-
-  if (req.user.id !== listing.userRef.toString()) {
-    return res.status(200).json("You can only delete your own listings!");
-  }
-
-  const imageUrls = [];
-  await listing.imageUrls.map((url) => {
-    imageUrls.push(url.public_id);
-  });
-
-  const result = await cloudinary.api.delete_resources(imageUrls);
-  res.status(200).json({ data: result });
 };
 
 module.exports = {
@@ -169,8 +158,6 @@ module.exports = {
   getListing,
   deleteListing,
   updateListing,
-  deleteListingImages,
   createListing,
-  handleUpload,
   getListings,
 };

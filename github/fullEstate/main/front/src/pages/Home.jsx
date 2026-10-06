@@ -1,32 +1,82 @@
-import { TypeAnimation } from "react-type-animation";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FaArrowRight, FaSearch } from "react-icons/fa";
 import HeroSection from "../components/HeroSection";
+import heroHome from "../assets/re/re7-optimized.jpg";
 import "../assets/css/home.css";
 
 const Home = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const query = new URLSearchParams();
+    if (searchTerm.trim()) query.set("searchTerm", searchTerm.trim());
+    navigate(`/search${query.size ? `?${query.toString()}` : ""}`);
+  };
+
   return (
-    <div className="w-full h-full bg-[#a1b7db9e] relative">
-      <div className="flex mx-auto md:w-4/6 flex-col md:px-20 justify-center md:right-[0px] absolute px-10">
-        <TypeAnimation
-          className="pb-3 text-slate-900 pt-14"
-          style={{ fontSize: "3rem" }}
-          sequence={["Nobody does it better!", 1000]}
-          wrapper="span"
-          speed={10}
-        />
-        <div className="text-3xl">
-          Believe in yourself and all that you are, and know that there is
-          something Real estate waiting for you
+    <main className="home-page">
+      <section className="home-hero" aria-labelledby="home-title">
+        <div className="home-hero-copy">
+          <p className="eyebrow"><span className="eyebrow-line" /> A more considered way home</p>
+          <h1 id="home-title">Find the place<br />that feels like <em>yours.</em></h1>
+          <p className="home-intro">
+            Browse homes to buy or rent, compare the details that matter, and
+            make your next move with confidence.
+          </p>
+          <form className="home-search" onSubmit={handleSearch} role="search">
+            <FaSearch aria-hidden="true" />
+            <label className="sr-only" htmlFor="home-search-term">Search properties</label>
+            <input
+              id="home-search-term"
+              type="search"
+              placeholder="Try a home or neighborhood"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+            />
+            <button type="submit" aria-label="Search properties"><FaArrowRight aria-hidden="true" /></button>
+          </form>
+          <div className="home-hero-links">
+            <Link className="text-link" to="/search?type=sale">Explore homes for sale <FaArrowRight aria-hidden="true" /></Link>
+            <Link className="text-link muted-link" to="/search?type=rent">Find a place to rent</Link>
+          </div>
         </div>
-        <div className="font-light pt-3 ">
-          Becoming a real estate attorney is a tough job. You will always have
-          to deal with battles of wills!
+
+        <div className="home-hero-visual">
+          <img
+            src={heroHome}
+            alt="Modern stone home overlooking a quiet bay at sunset"
+            fetchPriority="high"
+          />
+          <div className="hero-image-note">
+            <span className="note-mark" aria-hidden="true">⌂</span>
+            <span><strong>Your next chapter</strong><small>Starts with a place to call home</small></span>
+          </div>
+          <span className="hero-image-index">01 <i /> 04</span>
         </div>
-      </div>
-      <div className="home"></div>
-      <div className="mx-auto">
-        <HeroSection />
-      </div>
-    </div>
+      </section>
+
+      <section className="home-benefits" aria-label="Ways to find your next home">
+        <div><span className="benefit-number">01</span><span><strong>Browse with purpose</strong><small>See sale and rental homes in one place.</small></span></div>
+        <div><span className="benefit-number">02</span><span><strong>Focus on the details</strong><small>Filter by price, rooms, parking, and more.</small></span></div>
+        <div><span className="benefit-number">03</span><span><strong>Make your move</strong><small>Connect with the listing owner directly.</small></span></div>
+      </section>
+
+      <HeroSection />
+
+      <section className="home-cta">
+        <div>
+          <p className="eyebrow"><span className="eyebrow-line" /> Have a place to share?</p>
+          <h2>Good homes deserve<br />to be <em>found.</em></h2>
+        </div>
+        <div className="home-cta-action">
+          <p>Reach people looking for their next home. Create a clear listing in just a few steps.</p>
+          <Link to="/create-listing" className="button button-light">List your property <FaArrowRight aria-hidden="true" /></Link>
+        </div>
+      </section>
+    </main>
   );
 };
 

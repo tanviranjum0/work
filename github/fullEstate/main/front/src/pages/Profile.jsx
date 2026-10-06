@@ -1,221 +1,219 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
-import { RiListSettingsLine } from "react-icons/ri";
-import { RiDeleteBin5Line } from "react-icons/ri";
-import { StoreContext } from "../context/StoreContext";
 import { Link, useNavigate } from "react-router-dom";
+import { FaArrowRight, FaRegTrashAlt, FaSignOutAlt } from "react-icons/fa";
+import { StoreContext } from "../context/StoreContext";
+import heroHome from "../assets/re/re7-optimized.jpg";
+import { optimizeCloudinaryImage } from "../lib/cloudinary";
 
 const Profile = () => {
-    const navigate = useNavigate()
-    const [more, setMore] = useState(true)
-    const [error, setError] = useState("")
-    const [logOutLoading, setLogOutLoading] = useState(false)
-    const [deleteLoading, setDeleteLoading] = useState(false)
-    const [listingDeleteLoading, setListingDeleteLoading] = useState(false)
-    const user = JSON.parse(localStorage.getItem("user"))
+  const navigate = useNavigate();
+  const {
+    currentUser,
+    authLoading,
+    setCurrentUser,
+    setIsAlreadyLoggedIn,
+    userListings,
+    setUserListings,
+  } = useContext(StoreContext);
+  const [more, setMore] = useState(false);
+  const [loadingListings, setLoadingListings] = useState(true);
+  const [actionLoading, setActionLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [confirmAction, setConfirmAction] = useState(null);
+  const userId = currentUser?.userObject?.id;
 
-    const { userListings, setUserListings, setInitialListings } = useContext(StoreContext)
-    useEffect(() => {
-        if (!user) return window.location.href = "/"
-        async function getListings() {
-            const listings = await fetch(`/api/listing/user-listings/${user.userObject.id}`, {
-                method: "GET",
-                mode: "cors",
-                credentials: "include",
-            })
-            const data = await listings.json()
-            if (data.length < 10) {
-                setMore(false);
-            }
-            setInitialListings(data)
-            setUserListings({ data, progress: data.length })
-        }
-        getListings()
-    }, [])
-
-    const onMoreClick = async () => {
-        const urlParams = new URLSearchParams(location.search);
-        urlParams.set("startIndex", userListings.progress);
-        const searchQuery = urlParams.toString();
-        const res = await fetch(`/api/listing/user-listings/${user.userObject.id}?${searchQuery}`, {
-            method: "GET",
-            mode: "cors",
-            credentials: "include",
-        })
-        const data = await res.json();
-        if (data.length < 10) {
-            setMore(false);
-        }
-        setInitialListings(data)
-        setUserListings({ data, progress: userListings.progress + data.length });
-        document.getElementById("userListingContainer").scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-            inline: 'start'
-        })
-
+  useEffect(() => {
+    if (!userId) return undefined;
+    const controller = new AbortController();
+    const loadListings = async () => {
+      setLoadingListings(true);
+      setError("");
+      try {
+        const response = await fetch("/api/listing/user-listings/" + userId, {
+          credentials: "include",
+          signal: controller.signal,
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Unable to load your listings.");
+        setMore(data.length === 10);
+        setUserListings({ data, progress: data.length });
+      } catch (loadError) {
+        if (loadError.name !== "AbortError") setError(loadError.message || "Unable to load your listings.");
+      } finally {
+        if (!controller.signal.aborted) setLoadingListings(false);
+      }
     };
-    const handleSignOut = async () => {
-        setLogOutLoading(true)
-        document
-            .getElementById("confirmLogOutBox")
-            .classList.toggle("hidden");
-        const logOut = await fetch(`/api/auth/signout`, {
-            mode: "cors",
-            credentials: "include"
-        })
-        if (logOut.status == 200) {
-            localStorage.clear()
-            window.location.href = "/"
-        }
-        setLogOutLoading(false)
+    loadListings();
+    return () => controller.abort();
+  }, [userId, setUserListings]);
+
+  const loadMore = async () => {
+    setActionLoading(true);
+    try {
+      const response = await fetch(
+        "/api/listing/user-listings/" + userId + "?startIndex=" + userListings.progress,
+        { credentials: "include" }
+      );
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Unable to load more listings.");
+      setMore(data.length === 10);
+      setUserListings((previous) => ({
+        data: [...previous.data, ...data],
+        progress: previous.progress + data.length,
+      }));
+    } catch (loadError) {
+      setError(loadError.message || "Unable to load more listings.");
+    } finally {
+      setActionLoading(false);
     }
+  };
 
-    const handleAccountDelete = async () => {
-        setDeleteLoading(true)
-        document
-            .getElementById("confirmDeleteAccountBox")
-            .classList.toggle("hidden");
-        const data = await fetch(`/api/user/delete/${user.userObject.id}`, {
-            method: "DELETE",
-            mode: "cors",
-            credentials: "include"
-        })
-        if (data.status == 200) {
-            localStorage.clear()
-            window.location.href = "/"
-        }
-        setDeleteLoading(false)
+  const performAction = async () => {
+    if (!confirmAction) return;
+    setActionLoading(true);
+    setError("");
+    try {
+      if (confirmAction.type === "logout") {
+        const response = await fetch("/api/auth/signout", {
+          method: "POST",
+          credentials: "include",
+        });
+        if (!response.ok) throw new Error("Unable to sign out right now.");
+        setCurrentUser(null);
+        setIsAlreadyLoggedIn(false);
+        navigate("/");
+        return;
+      }
 
+      const url = confirmAction.type === "account"
+        ? "/api/user/delete/" + userId
+        : "/api/listing/delete/" + confirmAction.id;
+      const response = await fetch(url, {
+        method: confirmAction.type === "account" || confirmAction.type === "listing" ? "DELETE" : "POST",
+        credentials: "include",
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Unable to complete that action.");
+      if (confirmAction.type === "account") {
+        setCurrentUser(null);
+        setIsAlreadyLoggedIn(false);
+        navigate("/");
+      } else {
+        setUserListings((previous) => ({
+          data: previous.data.filter((listing) => listing._id !== confirmAction.id),
+          progress: Math.max(0, previous.progress - 1),
+        }));
+        setConfirmAction(null);
+      }
+    } catch (actionError) {
+      setError(actionError.message || "Unable to complete that action.");
+      setConfirmAction(null);
+    } finally {
+      setActionLoading(false);
     }
+  };
 
-    const handleDeleteListing = async (e) => {
-        e.preventDefault()
-        setListingDeleteLoading(true)
-        const listingId = JSON.parse(localStorage.getItem("ListingToBeDeleted"));
-
-        const data = await fetch(`/api/listing/delete/${listingId}`, {
-            method: "DELETE",
-            mode: "cors",
-            credentials: "include"
-        })
-        const res = await data.json()
-        document
-            .getElementById("confirmListingDeleteBox")
-            .classList.toggle("hidden");
-        if (data.status == 200) {
-            setError(res)
-            setTimeout(() => setError(""), 3000)
-            const updatedListings = userListings.data.filter((listing) => listing._id !== listingId);
-            setUserListings({ data: updatedListings, progress: updatedListings.length });
-        }
-        setListingDeleteLoading(false)
-    }
+  if (authLoading) {
+    return <main className="profile-page"><p className="profile-status">Checking your account…</p></main>;
+  }
+  if (!currentUser || !userId) {
     return (
-        <div className='w-[70vw] mx-auto'>
-            <div id="confirmLogOutBox" className="fixed overflow-hidden h-full hidden z-10 inset-0 backdrop-blur">
-                <div className="h-[100vh] w-[100vw] flex justify-center items-center">
-                    <div className="w-[90vw] p-5 bg-sky-50 md:w-[40vw] shadow-2xl">
-                        <div className="font-semibold text-xl ">Are you sure, you want to log out?</div>
-                        <div className="flex justify-end gap-5 ">
-                            <div onClick={() => {
-                                setLogOutLoading(false);
-                                document
-                                    .getElementById("confirmLogOutBox")
-                                    .classList.toggle("hidden");
-                            }} className="px-3 py-1.5 font-semibold text-2xl hover:bg-green-600 cursor-pointer  bg-green-500  border rounded">No</div>
-                            <div disabled={logOutLoading} onClick={() => handleSignOut()} className="px-3 py-1.5 font-semibold text-2xl hover:bg-red-600 cursor-pointer bg-red-500  border rounded">{logOutLoading ? "Logging Out..." : "Yes"}</div></div>
-                    </div>
-                </div>
-            </div>
-            <div id="confirmDeleteAccountBox" className="fixed overflow-hidden h-full hidden z-10 inset-0 backdrop-blur">
-                <div className="h-[100vh] w-[100vw] flex justify-center items-center">
-                    <div className="w-[90vw] p-5 bg-sky-50 md:w-[40vw] shadow-2xl">
-                        <div className="font-semibold text-xl py-2">Are you sure, you want to delete Your account?</div>
-                        <div className="flex justify-end gap-5 ">
-                            <div onClick={() => {
-                                document
-                                    .getElementById("confirmDeleteAccountBox")
-                                    .classList.toggle("hidden");
-                            }} className="px-3 py-1.5 font-semibold text-2xl hover:bg-green-600 cursor-pointer  bg-green-500 border rounded">No</div>
-                            <div disabled={deleteLoading} onClick={() => handleAccountDelete()} className="px-3 py-1.5 font-semibold text-2xl hover:bg-red-600 cursor-pointer bg-red-500  border rounded">{deleteLoading ? "Deleting..." : "Yes"}</div></div>
-                    </div>
-                </div>
-            </div>
-            <div id="confirmListingDeleteBox" className="fixed overflow-hidden h-full hidden z-10 inset-0 backdrop-blur">
-                <div className="h-[100vh] w-[100vw] flex justify-center items-center">
-                    <div className="w-[90vw] p-5 bg-sky-50 md:w-[40vw] shadow-2xl">
-                        <div className="font-semibold text-xl py-2">Are you sure, you want to delete Your This Listing?</div>
-                        <div className="flex justify-end gap-5 ">
-                            <div onClick={() => {
-                                document
-                                    .getElementById("confirmListingDeleteBox")
-                                    .classList.toggle("hidden");
-                            }} className="px-3 py-1.5 font-semibold text-2xl hover:bg-green-600 cursor-pointer  bg-green-500 border rounded">No</div>
-                            <div disabled={listingDeleteLoading} onClick={(e) => handleDeleteListing(e)} className="px-3 py-1.5 font-semibold text-2xl hover:bg-red-600 cursor-pointer bg-red-500 border rounded">{listingDeleteLoading ? "Deleting..." : "Yes"}</div></div>
-                    </div>
-                </div>
-            </div>
-            <div className="flex justify-between my-10">
-                <div className="flex items-center justify-center object-cover flex-col select-none"><img src={`${user.avatar.secure_url}`} alt="" className="h-40 object-cover w-40 rounded-lg" />
-                </div>
-                <div className="p-5 flex flex-col items-center justify-center">
-                    <div className='uppercase text-2xl'>{user.userObject.name}</div>
-                    <div>{user.userObject.email}</div>
-                    {error && <div className="text-red-700">{error}</div>}
-                </div>
-                <div className="p-5 flex flex-col items-center justify-center">
-                    <div onClick={() => {
-                        document
-                            .getElementById("confirmDeleteAccountBox")
-                            .classList.toggle("hidden");
-                    }} className="bg-red-700 text-center hover:bg-red-600 px-3 py-2 rounded border font-semibold text-white cursor-pointer">Delete Account</div>
-                    <div onClick={() => {
-                        document
-                            .getElementById("confirmLogOutBox")
-                            .classList.toggle("hidden");
-                    }} className="bg-sky-700 text-center hover:bg-sky-600 px-3 py-2 rounded border font-semibold text-white cursor-pointer">Log Out</div>
-                </div>
-            </div>
-            <div className="text-center text-4xl w-full underline mb-5">Your Listings</div>
-            <div id="userListingContainer" className="min-h-[60vh]">
-                {userListings && userListings.data && userListings.data.map((listing) => {
-                    return (
-                        <div key={listing._id} className="p-3 gap-3 cursor-pointer items-center bg-gray-300 border flex justify-between">
-                            <img src={listing.imageUrls[0].secure_url} alt="" className="h-10 object-cover w-16" />
-                            <Link to={`/listing/${listing._id}`} className="leading-tight hover:text-blue-800">
-                                <div className="text-center">{listing.name}</div>
-                                <div className="text-center">{listing.description}</div>
-                                <div className="text-center text-sm">{new Date(listing.updatedAt).toUTCString()}</div>
-                            </Link>
-                            <div className="flex justify-center items-center gap-5">
-                                <div onClick={() => {
-                                    localStorage.setItem("ListingToBeEdited", JSON.stringify(listing))
-                                    navigate(`/edit-listing/${listing._id}`)
+      <main className="profile-page profile-signin">
+        <p className="eyebrow"><span className="eyebrow-line" /> Your account</p>
+        <h1>Sign in to view your profile.</h1>
+        <Link className="button" to="/login">Go to sign in <FaArrowRight aria-hidden="true" /></Link>
+      </main>
+    );
+  }
 
-                                }}><RiListSettingsLine className="h-10 w-10 p-1 hover:border-2 border-black" /></div>
-                                <div onClick={() => {
-                                    localStorage.setItem("ListingToBeDeleted", JSON.stringify(listing._id))
-                                    document
-                                        .getElementById("confirmListingDeleteBox")
-                                        .classList.toggle("hidden");
-                                }}><RiDeleteBin5Line className="h-10 w-10 p-1 hover:border-2 border-black" /></div>
-                            </div>
-                        </div>
-                    )
-                })}
-                <div className="w-full flex justify-center my-2">
-                    {more && (
-                        <button
-                            onClick={() => onMoreClick()}
-                            className="transition-all disabled:bg-slate-600 active:scale-95  hover:scale-[1.01] hover:shadow-xl duration-300 p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
-                        >
-                            Show more
-                        </button>
-                    )}</div>
+  const requestedActionLabel = confirmAction?.type === "logout"
+    ? "sign out"
+    : confirmAction?.type === "account"
+      ? "delete your account and listings"
+      : "delete this listing";
+
+  return (
+    <main className="profile-page">
+      {confirmAction && (
+        <div className="profile-modal-backdrop">
+          <section className="profile-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+            <p className="eyebrow"><span className="eyebrow-line" /> Please confirm</p>
+            <h2 id="confirm-title">Are you sure you want to {requestedActionLabel}?</h2>
+            <p>This action will take effect immediately.</p>
+            <div className="profile-modal-actions">
+              <button type="button" className="profile-secondary-button" onClick={() => setConfirmAction(null)} disabled={actionLoading}>Cancel</button>
+              <button type="button" className="profile-danger-button" onClick={performAction} disabled={actionLoading}>
+                {actionLoading ? "Please wait…" : "Confirm"}
+              </button>
             </div>
+          </section>
         </div>
-    )
-}
+      )}
 
-export default Profile
+      <p className="eyebrow"><span className="eyebrow-line" /> Your account</p>
+      <div className="profile-header">
+        <div className="profile-avatar">
+          {currentUser.avatar?.secure_url
+          ? <img src={optimizeCloudinaryImage(currentUser.avatar.secure_url, 128)} alt="" />
+            : <span aria-hidden="true">{currentUser.userObject.name?.slice(0, 1) || "U"}</span>}
+        </div>
+        <div className="profile-identity">
+          <h1>Welcome, {currentUser.userObject.name}</h1>
+          <p>{currentUser.userObject.email}</p>
+        </div>
+        <div className="profile-actions">
+          <button type="button" className="profile-secondary-button" onClick={() => setConfirmAction({ type: "logout" })}>
+            <FaSignOutAlt aria-hidden="true" /> Sign out
+          </button>
+          <button type="button" className="profile-danger-button" onClick={() => setConfirmAction({ type: "account" })}>
+            <FaRegTrashAlt aria-hidden="true" /> Delete account
+          </button>
+        </div>
+      </div>
+
+      <div className="profile-list-heading">
+        <div><p className="eyebrow"><span className="eyebrow-line" /> Your properties</p><h2>Your listings</h2></div>
+        <Link to="/create-listing" className="button">Add a listing <FaArrowRight aria-hidden="true" /></Link>
+      </div>
+      {error && <p className="form-message form-error" role="alert">{error}</p>}
+      {loadingListings ? (
+        <p className="profile-status">Loading your listings…</p>
+      ) : userListings.data.length ? (
+        <div className="profile-list">
+          {userListings.data.map((listing) => (
+            <article className="profile-listing" key={listing._id}>
+              <img src={optimizeCloudinaryImage(listing.imageUrls?.[0]?.secure_url || heroHome, 720)} alt="" loading="lazy" />
+              <div className="profile-listing-details">
+                <p className="profile-listing-type">{listing.type === "rent" ? "For rent" : "For sale"}</p>
+                <h3><Link to={"/listing/" + listing._id}>{listing.name}</Link></h3>
+                <p>{listing.address}</p>
+                <small>Updated {new Date(listing.updatedAt).toLocaleDateString()}</small>
+              </div>
+              <div className="profile-listing-actions">
+                <Link to={"/edit-listing/" + listing._id} state={{ listing }} className="profile-secondary-button">Edit</Link>
+                <button type="button" className="profile-icon-button" aria-label={"Delete " + listing.name} onClick={() => setConfirmAction({ type: "listing", id: listing._id })}>
+                  <FaRegTrashAlt aria-hidden="true" />
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div className="profile-empty">
+          <span className="empty-mark" aria-hidden="true">⌂</span>
+          <div><h3>Your next listing can start here.</h3><p>You haven’t shared a property yet.</p></div>
+          <Link className="text-link" to="/create-listing">Create a listing <FaArrowRight aria-hidden="true" /></Link>
+        </div>
+      )}
+      {more && (
+        <div className="profile-more">
+          <button type="button" className="profile-secondary-button" onClick={loadMore} disabled={actionLoading}>
+            {actionLoading ? "Loading…" : "Show more"}
+          </button>
+        </div>
+      )}
+    </main>
+  );
+};
+
+export default Profile;

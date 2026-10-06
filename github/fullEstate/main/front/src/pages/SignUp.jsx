@@ -1,128 +1,95 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { uploadImage } from "../lib/cloudinary";
+
 export default function SignUp() {
-
-  function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [image, setImage] = useState(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
-
-  const handleSubmit = async (e) => {
-
-    e.preventDefault();
-    setLoading(true)
-    setError("")
-    const username = document.getElementById("username").value
-    const email = document.getElementById("email").value
-    const password = document.getElementById("password").value
-    const image = document.getElementById("file_input").files[0]
-    if (!username | !email | !password | !image) {
-      setLoading(false)
-      return setError("All input fields are required...")
-    }
-    if (!validateEmail(email)) {
-      setLoading(false)
-      return setError("Please provide a valid email address")
-    }
-
-    const isExistingUser = await fetch(`/api/user/${email}`)
-    const existed = await isExistingUser.json()
-    if (!existed.data) {
-      setLoading(false)
-      return setError("This email is already exists...")
-    }
-
-    let form = new FormData();
-    form.append("file", image);
-    form.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
-    form.append("cloud_name", import.meta.env.VITE_CLOUD_NAME)
-    let imageRes = await fetch(import.meta.env.VITE_CLOUDINARY_API, {
-      method: "POST",
-      body: form,
-    });
-
-    const ImageData = await imageRes.json();
-
-    const res = await fetch(
-      `/api/auth/signup`,
-      {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError("");
+    setLoading(true);
+    try {
+      if (!image) throw new Error("Choose a profile image to continue.");
+      if (password.length < 12) throw new Error("Use a password with at least 12 characters.");
+      const avatar = await uploadImage(image, "/api/auth/upload-avatar");
+      const response = await fetch("/api/auth/signup", {
         method: "POST",
         credentials: "include",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-          avatar: ImageData
-        }),
-      }
-    );
-    const data = await res.json();
-    if (data == "This email is already exist...") {
-      setLoading(false)
-      return setError(data);
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password, avatar }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Unable to create the account.");
+      navigate("/login", { state: { accountCreated: true } });
+    } catch (submitError) {
+      setError(submitError.message || "Unable to create the account.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false)
-    if (res.status == 400) return setError(data);
-    navigate("/login");
   };
 
   return (
-    <div className="p-3 max-w-lg mx-auto pb-40">
-      <h1 className="text-3xl text-center font-semibold my-7">Sign Up</h1>
-      <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2">
-        <label className="pl-3 font-mono font-bold" htmlFor="username">
-          Username :{" "}
-        </label>
-        <input
-          type="text"
-          className="border p-3 rounded-lg"
-          id="username"
-        />
-        <label className="pl-3 font-mono font-bold" htmlFor="Email">
-          Email :{" "}
-        </label>
-        <input
-          type="email"
-          className="border p-3 rounded-lg"
-          id="email"
-        />
-        <label className="pl-3 font-mono font-bold" htmlFor="password">
-          Password :{" "}
-        </label>
-        <input
-          type="password"
-          className="border p-3 rounded-lg"
-          id="password"
-        />
-        <label className="pl-3 font-mono font-bold" htmlFor="file_input">Upload a profile image</label>
-        <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer
-         bg-gray-50 " aria-describedby="file_input_help" id="file_input" type="file" />
-        <button
-          onClick={(e) => handleSubmit(e)}
-          type="submit"
-          disabled={loading}
-          className="mt-5 bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
-        >
-          {loading && "Please Wait..."}
-          {!loading && "Sign Up"}
-        </button>
-      </form>
-      {error && <div className="text-red-700">{error}</div>}
-      <div className="pl-2 flex gap-2 mt-5">
-        <p>Already have an account?</p>
-        <Link to={"/login"}>
-          <span className="text-blue-700">Login</span>
-        </Link>
-      </div>
-    </div>
+    <main className="auth-page">
+      <section className="auth-card" aria-labelledby="signup-title">
+        <p className="eyebrow"><span className="eyebrow-line" /> Make yourself at home</p>
+        <h1 id="signup-title">Create your account</h1>
+        <p className="auth-intro">Create a profile to manage your property listings.</p>
+        <form onSubmit={handleSubmit} className="auth-form">
+          <label htmlFor="signup-username">Your name</label>
+          <input
+            id="signup-username"
+            type="text"
+            autoComplete="name"
+            minLength="2"
+            maxLength="40"
+            required
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+          <label htmlFor="signup-email">Email address</label>
+          <input
+            id="signup-email"
+            type="email"
+            autoComplete="email"
+            maxLength="254"
+            required
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+          <label htmlFor="signup-password">Password</label>
+          <input
+            id="signup-password"
+            type="password"
+            autoComplete="new-password"
+            minLength="12"
+            maxLength="72"
+            required
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <label htmlFor="signup-avatar">Profile image</label>
+          <input
+            id="signup-avatar"
+            type="file"
+            accept="image/avif,image/jpeg,image/png,image/webp"
+            required
+            onChange={(event) => setImage(event.target.files?.[0] || null)}
+          />
+          <p className="auth-hint">JPG, PNG, WebP, or AVIF. Maximum size: 2 MB.</p>
+          {error && <p className="form-message form-error" role="alert">{error}</p>}
+          <button className="button auth-submit" type="submit" disabled={loading}>
+            {loading ? "Creating account…" : "Create account"}
+          </button>
+        </form>
+        <p className="auth-switch">Already have an account? <Link to="/login">Sign in</Link></p>
+      </section>
+    </main>
   );
 }
