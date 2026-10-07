@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const twoFactorSchema = require("./twoFactor.schema");
 
 const locationSchema = new mongoose.Schema(
   {
@@ -33,7 +34,7 @@ const captainSchema = new mongoose.Schema(
       firstname: {
         type: String,
         required: true,
-        minlength: 3,
+        minlength: 2,
       },
       lastname: {
         type: String,
@@ -103,6 +104,16 @@ const captainSchema = new mongoose.Schema(
       type: Number,
       default: 0,
       select: false,
+    },
+    registrationStatus: {
+      type: String,
+      enum: ["pending_2fa", "active"],
+      default: "active",
+    },
+    twoFactor: { type: twoFactorSchema, default: () => ({}) },
+    rating: {
+      avg: { type: Number, default: 0 },
+      count: { type: Number, default: 0 },
     },
   },
   { timestamps: true }

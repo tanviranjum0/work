@@ -65,6 +65,11 @@ function validateRuntimeConfig() {
 }
 
 app.disable("x-powered-by");
+app.use((req, res, next) => {
+  req.id = require("node:crypto").randomUUID();
+  res.set("X-Request-Id", req.id);
+  next();
+});
 if (process.env.TRUST_PROXY) app.set("trust proxy", Number(process.env.TRUST_PROXY));
 app.use(helmet());
 // Container health probe; registered before request logging and rate limiting.
@@ -84,6 +89,7 @@ app.use(cors({
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
+  exposedHeaders: ["X-Request-Id", "Retry-After"],
   maxAge: 600,
 }));
 app.use(cookieParser());

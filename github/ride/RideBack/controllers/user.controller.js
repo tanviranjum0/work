@@ -8,47 +8,52 @@ const { issueSession, clearSessionCookies } = require("../services/authSession.s
 const authController = require("./auth.controller");
 const { applyPasswordReset } = require("../services/passwordReset.service");
 const { disconnectUser } = require("../socket");
+const { ConflictError, UnauthorizedError } = require("../utils/AppError");
+const { serializeUser } = require("../services/accountSerializer");
+const createTwoFactor = require("./twoFactor.controller");
+
+const twoFactorFlow = createTwoFactor({ Model: userModel, userType: "user", serialize: serializeUser });
+const twoFactorRequired = () => process.env.TWO_FACTOR_REQUIRED !== "false";
+module.exports.activateTwoFactor = twoFactorFlow.activate;
+module.exports.completeTwoFactorLogin = twoFactorFlow.completeLogin;
+module.exports.setupTwoFactor = twoFactorFlow.setup;
 
 module.exports.registerUser = asyncHandler(async (req, res) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json(errors.array());
-  }
-
   const { fullname, email, password, phone } = req.body;
 
-  const alreadyExists = await userModel.findOne({ email });
-
-  if (alreadyExists) {
-    return res.status(400).json({ message: "User already exists" });
+  let user = await userModel.findOne({ email });
+  if (user && user.registrationStatus !== "pending_2fa") {
+    throw new ConflictError("An account with this email already exists. Try logging in instead.", "ACCOUNT_EXISTS");
   }
 
-  const user = await userService.createUser(
-    fullname.firstname,
-    fullname.lastname,
-    email,
-    password,
-    phone,
-  );
+  if (user) {
+    // An earlier sign-up was never finished (two-factor not confirmed): let it start over.
+    user.fullname = { firstname: fullname.firstname, lastname: fullname.lastname };
+    user.password = await userModel.hashPassword(password);
+    user.phone = phone;
+  } else {
+    user = await userService.createUser(fullname.firstname, fullname.lastname, email, password, phone);
+  }
 
   // Demo/free-tier mode: no transactional email provider, so skip the verification step.
-  if (process.env.AUTO_VERIFY_EMAIL === "true" && !user.emailVerified) {
-    user.emailVerified = true;
-    await user.save();
+  if (process.env.AUTO_VERIFY_EMAIL === "true") user.emailVerified = true;
+
+  if (twoFactorRequired()) {
+    user.registrationStatus = "pending_2fa";
+    const enrollment = await twoFactorFlow.beginEnrollment(user);
+    return res.status(201).json({
+      message: "Account created. Set up two-factor authentication to finish.",
+      requiresTwoFactorSetup: true,
+      ...enrollment,
+    });
   }
 
+  await user.save();
   const token = await issueSession(user, "user", res);
   return res.status(201).json({
     message: "User registered successfully",
     token,
-    user: {
-      _id: user._id,
-      fullname: user.fullname,
-      email: user.email,
-      phone: user.phone,
-      emailVerified: user.emailVerified,
-    },
+    user: serializeUser(user),
   });
 });
 
@@ -104,41 +109,33 @@ module.exports.verifyEmail = asyncHandler(async (req, res) => {
 });
 
 module.exports.loginUser = asyncHandler(async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json(errors.array());
-  }
-
   const { email, password } = req.body;
 
   const user = await userModel.findOne({ email }).select("+password +tokenVersion");
-  if (!user) {
-    return res.status(401).json({ message: "Invalid email or password" });
+  if (!user || !(await user.comparePassword(password))) {
+    throw new UnauthorizedError("Invalid email or password", "INVALID_CREDENTIALS");
   }
 
-  const isMatch = await user.comparePassword(password);
-
-  if (!isMatch) {
-    return res.status(401).json({ message: "Invalid email or password" });
+  if (user.registrationStatus === "pending_2fa") {
+    return res.status(200).json({
+      message: "Finish setting up two-factor authentication to continue.",
+      requiresTwoFactorSetup: true,
+      ...(await twoFactorFlow.beginEnrollment(user)),
+    });
+  }
+  if (user.twoFactor?.enabled) {
+    return res.status(200).json({
+      message: "Enter the code from your authenticator app.",
+      ...twoFactorFlow.startChallenge(user),
+    });
   }
 
+  // Accounts created before two-factor existed sign in directly and are nudged to enable it.
   const token = await issueSession(user, "user", res);
-
   return res.json({
     message: "Logged in successfully",
     token,
-    user: {
-      _id: user._id,
-      fullname: {
-        firstname: user.fullname.firstname,
-        lastname: user.fullname.lastname,
-      },
-      email: user.email,
-      phone: user.phone,
-      rides: user.rides?.slice(-50) || [],
-      socketId: user.socketId,
-      emailVerified: user.emailVerified,
-    },
+    user: serializeUser(user),
   });
 });
 
@@ -152,6 +149,8 @@ module.exports.userProfile = asyncHandler(async (req, res) => {
       options: { sort: { createdAt: -1 }, limit: 50 },
     })
     .lean();
+  user.twoFactorEnabled = Boolean(user.twoFactor?.enabled);
+  delete user.twoFactor;
   res.status(200).json({ user });
 });
 
@@ -225,4 +224,26 @@ module.exports.resetPassword = asyncHandler(async (req, res) => {
     message:
       "Your password has been successfully reset. You can now log in with your new credentials",
   });
+});
+
+module.exports.updateSavedPlaces = asyncHandler(async (req, res) => {
+  const user = await userModel
+    .findByIdAndUpdate(
+      req.user._id,
+      { savedPlaces: req.body.places },
+      { new: true, runValidators: true },
+    )
+    .select("savedPlaces");
+  res.status(200).json({ savedPlaces: user.savedPlaces });
+});
+
+module.exports.updateEmergencyContacts = asyncHandler(async (req, res) => {
+  const user = await userModel
+    .findByIdAndUpdate(
+      req.user._id,
+      { emergencyContacts: req.body.contacts },
+      { new: true, runValidators: true },
+    )
+    .select("emergencyContacts");
+  res.status(200).json({ emergencyContacts: user.emergencyContacts });
 });

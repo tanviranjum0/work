@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const twoFactorSchema = require("./twoFactor.schema");
 
 const userSchema = new mongoose.Schema(
   {
@@ -8,11 +9,11 @@ const userSchema = new mongoose.Schema(
       firstname: {
         type: String,
         required: true,
-        minlength: 3,
+        minlength: 2,
       },
       lastname: {
         type: String,
-        minlength: 3,
+        minlength: 1,
       },
     },
     email: {
@@ -45,6 +46,35 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
       select: false,
+    },
+    // "pending_2fa" accounts exist but cannot sign in until two-factor setup is confirmed.
+    registrationStatus: {
+      type: String,
+      enum: ["pending_2fa", "active"],
+      default: "active",
+    },
+    twoFactor: { type: twoFactorSchema, default: () => ({}) },
+    rating: {
+      avg: { type: Number, default: 0 },
+      count: { type: Number, default: 0 },
+    },
+    savedPlaces: {
+      type: [
+        {
+          label: { type: String, trim: true, maxlength: 30, required: true },
+          address: { type: String, trim: true, maxlength: 256, required: true },
+        },
+      ],
+      validate: [(places) => places.length <= 8, "You can save up to 8 places."],
+    },
+    emergencyContacts: {
+      type: [
+        {
+          name: { type: String, trim: true, maxlength: 60, required: true },
+          phone: { type: String, trim: true, match: /^d{10}$/, required: true },
+        },
+      ],
+      validate: [(contacts) => contacts.length <= 3, "You can add up to 3 emergency contacts."],
     },
     rides: [
       {

@@ -16,10 +16,13 @@ Set these variables in the deployment secret/configuration manager; do not commi
 | `GOOGLE_MAPS_API` | Map/ride flows | Google Maps API key |
 | `RESEND_API`, `RESEND_EMAIL_FROM` | Email flows | Resend API key and verified sender |
 | `TRUST_PROXY` | If proxied | Integer number of trusted reverse-proxy hops; set only for trusted infrastructure |
+| `TWO_FACTOR_REQUIRED` | No | Set to `false` to let new accounts skip authenticator-app setup (default: required) |
+| `TWO_FACTOR_KEY` | Recommended | Key that encrypts stored authenticator secrets (AES-256-GCM). Falls back to `JWT_SECRET`, so rotating `JWT_SECRET` would invalidate every enrolled authenticator: set this before the first sign-up and never rotate it casually |
+| `EMERGENCY_NUMBER` | No | Number shown in the in-trip safety toolkit (default `112`) |
 | `PORT` | No | HTTP listen port (default `4000`) |
 | `BACKGROUND_JOB_CONCURRENCY` | No | Background worker concurrency (default `10`) |
 
-Production startup fails when required JWT, MongoDB, Redis, browser-origin, Maps, or Resend configuration is missing. `CLIENT_URL` must be one of the allowlisted frontend origins. Use TLS for HTTP, MongoDB, and Redis connections. Redis stores queued email bodies and must be protected with network controls, authentication, and encryption in transit.
+Production startup fails when required JWT, MongoDB, browser-origin or (unless `AUTO_VERIFY_EMAIL=true`) Resend configuration is missing. A missing `GOOGLE_MAPS_API` only logs a warning, but every map, fare and ride request then fails with `MAPS_UNAVAILABLE`. Enable the Geocoding API, Places API (New) and Routes API for that key. `CLIENT_URL` must be one of the allowlisted frontend origins. Use TLS for HTTP, MongoDB, and Redis connections. Redis stores queued email bodies and must be protected with network controls, authentication, and encryption in transit.
 
 ## Authentication and API changes
 
@@ -46,3 +49,35 @@ Run focused checks with:
 npm test
 npm audit --omit=dev
 ```
+
+## Two-factor authentication
+
+New rider and driver accounts are created in a `pending_2fa` state and cannot sign in until an authenticator app (TOTP, RFC 6238) is confirmed.
+
+1. `POST /user/register` or `/captain/register` returns `requiresTwoFactorSetup`, an `enrollmentToken` and the `setup` secret / `otpauthUri` (no session yet).
+2. `POST /<role>/2fa/activate` with `{ enrollmentToken, code }` enables 2FA, returns the session and 8 single-use recovery codes (shown once, stored as HMAC hashes).
+3. `POST /<role>/login` returns `{ requiresTwoFactor, challengeToken }`; finish with `POST /<role>/login/2fa` and either `code` or `recoveryCode`.
+4. Accounts that predate 2FA sign in normally and can enrol from the profile screen (`POST /<role>/2fa/setup` when signed in, then `/2fa/activate`).
+
+Codes cannot be replayed (the last used time step is stored), five wrong codes lock the account for 15 minutes, and secrets are encrypted at rest.
+
+## Sessions
+
+Refresh tokens rotate on use, but a token may be presented again for 30 seconds after it was first used. Two tabs refreshing together, a retried request or a response lost on mobile data therefore no longer ends the session. `POST /auth/refresh` returns `{ token, userType }`.
+
+## Ride API additions
+
+| Endpoint | Purpose |
+| --- | --- |
+| `GET /ride/active` | The signed-in account's live ride (rider also gets the pickup code). Used to rebuild the screen after reloads and on other devices |
+| `GET /ride/available` | Open requests near an online driver |
+| `GET /ride/:id` | Ride detail for a participant |
+| `POST /ride/rate` | `{ rideId, stars, comment? }`, once per side, after completion |
+| `POST /ride/share` | Rider creates a private "follow my trip" link |
+| `GET /ride/track/:token` | Public, read-only live view for that link (expires after 24 h) |
+| `POST /ride/sos` | Records a safety alert and notifies the other participant |
+| `PATCH /captain/status` | `{ status: "active" \| "inactive" }`; only online drivers receive requests |
+| `GET /captain/earnings` | Today / week / month totals and trip counts |
+| `PUT /user/saved-places`, `PUT /user/emergency-contacts` | Home/Work style shortcuts and safety contacts |
+
+A rider or driver can only have one ride in `pending`, `accepted` or `ongoing` state at a time. Unaccepted requests expire after 150 seconds and dispatch widens from 4 km to 8 km to 15 km while the rider waits. Errors have the shape `{ status, code, message, details?, requestId }`; the same id is returned in the `X-Request-Id` header and written to the server log.

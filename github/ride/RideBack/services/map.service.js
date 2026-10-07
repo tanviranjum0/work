@@ -1,87 +1,63 @@
 const captainModel = require("../models/captain.model");
 const google = require("./google.service");
+const logger = require("../utils/logger");
+const { AppError, BadRequestError } = require("../utils/AppError");
 
-const logFailure = (err) =>
-  console.error(
-    JSON.stringify({
-      timestamp: new Date().toISOString(),
-      level: "error",
-      service: "rideback-api",
-      message: "Google Maps request failed",
-      detail: google.describeError(err),
-    })
-  );
-
-// Every map lookup goes to Google Maps Platform; failures are normalised to stable messages.
-module.exports.getAddressCoordinate = async (address) => {
+// Every map lookup goes to Google Maps Platform. Errors the client can act on (unknown
+// place, no route) keep their own code; everything else becomes one MAPS_UNAVAILABLE 502
+// and the underlying reason is logged without ever exposing the key.
+async function guard(operation, run) {
   try {
-    return await google.getAddressCoordinate(address);
-  } catch (err) {
-    logFailure(err);
-    throw new Error("Unable to fetch coordinates.");
+    return await run();
+  } catch (error) {
+    if (error instanceof AppError && error.statusCode < 500) throw error;
+    logger.error("Google Maps request failed", { operation, detail: google.describeError(error) });
+    if (error instanceof AppError) throw error;
+    throw new AppError("Maps are temporarily unavailable. Please try again in a moment.", 502, "MAPS_UNAVAILABLE");
   }
-};
+}
 
-module.exports.getDistanceTime = async (origin, destination) => {
+module.exports.getAddressCoordinate = (address) =>
+  guard("geocode", () => google.getAddressCoordinate(address));
+
+module.exports.getDistanceTime = (origin, destination) => {
   if (!origin || !destination) {
-    throw new Error("Origin and destination are required");
+    throw new BadRequestError("Origin and destination are required.");
   }
-  try {
-    return await google.getRoute(origin, destination);
-  } catch (err) {
-    logFailure(err);
-    throw new Error("Unable to fetch distance and time.");
-  }
+  return guard("route", () => google.getRoute(origin, destination));
 };
 
-module.exports.getAutoCompleteSuggestions = async (input) => {
-  if (!input) {
-    throw new Error("query is required");
-  }
-  try {
-    return await google.getAutoCompleteSuggestions(input);
-  } catch (err) {
-    logFailure(err);
-    throw new Error("Unable to fetch suggestions.");
-  }
+module.exports.getAutoCompleteSuggestions = (input) => {
+  if (!input) throw new BadRequestError("Enter a place to search for.");
+  return guard("autocomplete", () => google.getAutoCompleteSuggestions(input));
 };
 
-module.exports.getRoute = async (origin, destination) => {
-  try {
-    return await google.getRoute(origin, destination);
-  } catch (err) {
-    logFailure(err);
-    throw new Error("Unable to fetch route.");
-  }
-};
+module.exports.getRoute = (origin, destination) =>
+  guard("route", () => google.getRoute(origin, destination));
 
-module.exports.reverseGeocode = async (lat, lng) => {
-  try {
-    return await google.reverseGeocode(lat, lng);
-  } catch (err) {
-    logFailure(err);
-    throw new Error("Unable to look up this location.");
-  }
-};
+module.exports.reverseGeocode = (lat, lng) =>
+  guard("reverse-geocode", () => google.reverseGeocode(lat, lng));
 
 module.exports.getCaptainsInTheRadius = async (ltd, lng, radius, vehicleType) => {
   // radius in km
-
   try {
-    const captains = await captainModel.find({
-      location: {
-        $geoWithin: {
-          $centerSphere: [[lng, ltd], radius / 6371],
+    return await captainModel
+      .find({
+        location: {
+          $geoWithin: {
+            $centerSphere: [[lng, ltd], radius / 6371],
+          },
         },
-      },
-      "vehicle.type": vehicleType,
-      socketId: { $exists: true, $ne: "" },
-    })
+        "vehicle.type": vehicleType,
+        // Only drivers who are online and have a live socket can receive an offer.
+        status: "active",
+        registrationStatus: { $ne: "pending_2fa" },
+        socketId: { $exists: true, $ne: "" },
+      })
       .select("_id socketId fullname vehicle location status")
       .limit(100)
       .lean();
-    return captains;
   } catch (error) {
-    throw new Error("Unable to find nearby drivers.");
+    throw new AppError("Unable to find nearby drivers.", 503, "DISPATCH_UNAVAILABLE");
   }
 };

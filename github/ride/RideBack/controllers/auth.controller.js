@@ -30,7 +30,7 @@ module.exports.refresh = catchAsync(async (req, res) => {
   }
 
   const token = await issueSession(account, session.userType, res);
-  return res.status(200).json({ token });
+  return res.status(200).json({ token, userType: session.userType });
 });
 
 module.exports.revokeRefreshSession = async (refreshToken) => {

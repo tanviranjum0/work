@@ -1,5 +1,19 @@
 const mongoose = require("mongoose");
 
+const pointSchema = new mongoose.Schema(
+  { ltd: { type: Number, required: true }, lng: { type: Number, required: true } },
+  { _id: false },
+);
+
+const ratingEntry = new mongoose.Schema(
+  {
+    stars: { type: Number, min: 1, max: 5, required: true },
+    comment: { type: String, trim: true, maxlength: 280 },
+    at: { type: Date, default: Date.now },
+  },
+  { _id: false },
+);
+
 const rideSchema = new mongoose.Schema(
   {
     user: {
@@ -19,6 +33,9 @@ const rideSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    // Resolved once at booking so live tracking never has to geocode again.
+    pickupCoordinates: pointSchema,
+    destinationCoordinates: pointSchema,
     fare: {
       type: Number,
       required: true,
@@ -40,6 +57,7 @@ const rideSchema = new mongoose.Schema(
       type: Number,
     }, // in meters
 
+    paymentMethod: { type: String, enum: ["cash"], default: "cash" },
     paymentID: {
       type: String,
     },
@@ -57,6 +75,26 @@ const rideSchema = new mongoose.Schema(
       type: String,
       select: false,
     },
+
+    acceptedAt: Date,
+    startedAt: Date,
+    completedAt: Date,
+    cancelledAt: Date,
+    cancelledBy: { type: String, enum: ["user", "captain", "system"] },
+    cancelReason: { type: String, trim: true, maxlength: 120 },
+
+    rating: {
+      byUser: ratingEntry,
+      byCaptain: ratingEntry,
+    },
+    // Unguessable token behind the public "follow my trip" link.
+    shareToken: { type: String, select: false, index: true, sparse: true },
+    sos: {
+      at: Date,
+      by: { type: String, enum: ["user", "captain"] },
+      location: pointSchema,
+    },
+
     messages: [
       {
         msg: String,

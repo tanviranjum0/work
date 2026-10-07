@@ -86,6 +86,16 @@ async function initializeSocket(server, allowedOrigins) {
       socket.disconnect(true);
     });
 
+    rideModel
+      .find({
+        [userType === "user" ? "user" : "captain"]: userId,
+        status: { $in: ["accepted", "ongoing"] },
+      })
+      .select("_id")
+      .lean()
+      .then((rides) => rides.forEach((ride) => socket.join(ride._id.toString())))
+      .catch((error) => logger.error("Ride room restore failed", { name: error.name }));
+
     socket.on("join", () => {
       Promise.resolve(socket.join(`${userType}:${userId}`)).catch((error) => {
         logger.error("Socket room join failed", { name: error.name });
@@ -119,7 +129,15 @@ async function initializeSocket(server, allowedOrigins) {
         // Relay live position to the rider(s) in any ride room this captain has joined.
         const rideRooms = [...socket.rooms].filter((room) => /^[a-f\d]{24}$/i.test(room));
         if (rideRooms.length) {
-          socket.to(rideRooms).emit("captain-location", { ltd: latitude, lng: longitude });
+          const heading = Number.isFinite(data?.heading) ? data.heading : undefined;
+          const speed = Number.isFinite(data?.speed) ? data.speed : undefined;
+          socket.to(rideRooms).emit("captain-location", {
+            ltd: latitude,
+            lng: longitude,
+            heading,
+            speed,
+            at: Date.now(),
+          });
         }
       } catch (error) {
         logger.error("Driver location update failed", { name: error.name });
@@ -200,6 +218,26 @@ function sendMessageToSocketId(socketId, messageObject) {
   }
 }
 
+// Emits to every live socket of one account (all of their tabs/devices).
+function sendToAccount(userType, userId, event, data) {
+  if (io && userType && userId && event) {
+    io.to(`${userType}:${userId}`).emit(event, data);
+  }
+}
+
+// Puts every live socket of the rider and the driver into the ride's room, so location,
+// chat and status events reach them straight after a match (no client round trip needed).
+function joinRideRoom(rideId, { userId, captainId }) {
+  if (!io) return;
+  const room = String(rideId);
+  if (userId) io.in(`user:${userId}`).socketsJoin(room);
+  if (captainId) io.in(`captain:${captainId}`).socketsJoin(room);
+}
+
+function closeRideRoom(rideId) {
+  if (io) io.in(String(rideId)).socketsLeave(String(rideId));
+}
+
 // Forces out any live sockets for an account (logout, password reset). Works across
 // instances via the Socket.IO Redis adapter; relies on the account-room join above.
 function disconnectUser(userType, userId) {
@@ -220,4 +258,4 @@ function closeSocket() {
   });
 }
 
-module.exports = { initializeSocket, sendMessageToSocketId, disconnectUser, closeSocket };
+module.exports = { initializeSocket, sendMessageToSocketId, sendToAccount, joinRideRoom, closeRideRoom, disconnectUser, closeSocket };

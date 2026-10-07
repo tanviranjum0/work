@@ -14,6 +14,9 @@ function normalizeError(error) {
   if (error?.name === "ValidationError") {
     return new AppError("Request validation failed.", 400, "VALIDATION_ERROR");
   }
+  if (["MongoNetworkError", "MongoServerSelectionError", "MongooseServerSelectionError"].includes(error?.name)) {
+    return new AppError("We are having trouble reaching our servers. Please try again.", 503, "SERVICE_UNAVAILABLE");
+  }
   if (error?.name === "TokenExpiredError") {
     return new AppError("Authentication token has expired.", 401, "TOKEN_EXPIRED");
   }
@@ -38,6 +41,7 @@ module.exports = (error, req, res, next) => {
     statusCode: normalized.statusCode,
     method: req.method,
     path: req.path,
+    requestId: req.id,
     ...(normalized.statusCode >= 500 && {
       errorName: error.name,
       errorCode: error.code,
@@ -48,6 +52,7 @@ module.exports = (error, req, res, next) => {
     status: normalized.statusCode < 500 ? "fail" : "error",
     code: normalized.code,
     message: normalized.message,
+    ...(req.id && { requestId: req.id }),
   };
   if (normalized.details) response.details = normalized.details;
   if (process.env.ENVIRONMENT !== "production" && error.stack) response.stack = error.stack;

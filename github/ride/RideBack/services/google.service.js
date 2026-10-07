@@ -3,6 +3,7 @@
 // Google Maps Platform provider: Geocoding, Places (New) autocomplete and Routes.
 // All map data in the app comes from here; GOOGLE_MAPS_API is a server-side key.
 const axios = require("axios");
+const { AppError, NotFoundError } = require("../utils/AppError");
 
 const http = axios.create({ timeout: 8000 });
 
@@ -10,9 +11,21 @@ const GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/json";
 const AUTOCOMPLETE_URL = "https://places.googleapis.com/v1/places:autocomplete";
 const ROUTES_URL = "https://routes.googleapis.com/directions/v2:computeRoutes";
 
+// Failures the client can act on are given stable codes; anything else (bad key, quota,
+// network) is a MAPS_UNAVAILABLE 502 and the real reason is logged by the caller.
+const mapsUnavailable = (detail) => {
+  const error = new AppError("Maps are temporarily unavailable. Please try again in a moment.", 502, "MAPS_UNAVAILABLE");
+  error.detail = detail;
+  return error;
+};
+const placeNotFound = () =>
+  new NotFoundError("We could not find that address. Try adding the area or city.", "PLACE_NOT_FOUND");
+const noRoute = () =>
+  new AppError("We could not find a driving route between those places.", 422, "NO_ROUTE");
+
 function apiKey() {
   const key = process.env.GOOGLE_MAPS_API;
-  if (!key) throw new Error("Maps integration is not configured.");
+  if (!key) throw mapsUnavailable("GOOGLE_MAPS_API is not configured.");
   return key;
 }
 
@@ -40,36 +53,49 @@ async function getAddressCoordinate(address) {
   }
   const key = apiKey();
   return cached(`geo:${address.trim().toLowerCase()}`, async () => {
-    const { data } = await http.get(GEOCODE_URL, { params: { address, key } });
-    if (data.status !== "OK" || !data.results?.[0]) {
-      throw new Error(`Geocoding ${data.status}: ${data.error_message || "no results"}`);
+    let data;
+    try {
+      ({ data } = await http.get(GEOCODE_URL, { params: { address, key } }));
+    } catch (error) {
+      throw mapsUnavailable(error.message);
     }
+    if (data.status === "ZERO_RESULTS" || (data.status === "OK" && !data.results?.[0])) throw placeNotFound();
+    if (data.status !== "OK") throw mapsUnavailable(`Geocoding ${data.status}: ${data.error_message || ""}`);
     const { lat, lng } = data.results[0].geometry.location;
     return { ltd: lat, lng };
   });
 }
 
 async function getAutoCompleteSuggestions(input) {
-  const { data } = await http.post(
-    AUTOCOMPLETE_URL,
-    { input },
-    {
-      headers: {
-        "X-Goog-Api-Key": apiKey(),
-        "X-Goog-FieldMask": "suggestions.placePrediction.text.text",
+  let data;
+  try {
+    ({ data } = await http.post(
+      AUTOCOMPLETE_URL,
+      { input },
+      {
+        headers: {
+          "X-Goog-Api-Key": apiKey(),
+          "X-Goog-FieldMask": "suggestions.placePrediction.text.text",
+        },
       },
-    }
-  );
-  return (data.suggestions || [])
-    .map((s) => s.placePrediction?.text?.text)
-    .filter(Boolean);
+    ));
+  } catch (error) {
+    if (error instanceof AppError) throw error;
+    throw mapsUnavailable(error.response?.data?.error?.message || error.message);
+  }
+  return (data.suggestions || []).map((s) => s.placePrediction?.text?.text).filter(Boolean);
 }
 
 async function reverseGeocode(lat, lng) {
   const key = apiKey();
-  const { data } = await http.get(GEOCODE_URL, { params: { latlng: `${lat},${lng}`, key } });
+  let data;
+  try {
+    ({ data } = await http.get(GEOCODE_URL, { params: { latlng: `${lat},${lng}`, key } }));
+  } catch (error) {
+    throw mapsUnavailable(error.message);
+  }
   if (data.status === "ZERO_RESULTS") return null;
-  if (data.status !== "OK") throw new Error(`Geocoding ${data.status}: ${data.error_message || ""}`);
+  if (data.status !== "OK") throw mapsUnavailable(`Geocoding ${data.status}: ${data.error_message || ""}`);
   return data.results[0]?.formatted_address || null;
 }
 
@@ -112,18 +138,23 @@ async function getRoute(origin, destination) {
     getAddressCoordinate(destination),
   ]);
   const waypoint = ({ ltd, lng }) => ({ location: { latLng: { latitude: ltd, longitude: lng } } });
-  const { data } = await http.post(
-    ROUTES_URL,
-    { origin: waypoint(from), destination: waypoint(to), travelMode: "DRIVE" },
-    {
-      headers: {
-        "X-Goog-Api-Key": key,
-        "X-Goog-FieldMask": "routes.distanceMeters,routes.duration,routes.polyline.encodedPolyline",
+  let data;
+  try {
+    ({ data } = await http.post(
+      ROUTES_URL,
+      { origin: waypoint(from), destination: waypoint(to), travelMode: "DRIVE" },
+      {
+        headers: {
+          "X-Goog-Api-Key": key,
+          "X-Goog-FieldMask": "routes.distanceMeters,routes.duration,routes.polyline.encodedPolyline",
+        },
       },
-    }
-  );
+    ));
+  } catch (error) {
+    throw mapsUnavailable(error.response?.data?.error?.message || error.message);
+  }
   const route = data.routes?.[0];
-  if (!route) throw new Error("No routes found");
+  if (!route) throw noRoute();
   const distance = route.distanceMeters || 0;
   const seconds = parseInt(route.duration, 10) || 0;
   return {
@@ -141,7 +172,13 @@ async function getRoute(origin, destination) {
 // Google's own error text (never the key) so a misconfigured key/API shows up in the logs.
 function describeError(err) {
   const body = err.response?.data;
-  return body?.error?.message || body?.error_message || err.message;
+  return err.detail || body?.error?.message || body?.error_message || err.message;
 }
 
-module.exports = { describeError, getAddressCoordinate, getAutoCompleteSuggestions, reverseGeocode, getRoute };
+module.exports = {
+  describeError,
+  getAddressCoordinate,
+  getAutoCompleteSuggestions,
+  reverseGeocode,
+  getRoute,
+};

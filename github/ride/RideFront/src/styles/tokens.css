@@ -1,0 +1,93 @@
+/*
+  QuickRide design tokens. One palette, one type scale, one spacing/radius/shadow system.
+  Every screen reads these; nothing else in the app should hard-code a colour.
+
+  Contrast notes (WCAG 2.2 AA): --brand-600 on white is 4.9:1 (buttons, links),
+  --ink-500 on white is 5.4:1 (secondary text), --danger-600 on white is 5.2:1.
+*/
+:root {
+  /* Brand */
+  --brand-50: #eefaf5;
+  --brand-100: #d6f2e4;
+  --brand-200: #aee5cb;
+  --brand-300: #78d1ab;
+  --brand-400: #3cb88a;
+  --brand-500: #12a477; /* decorative accents, map route, pulses */
+  --brand-600: #0a8060; /* primary actions: 4.9:1 with white text */
+  --brand-700: #076650; /* hover / pressed / green text */
+  --brand-800: #064f3f;
+
+  /* Neutrals (slightly green-tinted so they sit with the brand) */
+  --ink-900: #0f1f1a;
+  --ink-800: #1a2b25;
+  --ink-700: #2c3d36;
+  --ink-600: #44564f;
+  --ink-500: #5b6c65;
+  --ink-400: #82918b;
+  --ink-300: #b2bdb8;
+  --ink-200: #d5ddd9;
+  --line: #e3ebe7;
+  --line-strong: #cfd9d4;
+  --bg: #f3f6f4;
+  --surface: #ffffff;
+  --surface-2: #f7faf8;
+
+  /* Semantic */
+  --danger-600: #c0392b;
+  --danger-500: #d64545;
+  --danger-50: #fdeeed;
+  --warning-600: #a85f00;
+  --warning-50: #fff4df;
+  --info-600: #1f5fe0;
+  --info-500: #2f6bff; /* "you" marker on the map */
+  --info-50: #e8f0ff;
+  --success-50: var(--brand-50);
+
+  /* Type */
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Manrope", "DM Sans", system-ui, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+
+  /* Shape */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgb(15 31 26 / 6%), 0 1px 3px rgb(15 31 26 / 6%);
+  --shadow-md: 0 6px 20px rgb(15 31 26 / 10%);
+  --shadow-lg: 0 18px 50px rgb(15 31 26 / 16%);
+  --shadow-sheet: 0 -10px 40px rgb(15 31 26 / 16%);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+
+  /* Layout */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --app-height: 100dvh; /* overwritten with the visual viewport height (keyboard aware) */
+  --sheet-width: 420px;
+  --topbar-h: 64px;
+
+  /* Layers */
+  --z-map: 0;
+  --z-chrome: 20;
+  --z-sheet: 30;
+  --z-drawer: 60;
+  --z-dialog: 80;
+  --z-toast: 100;
+
+  color-scheme: light;
+}

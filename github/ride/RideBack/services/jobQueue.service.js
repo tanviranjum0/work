@@ -5,7 +5,8 @@ const IORedis = require("ioredis");
 const { getAddressCoordinate, getCaptainsInTheRadius } = require("./map.service");
 const { sendMail } = require("./mail.service");
 const rideModel = require("../models/ride.model");
-const { sendMessageToSocketId } = require("../socket");
+const { sendToAccount } = require("../socket");
+const { expireStaleRequests, REQUEST_TTL_MS, distanceKm } = require("./ride.service");
 const logger = require("../utils/logger");
 
 const QUEUE_NAME = "rideback-background";
@@ -14,35 +15,71 @@ let worker;
 let queueConnection;
 let workerConnection;
 
-async function dispatchRide(rideId) {
-  const ride = await rideModel.findById(rideId).populate("user", "fullname");
+// Offer schedule: nearby drivers first, then a wider net while the rider waits.
+const DISPATCH_RADII_KM = [4, 8, 15];
+const DISPATCH_RETRY_MS = 30 * 1000;
+
+async function dispatchRide(rideId, attempt = 0) {
+  const ride = await rideModel.findById(rideId).populate("user", "fullname rating");
   if (!ride || ride.status !== "pending") return;
 
-  const coordinates = await getAddressCoordinate(ride.pickup);
-  const drivers = await getCaptainsInTheRadius(
-    coordinates.ltd,
-    coordinates.lng,
-    4,
-    ride.vehicle,
-  );
+  const origin = ride.pickupCoordinates?.ltd != null
+    ? ride.pickupCoordinates
+    : await getAddressCoordinate(ride.pickup);
+  const radius = DISPATCH_RADII_KM[Math.min(attempt, DISPATCH_RADII_KM.length - 1)];
+  const drivers = await getCaptainsInTheRadius(origin.ltd, origin.lng, radius, ride.vehicle);
+
   // Riders aren't contactable until a captain accepts (POST /ride/confirm returns their
-  // phone and socketId then), so the broadcast omits both.
-  const offer = {
-    _id: ride._id,
-    pickup: ride.pickup,
-    destination: ride.destination,
-    fare: ride.fare,
-    vehicle: ride.vehicle,
-    distance: ride.distance,
-    duration: ride.duration,
-    status: ride.status,
-    user: { fullname: ride.user?.fullname },
-  };
+  // phone then), so the broadcast omits it.
+  const expiresAt = new Date(ride.createdAt.getTime() + REQUEST_TTL_MS);
   for (const driver of drivers) {
-    if (driver.socketId) {
-      sendMessageToSocketId(driver.socketId, { event: "new-ride", data: offer });
-    }
+    const here = driver.location?.coordinates?.length === 2
+      ? { ltd: driver.location.coordinates[1], lng: driver.location.coordinates[0] }
+      : null;
+    sendToAccount("captain", driver._id, "new-ride", {
+      _id: ride._id,
+      pickup: ride.pickup,
+      destination: ride.destination,
+      pickupCoordinates: ride.pickupCoordinates,
+      destinationCoordinates: ride.destinationCoordinates,
+      fare: ride.fare,
+      vehicle: ride.vehicle,
+      distance: ride.distance,
+      duration: ride.duration,
+      status: ride.status,
+      expiresAt,
+      pickupDistanceKm: here ? Math.round(distanceKm(here, origin) * 10) / 10 : undefined,
+      user: { fullname: ride.user?.fullname, rating: ride.user?.rating },
+    });
   }
+
+  if (attempt < DISPATCH_RADII_KM.length - 1) {
+    setTimeout(() => {
+      dispatchRide(rideId, attempt + 1).catch((error) =>
+        logger.warn("Ride re-dispatch failed", { rideId: String(rideId), name: error.name }),
+      );
+    }, DISPATCH_RETRY_MS).unref();
+  }
+  if (attempt === 0) scheduleExpiry(ride);
+}
+
+// If nobody accepts, close the request and tell the rider rather than leaving it pending.
+function scheduleExpiry(ride) {
+  const wait = Math.max(0, ride.createdAt.getTime() + REQUEST_TTL_MS - Date.now()) + 1000;
+  setTimeout(async () => {
+    try {
+      const expired = await expireStaleRequests({ _id: ride._id });
+      if (expired.length) {
+        sendToAccount("user", ride.user._id, "ride-cancelled", {
+          rideId: ride._id,
+          cancelledBy: "system",
+          reason: "no_drivers",
+        });
+      }
+    } catch (error) {
+      logger.warn("Ride expiry failed", { rideId: String(ride._id), name: error.name });
+    }
+  }, wait).unref();
 }
 
 async function processJob(job) {

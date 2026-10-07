@@ -5,6 +5,10 @@ const RefreshSession = require("../models/refreshSession.model");
 
 const ACCESS_TOKEN_TTL_MS = 15 * 60 * 1000;
 const REFRESH_TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+// A refresh token may be presented again for this long after it was first used. Two tabs,
+// a retried request or a response lost on a flaky mobile connection would otherwise find the
+// token already consumed and be signed out, which is the main cause of "login again" loops.
+const REFRESH_GRACE_MS = 30 * 1000;
 
 function hashToken(token) {
   return crypto.createHash("sha256").update(token).digest("hex");
@@ -41,11 +45,18 @@ async function issueSession(account, userType, res) {
   return accessToken;
 }
 
-async function rotateRefreshToken(refreshToken, res) {
-  const session = await RefreshSession.findOneAndDelete({
+async function rotateRefreshToken(refreshToken) {
+  const now = new Date();
+  const session = await RefreshSession.findOne({
     tokenHash: hashToken(refreshToken),
-    expiresAt: { $gt: new Date() },
+    expiresAt: { $gt: now },
   }).select("+tokenHash");
+  if (!session) return null;
+  if (session.rotatedAt && now - session.rotatedAt > REFRESH_GRACE_MS) return null;
+  if (!session.rotatedAt) {
+    session.rotatedAt = now;
+    await session.save();
+  }
   return session;
 }
 
