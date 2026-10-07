@@ -273,15 +273,19 @@ const TripMap = forwardRef(function TripMap(
   const routeSignature = route?.coordinates ? `${route.coordinates.length}:${route.coordinates[0]}:${route.coordinates.at(-1)}` : "";
   useEffect(syncRoute, [routeSignature]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Camera: re-frame on a new fitKey; otherwise keep the followed marker in view.
+  // Camera: a new fitKey (new phase / route) resets any manual pan. The frame is also redone
+  // when the floating panel settles at its real height, unless the person has panned away.
+  // Debounced so a resizing panel does not make the camera jitter.
   useEffect(() => {
-    if (!mapRef.current) return;
-    if (lastFitKey.current !== fitKey) {
+    if (!mapRef.current) return undefined;
+    const keyChanged = lastFitKey.current !== fitKey;
+    if (keyChanged) {
       lastFitKey.current = fitKey;
       detachedRef.current = false;
       onFollowChange?.(true);
-      frame();
-    }
+    } else if (detachedRef.current) return undefined;
+    const id = setTimeout(frame, keyChanged ? 60 : 180);
+    return () => clearTimeout(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fitKey, padding?.bottom, padding?.left, padding?.top]);
 
