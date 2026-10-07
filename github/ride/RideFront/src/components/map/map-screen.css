@@ -217,6 +217,12 @@
   background: var(--surface);
 }
 
+@media (max-width: 899px) {
+  .map-sheet--compact {
+    max-height: min(calc(var(--app-height) * 0.64), 680px);
+  }
+}
+
 @keyframes sheet-in {
   from {
     opacity: 0;

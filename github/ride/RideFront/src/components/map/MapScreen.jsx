@@ -40,9 +40,10 @@ export function StatusPill({ tone = "default", icon, children }) {
  * The booking panel. A bottom sheet on phones, a floating card on desktop. It never grows
  * past the visible viewport: the body scrolls while `footer` (the main action) stays pinned,
  * so the primary button can no longer fall below the screen. It reports its height so the
- * map can keep the route framed above it.
+ * map can keep the route framed above it. `compact` caps it near two thirds of a phone screen
+ * for phases where the route on the map matters (options, matching, live trip).
  */
-export function Sheet({ children, footer, label, onHeight, className = "" }) {
+export function Sheet({ children, footer, label, onHeight, compact = false, className = "" }) {
   const ref = useRef(null);
   const [collapsed, setCollapsed] = useState(false);
 
@@ -58,7 +59,7 @@ export function Sheet({ children, footer, label, onHeight, className = "" }) {
   }, [onHeight]);
 
   return (
-    <section ref={ref} className={`map-sheet ${collapsed ? "is-collapsed" : ""} ${className}`} aria-label={label}>
+    <section ref={ref} className={`map-sheet ${compact ? "map-sheet--compact" : ""} ${collapsed ? "is-collapsed" : ""} ${className}`} aria-label={label}>
       <button
         type="button"
         className="map-sheet-handle"

@@ -411,7 +411,7 @@ export default function UserHome() {
         }
       />
 
-      <Sheet key={phase} label={label} onHeight={setSheetHeight} footer={footer}>
+      <Sheet key={phase} label={label} onHeight={setSheetHeight} footer={footer} compact={["options", "searching", "matched", "ongoing"].includes(phase)}>
         {body}
         {phase === "search" && (
           <p className="qr-hint" style={{ display: "flex", alignItems: "center", gap: 6 }}>

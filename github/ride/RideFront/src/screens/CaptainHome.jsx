@@ -365,7 +365,13 @@ export default function CaptainHome() {
         }
       />
 
-      <Sheet key={`${phase}:${activeOffer?._id || ""}`} label={label} onHeight={setSheetHeight} footer={footer}>
+      <Sheet
+        key={`${phase}:${activeOffer?._id || ""}`}
+        label={label}
+        onHeight={setSheetHeight}
+        footer={footer}
+        compact={["offer", "pickup", "trip"].includes(phase)}
+      >
         {body}
       </Sheet>
 
