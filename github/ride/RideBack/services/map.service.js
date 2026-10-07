@@ -1,11 +1,23 @@
 const captainModel = require("../models/captain.model");
 const google = require("./google.service");
 
+const logFailure = (err) =>
+  console.error(
+    JSON.stringify({
+      timestamp: new Date().toISOString(),
+      level: "error",
+      service: "rideback-api",
+      message: "Google Maps request failed",
+      detail: google.describeError(err),
+    })
+  );
+
 // Every map lookup goes to Google Maps Platform; failures are normalised to stable messages.
 module.exports.getAddressCoordinate = async (address) => {
   try {
     return await google.getAddressCoordinate(address);
-  } catch {
+  } catch (err) {
+    logFailure(err);
     throw new Error("Unable to fetch coordinates.");
   }
 };
@@ -16,7 +28,8 @@ module.exports.getDistanceTime = async (origin, destination) => {
   }
   try {
     return await google.getRoute(origin, destination);
-  } catch {
+  } catch (err) {
+    logFailure(err);
     throw new Error("Unable to fetch distance and time.");
   }
 };
@@ -27,7 +40,8 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
   }
   try {
     return await google.getAutoCompleteSuggestions(input);
-  } catch {
+  } catch (err) {
+    logFailure(err);
     throw new Error("Unable to fetch suggestions.");
   }
 };
@@ -35,7 +49,8 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
 module.exports.getRoute = async (origin, destination) => {
   try {
     return await google.getRoute(origin, destination);
-  } catch {
+  } catch (err) {
+    logFailure(err);
     throw new Error("Unable to fetch route.");
   }
 };
@@ -43,7 +58,8 @@ module.exports.getRoute = async (origin, destination) => {
 module.exports.reverseGeocode = async (lat, lng) => {
   try {
     return await google.reverseGeocode(lat, lng);
-  } catch {
+  } catch (err) {
+    logFailure(err);
     throw new Error("Unable to look up this location.");
   }
 };

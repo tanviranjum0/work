@@ -41,7 +41,9 @@ async function getAddressCoordinate(address) {
   const key = apiKey();
   return cached(`geo:${address.trim().toLowerCase()}`, async () => {
     const { data } = await http.get(GEOCODE_URL, { params: { address, key } });
-    if (data.status !== "OK" || !data.results?.[0]) throw new Error("Unable to fetch coordinates.");
+    if (data.status !== "OK" || !data.results?.[0]) {
+      throw new Error(`Geocoding ${data.status}: ${data.error_message || "no results"}`);
+    }
     const { lat, lng } = data.results[0].geometry.location;
     return { ltd: lat, lng };
   });
@@ -67,7 +69,7 @@ async function reverseGeocode(lat, lng) {
   const key = apiKey();
   const { data } = await http.get(GEOCODE_URL, { params: { latlng: `${lat},${lng}`, key } });
   if (data.status === "ZERO_RESULTS") return null;
-  if (data.status !== "OK") throw new Error("Unable to look up this location.");
+  if (data.status !== "OK") throw new Error(`Geocoding ${data.status}: ${data.error_message || ""}`);
   return data.results[0]?.formatted_address || null;
 }
 
@@ -136,4 +138,10 @@ async function getRoute(origin, destination) {
   };
 }
 
-module.exports = { getAddressCoordinate, getAutoCompleteSuggestions, reverseGeocode, getRoute };
+// Google's own error text (never the key) so a misconfigured key/API shows up in the logs.
+function describeError(err) {
+  const body = err.response?.data;
+  return body?.error?.message || body?.error_message || err.message;
+}
+
+module.exports = { describeError, getAddressCoordinate, getAutoCompleteSuggestions, reverseGeocode, getRoute };
