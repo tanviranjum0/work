@@ -39,6 +39,11 @@ function validateRuntimeConfig() {
     for (const key of required) {
       if (!process.env[key]) throw new Error(`${key} must be configured in production.`);
     }
+    if (!process.env.GOOGLE_MAPS_API) {
+      // Not fatal, so the API still boots and can be fixed from the dashboard, but every
+      // map endpoint (geocoding, suggestions, routes, fares) will fail until it is set.
+      console.warn("GOOGLE_MAPS_API is not set: map, fare and ride requests will fail.");
+    }
     if (process.env.OTP_HASH_SECRET.length < 32) {
       throw new Error("OTP_HASH_SECRET must be at least 32 characters in production.");
     }

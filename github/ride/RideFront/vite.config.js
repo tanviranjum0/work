@@ -4,7 +4,6 @@ import react from '@vitejs/plugin-react'
 const vendorChunks = {
   react: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|scheduler)[\\/]/,
   motion: /[\\/]node_modules[\\/](framer-motion|motion-dom|motion-utils)[\\/]/,
-  maplibre: /[\\/]node_modules[\\/]maplibre-gl[\\/]/,
   socket: /[\\/]node_modules[\\/](socket\.io-client|socket\.io-parser|engine\.io-client|engine\.io-parser|@socket\.io)[\\/]/,
 }
 

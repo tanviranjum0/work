@@ -4,20 +4,21 @@
   background: #e9eef0;
 }
 
-.trip-map .maplibregl-ctrl-top-right {
-  top: 78px;
-  right: 18px;
+.trip-map-canvas {
+  position: absolute;
+  inset: 0;
 }
 
-.trip-map .maplibregl-ctrl-group {
-  overflow: hidden;
-  border-radius: 14px;
-  box-shadow: 0 8px 28px rgb(21 35 31 / 14%);
-}
-
-.trip-map .maplibregl-ctrl-group button {
-  width: 38px;
-  height: 38px;
+.trip-map-notice {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  color: #1d2f27;
+  font-size: 15px;
+  background: #e9eef0;
 }
 
 .trip-marker {
@@ -78,13 +79,6 @@
   100% {
     transform: scale(1.7);
     opacity: 0;
-  }
-}
-
-@media (max-width: 640px) {
-  .trip-map .maplibregl-ctrl-top-right {
-    top: 68px;
-    right: 12px;
   }
 }
 

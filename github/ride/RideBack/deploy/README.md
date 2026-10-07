@@ -58,10 +58,10 @@ If EC2 memory gets tight later: delete the `COMPOSE_PROFILES` line and set `REDI
 
 ### Google Maps keys
 
-Still Google Maps for geocoding/distance/autocomplete (the backend's `map.service.js`) — the MapLibre + MapTiler/Protomaps swap is frontend map *rendering* and is scoped as a later phase, not part of this hardening pass.
+All map data (geocoding, autocomplete, routing and the map itself) comes from Google Maps Platform.
 
-- **Server key** (`GOOGLE_MAPS_API` in `.env.production`): application restriction *IP addresses* → the Elastic IP. API restriction → Geocoding, Distance Matrix, Places.
-- **Browser key** (`VITE_GOOGLE_MAPS_API_KEY`): the frontend calls the Geocoding web service directly. Google doesn't allow HTTP-referrer restrictions on web-service APIs, so this key can't be locked down. Give it a tiny daily quota.
+- **Server key** (`GOOGLE_MAPS_API`): API restriction → Geocoding API, Places API (New), Routes API. Add an IP restriction where the host has a fixed IP (not on Render's free tier).
+- **Browser key** (`VITE_GOOGLE_MAPS_API_KEY`): used by the Maps JavaScript API to draw the map. Application restriction → HTTP referrers (`https://ride.tanvirdev.site/*`); API restriction → Maps JavaScript API only.
 - In Google Cloud, set **per-API daily quotas** on both keys.
 
 ### Resend
