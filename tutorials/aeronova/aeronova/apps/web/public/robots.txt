@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /trips
+Disallow: /account
+Disallow: /admin
+Disallow: /booking

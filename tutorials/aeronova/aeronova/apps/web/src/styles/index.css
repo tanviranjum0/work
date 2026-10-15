@@ -1,0 +1,258 @@
+@import '@fontsource-variable/archivo/wdth.css';
+@import '@fontsource-variable/source-sans-3/wght.css';
+@import 'tailwindcss';
+
+/* Dark utilities follow the resolved theme attribute, not the OS setting,
+   so an explicit user choice always wins. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* ------------------------------------------------------------------ */
+/* Theme values. See docs/DESIGN.md for rationale and contrast table.  */
+/* ------------------------------------------------------------------ */
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f1f3f6;
+  --surface: #ffffff;
+  --surface-muted: #e6eaf0;
+  --fg: #0e1a2b;
+  --muted: #4f5f77;
+  --border: #cdd5e0;
+  --control-border: #7a889c;
+  --primary: #1546a6;
+  --primary-hover: #10398a;
+  --on-primary: #ffffff;
+  --course: #a8238c;
+  --warning: #8a5a00;
+  --success: #146b44;
+  --danger: #b02b28;
+  --info: #0a6a78;
+  --horizon-glow: #d9e3f0;
+  --shadow-float: 0 12px 32px -12px rgb(14 26 43 / 0.22), 0 2px 6px -2px rgb(14 26 43 / 0.08);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0f1a2a;
+  --surface: #162438;
+  --surface-muted: #1d2e45;
+  --fg: #e8eef6;
+  --muted: #9aa9bf;
+  --border: #2b3f5a;
+  --control-border: #6b82a3;
+  --primary: #8ec2ff;
+  --primary-hover: #b3d6ff;
+  --on-primary: #0b1626;
+  --course: #ec6ad2;
+  --warning: #f2c24f;
+  --success: #5dd39c;
+  --danger: #ff8a85;
+  --info: #5cd2e0;
+  --horizon-glow: #1b3150;
+  --shadow-float: 0 16px 40px -12px rgb(0 0 0 / 0.55), 0 2px 8px -2px rgb(0 0 0 / 0.35);
+}
+
+/* ------------------------------------------------------------------ */
+/* Tokens exposed to Tailwind utilities (bg-surface, text-muted, …).   */
+/* ------------------------------------------------------------------ */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-control-border: var(--control-border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-course: var(--course);
+  --color-warning: var(--warning);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --shadow-float: var(--shadow-float);
+}
+
+@theme {
+  --font-display: 'Archivo Variable', 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    'Source Sans 3 Variable', 'Source Sans 3', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+
+  /* Type scale (≈1.25 ratio from a 17px body). Display sizes are fluid. */
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.35;
+  --text-body-sm: 0.9375rem;
+  --text-body-sm--line-height: 1.45;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.55;
+  --text-title: 1.3125rem;
+  --text-title--line-height: 1.3;
+  --text-headline: clamp(1.625rem, 1.2rem + 1.4vw, 2.125rem);
+  --text-headline--line-height: 1.15;
+  --text-display: clamp(2.5rem, 1.4rem + 4.6vw, 4.75rem);
+  --text-display--line-height: 1.02;
+
+  --radius-control: 6px;
+  --radius-panel: 10px;
+  --radius-sheet: 16px;
+
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+
+  --z-sticky: 20;
+  --z-header: 30;
+  --z-overlay: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+
+  --breakpoint-xs: 23.4375rem; /* 375px */
+  --breakpoint-3xl: 120rem; /* 1920px */
+  --breakpoint-4xl: 160rem; /* 2560px */
+}
+
+/* ------------------------------------------------------------------ */
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-stretch: 118%;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--course) 28%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+@utility measure {
+  max-width: 68ch;
+}
+
+@utility content-width {
+  width: 100%;
+  max-width: 82.5rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+}
+
+/* The one orchestrated moment on the landing page. Reduced motion jumps to the end state. */
+@layer components {
+  .course-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: course-draw 1.6s var(--ease-in-out) 0.25s forwards;
+  }
+
+  /* Waypoints appear as the line reaches them. */
+  .course-waypoint {
+    opacity: 0;
+    animation: waypoint-in var(--duration-base) var(--ease-out) forwards;
+  }
+}
+
+@keyframes waypoint-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes course-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Search progress: a short course segment sweeping along the route. */
+@layer components {
+  .search-sweep {
+    animation: search-sweep 1.4s var(--ease-in-out) infinite;
+  }
+  .skeleton {
+    display: block;
+    background: var(--surface-muted);
+    animation: skeleton-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes search-sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
+@keyframes skeleton-pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-sweep {
+    animation: none;
+    width: 100%;
+    opacity: 0.6;
+  }
+}
+
+@layer components {
+  .sheet[open] {
+    animation: sheet-in var(--duration-slow) var(--ease-out);
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}

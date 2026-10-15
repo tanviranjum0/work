@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>AeroNova — Flight search, redesigned</title>
+    <meta
+      name="description"
+      content="Compare flights by price, travel time, stops and baggage side by side, with every fee shown before you book."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#F1F3F6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0F1A2A" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AeroNova" />
+    <meta property="og:title" content="AeroNova — Flight search, redesigned" />
+    <meta
+      property="og:description"
+      content="Compare flights by price, travel time, stops and baggage side by side."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- External (not inline) so the site CSP can forbid inline scripts. Runs before paint to avoid a theme flash. -->
+    <script src="/theme-init.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>AeroNova needs JavaScript to search flights.</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,4128 @@
+{
+  "searchId": "srch_00000000000000000000000000000000",
+  "query": {
+    "tripType": "one_way",
+    "journeys": [
+      {
+        "origin": "DAC",
+        "destination": "LHR",
+        "departureDate": "2026-12-22"
+      }
+    ],
+    "passengers": {
+      "adults": 1,
+      "children": 0,
+      "infants": 0
+    },
+    "cabin": "economy",
+    "currency": "USD",
+    "directOnly": false
+  },
+  "dataOrigin": "demo",
+  "currency": "USD",
+  "conversion": "none",
+  "generatedAt": "2026-09-15T12:00:00.000Z",
+  "expiresAt": "2026-09-15T12:30:00.000Z",
+  "totalOffers": 14,
+  "truncated": false,
+  "offers": [
+    {
+      "offer": {
+        "id": "off_0cdx3fk1jjhikx",
+        "itineraryKey": "itn_02rztx71feflou",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "provided",
+                "value": "2"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "BG",
+                  "name": "Biman Bangladesh Airlines"
+                },
+                "marketingFlightNumber": "201",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "BG",
+                    "name": "Biman Bangladesh Airlines"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "2"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T09:40",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T03:40:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T14:30",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-22T14:30:00.000Z"
+                },
+                "durationMinutes": 650,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "788",
+                    "name": {
+                      "status": "provided",
+                      "value": "Boeing 787-8"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [],
+            "totalDurationMinutes": 650
+          }
+        ],
+        "validatingCarrier": {
+          "status": "provided",
+          "value": {
+            "code": "BG",
+            "name": "Biman Bangladesh Airlines"
+          }
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Economy Saver"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "weight",
+            "totalKg": 7
+          },
+          "checked": {
+            "kind": "weight",
+            "totalKg": 20
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 12000,
+                  "currency": "USD"
+                }
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 6000,
+                  "currency": "USD"
+                }
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 76600,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 10700,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "carrier_surcharge",
+              "label": "Carrier-imposed surcharge",
+              "amount": {
+                "amountMinor": 6000,
+                "currency": "USD"
+              }
+            },
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 95100,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 95100,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 95100,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 650,
+        "airborneMinutes": 650,
+        "layoverMinutes": 0,
+        "stops": 0,
+        "shortestLayoverMinutes": null,
+        "longestLayoverMinutes": null,
+        "hasTightConnection": false,
+        "hasLongConnection": false,
+        "hasOvernightLayover": false,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "no",
+        "hasRedEye": false,
+        "checkedBagIncluded": "yes",
+        "refundable": "yes",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 8778,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 86,
+      "badges": ["best_overall"],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 25600,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 37,
+        "durationDeltaVsFastestMinutes": 0
+      }
+    },
+    {
+      "offer": {
+        "id": "off_0y21y5o0h991ml",
+        "itineraryKey": "itn_02rztx71feflou",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "provided",
+                "value": "2"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "BG",
+                  "name": "Biman Bangladesh Airlines"
+                },
+                "marketingFlightNumber": "201",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "BG",
+                    "name": "Biman Bangladesh Airlines"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "2"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T09:40",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T03:40:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T14:30",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-22T14:30:00.000Z"
+                },
+                "durationMinutes": 650,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "788",
+                    "name": {
+                      "status": "provided",
+                      "value": "Boeing 787-8"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [],
+            "totalDurationMinutes": 650
+          }
+        ],
+        "validatingCarrier": {
+          "status": "provided",
+          "value": {
+            "code": "BG",
+            "name": "Biman Bangladesh Airlines"
+          }
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Economy Standard"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "weight",
+            "totalKg": 7
+          },
+          "checked": {
+            "kind": "weight",
+            "totalKg": 30
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 8000,
+                  "currency": "USD"
+                }
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 4000,
+                  "currency": "USD"
+                }
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 87300,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 12200,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "carrier_surcharge",
+              "label": "Carrier-imposed surcharge",
+              "amount": {
+                "amountMinor": 6000,
+                "currency": "USD"
+              }
+            },
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 107300,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 107300,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 107300,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 650,
+        "airborneMinutes": 650,
+        "layoverMinutes": 0,
+        "stops": 0,
+        "shortestLayoverMinutes": null,
+        "longestLayoverMinutes": null,
+        "hasTightConnection": false,
+        "hasLongConnection": false,
+        "hasOvernightLayover": false,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "no",
+        "hasRedEye": false,
+        "checkedBagIncluded": "yes",
+        "refundable": "yes",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 9905,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 79,
+      "badges": [],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 37800,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 54,
+        "durationDeltaVsFastestMinutes": 0
+      }
+    },
+    {
+      "offer": {
+        "id": "off_04xg16r1f8zevq",
+        "itineraryKey": "itn_02rztx71feflou",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "provided",
+                "value": "2"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "BG",
+                  "name": "Biman Bangladesh Airlines"
+                },
+                "marketingFlightNumber": "201",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "BG",
+                    "name": "Biman Bangladesh Airlines"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "2"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T09:40",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T03:40:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T14:30",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-22T14:30:00.000Z"
+                },
+                "durationMinutes": 650,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "788",
+                    "name": {
+                      "status": "provided",
+                      "value": "Boeing 787-8"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [],
+            "totalDurationMinutes": 650
+          }
+        ],
+        "validatingCarrier": {
+          "status": "provided",
+          "value": {
+            "code": "BG",
+            "name": "Biman Bangladesh Airlines"
+          }
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Economy Flexi"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "weight",
+            "totalKg": 10
+          },
+          "checked": {
+            "kind": "weight",
+            "totalKg": 40
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 3000,
+                  "currency": "USD"
+                }
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed",
+              "penalty": {
+                "status": "not_provided"
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 103400,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 14500,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "carrier_surcharge",
+              "label": "Carrier-imposed surcharge",
+              "amount": {
+                "amountMinor": 6000,
+                "currency": "USD"
+              }
+            },
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 125700,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 125700,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 125700,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 650,
+        "airborneMinutes": 650,
+        "layoverMinutes": 0,
+        "stops": 0,
+        "shortestLayoverMinutes": null,
+        "longestLayoverMinutes": null,
+        "hasTightConnection": false,
+        "hasLongConnection": false,
+        "hasOvernightLayover": false,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "no",
+        "hasRedEye": false,
+        "checkedBagIncluded": "yes",
+        "refundable": "yes",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 11603,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 69,
+      "badges": ["fastest"],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 56200,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 81,
+        "durationDeltaVsFastestMinutes": 0
+      }
+    },
+    {
+      "offer": {
+        "id": "off_1hwe7zb1tawbve",
+        "itineraryKey": "itn_187in411gs1hi4",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "provided",
+                "value": "2"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "TK",
+                  "name": "Turkish Airlines"
+                },
+                "marketingFlightNumber": "713",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "TK",
+                    "name": "Turkish Airlines"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "IST",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T07:25",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T01:25:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T13:25",
+                  "timeZone": "Europe/Istanbul",
+                  "utc": "2026-12-22T10:25:00.000Z"
+                },
+                "durationMinutes": 540,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "333",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A330-300"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              },
+              {
+                "id": "j0s1",
+                "marketingCarrier": {
+                  "code": "TK",
+                  "name": "Turkish Airlines"
+                },
+                "marketingFlightNumber": "1971",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "TK",
+                    "name": "Turkish Airlines"
+                  }
+                },
+                "origin": {
+                  "iataCode": "IST",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "2"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T16:15",
+                  "timeZone": "Europe/Istanbul",
+                  "utc": "2026-12-22T13:15:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T17:20",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-22T17:20:00.000Z"
+                },
+                "durationMinutes": 245,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "321",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A321"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [
+              {
+                "afterSegmentId": "j0s0",
+                "beforeSegmentId": "j0s1",
+                "airport": {
+                  "iataCode": "IST",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "durationMinutes": 170,
+                "requiresAirportChange": false,
+                "requiresTerminalChange": {
+                  "status": "not_provided"
+                },
+                "selfTransfer": {
+                  "status": "provided",
+                  "value": false
+                }
+              }
+            ],
+            "totalDurationMinutes": 955
+          }
+        ],
+        "validatingCarrier": {
+          "status": "provided",
+          "value": {
+            "code": "TK",
+            "name": "Turkish Airlines"
+          }
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Economy Light"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "pieces",
+            "quantity": 1,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 7
+            }
+          },
+          "checked": {
+            "kind": "none"
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "not_allowed",
+              "penalty": {
+                "status": "not_provided"
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 15000,
+                  "currency": "USD"
+                }
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 74000,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 10400,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "carrier_surcharge",
+              "label": "Carrier-imposed surcharge",
+              "amount": {
+                "amountMinor": 11000,
+                "currency": "USD"
+              }
+            },
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 97200,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 97200,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 97200,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 955,
+        "airborneMinutes": 785,
+        "layoverMinutes": 170,
+        "stops": 1,
+        "shortestLayoverMinutes": 170,
+        "longestLayoverMinutes": 170,
+        "hasTightConnection": false,
+        "hasLongConnection": false,
+        "hasOvernightLayover": false,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "no",
+        "hasRedEye": false,
+        "checkedBagIncluded": "no",
+        "refundable": "no",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 6107,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 49,
+      "badges": [],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 27700,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 40,
+        "durationDeltaVsFastestMinutes": 305
+      }
+    },
+    {
+      "offer": {
+        "id": "off_0nkt6ij1wm4scu",
+        "itineraryKey": "itn_187in411gs1hi4",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "provided",
+                "value": "2"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "TK",
+                  "name": "Turkish Airlines"
+                },
+                "marketingFlightNumber": "713",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "TK",
+                    "name": "Turkish Airlines"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "IST",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T07:25",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T01:25:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T13:25",
+                  "timeZone": "Europe/Istanbul",
+                  "utc": "2026-12-22T10:25:00.000Z"
+                },
+                "durationMinutes": 540,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "333",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A330-300"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              },
+              {
+                "id": "j0s1",
+                "marketingCarrier": {
+                  "code": "TK",
+                  "name": "Turkish Airlines"
+                },
+                "marketingFlightNumber": "1971",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "TK",
+                    "name": "Turkish Airlines"
+                  }
+                },
+                "origin": {
+                  "iataCode": "IST",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "2"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T16:15",
+                  "timeZone": "Europe/Istanbul",
+                  "utc": "2026-12-22T13:15:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T17:20",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-22T17:20:00.000Z"
+                },
+                "durationMinutes": 245,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "321",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A321"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [
+              {
+                "afterSegmentId": "j0s0",
+                "beforeSegmentId": "j0s1",
+                "airport": {
+                  "iataCode": "IST",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "durationMinutes": 170,
+                "requiresAirportChange": false,
+                "requiresTerminalChange": {
+                  "status": "not_provided"
+                },
+                "selfTransfer": {
+                  "status": "provided",
+                  "value": false
+                }
+              }
+            ],
+            "totalDurationMinutes": 955
+          }
+        ],
+        "validatingCarrier": {
+          "status": "provided",
+          "value": {
+            "code": "TK",
+            "name": "Turkish Airlines"
+          }
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Economy Classic"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "pieces",
+            "quantity": 1,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 7
+            }
+          },
+          "checked": {
+            "kind": "pieces",
+            "quantity": 1,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 23
+            }
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 20000,
+                  "currency": "USD"
+                }
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 7500,
+                  "currency": "USD"
+                }
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 85900,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 12000,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "carrier_surcharge",
+              "label": "Carrier-imposed surcharge",
+              "amount": {
+                "amountMinor": 11000,
+                "currency": "USD"
+              }
+            },
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 110700,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 110700,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 110700,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 955,
+        "airborneMinutes": 785,
+        "layoverMinutes": 170,
+        "stops": 1,
+        "shortestLayoverMinutes": 170,
+        "longestLayoverMinutes": 170,
+        "hasTightConnection": false,
+        "hasLongConnection": false,
+        "hasOvernightLayover": false,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "no",
+        "hasRedEye": false,
+        "checkedBagIncluded": "yes",
+        "refundable": "yes",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 6955,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 48,
+      "badges": [],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 41200,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 59,
+        "durationDeltaVsFastestMinutes": 305
+      }
+    },
+    {
+      "offer": {
+        "id": "off_0eb5j34122ais1",
+        "itineraryKey": "itn_1meo0fr1gntubu",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "provided",
+                "value": "3"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "6E",
+                  "name": "IndiGo"
+                },
+                "marketingFlightNumber": "1102",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "6E",
+                    "name": "IndiGo"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "DEL",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T13:55",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T07:55:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T16:10",
+                  "timeZone": "Asia/Kolkata",
+                  "utc": "2026-12-22T10:40:00.000Z"
+                },
+                "durationMinutes": 165,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "32N",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A320neo"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              },
+              {
+                "id": "j0s1",
+                "marketingCarrier": {
+                  "code": "VS",
+                  "name": "Virgin Atlantic"
+                },
+                "marketingFlightNumber": "301",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "VS",
+                    "name": "Virgin Atlantic"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DEL",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T23:10",
+                  "timeZone": "Asia/Kolkata",
+                  "utc": "2026-12-22T17:40:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-23T03:25",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-23T03:25:00.000Z"
+                },
+                "durationMinutes": 585,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "789",
+                    "name": {
+                      "status": "provided",
+                      "value": "Boeing 787-9"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [
+              {
+                "afterSegmentId": "j0s0",
+                "beforeSegmentId": "j0s1",
+                "airport": {
+                  "iataCode": "DEL",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "durationMinutes": 420,
+                "requiresAirportChange": false,
+                "requiresTerminalChange": {
+                  "status": "not_provided"
+                },
+                "selfTransfer": {
+                  "status": "provided",
+                  "value": true
+                }
+              }
+            ],
+            "totalDurationMinutes": 1170
+          }
+        ],
+        "validatingCarrier": {
+          "status": "not_provided"
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Basic"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "weight",
+            "totalKg": 7
+          },
+          "checked": {
+            "kind": "none"
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "not_allowed",
+              "penalty": {
+                "status": "not_provided"
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 4500,
+                  "currency": "USD"
+                }
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 59400,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 8300,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 69500,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 69500,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 69500,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 1170,
+        "airborneMinutes": 750,
+        "layoverMinutes": 420,
+        "stops": 1,
+        "shortestLayoverMinutes": 420,
+        "longestLayoverMinutes": 420,
+        "hasTightConnection": false,
+        "hasLongConnection": true,
+        "hasOvernightLayover": false,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "yes",
+        "hasRedEye": true,
+        "checkedBagIncluded": "no",
+        "refundable": "no",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 3564,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 47,
+      "badges": ["cheapest"],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 0,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 0,
+        "durationDeltaVsFastestMinutes": 520
+      }
+    },
+    {
+      "offer": {
+        "id": "off_0lxdhse1168hj3",
+        "itineraryKey": "itn_1mgc1m616jk3vj",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "provided",
+                "value": "3"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "EK",
+                  "name": "Emirates"
+                },
+                "marketingFlightNumber": "583",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "EK",
+                    "name": "Emirates"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "DXB",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T22:05",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T16:05:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-23T01:35",
+                  "timeZone": "Asia/Dubai",
+                  "utc": "2026-12-22T21:35:00.000Z"
+                },
+                "durationMinutes": 330,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "77W",
+                    "name": {
+                      "status": "provided",
+                      "value": "Boeing 777-300ER"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              },
+              {
+                "id": "j0s1",
+                "marketingCarrier": {
+                  "code": "EK",
+                  "name": "Emirates"
+                },
+                "marketingFlightNumber": "5",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "EK",
+                    "name": "Emirates"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DXB",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-23T04:40",
+                  "timeZone": "Asia/Dubai",
+                  "utc": "2026-12-23T00:40:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-23T08:20",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-23T08:20:00.000Z"
+                },
+                "durationMinutes": 460,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "388",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A380-800"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [
+              {
+                "afterSegmentId": "j0s0",
+                "beforeSegmentId": "j0s1",
+                "airport": {
+                  "iataCode": "DXB",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "durationMinutes": 185,
+                "requiresAirportChange": false,
+                "requiresTerminalChange": {
+                  "status": "provided",
+                  "value": false
+                },
+                "selfTransfer": {
+                  "status": "provided",
+                  "value": false
+                }
+              }
+            ],
+            "totalDurationMinutes": 975
+          }
+        ],
+        "validatingCarrier": {
+          "status": "provided",
+          "value": {
+            "code": "EK",
+            "name": "Emirates"
+          }
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Economy Light"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "pieces",
+            "quantity": 1,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 7
+            }
+          },
+          "checked": {
+            "kind": "none"
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "not_allowed",
+              "penalty": {
+                "status": "not_provided"
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 15000,
+                  "currency": "USD"
+                }
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 73400,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 10300,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "carrier_surcharge",
+              "label": "Carrier-imposed surcharge",
+              "amount": {
+                "amountMinor": 14000,
+                "currency": "USD"
+              }
+            },
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 99500,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 99500,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 99500,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 975,
+        "airborneMinutes": 790,
+        "layoverMinutes": 185,
+        "stops": 1,
+        "shortestLayoverMinutes": 185,
+        "longestLayoverMinutes": 185,
+        "hasTightConnection": false,
+        "hasLongConnection": false,
+        "hasOvernightLayover": true,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "no",
+        "hasRedEye": true,
+        "checkedBagIncluded": "no",
+        "refundable": "no",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 6123,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 43,
+      "badges": [],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 30000,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 43,
+        "durationDeltaVsFastestMinutes": 325
+      }
+    },
+    {
+      "offer": {
+        "id": "off_14b3peu1cxrb6f",
+        "itineraryKey": "itn_1meo0fr1gntubu",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "provided",
+                "value": "3"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "6E",
+                  "name": "IndiGo"
+                },
+                "marketingFlightNumber": "1102",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "6E",
+                    "name": "IndiGo"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "DEL",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T13:55",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T07:55:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T16:10",
+                  "timeZone": "Asia/Kolkata",
+                  "utc": "2026-12-22T10:40:00.000Z"
+                },
+                "durationMinutes": 165,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "32N",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A320neo"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              },
+              {
+                "id": "j0s1",
+                "marketingCarrier": {
+                  "code": "VS",
+                  "name": "Virgin Atlantic"
+                },
+                "marketingFlightNumber": "301",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "VS",
+                    "name": "Virgin Atlantic"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DEL",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T23:10",
+                  "timeZone": "Asia/Kolkata",
+                  "utc": "2026-12-22T17:40:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-23T03:25",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-23T03:25:00.000Z"
+                },
+                "durationMinutes": 585,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "789",
+                    "name": {
+                      "status": "provided",
+                      "value": "Boeing 787-9"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [
+              {
+                "afterSegmentId": "j0s0",
+                "beforeSegmentId": "j0s1",
+                "airport": {
+                  "iataCode": "DEL",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "durationMinutes": 420,
+                "requiresAirportChange": false,
+                "requiresTerminalChange": {
+                  "status": "not_provided"
+                },
+                "selfTransfer": {
+                  "status": "provided",
+                  "value": true
+                }
+              }
+            ],
+            "totalDurationMinutes": 1170
+          }
+        ],
+        "validatingCarrier": {
+          "status": "not_provided"
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Value Pack"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "weight",
+            "totalKg": 7
+          },
+          "checked": {
+            "kind": "weight",
+            "totalKg": 20
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "not_allowed",
+              "penalty": {
+                "status": "not_provided"
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 3000,
+                  "currency": "USD"
+                }
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 76000,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 10600,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 88400,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 88400,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 88400,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 1170,
+        "airborneMinutes": 750,
+        "layoverMinutes": 420,
+        "stops": 1,
+        "shortestLayoverMinutes": 420,
+        "longestLayoverMinutes": 420,
+        "hasTightConnection": false,
+        "hasLongConnection": true,
+        "hasOvernightLayover": false,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "yes",
+        "hasRedEye": true,
+        "checkedBagIncluded": "yes",
+        "refundable": "no",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 4533,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 42,
+      "badges": [],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 18900,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 27,
+        "durationDeltaVsFastestMinutes": 520
+      }
+    },
+    {
+      "offer": {
+        "id": "off_1ukf4ye0mb3h2f",
+        "itineraryKey": "itn_1mgc1m616jk3vj",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "provided",
+                "value": "3"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "EK",
+                  "name": "Emirates"
+                },
+                "marketingFlightNumber": "583",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "EK",
+                    "name": "Emirates"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "DXB",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T22:05",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T16:05:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-23T01:35",
+                  "timeZone": "Asia/Dubai",
+                  "utc": "2026-12-22T21:35:00.000Z"
+                },
+                "durationMinutes": 330,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "77W",
+                    "name": {
+                      "status": "provided",
+                      "value": "Boeing 777-300ER"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              },
+              {
+                "id": "j0s1",
+                "marketingCarrier": {
+                  "code": "EK",
+                  "name": "Emirates"
+                },
+                "marketingFlightNumber": "5",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "EK",
+                    "name": "Emirates"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DXB",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-23T04:40",
+                  "timeZone": "Asia/Dubai",
+                  "utc": "2026-12-23T00:40:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-23T08:20",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-23T08:20:00.000Z"
+                },
+                "durationMinutes": 460,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "388",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A380-800"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [
+              {
+                "afterSegmentId": "j0s0",
+                "beforeSegmentId": "j0s1",
+                "airport": {
+                  "iataCode": "DXB",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "durationMinutes": 185,
+                "requiresAirportChange": false,
+                "requiresTerminalChange": {
+                  "status": "provided",
+                  "value": false
+                },
+                "selfTransfer": {
+                  "status": "provided",
+                  "value": false
+                }
+              }
+            ],
+            "totalDurationMinutes": 975
+          }
+        ],
+        "validatingCarrier": {
+          "status": "provided",
+          "value": {
+            "code": "EK",
+            "name": "Emirates"
+          }
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Economy Classic"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "pieces",
+            "quantity": 1,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 7
+            }
+          },
+          "checked": {
+            "kind": "pieces",
+            "quantity": 1,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 23
+            }
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 20000,
+                  "currency": "USD"
+                }
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 7500,
+                  "currency": "USD"
+                }
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 85200,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 11900,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "carrier_surcharge",
+              "label": "Carrier-imposed surcharge",
+              "amount": {
+                "amountMinor": 14000,
+                "currency": "USD"
+              }
+            },
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 112900,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 112900,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 112900,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 975,
+        "airborneMinutes": 790,
+        "layoverMinutes": 185,
+        "stops": 1,
+        "shortestLayoverMinutes": 185,
+        "longestLayoverMinutes": 185,
+        "hasTightConnection": false,
+        "hasLongConnection": false,
+        "hasOvernightLayover": true,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "no",
+        "hasRedEye": true,
+        "checkedBagIncluded": "yes",
+        "refundable": "yes",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 6948,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 42,
+      "badges": [],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 43400,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 62,
+        "durationDeltaVsFastestMinutes": 325
+      }
+    },
+    {
+      "offer": {
+        "id": "off_1s5s1oc0yhvy5p",
+        "itineraryKey": "itn_0f63okt1axpijs",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "QR",
+                  "name": "Qatar Airways"
+                },
+                "marketingFlightNumber": "637",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "QR",
+                    "name": "Qatar Airways"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "DOH",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T19:40",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T13:40:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T22:25",
+                  "timeZone": "Asia/Qatar",
+                  "utc": "2026-12-22T19:25:00.000Z"
+                },
+                "durationMinutes": 345,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "359",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A350-900"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              },
+              {
+                "id": "j0s1",
+                "marketingCarrier": {
+                  "code": "QR",
+                  "name": "Qatar Airways"
+                },
+                "marketingFlightNumber": "3",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "QR",
+                    "name": "Qatar Airways"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DOH",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-23T00:55",
+                  "timeZone": "Asia/Qatar",
+                  "utc": "2026-12-22T21:55:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-23T05:15",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-23T05:15:00.000Z"
+                },
+                "durationMinutes": 440,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "35K",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A350-1000"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [
+              {
+                "afterSegmentId": "j0s0",
+                "beforeSegmentId": "j0s1",
+                "airport": {
+                  "iataCode": "DOH",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "durationMinutes": 150,
+                "requiresAirportChange": false,
+                "requiresTerminalChange": {
+                  "status": "not_provided"
+                },
+                "selfTransfer": {
+                  "status": "provided",
+                  "value": false
+                }
+              }
+            ],
+            "totalDurationMinutes": 935
+          }
+        ],
+        "validatingCarrier": {
+          "status": "provided",
+          "value": {
+            "code": "QR",
+            "name": "Qatar Airways"
+          }
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Economy Light"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "pieces",
+            "quantity": 1,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 7
+            }
+          },
+          "checked": {
+            "kind": "none"
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "not_allowed",
+              "penalty": {
+                "status": "not_provided"
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 15000,
+                  "currency": "USD"
+                }
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 83400,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 11700,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "carrier_surcharge",
+              "label": "Carrier-imposed surcharge",
+              "amount": {
+                "amountMinor": 15000,
+                "currency": "USD"
+              }
+            },
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 111900,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 111900,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 111900,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 935,
+        "airborneMinutes": 785,
+        "layoverMinutes": 150,
+        "stops": 1,
+        "shortestLayoverMinutes": 150,
+        "longestLayoverMinutes": 150,
+        "hasTightConnection": false,
+        "hasLongConnection": false,
+        "hasOvernightLayover": true,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "no",
+        "hasRedEye": true,
+        "checkedBagIncluded": "no",
+        "refundable": "no",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 7181,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 39,
+      "badges": [],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 42400,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 61,
+        "durationDeltaVsFastestMinutes": 285
+      }
+    },
+    {
+      "offer": {
+        "id": "off_0ljvydk0rawfeh",
+        "itineraryKey": "itn_0f63okt1axpijs",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "QR",
+                  "name": "Qatar Airways"
+                },
+                "marketingFlightNumber": "637",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "QR",
+                    "name": "Qatar Airways"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "DOH",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T19:40",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T13:40:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T22:25",
+                  "timeZone": "Asia/Qatar",
+                  "utc": "2026-12-22T19:25:00.000Z"
+                },
+                "durationMinutes": 345,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "359",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A350-900"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              },
+              {
+                "id": "j0s1",
+                "marketingCarrier": {
+                  "code": "QR",
+                  "name": "Qatar Airways"
+                },
+                "marketingFlightNumber": "3",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "QR",
+                    "name": "Qatar Airways"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DOH",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-23T00:55",
+                  "timeZone": "Asia/Qatar",
+                  "utc": "2026-12-22T21:55:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-23T05:15",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-23T05:15:00.000Z"
+                },
+                "durationMinutes": 440,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "35K",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A350-1000"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [
+              {
+                "afterSegmentId": "j0s0",
+                "beforeSegmentId": "j0s1",
+                "airport": {
+                  "iataCode": "DOH",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "durationMinutes": 150,
+                "requiresAirportChange": false,
+                "requiresTerminalChange": {
+                  "status": "not_provided"
+                },
+                "selfTransfer": {
+                  "status": "provided",
+                  "value": false
+                }
+              }
+            ],
+            "totalDurationMinutes": 935
+          }
+        ],
+        "validatingCarrier": {
+          "status": "provided",
+          "value": {
+            "code": "QR",
+            "name": "Qatar Airways"
+          }
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Economy Classic"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "pieces",
+            "quantity": 1,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 7
+            }
+          },
+          "checked": {
+            "kind": "pieces",
+            "quantity": 1,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 23
+            }
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 20000,
+                  "currency": "USD"
+                }
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 7500,
+                  "currency": "USD"
+                }
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 96800,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 13600,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "carrier_surcharge",
+              "label": "Carrier-imposed surcharge",
+              "amount": {
+                "amountMinor": 15000,
+                "currency": "USD"
+              }
+            },
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 127200,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 127200,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 127200,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 935,
+        "airborneMinutes": 785,
+        "layoverMinutes": 150,
+        "stops": 1,
+        "shortestLayoverMinutes": 150,
+        "longestLayoverMinutes": 150,
+        "hasTightConnection": false,
+        "hasLongConnection": false,
+        "hasOvernightLayover": true,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "no",
+        "hasRedEye": true,
+        "checkedBagIncluded": "yes",
+        "refundable": "yes",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 8163,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 37,
+      "badges": [],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 57700,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 83,
+        "durationDeltaVsFastestMinutes": 285
+      }
+    },
+    {
+      "offer": {
+        "id": "off_0mdfdec02s9nj9",
+        "itineraryKey": "itn_187in411gs1hi4",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "provided",
+                "value": "2"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "TK",
+                  "name": "Turkish Airlines"
+                },
+                "marketingFlightNumber": "713",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "TK",
+                    "name": "Turkish Airlines"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "IST",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T07:25",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T01:25:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T13:25",
+                  "timeZone": "Europe/Istanbul",
+                  "utc": "2026-12-22T10:25:00.000Z"
+                },
+                "durationMinutes": 540,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "333",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A330-300"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              },
+              {
+                "id": "j0s1",
+                "marketingCarrier": {
+                  "code": "TK",
+                  "name": "Turkish Airlines"
+                },
+                "marketingFlightNumber": "1971",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "TK",
+                    "name": "Turkish Airlines"
+                  }
+                },
+                "origin": {
+                  "iataCode": "IST",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "2"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T16:15",
+                  "timeZone": "Europe/Istanbul",
+                  "utc": "2026-12-22T13:15:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T17:20",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-22T17:20:00.000Z"
+                },
+                "durationMinutes": 245,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "321",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A321"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [
+              {
+                "afterSegmentId": "j0s0",
+                "beforeSegmentId": "j0s1",
+                "airport": {
+                  "iataCode": "IST",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "durationMinutes": 170,
+                "requiresAirportChange": false,
+                "requiresTerminalChange": {
+                  "status": "not_provided"
+                },
+                "selfTransfer": {
+                  "status": "provided",
+                  "value": false
+                }
+              }
+            ],
+            "totalDurationMinutes": 955
+          }
+        ],
+        "validatingCarrier": {
+          "status": "provided",
+          "value": {
+            "code": "TK",
+            "name": "Turkish Airlines"
+          }
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Economy Flex"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "pieces",
+            "quantity": 1,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 7
+            }
+          },
+          "checked": {
+            "kind": "pieces",
+            "quantity": 2,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 23
+            }
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 5000,
+                  "currency": "USD"
+                }
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed",
+              "penalty": {
+                "status": "not_provided"
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 105100,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 14700,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "carrier_surcharge",
+              "label": "Carrier-imposed surcharge",
+              "amount": {
+                "amountMinor": 11000,
+                "currency": "USD"
+              }
+            },
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 132600,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 132600,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 132600,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 955,
+        "airborneMinutes": 785,
+        "layoverMinutes": 170,
+        "stops": 1,
+        "shortestLayoverMinutes": 170,
+        "longestLayoverMinutes": 170,
+        "hasTightConnection": false,
+        "hasLongConnection": false,
+        "hasOvernightLayover": false,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "no",
+        "hasRedEye": false,
+        "checkedBagIncluded": "yes",
+        "refundable": "yes",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 8331,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 36,
+      "badges": [],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 63100,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 91,
+        "durationDeltaVsFastestMinutes": 305
+      }
+    },
+    {
+      "offer": {
+        "id": "off_0v6jqgz0eqxt5i",
+        "itineraryKey": "itn_1mgc1m616jk3vj",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "provided",
+                "value": "3"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "EK",
+                  "name": "Emirates"
+                },
+                "marketingFlightNumber": "583",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "EK",
+                    "name": "Emirates"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "DXB",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T22:05",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T16:05:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-23T01:35",
+                  "timeZone": "Asia/Dubai",
+                  "utc": "2026-12-22T21:35:00.000Z"
+                },
+                "durationMinutes": 330,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "77W",
+                    "name": {
+                      "status": "provided",
+                      "value": "Boeing 777-300ER"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              },
+              {
+                "id": "j0s1",
+                "marketingCarrier": {
+                  "code": "EK",
+                  "name": "Emirates"
+                },
+                "marketingFlightNumber": "5",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "EK",
+                    "name": "Emirates"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DXB",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-23T04:40",
+                  "timeZone": "Asia/Dubai",
+                  "utc": "2026-12-23T00:40:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-23T08:20",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-23T08:20:00.000Z"
+                },
+                "durationMinutes": 460,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "388",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A380-800"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [
+              {
+                "afterSegmentId": "j0s0",
+                "beforeSegmentId": "j0s1",
+                "airport": {
+                  "iataCode": "DXB",
+                  "terminal": {
+                    "status": "provided",
+                    "value": "3"
+                  }
+                },
+                "durationMinutes": 185,
+                "requiresAirportChange": false,
+                "requiresTerminalChange": {
+                  "status": "provided",
+                  "value": false
+                },
+                "selfTransfer": {
+                  "status": "provided",
+                  "value": false
+                }
+              }
+            ],
+            "totalDurationMinutes": 975
+          }
+        ],
+        "validatingCarrier": {
+          "status": "provided",
+          "value": {
+            "code": "EK",
+            "name": "Emirates"
+          }
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Economy Flex"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "pieces",
+            "quantity": 1,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 7
+            }
+          },
+          "checked": {
+            "kind": "pieces",
+            "quantity": 2,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 23
+            }
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 5000,
+                  "currency": "USD"
+                }
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed",
+              "penalty": {
+                "status": "not_provided"
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 104300,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 14600,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "carrier_surcharge",
+              "label": "Carrier-imposed surcharge",
+              "amount": {
+                "amountMinor": 14000,
+                "currency": "USD"
+              }
+            },
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 134700,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 134700,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 134700,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 975,
+        "airborneMinutes": 790,
+        "layoverMinutes": 185,
+        "stops": 1,
+        "shortestLayoverMinutes": 185,
+        "longestLayoverMinutes": 185,
+        "hasTightConnection": false,
+        "hasLongConnection": false,
+        "hasOvernightLayover": true,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "no",
+        "hasRedEye": true,
+        "checkedBagIncluded": "yes",
+        "refundable": "yes",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 8289,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 30,
+      "badges": [],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 65200,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 94,
+        "durationDeltaVsFastestMinutes": 325
+      }
+    },
+    {
+      "offer": {
+        "id": "off_1cbq62t1pb5o0w",
+        "itineraryKey": "itn_0f63okt1axpijs",
+        "dataOrigin": "demo",
+        "journeys": [
+          {
+            "id": "j0",
+            "origin": {
+              "iataCode": "DAC",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "destination": {
+              "iataCode": "LHR",
+              "terminal": {
+                "status": "not_provided"
+              }
+            },
+            "segments": [
+              {
+                "id": "j0s0",
+                "marketingCarrier": {
+                  "code": "QR",
+                  "name": "Qatar Airways"
+                },
+                "marketingFlightNumber": "637",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "QR",
+                    "name": "Qatar Airways"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DAC",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "DOH",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-22T19:40",
+                  "timeZone": "Asia/Dhaka",
+                  "utc": "2026-12-22T13:40:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-22T22:25",
+                  "timeZone": "Asia/Qatar",
+                  "utc": "2026-12-22T19:25:00.000Z"
+                },
+                "durationMinutes": 345,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "359",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A350-900"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              },
+              {
+                "id": "j0s1",
+                "marketingCarrier": {
+                  "code": "QR",
+                  "name": "Qatar Airways"
+                },
+                "marketingFlightNumber": "3",
+                "operatingCarrier": {
+                  "status": "provided",
+                  "value": {
+                    "code": "QR",
+                    "name": "Qatar Airways"
+                  }
+                },
+                "origin": {
+                  "iataCode": "DOH",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "destination": {
+                  "iataCode": "LHR",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "departure": {
+                  "local": "2026-12-23T00:55",
+                  "timeZone": "Asia/Qatar",
+                  "utc": "2026-12-22T21:55:00.000Z"
+                },
+                "arrival": {
+                  "local": "2026-12-23T05:15",
+                  "timeZone": "Europe/London",
+                  "utc": "2026-12-23T05:15:00.000Z"
+                },
+                "durationMinutes": 440,
+                "aircraft": {
+                  "status": "provided",
+                  "value": {
+                    "code": "35K",
+                    "name": {
+                      "status": "provided",
+                      "value": "Airbus A350-1000"
+                    }
+                  }
+                },
+                "cabin": "economy",
+                "technicalStops": []
+              }
+            ],
+            "layovers": [
+              {
+                "afterSegmentId": "j0s0",
+                "beforeSegmentId": "j0s1",
+                "airport": {
+                  "iataCode": "DOH",
+                  "terminal": {
+                    "status": "not_provided"
+                  }
+                },
+                "durationMinutes": 150,
+                "requiresAirportChange": false,
+                "requiresTerminalChange": {
+                  "status": "not_provided"
+                },
+                "selfTransfer": {
+                  "status": "provided",
+                  "value": false
+                }
+              }
+            ],
+            "totalDurationMinutes": 935
+          }
+        ],
+        "validatingCarrier": {
+          "status": "provided",
+          "value": {
+            "code": "QR",
+            "name": "Qatar Airways"
+          }
+        },
+        "cabin": "economy",
+        "fareFamily": {
+          "status": "provided",
+          "value": "Economy Flex"
+        },
+        "baggage": {
+          "cabin": {
+            "kind": "pieces",
+            "quantity": 1,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 7
+            }
+          },
+          "checked": {
+            "kind": "pieces",
+            "quantity": 2,
+            "maxWeightKg": {
+              "status": "provided",
+              "value": 23
+            }
+          }
+        },
+        "conditions": {
+          "refund": {
+            "status": "provided",
+            "value": {
+              "value": "allowed_with_fee",
+              "penalty": {
+                "status": "provided",
+                "value": {
+                  "amountMinor": 5000,
+                  "currency": "USD"
+                }
+              }
+            }
+          },
+          "change": {
+            "status": "provided",
+            "value": {
+              "value": "allowed",
+              "penalty": {
+                "status": "not_provided"
+              }
+            }
+          }
+        },
+        "price": {
+          "currency": "USD",
+          "base": {
+            "amountMinor": 118500,
+            "currency": "USD"
+          },
+          "taxes": {
+            "status": "provided",
+            "value": {
+              "amountMinor": 16600,
+              "currency": "USD"
+            }
+          },
+          "fees": [
+            {
+              "category": "carrier_surcharge",
+              "label": "Carrier-imposed surcharge",
+              "amount": {
+                "amountMinor": 15000,
+                "currency": "USD"
+              }
+            },
+            {
+              "category": "airport_fee",
+              "label": "Airport and security fees",
+              "amount": {
+                "amountMinor": 1800,
+                "currency": "USD"
+              }
+            }
+          ],
+          "supplierTotal": {
+            "amountMinor": 151900,
+            "currency": "USD"
+          },
+          "markup": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "serviceFee": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "discount": {
+            "amountMinor": 0,
+            "currency": "USD"
+          },
+          "customerTotal": {
+            "amountMinor": 151900,
+            "currency": "USD"
+          },
+          "perPassenger": {
+            "status": "provided",
+            "value": [
+              {
+                "passengerType": "adult",
+                "count": 1,
+                "unitTotal": {
+                  "amountMinor": 151900,
+                  "currency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        "seatsRemaining": {
+          "status": "not_provided"
+        },
+        "expiresAt": {
+          "status": "provided",
+          "value": "2026-09-15T12:30:00.000Z"
+        }
+      },
+      "metrics": {
+        "totalTravelMinutes": 935,
+        "airborneMinutes": 785,
+        "layoverMinutes": 150,
+        "stops": 1,
+        "shortestLayoverMinutes": 150,
+        "longestLayoverMinutes": 150,
+        "hasTightConnection": false,
+        "hasLongConnection": false,
+        "hasOvernightLayover": true,
+        "hasAirportChange": false,
+        "hasSelfTransfer": "no",
+        "hasRedEye": true,
+        "checkedBagIncluded": "yes",
+        "refundable": "yes",
+        "changeable": "yes",
+        "pricePerTravelHour": {
+          "amountMinor": 9748,
+          "currency": "USD"
+        },
+        "clockShiftMinutes": -360
+      },
+      "score": 23,
+      "badges": [],
+      "comparison": {
+        "priceDeltaVsCheapest": {
+          "amountMinor": 82400,
+          "currency": "USD"
+        },
+        "priceDeltaPercentVsCheapest": 119,
+        "durationDeltaVsFastestMinutes": 285
+      }
+    }
+  ],
+  "places": {
+    "DAC": {
+      "code": "DAC",
+      "kind": "airport",
+      "cityName": "Dhaka",
+      "airportName": "Hazrat Shahjalal International Airport",
+      "countryName": "Bangladesh",
+      "timeZone": "Asia/Dhaka"
+    },
+    "LHR": {
+      "code": "LHR",
+      "kind": "airport",
+      "cityName": "London",
+      "airportName": "Heathrow Airport",
+      "countryName": "United Kingdom",
+      "timeZone": "Europe/London"
+    },
+    "IST": {
+      "code": "IST",
+      "kind": "airport",
+      "cityName": "Istanbul",
+      "airportName": "Istanbul Airport",
+      "countryName": "Türkiye",
+      "timeZone": "Europe/Istanbul"
+    },
+    "DEL": {
+      "code": "DEL",
+      "kind": "airport",
+      "cityName": "Delhi",
+      "airportName": "Indira Gandhi International Airport",
+      "countryName": "India",
+      "timeZone": "Asia/Kolkata"
+    },
+    "DXB": {
+      "code": "DXB",
+      "kind": "city",
+      "cityName": "Dubai",
+      "airportName": null,
+      "countryName": "United Arab Emirates",
+      "timeZone": "Asia/Dubai"
+    },
+    "DOH": {
+      "code": "DOH",
+      "kind": "airport",
+      "cityName": "Doha",
+      "airportName": "Hamad International Airport",
+      "countryName": "Qatar",
+      "timeZone": "Asia/Qatar"
+    }
+  }
+}
