@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: aeronova
+    env: node
+    # Use a paid instance for a production service. Render Free instances sleep and are not intended for production.
+    plan: starter
+    rootDir: .
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start -w @aeronova/api
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: APP_MODE
+        value: demo
+      - key: LOG_LEVEL
+        value: info
+      - key: AUTH_PROVIDER
+        value: dev
+      - key: TRUST_PROXY_HOPS
+        value: 1
+      - key: DEV_AUTH_SECRET
+        generateValue: true
+      - key: MONGODB_URI
+        sync: false

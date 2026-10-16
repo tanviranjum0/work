@@ -1,0 +1,5 @@
+# Keep LF in the repo so Windows checkouts don't break shell scripts or Prettier.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.woff2 binary

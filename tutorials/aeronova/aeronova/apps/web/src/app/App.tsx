@@ -5,7 +5,7 @@ import { ThemeProvider } from '../lib/theme';
 import { AuthProvider } from '../features/auth/auth-context';
 import { createQueryClient } from './query-client';
 import { createAppRouter } from './router';
-
+//hello
 export const App = () => {
   const [queryClient] = useState(createQueryClient);
   const [router] = useState(createAppRouter);

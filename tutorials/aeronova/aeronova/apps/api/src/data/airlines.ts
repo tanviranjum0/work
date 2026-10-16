@@ -1,0 +1,45 @@
+import type { Airline } from '@aeronova/shared';
+
+/** Carriers referenced by the demo schedule. Names are public reference data. */
+export const AIRLINES: readonly Airline[] = [
+  ['BG', 'Biman Bangladesh Airlines', 'BD'],
+  ['BS', 'US-Bangla Airlines', 'BD'],
+  ['EK', 'Emirates', 'AE'],
+  ['FZ', 'flydubai', 'AE'],
+  ['QR', 'Qatar Airways', 'QA'],
+  ['TK', 'Turkish Airlines', 'TR'],
+  ['SQ', 'Singapore Airlines', 'SG'],
+  ['MH', 'Malaysia Airlines', 'MY'],
+  ['AK', 'AirAsia', 'MY'],
+  ['TG', 'Thai Airways', 'TH'],
+  ['FD', 'Thai AirAsia', 'TH'],
+  ['6E', 'IndiGo', 'IN'],
+  ['AI', 'Air India', 'IN'],
+  ['BA', 'British Airways', 'GB'],
+  ['VS', 'Virgin Atlantic', 'GB'],
+  ['AF', 'Air France', 'FR'],
+  ['LH', 'Lufthansa', 'DE'],
+  ['DL', 'Delta Air Lines', 'US'],
+  ['UA', 'United Airlines', 'US'],
+  ['AA', 'American Airlines', 'US'],
+  ['B6', 'JetBlue', 'US'],
+  ['QF', 'Qantas', 'AU'],
+].map(([iataCode = '', name = '', countryCode = '']) => ({ iataCode, name, countryCode }));
+
+export const AIRCRAFT_NAMES: Readonly<Record<string, string>> = {
+  '320': 'Airbus A320',
+  '321': 'Airbus A321',
+  '32N': 'Airbus A320neo',
+  '332': 'Airbus A330-200',
+  '333': 'Airbus A330-300',
+  '359': 'Airbus A350-900',
+  '35K': 'Airbus A350-1000',
+  '388': 'Airbus A380-800',
+  '738': 'Boeing 737-800',
+  '7M8': 'Boeing 737 MAX 8',
+  '744': 'Boeing 747-400',
+  '748': 'Boeing 747-8',
+  '77W': 'Boeing 777-300ER',
+  '788': 'Boeing 787-8',
+  '789': 'Boeing 787-9',
+};
